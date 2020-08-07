@@ -1,0 +1,11 @@
+apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
+kind: SourceRepoRepository
+metadata:
+  name: source-repo # {"$kpt-set":"source-repo"}
+  namespace: yakima-system # {"$kpt-set":"namespace"}
+---
+apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
+kind: SourceRepoRepository
+metadata:
+  name: deployment-repo # {"$kpt-set":"deployment-repo"}
+  namespace: yakima-system # {"$kpt-set":"namespace"}

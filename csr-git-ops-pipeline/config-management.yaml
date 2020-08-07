@@ -1,0 +1,38 @@
+# TODO(jcwc): Consider changing this to a FutureObject when cluster-scoped resources are supported
+apiVersion: configmanagement.gke.io/v1
+kind: ConfigManagement
+metadata:
+  name: config-management
+  namespace: yakima-system # {"$kpt-set":"namespace"}
+spec:
+  clusterName: yakima-csr-git-ops-pipeline # {"$kpt-set":"cluster-name"}
+  git:
+    syncRepo: https://source.developers.google.com/p/my-project-id/r/deployment-repo # {"$kpt-set":"config-sync-repo"}
+    syncBranch: master
+    secretType: gcenode
+    policyDir: config
+  sourceFormat: unstructured
+---
+# Needed per: https://cloud.google.com/kubernetes-engine/docs/add-on/config-sync/how-to/installing#git-creds-gcenode
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: allow-configsync-use-computesa
+  annotations:
+    cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
+spec:
+  member: serviceAccount:my-project-id.svc.id.goog[config-management-system/importer] # {"$kpt-set":"config-sync-workload-identity"}
+  role: roles/iam.workloadIdentityUser
+  resourceRef:
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+    external: serviceAccount:1234567890123-compute@developer.gserviceaccount.com # {"$kpt-set":"compute-sa"}
+---
+# Needed per: https://cloud.google.com/kubernetes-engine/docs/add-on/config-sync/how-to/installing#git-creds-gcenode
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: importer
+  namespace: config-management-system
+  annotations:
+    iam.gke.io/gcp-service-account: 1234567890123-compute@developer.gserviceaccount.com # {"$kpt-set":"compute-sa"}

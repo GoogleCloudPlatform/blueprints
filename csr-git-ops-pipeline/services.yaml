@@ -1,0 +1,11 @@
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: sourcerepo.googleapis.com
+  namespace: yakima-system # {"$kpt-set":"namespace"}
+---
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  name: cloudbuild.googleapis.com
+  namespace: yakima-system # {"$kpt-set":"namespace"}

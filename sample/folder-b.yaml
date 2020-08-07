@@ -5,7 +5,7 @@ metadata:
     cnrm.cloud.google.com/folder-ref: "top-folder"
     config.kubernetes.io/function: |
       container:
-        image: gcr.io/yakima-eap/image:v1
+        image: gcr.io/yakima-eap/folder-ref:v1
   name: folder-b
   namespace: project-hierarchy
 spec:

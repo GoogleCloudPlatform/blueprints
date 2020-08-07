@@ -14,6 +14,8 @@ So objects in KCC can be parented by 4 annotations:
 
 # How do I use it?
 
+1. Prereqs: To apply the output of the function, cork must be installed and its service account must be able to read and write KCC folders, projects, etc.
+
 1. Build it
 
 For container runtime:
@@ -25,7 +27,7 @@ gcloud builds submit -t gcr.io/$YOUR_PROJECT_ID/folder-ref:v1 .
 
 For exec: `go build -v -o config-function ./`
 
-2. Run `kpt fn run sample/ --image gcr.io/$YOUR_PROJECT_ID/folder-ref:v1` if you have a gcr image cut.
+3. Run `kpt fn run sample/ --image gcr.io/$YOUR_PROJECT_ID/folder-ref:v1` if you have a gcr image cut.
 
 OR
 
@@ -39,6 +41,10 @@ NOTE: If you sudo docker then you need to sudo kpt and there's an obnoxious set 
 # How do I run the tests?
 
 `make`
+
+# How do I "release" it to prod
+
+For now: `gcloud builds submit -t gcr.io/yakima-eap/folder-ref:v1 .`
 
 # Further Reading
 

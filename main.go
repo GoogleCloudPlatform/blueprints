@@ -1,15 +1,14 @@
 package main
 
 import (
+	"bytes"
+	"fmt"
 	"os"
+	"text/template"
 
-	cork "cnrm.googlesource.com/cork/pkg/api/v1alpha1"
-	v1 "k8s.io/api/core/v1"
-	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"sigs.k8s.io/kustomize/kyaml/fn/framework"
 	"sigs.k8s.io/kustomize/kyaml/kio/filters"
 	"sigs.k8s.io/kustomize/kyaml/yaml"
-	yaml2 "sigs.k8s.io/yaml"
 )
 
 // TODO: all of this
@@ -28,17 +27,19 @@ func main() {
 				continue
 			}
 
-			err = wrapInCork(resourceList.Items[i])
-			if err != nil {
-				return err
-			}
-
 			// Build new fieldref
 			generatedRef, err := genFieldRef(resourceList.Items[i])
 			if err != nil {
 				return err
 			}
 			refObjs = append(refObjs, generatedRef)
+
+			// Replace with a future
+			future, err := wrapInCork(resourceList.Items[i])
+			if err != nil {
+				return err
+			}
+			resourceList.Items[i] = future
 		}
 		// TODO: replace child folders with future(childfolder)s
 
@@ -60,14 +61,15 @@ func main() {
 
 		return nil
 	})
-	// cmd.Flags().StringVar(&namespace, "namespace", "", "the namespace value")
+
 	if err := cmd.Execute(); err != nil {
+		fmt.Fprintf(os.Stderr, "%v\n", err)
 		os.Exit(1)
 	}
 }
 
 func shouldRun(r *yaml.RNode) bool {
-	parent, err := r.Pipe(yaml.Lookup("metadata", "annotations", "cnrm.cloud.google.com/folder-parent"))
+	parent, err := r.Pipe(yaml.GetAnnotation("cnrm.cloud.google.com/folder-parent"))
 	if err != nil {
 		return false
 	}
@@ -75,113 +77,86 @@ func shouldRun(r *yaml.RNode) bool {
 }
 
 func genFieldRef(r *yaml.RNode) (*yaml.RNode, error) {
-	parent, err := r.Pipe(yaml.Lookup("metadata", "annotations", "cnrm.cloud.google.com/folder-parent"))
-	if err != nil {
-		return nil, err
-	}
-	p, err := parent.String()
-	if err != nil {
-		return nil, err
-	}
 	meta, err := r.GetMeta()
 	if err != nil {
 		return nil, err
 	}
 	ns := meta.ObjectMeta.Namespace
-
-	fr := cork.FieldReference{
-		TypeMeta: metav1.TypeMeta{
-			APIVersion: "orchestration.cnrm.cloud.google.com/v1alpha1",
-			Kind:       "FieldReference",
-		},
-		ObjectMeta: metav1.ObjectMeta{
-			Namespace: ns,
-			Name:      p + "-nameref",
-		},
-		Spec: cork.FieldReferenceSpec{JSONPath: "{$.status.name}",
-			ConfigMapRef: &cork.ConfigMapDataReference{Name: p + "-nameref-cm", Key: "folder"},
-			ResourceRef:  &cork.NamespacedResource{Kind: "Folder"},
-			Mutators: []cork.Mutator{
-				{
-					// Default mutator, trim "folder/" from status field
-					Name: "substring", Settings: map[string]string{"start": "8"},
-				},
-			},
-		},
+	ps, ok := meta.Annotations["cnrm.cloud.google.com/folder-parent"]
+	if !ok {
+		return nil, fmt.Errorf("Missing CNRM folder-parent annotation: %v", meta.Annotations)
 	}
-	data, err := yaml2.Marshal(fr)
-	if err != nil {
+
+	buff := &bytes.Buffer{}
+	t := template.Must(template.New("fieldref-obj").Parse(fieldRefTemplate))
+	if err := t.Execute(buff, map[string]string{"namespace": ns, "parent": ps}); err != nil {
 		return nil, err
 	}
-	return yaml.Parse(string(data))
+	return yaml.Parse(buff.String())
 }
 
-func wrapInCork(r *yaml.RNode) error {
-	// get
+func wrapInCork(r *yaml.RNode) (*yaml.RNode, error) {
 	meta, err := r.GetMeta()
 	if err != nil {
-		return err
+		return nil, fmt.Errorf("Unable to parse metadata: %v", err)
 	}
 	ns := meta.ObjectMeta.Namespace
 	folderName := meta.ObjectMeta.Name
 
-	parent, err := r.Pipe(yaml.Lookup("metadata", "annotations", "cnrm.cloud.google.com/folder-parent"))
-	if err != nil {
-		return err
-	}
-	ps, err := parent.String()
-	if err != nil {
-		return err
+	ps, ok := meta.Annotations["cnrm.cloud.google.com/folder-parent"]
+	if !ok {
+		return nil, fmt.Errorf("Missing CNRM folder-parent annotation: %v", meta.Annotations)
 	}
 
-	futureTemplate := cork.FutureObject{TypeMeta: metav1.TypeMeta{
-		APIVersion: "orchestration.cnrm.cloud.google.com/v1alpha1",
-		Kind:       "FutureObject",
-	},
-		ObjectMeta: metav1.ObjectMeta{
-			Namespace: ns,
-			Name:      folderName + "-future",
-		},
-		Spec: cork.FutureObjectSpec{
-			ConfigMapRef: &v1.LocalObjectReference{Name: ps + "-nameref-cm"},
-		},
+	// Set folder parent to cork var "folder-name"
+	err = r.PipeE(yaml.Lookup("metadata", "annotations"), yaml.SetField("cnrm.cloud.google.com/folder-id", yaml.NewScalarRNode("${folder-name}")))
+	if err != nil {
+		return nil, fmt.Errorf("Failed to add parent annotation: %v", err)
 	}
 
-	data, err := yaml2.Marshal(futureTemplate)
-	if err != nil {
-		return nil
+	templateContext := map[string]string{"name": folderName, "namespace": ns, "parent": ps}
+	buff := &bytes.Buffer{}
+	t := template.Must(template.New("future-obj").Parse(futureObjecTemplate))
+	if err := t.Execute(buff, templateContext); err != nil {
+		return nil, fmt.Errorf("Future template expansion error: %v", err)
 	}
-	futureNode, err := yaml.Parse(string(data))
+	s := buff.String()
+	futureNode, err := yaml.Parse(s)
 	if err != nil {
-		return nil
+		return nil, fmt.Errorf("Yaml parsing of template error: %v.\nHydrated: %v", err, s)
 	}
 
 	// copy this Folder krm, r, to the future nested object
-	_, err = futureNode.Pipe(
-		yaml.LookupCreate(yaml.MappingNode, "spec", "object"),
-		yaml.Set(r))
+	err = futureNode.PipeE(
+		yaml.LookupCreate(yaml.MappingNode, "spec"),
+		yaml.SetField("object", r))
+
+	if err != nil {
+		return nil, fmt.Errorf("Nesting folder in future error: %v", err)
+	}
 
 	// TODO: mutate object in to a future
-	return err
+
+	return futureNode, nil
 
 	/*
-		//	dead stuff
-		k, err := r.Pipe(yaml.Lookup("kind"))
-		a, err := r.Pipe(yaml.Lookup("apiVersion"))
-		if err != nil {
-			s, _ := r.String()
-			return fmt.Errorf("%v: %s", err, s)
-		}
-		if parent == nil {
-			// doesn't have folder parent, skip
-			return nil
-		}
-		yaml.Set(yaml.Loo)
+	   //	dead stuff
+	   k, err := r.Pipe(yaml.Lookup("kind"))
+	   a, err := r.Pipe(yaml.Lookup("apiVersion"))
+	   if err != nil {
+	       s, _ := r.String()
+	       return fmt.Errorf("%v: %s", err, s)
+	   }
+	   if parent == nil {
+	       // doesn't have folder parent, skip
+	       return nil
+	   }
+	   yaml.Set(yaml.Loo)
 	*/
 
 }
 
-futureObjecTemplate := `apiVersion: orchestration.cnrm.cloud.google.com/v1alpha1
+var futureObjecTemplate = `apiVersion: orchestration.cnrm.cloud.google.com/v1alpha1
 kind: FutureObject
 metadata:
   name: {{ .name }}-future
@@ -189,19 +164,19 @@ metadata:
 spec:
   object: {}
   configMapRef:
-	name: {{ .parent }}-ref-cm
+    name: {{ .parent }}-ref-cm
 `
 
-fieldRefTemplate := `apiVersion: orchestration.cnrm.cloud.google.com/v1alpha1
+var fieldRefTemplate = `apiVersion: orchestration.cnrm.cloud.google.com/v1alpha1
 kind: FieldReference
 metadata:
   name: {{ .parent }}-ref
   namespace: {{ .namespace }}
 spec:
   configMapRef:
-	name: {{ .parent }}-ref-cm
+    name: {{ .parent }}-ref-cm
     key: folder-name
-  jsonPath: '{$.status.name}'
+  jsonPath: "{$.status.name}"
   mutators:
   - name: substring
     settings:

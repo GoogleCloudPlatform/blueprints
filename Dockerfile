@@ -1,10 +1,12 @@
 FROM golang:1.14
 ENV CGO_ENABLED=0
 WORKDIR /go/src/
-COPY . .
-COPY /usr/local/google/home/thackerm/go/src/cnrm.googlesource.com/cork /usr/local/google/home/thackerm/go/src/cnrm.googlesource.com/cork
-RUN go build -v -o /usr/local/bin/folder-parent ./
+COPY go.mod .
+COPY go.sum .
+RUN go mod download
+COPY main.go .
+RUN go build -v -o /usr/local/bin/config-function ./
 
 FROM alpine:latest
-COPY --from=0 /usr/local/bin/folder-parent /usr/local/bin/folder-parent
-CMD ["folder-parent"]
+COPY --from=0 /usr/local/bin/config-function /usr/local/bin/config-function
+CMD ["config-function"]

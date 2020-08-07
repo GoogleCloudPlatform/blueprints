@@ -1,6 +1,16 @@
 # What is this
 
-Folder-parent uses an annotation on a folder to its intended parent folder to construct orchestration custom resources that will ensure the proper folder hierarchy happens without further user config editing.
+Folder-ref uses an annotation on a folder or project that references its intended parent folder, to construct orchestration custom resources that will ensure the proper hierarchy happens without further user config editing.
+
+Caution: this is a destructive function that mutates config to suit the orchestration system. Don't run and commit on dry code as it's a one way cork indirection wrapper.
+
+This function creates a virtual KCC annotation, `cnrm.cloud.google.com/folder-ref`.
+
+So objects in KCC can be parented by 4 annotations:
+1. `cnrm.cloud.google.com/organization-id`
+1. `cnrm.cloud.google.com/folder-id`
+1. `cnrm.cloud.google.com/project-id`
+1. `cnrm.cloud.google.com/folder-ref`
 
 # How do I use it?
 
@@ -10,12 +20,12 @@ For container runtime:
 
 ```
 # From this directory
-gcloud builds submit -t gcr.io/$YOUR_PROJECT_ID/folder-parent:v1 .
+gcloud builds submit -t gcr.io/$YOUR_PROJECT_ID/folder-ref:v1 .
 ```
 
 For exec: `go build -v -o config-function ./`
 
-2. Run `kpt fn run sample/ --image gcr.io/$YOUR_PROJECT_ID/folder-parent:v1` if you have a gcr image cut.
+2. Run `kpt fn run sample/ --image gcr.io/$YOUR_PROJECT_ID/folder-ref:v1` if you have a gcr image cut.
 
 OR
 

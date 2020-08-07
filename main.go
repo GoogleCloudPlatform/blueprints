@@ -11,12 +11,11 @@ import (
 	"sigs.k8s.io/kustomize/kyaml/yaml"
 )
 
-// TODO: all of this
+const annotation string = "cnrm.cloud.google.com/folder-ref"
+
 func main() {
 	resourceList := &framework.ResourceList{}
 	cmd := framework.Command(resourceList, func() error {
-		// cmd.Execute() will parse the ResourceList.functionConfig into cmd.Flags from
-		// the ResourceList.functionConfig.data field.
 		var refObjs []*yaml.RNode
 		for i := range resourceList.Items {
 			meta, err := resourceList.Items[i].GetMeta()
@@ -41,8 +40,6 @@ func main() {
 			}
 			resourceList.Items[i] = future
 		}
-		// TODO: replace child folders with future(childfolder)s
-
 		// add generated fieldrefs
 		resourceList.Items = append(resourceList.Items, refObjs...)
 
@@ -69,7 +66,7 @@ func main() {
 }
 
 func shouldRun(r *yaml.RNode) bool {
-	parent, err := r.Pipe(yaml.GetAnnotation("cnrm.cloud.google.com/folder-parent"))
+	parent, err := r.Pipe(yaml.GetAnnotation(annotation))
 	if err != nil {
 		return false
 	}
@@ -82,9 +79,9 @@ func genFieldRef(r *yaml.RNode) (*yaml.RNode, error) {
 		return nil, err
 	}
 	ns := meta.ObjectMeta.Namespace
-	ps, ok := meta.Annotations["cnrm.cloud.google.com/folder-parent"]
+	ps, ok := meta.Annotations[annotation]
 	if !ok {
-		return nil, fmt.Errorf("Missing CNRM folder-parent annotation: %v", meta.Annotations)
+		return nil, fmt.Errorf("Missing %v annotation: %v", annotation, meta.Annotations)
 	}
 
 	buff := &bytes.Buffer{}
@@ -103,15 +100,16 @@ func wrapInCork(r *yaml.RNode) (*yaml.RNode, error) {
 	ns := meta.ObjectMeta.Namespace
 	folderName := meta.ObjectMeta.Name
 
-	ps, ok := meta.Annotations["cnrm.cloud.google.com/folder-parent"]
+	ps, ok := meta.Annotations[annotation]
 	if !ok {
-		return nil, fmt.Errorf("Missing CNRM folder-parent annotation: %v", meta.Annotations)
+		return nil, fmt.Errorf("Missing %v annotation: %v", annotation, meta.Annotations)
 	}
 
-	// Set folder parent to cork var "folder-name"
+	// Set folder parent to cork var "${folder-name}"
+	// NOTE: this variable must match the name in the spec.variables of the template below
 	err = r.PipeE(yaml.Lookup("metadata", "annotations"), yaml.SetField("cnrm.cloud.google.com/folder-id", yaml.NewScalarRNode("${folder-name}")))
 	if err != nil {
-		return nil, fmt.Errorf("Failed to add parent annotation: %v", err)
+		return nil, fmt.Errorf("Failed to add folder-id annotation: %v", err)
 	}
 
 	templateContext := map[string]string{"name": folderName, "namespace": ns, "parent": ps}
@@ -135,25 +133,7 @@ func wrapInCork(r *yaml.RNode) (*yaml.RNode, error) {
 		return nil, fmt.Errorf("Nesting folder in future error: %v", err)
 	}
 
-	// TODO: mutate object in to a future
-
 	return futureNode, nil
-
-	/*
-	   //	dead stuff
-	   k, err := r.Pipe(yaml.Lookup("kind"))
-	   a, err := r.Pipe(yaml.Lookup("apiVersion"))
-	   if err != nil {
-	       s, _ := r.String()
-	       return fmt.Errorf("%v: %s", err, s)
-	   }
-	   if parent == nil {
-	       // doesn't have folder parent, skip
-	       return nil
-	   }
-	   yaml.Set(yaml.Loo)
-	*/
-
 }
 
 var futureObjecTemplate = `apiVersion: orchestration.cnrm.cloud.google.com/v1alpha1
@@ -165,7 +145,9 @@ spec:
   object: {}
   configMapRef:
     name: {{ .parent }}-ref-cm
-`
+  variables:
+  - name: folder-name
+    type: string`
 
 var fieldRefTemplate = `apiVersion: orchestration.cnrm.cloud.google.com/v1alpha1
 kind: FieldReference

@@ -2,8 +2,10 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
   annotations:
-    cnrm.cloud.google.com/organization-id: "your-organization-id" # {"$ref":"#/definitions/io.k8s.cli.setters.organization-id"}
-    cnrm.cloud.google.com/folder-parent: "top-folder"
+    cnrm.cloud.google.com/folder-ref: "top-folder"
+    config.kubernetes.io/function: |
+      container:
+        image: gcr.io/yakima-eap/image:v1
   name: folder-b
   namespace: project-hierarchy
 spec:

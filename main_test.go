@@ -10,8 +10,7 @@ const annotatedFolderKrm string = `apiVersion: resourcemanager.cnrm.cloud.google
 kind: Folder
 metadata:
     annotations:
-        cnrm.cloud.google.com/organization-id: foobar
-        cnrm.cloud.google.com/folder-parent: top-folder
+        cnrm.cloud.google.com/folder-ref: top-folder
     name: folder-b
     namespace: project-hierarchy
 spec:

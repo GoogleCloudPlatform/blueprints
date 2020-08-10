@@ -2,7 +2,13 @@
 
 GOPATH := $(shell go env GOPATH)
 
-all: fix vet fmt test lint
+PROJECT_ID ?= $(shell gcloud config get-value project)
+IMG ?= gcr.io/${PROJECT_ID}/folder-ref:v1
+
+all: fix vet fmt test lint build
+
+build:
+	go build -o bin/main ./...
 
 fix:
 	go fix ./...
@@ -16,6 +22,15 @@ lint:
 
 test:
 	go test -cover ./...
+	scripts/integ-test.sh
 
 vet:
 	go vet ./...
+
+docker-release: docker-build docker-push
+
+docker-build: fix vet fmt test lint
+	docker build . -t ${IMG}
+
+docker-push:
+	docker push ${IMG}

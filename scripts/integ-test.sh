@@ -1,6 +1,5 @@
-REPO_ROOT=$(dirname "${BASH_SOURCE}")/..
-cd "${REPO_ROOT}"
-
+#!/bin/bash
+#  expected to be run from yakima/kpt-folder-parent
 kpt version  # sanity test
 
 OUTPUT="$(kpt fn run sample/ --enable-exec --exec-path ./bin/main --dry-run)"

@@ -6,6 +6,7 @@ REPO_ROOT=$(dirname "${BASH_SOURCE}")/..
 cd "${REPO_ROOT}"
 
 # kpt is a dependency for testing
+gcloud components update
 gcloud components install kpt
 
 make test

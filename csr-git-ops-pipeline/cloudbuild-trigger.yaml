@@ -21,11 +21,11 @@ spec:
     "_SOURCE_REPO": "source-repo" # {"$kpt-set":"source-repo"}
     "_DEPLOYMENT_REPO": "deployment-repo" # {"$kpt-set":"deployment-repo"}
   build:
-    images: ["gcr.io/cloud-builders/gcloud"]
+    images: ["gcr.io/google.com/cloudsdktool/cloud-sdk"]
     timeout: 600s
     step:
     - id: "Clone Deployment Repo"
-      name: gcr.io/cloud-builders/gcloud
+      name: gcr.io/google.com/cloudsdktool/cloud-sdk
       dir: /deployment-workspace
       entrypoint: /bin/sh
       args:
@@ -48,10 +48,10 @@ spec:
       - '-c'
       - |
         kpt fn source . | \
-        # TODO(jcwc): Add ability to interpret kpt fn for hydration and validation here.
         # TODO(jcwc): Ordering of kpt fn is not clear here. I proposed a strict enforcement
         #             on folder structure where validation and hydration are separated
         #             but this may not be ideal according to morgantep@.
+        kpt fn run |
         kpt fn sink /deployment-workspace/config
       volumes:
       - name: deployment-workspace
@@ -59,7 +59,7 @@ spec:
     - id: "Push Changes To Deployment Repo"
       waitFor:
       - "Apply Hydration and Validation"
-      name: gcr.io/cloud-builders/gcloud
+      name: gcr.io/google.com/cloudsdktool/cloud-sdk
       dir: /deployment-workspace
       entrypoint: /bin/sh
       args:

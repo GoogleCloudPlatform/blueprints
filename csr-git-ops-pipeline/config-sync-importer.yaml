@@ -1,0 +1,10 @@
+# This needs to be ran with `kubectl apply -f config-sync-importer.yaml --server-side`
+# Needed per: https://cloud.google.com/kubernetes-engine/docs/add-on/config-sync/how-to/installing#git-creds-gcenode
+# TODO(jcwc): Figure out how to run this declaratively without the need for --server-side.
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: importer
+  namespace: config-management-system
+  annotations:
+    iam.gke.io/gcp-service-account: serviceAccount:1234567890123-compute@developer.gserviceaccount.com # {"$kpt-set":"compute-sa"}

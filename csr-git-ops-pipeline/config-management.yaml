@@ -28,12 +28,3 @@ spec:
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
     external: serviceAccount:1234567890123-compute@developer.gserviceaccount.com # {"$kpt-set":"compute-sa"}
----
-# Needed per: https://cloud.google.com/kubernetes-engine/docs/add-on/config-sync/how-to/installing#git-creds-gcenode
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: importer
-  namespace: config-management-system
-  annotations:
-    iam.gke.io/gcp-service-account: 1234567890123-compute@developer.gserviceaccount.com # {"$kpt-set":"compute-sa"}

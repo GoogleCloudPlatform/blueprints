@@ -12,19 +12,3 @@ spec:
     secretType: gcenode
     policyDir: config
   sourceFormat: unstructured
----
-# Needed per: https://cloud.google.com/kubernetes-engine/docs/add-on/config-sync/how-to/installing#git-creds-gcenode
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: allow-configsync-use-computesa
-  namespace: yakima-system # {"$kpt-set":"namespace"}
-  annotations:
-    cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
-spec:
-  member: serviceAccount:my-project-id.svc.id.goog[config-management-system/importer] # {"$kpt-set":"config-sync-workload-identity"}
-  role: roles/iam.workloadIdentityUser
-  resourceRef:
-    apiVersion: iam.cnrm.cloud.google.com/v1beta1
-    kind: IAMServiceAccount
-    external: serviceAccount:1234567890123-compute@developer.gserviceaccount.com # {"$kpt-set":"compute-sa"}

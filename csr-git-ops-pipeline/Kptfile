@@ -22,13 +22,15 @@ openAPI:
           name: deployment-repo
           value: deployment-repo
           isSet: true
-    io.k8s.cli.setters.source-repo-staging-branch:
+    io.k8s.cli.setters.staging-branch:
       description: Name of the branch in the source repository which will be used
-        to store your staging DRY configurations for validation and review
+        to store your staging DRY configurations for validation and review without
+        triggering the full Yakima pipeline. Results of hydration will be pushed
+        to the same branch in the deployment repository.
       x-k8s-cli:
         setter:
-          name: source-repo-staging-branch
-          value: dev
+          name: staging-branch
+          value: staging
     io.k8s.cli.setters.namespace:
       description: Namespace to store Git Ops pipeline components under
       x-k8s-cli:

@@ -1,0 +1,161 @@
+# Trigger for CI/CD (master branch). Pushes to this branch will result in a full
+# Yakima pipeline execution and actuation.
+apiVersion: cloudbuild.cnrm.cloud.google.com/v1beta1
+kind: CloudBuildTrigger
+metadata:
+  name: cicd-master-trigger
+  namespace: yakima-system # {"$kpt-set":"namespace"}
+spec:
+  description: Cloud Build Trigger for building the master branch of the source (DRY)
+    repository. This runs all user defined kpt fns and pushes to the deployment (WET)
+    repository.
+  disabled: false
+  triggerTemplate:
+    repoRef:
+      name: source-repo # {"$kpt-set":"source-repo"}
+    branchName: master
+  ignoredFiles:
+  - "**/*.md"
+  includedFiles:
+  - "**/*.yaml"
+  - "**/*.yml"
+  substitutions:
+    "_SOURCE_REPO": "source-repo" # {"$kpt-set":"source-repo"}
+    "_DEPLOYMENT_REPO": "deployment-repo" # {"$kpt-set":"deployment-repo"}
+  build:
+    images: ["gcr.io/google.com/cloudsdktool/cloud-sdk"]
+    timeout: 600s
+    step:
+    - id: "Clone Deployment Repo"
+      name: gcr.io/google.com/cloudsdktool/cloud-sdk
+      dir: /deployment-workspace
+      entrypoint: /bin/sh
+      args:
+      - '-c'
+      - |
+        gcloud source repos clone $_DEPLOYMENT_REPO . && \
+        git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
+        mkdir -p /deployment-workspace/config
+        rm -rf /deployment-workspace/config/*
+      timeout: 300s
+      volumes:
+      - name: deployment-workspace
+        path: /deployment-workspace
+    - id: "Apply Hydration and Validation"
+      waitFor:
+      - "Clone Deployment Repo"
+      name: gcr.io/kpt-dev/kpt:latest
+      entrypoint: /bin/sh
+      args:
+      - '-c'
+      - |
+        kpt fn source . | \
+        # TODO(jcwc): Ordering of kpt fn is not clear here. I proposed a strict enforcement
+        #             on folder structure where validation and hydration are separated
+        #             but this may not be ideal according to morgantep@.
+        kpt fn run |
+        kpt fn sink /deployment-workspace/config
+      volumes:
+      - name: deployment-workspace
+        path: /deployment-workspace
+    - id: "Push Changes To Deployment Repo"
+      waitFor:
+      - "Apply Hydration and Validation"
+      name: gcr.io/google.com/cloudsdktool/cloud-sdk
+      dir: /deployment-workspace
+      entrypoint: /bin/sh
+      args:
+      - '-c'
+      - |
+        set -x && \
+        # Configure Git to create commits with Cloud Build's service account
+        git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
+        git add -A
+        git status
+        if git diff --cached --exit-code; then echo "No changes"; true;
+        else git commit -m "Resources from ${COMMIT_SHA}" && git push origin master; fi
+      volumes:
+      - name: deployment-workspace
+        path: /deployment-workspace
+---
+# Trigger for staging. Pushes to this branch will result in validation
+# and hydration happening, but will not trigger the rest of Yakima.
+apiVersion: cloudbuild.cnrm.cloud.google.com/v1beta1
+kind: CloudBuildTrigger
+metadata:
+  name: cicd-staging-trigger
+  namespace: yakima-system # {"$kpt-set":"namespace"}
+spec:
+  description: Cloud Build Trigger for building the staging branch of the source (DRY)
+    repository. This runs all user defined kpt fns and pushes to the deployment (WET)
+    repository.
+  disabled: false
+  triggerTemplate:
+    repoRef:
+      name: source-repo # {"$kpt-set":"source-repo"}
+    branchName: staging
+  ignoredFiles:
+  - "**/*.md"
+  includedFiles:
+  - "**/*.yaml"
+  - "**/*.yml"
+  substitutions:
+    "_SOURCE_REPO": "source-repo" # {"$kpt-set":"source-repo"}
+    "_DEPLOYMENT_REPO": "deployment-repo" # {"$kpt-set":"deployment-repo"}
+    "_STAGING_BRANCH": "staging" # {"$kpt-set":"staging-branch"}
+  build:
+    images: ["gcr.io/google.com/cloudsdktool/cloud-sdk"]
+    timeout: 600s
+    step:
+    - id: "Clone Deployment Repo"
+      name: gcr.io/google.com/cloudsdktool/cloud-sdk
+      dir: /deployment-workspace
+      entrypoint: /bin/sh
+      args:
+      - '-c'
+      - |
+        gcloud source repos clone $_DEPLOYMENT_REPO .
+        git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
+        (git show-branch foo1 &>/dev/null) && (git checkout $_STAGING_BRANCH) || (git checkout -b $_STAGING_BRANCH)
+        mkdir -p /deployment-workspace/config
+        rm -rf /deployment-workspace/config/*
+      timeout: 300s
+      volumes:
+      - name: deployment-workspace
+        path: /deployment-workspace
+    - id: "Apply Hydration and Validation"
+      waitFor:
+      - "Clone Deployment Repo"
+      name: gcr.io/kpt-dev/kpt:latest
+      entrypoint: /bin/sh
+      args:
+      - '-c'
+      - |
+        kpt fn source . | \
+        # TODO(jcwc): Ordering of kpt fn is not clear here. I proposed a strict enforcement
+        #             on folder structure where validation and hydration are separated
+        #             but this may not be ideal according to morgantep@.
+        kpt fn run |
+        kpt fn sink /deployment-workspace/config
+      volumes:
+      - name: deployment-workspace
+        path: /deployment-workspace
+    - id: "Push Changes To Deployment Repo"
+      waitFor:
+      - "Apply Hydration and Validation"
+      name: gcr.io/google.com/cloudsdktool/cloud-sdk
+      dir: /deployment-workspace
+      entrypoint: /bin/sh
+      args:
+      - '-c'
+      - |
+        set -x && \
+        # Configure Git to create commits with Cloud Build's service account
+        git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
+        git add -A
+        git status
+        if git diff --cached --exit-code; then echo "No changes"; true;
+        else git commit -m "Resources from ${COMMIT_SHA}" && git push origin $_STAGING_BRANCH; fi
+      volumes:
+      - name: deployment-workspace
+        path: /deployment-workspace

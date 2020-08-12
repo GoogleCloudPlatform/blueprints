@@ -1,0 +1,44 @@
+# Provides write access to deployment repo for cloudbuild trigger
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: deployment-repo-cloudbuild-write
+  namespace: yakima-system # {"$kpt-set":"namespace"}
+spec:
+  resourceRef:
+    apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
+    kind: SourceRepoRepository
+    name: deployment-repo # {"$kpt-set":"deployment-repo"}
+  role: roles/source.writer
+  member: serviceAccount:1234567890123@cloudbuild.gserviceaccount.com # {"$kpt-set":"cloudbuild-sa"}
+---
+# Provides read access to source repo for cloudbuild trigger
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: source-repo-cloudbuild-read
+  namespace: yakima-system # {"$kpt-set":"namespace"}
+spec:
+  resourceRef:
+    apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
+    kind: SourceRepoRepository
+    name: source-repo # {"$kpt-set":"source-repo"}
+  role: roles/source.reader
+  member: serviceAccount:1234567890123@cloudbuild.gserviceaccount.com # {"$kpt-set":"cloudbuild-sa"}
+---
+# Provides Config Sync with the proper access to read CSR repo
+# Needed per: https://cloud.google.com/kubernetes-engine/docs/add-on/config-sync/how-to/installing#git-creds-gcenode
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: allow-configsync-use-computesa
+  namespace: yakima-system # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
+spec:
+  member: serviceAccount:my-project-id.svc.id.goog[config-management-system/importer] # {"$kpt-set":"config-sync-workload-identity"}
+  role: roles/iam.workloadIdentityUser
+  resourceRef:
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+    external: serviceAccount:1234567890123-compute@developer.gserviceaccount.com # {"$kpt-set":"compute-sa"}

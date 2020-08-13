@@ -14,11 +14,6 @@ spec:
     repoRef:
       name: source-repo # {"$kpt-set":"source-repo"}
     branchName: master
-  ignoredFiles:
-  - "**/*.md"
-  includedFiles:
-  - "**/*.yaml"
-  - "**/*.yml"
   substitutions:
     "_SOURCE_REPO": "source-repo" # {"$kpt-set":"source-repo"}
     "_DEPLOYMENT_REPO": "deployment-repo" # {"$kpt-set":"deployment-repo"}
@@ -93,11 +88,6 @@ spec:
     repoRef:
       name: source-repo # {"$kpt-set":"source-repo"}
     branchName: staging
-  ignoredFiles:
-  - "**/*.md"
-  includedFiles:
-  - "**/*.yaml"
-  - "**/*.yml"
   substitutions:
     "_SOURCE_REPO": "source-repo" # {"$kpt-set":"source-repo"}
     "_DEPLOYMENT_REPO": "deployment-repo" # {"$kpt-set":"deployment-repo"}

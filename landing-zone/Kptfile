@@ -1,0 +1,6 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: landing-zone
+packageMetadata:
+  shortDescription: Foundational landing zone blueprint for GCP

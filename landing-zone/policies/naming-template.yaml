@@ -1,0 +1,45 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpenforcenamingv2
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPEnforceNamingV2
+      validation:
+        openAPIV3Schema:
+          properties:
+            naming_rules:
+              items:
+                properties:
+                  patterns:
+                    items:
+                      type: string
+                    type: array
+                  resource:
+                    type: string
+                type: object
+              type: array
+  targets:
+  - rego: "package templates.gcp.GCPEnforceNamingConstraintV1\n\nviolation[{\"msg\":
+      msg}] {\n  rule := input.parameters.naming_rules[_]\n\n  kind := input.review.object.kind\n
+      \ kind == rule.kind\n  \n  # TODO: actually use params\n  pattern := rule.patterns[_]\n
+      \ name := input.review.object.metadata.name\n\n  not re_match(pattern, name)\n\n
+      \ msg := sprintf(\"The following %s didn't follow the naming convention (%s):
+      %s\", [kind, pattern, name])\n}"
+    target: admission.k8s.gatekeeper.sh
+status: {}
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPEnforceNamingV2
+metadata:
+  annotations:
+    description: Checks that folder names follow the required standard.
+  name: enforce-folder-names
+spec:
+  parameters:
+    naming_rules:
+    - kind: Folder
+      patterns:
+      - .*-.*

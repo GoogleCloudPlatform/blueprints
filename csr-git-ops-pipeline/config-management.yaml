@@ -5,7 +5,7 @@ metadata:
   name: config-management
   namespace: yakima-system # {"$kpt-set":"namespace"}
 spec:
-  clusterName: yakima-csr-git-ops-pipeline # {"$kpt-set":"cluster-name"}
+  clusterName: my-yakima-cluster # {"$kpt-set":"cluster-name"}
   git:
     syncRepo: https://source.developers.google.com/p/my-project-id/r/deployment-repo # {"$kpt-set":"config-sync-repo"}
     syncBranch: master

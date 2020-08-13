@@ -23,7 +23,6 @@ spec:
     "_SOURCE_REPO": "source-repo" # {"$kpt-set":"source-repo"}
     "_DEPLOYMENT_REPO": "deployment-repo" # {"$kpt-set":"deployment-repo"}
   build:
-    images: ["gcr.io/google.com/cloudsdktool/cloud-sdk"]
     timeout: 600s
     step:
     - id: "Clone Deployment Repo"
@@ -104,7 +103,6 @@ spec:
     "_DEPLOYMENT_REPO": "deployment-repo" # {"$kpt-set":"deployment-repo"}
     "_STAGING_BRANCH": "staging" # {"$kpt-set":"staging-branch"}
   build:
-    images: ["gcr.io/google.com/cloudsdktool/cloud-sdk"]
     timeout: 600s
     step:
     - id: "Clone Deployment Repo"

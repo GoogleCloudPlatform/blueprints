@@ -25,8 +25,8 @@ openAPI:
     io.k8s.cli.setters.staging-branch:
       description: Name of the branch in the source repository which will be used
         to store your staging DRY configurations for validation and review without
-        triggering the full Yakima pipeline. Results of hydration will be pushed
-        to the same branch in the deployment repository.
+        triggering the full Yakima pipeline. Results of hydration will be pushed to
+        the same branch in the deployment repository.
       x-k8s-cli:
         setter:
           name: staging-branch
@@ -37,6 +37,7 @@ openAPI:
         setter:
           name: namespace
           value: yakima-system
+          isSet: true
     io.k8s.cli.setters.project-id:
       description: Project ID to actuate Config Connector resources in
       x-k8s-cli:
@@ -75,7 +76,8 @@ openAPI:
       x-k8s-cli:
         setter:
           name: cluster-name
-          value: yakima-csr-git-ops-pipeline
+          value: my-yakima-cluster
+          isSet: true
     io.k8s.cli.substitutions.compute-sa:
       x-k8s-cli:
         substitution:
@@ -89,6 +91,24 @@ openAPI:
         substitution:
           name: config-sync-workload-identity
           pattern: serviceAccount:${project-id}.svc.id.goog[config-management-system/importer]
+          values:
+          - marker: ${project-id}
+            ref: '#/definitions/io.k8s.cli.setters.project-id'
+    io.k8s.cli.substitutions.compute-sa-external:
+      x-k8s-cli:
+        substitution:
+          name: compute-sa-external
+          pattern: projects/${project-id}/serviceAccounts/${project-number}-compute@developer.gserviceaccount.com
+          values:
+          - marker: ${project-id}
+            ref: '#/definitions/io.k8s.cli.setters.project-id'
+          - marker: ${project-number}
+            ref: '#/definitions/io.k8s.cli.setters.project-number'
+    io.k8s.cli.substitutions.project-id-external:
+      x-k8s-cli:
+        substitution:
+          name: project-id-external
+          pattern: projects/${project-id}
           values:
           - marker: ${project-id}
             ref: '#/definitions/io.k8s.cli.setters.project-id'

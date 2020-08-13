@@ -3,7 +3,7 @@
 apiVersion: cloudbuild.cnrm.cloud.google.com/v1beta1
 kind: CloudBuildTrigger
 metadata:
-  name: cicd-master-trigger
+  name: source-repo-cicd-master-trigger # {"$kpt-set":"master-trigger-name"}
   namespace: yakima-system # {"$kpt-set":"namespace"}
 spec:
   description: Cloud Build Trigger for building the master branch of the source (DRY)
@@ -82,7 +82,7 @@ spec:
 apiVersion: cloudbuild.cnrm.cloud.google.com/v1beta1
 kind: CloudBuildTrigger
 metadata:
-  name: cicd-staging-trigger
+  name: source-repo-cicd-staging-trigger # {"$kpt-set":"staging-trigger-name"}
   namespace: yakima-system # {"$kpt-set":"namespace"}
 spec:
   description: Cloud Build Trigger for building the staging branch of the source (DRY)

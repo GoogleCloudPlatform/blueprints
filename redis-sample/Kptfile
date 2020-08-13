@@ -1,0 +1,46 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: redis-sample
+openAPI:
+  definitions:
+    io.k8s.cli.setters.namespace:
+      x-k8s-cli:
+        setter:
+          name: namespace
+          value: my-namespace
+      description: Namespace name for pipeline GCP resources
+    io.k8s.cli.setters.name:
+      x-k8s-cli:
+        setter:
+          name: name
+          value: redis-sample-001
+      description: Redis instance name
+    io.k8s.cli.setters.region:
+      x-k8s-cli:
+        setter:
+          name: region
+          value: us-central1
+      description: Redis instance region
+    io.k8s.cli.setters.project-id:
+      x-k8s-cli:
+        setter:
+          name: project-id
+          value: my-project
+      description: Project ID for Redis instance
+    io.k8s.cli.setters.network:
+      x-k8s-cli:
+        setter:
+          name: network
+          value: default
+      description: Redis instance network
+    io.k8s.cli.substitutions.networkref:
+      x-k8s-cli:
+        substitution:
+          name: networkref
+          pattern: projects/PROJECT_ID_SETTER/global/networks/NETWORK_SETTER
+          values:
+          - marker: PROJECT_ID_SETTER
+            ref: '#/definitions/io.k8s.cli.setters.project-id'
+          - marker: NETWORK_SETTER
+            ref: '#/definitions/io.k8s.cli.setters.network'

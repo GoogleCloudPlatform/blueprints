@@ -20,8 +20,12 @@ lint:
 	(which $(GOPATH)/bin/golangci-lint || go get github.com/golangci/golangci-lint/cmd/golangci-lint)
 	$(GOPATH)/bin/golangci-lint run ./...
 
-test:
+test: unit-test
+
+unit-test:
 	go test -cover ./...
+
+full-test: unit-test build
 	scripts/integ-test.sh
 
 vet:

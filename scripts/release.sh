@@ -11,5 +11,5 @@ gcloud auth activate-service-account --key-file "${GOOGLE_APPLICATION_CREDENTIAL
 gcloud auth configure-docker
 gcloud config set core/project ${PROJECT_ID}
 
-make test
+make full-test
 make docker-release

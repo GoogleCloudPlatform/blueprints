@@ -9,4 +9,4 @@ cd "${REPO_ROOT}"
 gcloud components update
 gcloud components install kpt
 
-make test
+make full-test

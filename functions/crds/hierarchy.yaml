@@ -1,0 +1,39 @@
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  # name must match the spec fields below, and be in the form: <plural>.<group>
+  name: resourcehierarchies.cft.dev
+spec:
+  group: cft.dev
+  scope: Namespaced
+  names:
+    plural: resourcehierarchies
+    singular: resourcehierarchy
+    kind: ResourceHierarchy
+  preserveUnknownFields: false
+  versions:
+  - name: v1alpha1
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        required:
+        - spec
+        properties:
+          spec:
+            # ResourceHierarchySpec
+            type: object
+            properties:
+              environments:
+                type: array
+                items:
+                  type: string
+              teams:
+                type: array
+                items:
+                  type: string
+            required:
+              - environments
+              - teams
+            # /ResourceHierarchySpec

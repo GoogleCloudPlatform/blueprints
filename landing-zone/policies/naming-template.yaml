@@ -42,4 +42,4 @@ spec:
     naming_rules:
     - kind: Folder
       patterns:
-      - .*-.*
+      - (dev|prod)-.*

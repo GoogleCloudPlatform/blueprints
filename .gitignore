@@ -1,3 +1,5 @@
 **/ignoreme/**/*
-
 node_modules/
+**/.terraform*
+**/terraform.tfstate*
+**/.build

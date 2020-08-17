@@ -1,0 +1,50 @@
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: project-id-sa # {"$ref":"#/definitions/io.k8s.cli.substitutions.project-id-sa"}
+  namespace: management-namespace # {"$ref":"#/definitions/io.k8s.cli.setters.management-namespace"}
+spec:
+  displayName: project-id-sa # {"$ref":"#/definitions/io.k8s.cli.substitutions.project-id-sa"}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-sa-owners-permissions # {"$ref":"#/definitions/io.k8s.cli.substitutions.project-id-sa-owners-permissions"}
+  namespace: management-namespace # {"$ref":"#/definitions/io.k8s.cli.setters.management-namespace"}
+spec:
+  member: "serviceAccount:project-id-sa@management-project-id.iam.gserviceaccount.com" # {"$ref":"#/definitions/io.k8s.cli.substitutions.project-id-sa-ref"}
+  role: roles/owner
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: project-id # {"$ref":"#/definitions/io.k8s.cli.setters.project-id"}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: project-id-sa-workload-identity-binding # {"$ref":"#/definitions/io.k8s.cli.substitutions.workload-identity-binding"}
+  namespace: management-namespace # {"$ref":"#/definitions/io.k8s.cli.setters.management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$ref":"#/definitions/io.k8s.cli.setters.project-id"}
+spec:
+  member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-project-id] # {"$ref":"#/definitions/io.k8s.cli.substitutions.workload-identity-sa"}
+  role: roles/iam.workloadIdentityUser
+  resourceRef:
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+    name: project-id-sa # {"$ref":"#/definitions/io.k8s.cli.substitutions.project-id-sa"}
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: project-id # {"$ref":"#/definitions/io.k8s.cli.substitutions.project-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # {"$ref":"#/definitions/io.k8s.cli.setters.project-id"}
+---
+apiVersion: core.cnrm.cloud.google.com/v1beta1
+kind: ConfigConnectorContext
+metadata:
+  name: configconnectorcontext.core.cnrm.cloud.google.com
+  namespace: project-id # {"$ref":"#/definitions/io.k8s.cli.substitutions.project-namespace"}
+spec:
+  googleServiceAccount: project-id-sa@management-project-id.iam.gserviceaccount.com # {"$ref":"#/definitions/io.k8s.cli.substitutions.project-id-sa-email"}

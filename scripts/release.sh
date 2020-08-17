@@ -10,6 +10,8 @@ cd ${REPO_ROOT}
 gcloud auth activate-service-account --key-file "${GOOGLE_APPLICATION_CREDENTIALS}"
 gcloud auth configure-docker
 gcloud config set core/project ${PROJECT_ID}
+gcloud components update
+gcloud components install kpt
 
 make full-test
 make docker-release

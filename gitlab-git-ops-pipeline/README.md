@@ -27,4 +27,8 @@ terraform apply
 - Terraform installed
 - gcloud installed
 - kubectl installed with Yakima cluster context
+- git installed and configured
 - Yakima cluster
+
+## FAQS:
+

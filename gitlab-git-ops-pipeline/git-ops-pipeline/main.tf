@@ -12,13 +12,23 @@ provider "kubernetes" {
   config_context = "gke_${var.project_id}_${var.region}_${var.cluster_name}"
 }
 
-# 1. Create projects (repos)
+# 1. Create projects (repos) and an env variable for CI runner gitlab access
 resource "gitlab_project" "source_repo" {
   name = var.source_repo_name
   description = "Repo containing DRY config to be validated and hydrated"
 
   default_branch = "master"
   visibility_level = "private"
+  shared_runners_enabled = true
+
+  provisioner "local-exec" {
+    command = <<EOF
+      ${path.module}/scripts/initialize-source-repo.sh \
+        ${var.gitlab_personal_access_token} \
+        ${var.project_id} \
+        ${var.source_repo_name}
+    EOF
+  }
 }
 
 resource "gitlab_project" "deployment_repo" {
@@ -27,6 +37,41 @@ resource "gitlab_project" "deployment_repo" {
 
   default_branch = "master"
   visibility_level = "private"
+}
+
+resource "gitlab_project_variable" "gitlab_ci_access_token" {
+  project   = gitlab_project.source_repo.id
+  key       = "GITLAB_CI_ACCESS_TOKEN"
+  value     = var.gitlab_personal_access_token
+  environment_scope = "All"
+}
+
+resource "gitlab_project_variable" "project_id" {
+  project   = gitlab_project.source_repo.id
+  key       = "PROJECT_ID"
+  value     = var.project_id
+  environment_scope = "All"
+}
+
+resource "gitlab_project_variable" "source_repo" {
+   project   = gitlab_project.source_repo.id
+   key       = "SOURCE_REPO"
+   value     = var.source_repo_name
+   environment_scope = "All"
+}
+
+resource "gitlab_project_variable" "deployment_repo" {
+  project   = gitlab_project.source_repo.id
+  key       = "DEPLOYMENT_REPO"
+  value     = var.deployment_repo_name
+  environment_scope = "All"
+}
+
+resource "gitlab_project_variable" "email" {
+  project   = gitlab_project.source_repo.id
+  key       = "EMAIL"
+  value     = var.email
+  environment_scope = "All"
 }
 
 # 2. Configure Config Sync

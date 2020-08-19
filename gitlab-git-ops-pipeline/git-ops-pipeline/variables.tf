@@ -36,3 +36,11 @@ variable "cluster_name" {
   type = string
   description = "Name of your Yakima cluster."
 }
+
+variable "email" {
+  type = string
+  description = <<EOF
+    Email address to use for the cert manager issuer.
+    You can use your GCP email address.
+  EOF
+}

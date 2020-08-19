@@ -1,1 +1,22 @@
-TODO(jcwc): Implement this script
+before_script:
+  - apk update && apk add git
+  - git --version
+  - git remote set-url origin https://oauth2:${GITLAB_CI_ACCESS_TOKEN}@gitlab.endpoints.${PROJECT_ID}.cloud.goog/root/${DEPLOYMENT_REPO}.git
+  - git config --global user.name 'root'
+  - echo $EMAIL
+  - git config --global user.email $EMAIL
+
+# TODO(jcwc): Consider breaking this up into multiple steps to be clearer
+hydrate_and_validate:
+  image: gcr.io/kpt-dev/kpt:latest
+  script:
+    - DEPLOYMENT_URL=https://oauth2:${GITLAB_CI_ACCESS_TOKEN}@gitlab.endpoints.${PROJECT_ID}.cloud.goog/root/${DEPLOYMENT_REPO}.git
+    - git clone $DEPLOYMENT_URL
+    - rm -rf ${DEPLOYMENT_REPO}/*
+    - mkdir -p ${DEPLOYMENT_REPO}/config
+    - kpt fn source . | kpt fn run | kpt fn sink $DEPLOYMENT_REPO/config
+    - cd ${DEPLOYMENT_REPO}
+    - git status
+    - git add -A
+    - git commit -m "[Automatic] Hydrated from ${SOURCE_REPO}:${CI_COMMIT_BRANCH} '${CI_COMMIT_SHORT_SHA}' deployment at $(date)"
+    - git push origin HEAD:refs/heads/$CI_COMMIT_BRANCH

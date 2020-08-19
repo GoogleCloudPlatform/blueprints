@@ -43,35 +43,35 @@ resource "gitlab_project_variable" "gitlab_ci_access_token" {
   project   = gitlab_project.source_repo.id
   key       = "GITLAB_CI_ACCESS_TOKEN"
   value     = var.gitlab_personal_access_token
-  environment_scope = "All"
+  environment_scope = "*"
 }
 
 resource "gitlab_project_variable" "project_id" {
   project   = gitlab_project.source_repo.id
   key       = "PROJECT_ID"
   value     = var.project_id
-  environment_scope = "All"
+  environment_scope = "*"
 }
 
 resource "gitlab_project_variable" "source_repo" {
    project   = gitlab_project.source_repo.id
    key       = "SOURCE_REPO"
    value     = var.source_repo_name
-   environment_scope = "All"
+   environment_scope = "*"
 }
 
 resource "gitlab_project_variable" "deployment_repo" {
   project   = gitlab_project.source_repo.id
   key       = "DEPLOYMENT_REPO"
   value     = var.deployment_repo_name
-  environment_scope = "All"
+  environment_scope = "*"
 }
 
 resource "gitlab_project_variable" "email" {
   project   = gitlab_project.source_repo.id
   key       = "EMAIL"
   value     = var.email
-  environment_scope = "All"
+  environment_scope = "*"
 }
 
 # 2. Configure Config Sync

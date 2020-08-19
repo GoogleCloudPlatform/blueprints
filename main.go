@@ -12,17 +12,21 @@ import (
 )
 
 const annotation string = "cnrm.cloud.google.com/folder-ref"
+const operableVersion string = "resourcemanager.cnrm.cloud.google.com/v1beta1"
+
+var operableKindSet map[string]bool = map[string]bool{"Folder": true, "Project": true}
+
+func isOperableKind(kind string) bool {
+	_, ok := operableKindSet[kind]
+	return ok
+}
 
 func main() {
 	resourceList := &framework.ResourceList{}
 	cmd := framework.Command(resourceList, func() error {
 		var refObjs []*yaml.RNode
 		for i := range resourceList.Items {
-			meta, err := resourceList.Items[i].GetMeta()
-			if err != nil {
-				return err
-			}
-			if meta.APIVersion != "resourcemanager.cnrm.cloud.google.com/v1beta1" || meta.Kind != "Folder" || !shouldRun(resourceList.Items[i]) {
+			if !shouldRun(resourceList.Items[i]) {
 				continue
 			}
 
@@ -65,7 +69,19 @@ func main() {
 	}
 }
 
+// This generator should run IFF it's an operable kind & version with the right annotation.
 func shouldRun(r *yaml.RNode) bool {
+	meta, err := r.GetMeta()
+	if err != nil {
+		return false
+	}
+	if meta.APIVersion != operableVersion {
+		return false
+	}
+	if !isOperableKind(meta.Kind) {
+		return false
+	}
+
 	parent, err := r.Pipe(yaml.GetAnnotation(annotation))
 	if err != nil {
 		return false
@@ -73,6 +89,7 @@ func shouldRun(r *yaml.RNode) bool {
 	return !yaml.IsEmpty(parent)
 }
 
+// TODO: for now this means every child obj will create a field ref, even if they have parents in common. So there may be duplicate fieldrefs.
 func genFieldRef(r *yaml.RNode) (*yaml.RNode, error) {
 	meta, err := r.GetMeta()
 	if err != nil {

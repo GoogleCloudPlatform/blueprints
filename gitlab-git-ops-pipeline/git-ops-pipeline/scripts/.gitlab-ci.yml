@@ -10,6 +10,7 @@ before_script:
 hydrate_and_validate:
   image: gcr.io/kpt-dev/kpt:latest
   script:
+    - rm .gitlab-ci.yml # Remove GitLab CI file so that it isn't accidentally copied to deployment repo
     - DEPLOYMENT_URL=https://oauth2:${GITLAB_CI_ACCESS_TOKEN}@gitlab.endpoints.${PROJECT_ID}.cloud.goog/root/${DEPLOYMENT_REPO}.git
     - git clone $DEPLOYMENT_URL
     - rm -rf ${DEPLOYMENT_REPO}/*

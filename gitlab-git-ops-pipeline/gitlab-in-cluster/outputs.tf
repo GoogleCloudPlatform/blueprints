@@ -1,4 +1,4 @@
-output "url" {
+output "gitlab_url" {
   value       = "https://gitlab.endpoints.${var.project_id}.cloud.goog"
   description = "The GitLab URL to access your GitLab instance at."
 }

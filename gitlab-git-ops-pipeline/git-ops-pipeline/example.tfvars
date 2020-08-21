@@ -1,0 +1,5 @@
+cluster_name                 = "my-yakima-cluster"
+project_id                   = "my-gcp-project-1"
+email                        = "my.fake@email.address"
+region                       = "us-west1"
+gitlab_personal_access_token = "P3rs0n4l4cc3ssT0k3nFr0mPr3v10u50utpu7"

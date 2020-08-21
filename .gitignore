@@ -4,3 +4,4 @@ node_modules/
 **/terraform.tfstate*
 **/.build
 **/testing.tfvars
+**/terraform.tfvars

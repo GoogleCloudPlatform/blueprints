@@ -33,32 +33,32 @@ module "cloud-endpoints-dns-registry" {
 
 # 3. Setup GitLab using endpoints
 resource "helm_release" "gitlab" {
-  name = "gitlab"
-  repository = "http://charts.gitlab.io"
-  chart = "gitlab"
-  namespace = kubernetes_namespace.gitlab.metadata[0].name
-  atomic = true
+  name             = "gitlab"
+  repository       = "http://charts.gitlab.io"
+  chart            = "gitlab"
+  namespace        = kubernetes_namespace.gitlab.metadata[0].name
+  atomic           = true
   create_namespace = true
 
   set {
-    name = "global.hosts.domain"
+    name  = "global.hosts.domain"
     value = trimprefix(module.cloud-endpoints-dns-gitlab.endpoint_computed, "gitlab.")
   }
 
   set {
-    name = "global.hosts.externalIP"
+    name  = "global.hosts.externalIP"
     value = google_compute_address.gitlab.address
   }
 
   set {
-    name = "certmanager-issuer.email"
+    name  = "certmanager-issuer.email"
     value = var.email
   }
 
   # Needed for DinD which kpt fn relies on:
   # https://googlecontainertools.github.io/kpt/guides/consumer/function/export/gitlab-ci/
   set {
-    name = "gitlab-runner.runners.privileged"
+    name  = "gitlab-runner.runners.privileged"
     value = true
   }
 
@@ -70,7 +70,7 @@ resource "helm_release" "gitlab" {
 # 4. Expose GitLab password as an output
 data "kubernetes_secret" "gitlab_password" {
   metadata {
-    name = "gitlab-gitlab-initial-root-password"
+    name      = "gitlab-gitlab-initial-root-password"
     namespace = var.k8s_namespace
   }
 

@@ -1,0 +1,6 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: hierarchy
+packageMetadata:
+  shortDescription: Resource hierarchy blueprint for GCP

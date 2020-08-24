@@ -43,12 +43,8 @@ spec:
       args:
       - '-c'
       - |
-        kpt fn source . | \
-        # TODO(jcwc): Ordering of kpt fn is not clear here. I proposed a strict enforcement
-        #             on folder structure where validation and hydration are separated
-        #             but this may not be ideal according to morgantep@.
-        kpt fn run |
-        kpt fn sink /deployment-workspace/config
+        set -o pipefail # Fail if any piped command fails
+        kpt fn source . | kpt fn run | kpt fn sink /deployment-workspace/config
       volumes:
       - name: deployment-workspace
         path: /deployment-workspace
@@ -119,12 +115,8 @@ spec:
       args:
       - '-c'
       - |
-        kpt fn source . | \
-        # TODO(jcwc): Ordering of kpt fn is not clear here. I proposed a strict enforcement
-        #             on folder structure where validation and hydration are separated
-        #             but this may not be ideal according to morgantep@.
-        kpt fn run |
-        kpt fn sink /deployment-workspace/config
+        set -o pipefail
+        kpt fn source . | kpt fn run | kpt fn sink /deployment-workspace/config
       volumes:
       - name: deployment-workspace
         path: /deployment-workspace

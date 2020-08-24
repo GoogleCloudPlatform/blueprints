@@ -36,7 +36,7 @@ resource "helm_release" "gitlab" {
   name             = "gitlab"
   repository       = "http://charts.gitlab.io"
   chart            = "gitlab"
-  namespace        = kubernetes_namespace.gitlab.metadata[0].name
+  namespace        = var.k8s_namespace
   atomic           = true
   create_namespace = true
 

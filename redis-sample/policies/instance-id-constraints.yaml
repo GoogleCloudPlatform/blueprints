@@ -1,0 +1,58 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: redisinstanceidconstraint
+  namespace: my-namespace # {"$ref":"#/definitions/io.k8s.cli.setters.namespace"}
+spec:
+  crd:
+    spec:
+      names:
+        kind: RedisInstanceIdConstraint
+      validation:
+        openAPIV3Schema: {}
+  targets:
+  - rego: |
+      package redisinstanceidconstraints
+
+      violation[{"msg": msg, "details": {"provided_name": provided}}] {
+        provided := input.review.object.spec.displayName
+        not re_match("^[a-z]", provided)
+        msg := "Invalid displayName. ID must start with a letter."
+      }
+
+      violation[{"msg": msg, "details": {"provided_name": provided}}] {
+        provided := input.review.object.spec.displayName
+        not re_match("[a-z]$", provided)
+        msg := "Invalid displayName. ID must end with a letter."
+      }
+
+      violation[{"msg": msg, "details": {"provided_name": provided}}] {
+        provided := input.review.object.spec.displayName
+        re_match("[^a-z0-9-]", provided)
+        msg := "Invalid displayName. ID must only contain lowercase letters, numbers, and hyphens."
+      }
+
+      violation[{"msg": msg, "details": {"provided_name": provided}}] {
+        provided := input.review.object.spec.displayName
+        count(provided) < 1
+        msg := "Invalid displayName. Length of string must be greater than 1 character."
+      }
+
+      violation[{"msg": msg, "details": {"provided_name": provided}}] {
+        provided := input.review.object.spec.displayName
+        count(provided) > 40
+        msg := "Invalid displayName. Length of string must be less than 40 characters"
+      }
+    target: admission.k8s.gatekeeper.sh
+status: {}
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: RedisInstanceIdConstraint
+metadata:
+  annotations:
+    description: Checks that the Redis displayName matches conventions required for
+      an ID
+  name: enforce-redis-instance-id
+  namespace: my-namespace # {"$ref":"#/definitions/io.k8s.cli.setters.namespace"}
+spec:
+  parameters: null

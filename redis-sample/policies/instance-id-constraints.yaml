@@ -2,7 +2,6 @@ apiVersion: templates.gatekeeper.sh/v1beta1
 kind: ConstraintTemplate
 metadata:
   name: redisinstanceidconstraint
-  namespace: my-namespace # {"$ref":"#/definitions/io.k8s.cli.setters.namespace"}
 spec:
   crd:
     spec:
@@ -22,8 +21,8 @@ spec:
 
       violation[{"msg": msg, "details": {"provided_name": provided}}] {
         provided := input.review.object.spec.displayName
-        not re_match("[a-z]$", provided)
-        msg := "Invalid displayName. ID must end with a letter."
+        not re_match("-$", provided)
+        msg := "Invalid displayName. ID must not end with a hyphen."
       }
 
       violation[{"msg": msg, "details": {"provided_name": provided}}] {
@@ -53,6 +52,5 @@ metadata:
     description: Checks that the Redis displayName matches conventions required for
       an ID
   name: enforce-redis-instance-id
-  namespace: my-namespace # {"$ref":"#/definitions/io.k8s.cli.setters.namespace"}
 spec:
   parameters: null

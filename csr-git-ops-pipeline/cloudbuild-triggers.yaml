@@ -31,6 +31,7 @@ spec:
         git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
         mkdir -p /deployment-workspace/config
         rm -rf /deployment-workspace/config/*
+        touch /deployment-workspace/config/.gitkeep
       timeout: 300s
       volumes:
       - name: deployment-workspace
@@ -103,6 +104,7 @@ spec:
         (git show-branch foo1 &>/dev/null) && (git checkout $_STAGING_BRANCH) || (git checkout -b $_STAGING_BRANCH)
         mkdir -p /deployment-workspace/config
         rm -rf /deployment-workspace/config/*
+        touch /deployment-workspace/config/.gitkeep
       timeout: 300s
       volumes:
       - name: deployment-workspace

@@ -1,0 +1,17 @@
+.diagram-list {
+
+  .diagram-item {
+    background: white;
+    margin-bottom: 1rem;
+    padding: 0 1rem;
+  }
+
+  .item-svg svg {
+    max-width: 800px;
+    max-height: 400px;
+  }
+
+  .item-info {
+    padding: 1.5rem 2rem;
+  }
+}

@@ -1,0 +1,19 @@
+.idea
+.credentials.json
+dist
+.DS_Store
+
+# binary
+cmd/gcpdraw
+web/web
+
+# client
+web/client/node_modules
+web/client/build
+web/.pnp
+web/.pnp.js
+web/client/coverage
+web/client/npm-debug.log*
+web/client/yarn-debug.log*
+web/client/yarn-error.log*
+web/client/TODO.md

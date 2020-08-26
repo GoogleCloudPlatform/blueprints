@@ -1,0 +1,61 @@
+@import './variables';
+
+.btn.btn-xs {
+  @include button-size($btn-padding-y-xs, $btn-padding-x-xs, $btn-font-size-xs, $btn-line-height-xs, $btn-border-radius-xs);
+}
+
+@mixin pane-button-variant($color, $color-hover: color-yiq($color), $active-background: $color, $active-border: $color) {
+  color: $color;
+  // border-color: $color;
+
+  @include hover {
+    color: $color-hover;
+    background-color: $active-background;
+    // border-color: $active-border;
+  }
+
+  &:focus,
+  &.focus {
+    // background-color: darken($active-background, 5%);
+  }
+
+  &.disabled,
+  &:disabled {
+    color: $color;
+    background-color: transparent;
+  }
+}
+
+.btn.pane-btn {
+  font-size: 0.8rem;
+  padding-top: 0;
+  padding-bottom: 0;
+  border-radius: 0;
+  line-height: 29px;
+  height: 29px;
+  vertical-align: baseline;
+  border: none;
+
+  &.primary {
+    @include pane-button-variant( $primary );
+  }
+
+  &.success {
+    @include pane-button-variant( $success );
+  }
+
+  &.muted {
+    @include pane-button-variant( lighten($headings-color, 30%) );
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+button.dropdown-item.no-shadow {
+  &:focus {
+    box-shadow: none !important;
+    outline: 0px !important;
+  }
+}

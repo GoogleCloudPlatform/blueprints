@@ -1,0 +1,89 @@
+{
+  "version": "v1alpha1",
+  "diagram": {
+    "meta": {
+      "title": "Simple Example"
+    },
+    "elements": [
+      {
+        "type": "card",
+        "cardId": "pc"
+      },
+      {
+        "type": "card",
+        "cardId": "smartphone"
+      },
+      {
+        "type": "gcp",
+        "innerElements": [
+          {
+            "type": "card",
+            "cardId": "gclb"
+          },
+          {
+            "type": "card",
+            "cardId": "storage"
+          },
+          {
+            "type": "card",
+            "cardId": "gke"
+          },
+          {
+            "type": "group",
+            "id": "vpc",
+            "name": "VPC (default network)",
+            "innerElements": [
+              {
+                "type": "card",
+                "cardId": "gce"
+              },
+              {
+                "type": "card",
+                "cardId": "sql",
+                "id": "database"
+              }
+            ]
+          },
+          {
+            "type": "card",
+            "cardId": "gae",
+            "stacked": true,
+            "name": "Microservices",
+            "description": "Auto scale"
+          }
+        ]
+      }
+    ],
+    "paths": [
+      {
+        "src": "pc",
+        "dst": "gclb"
+      },
+      {
+        "src": "smartphone",
+        "dst": "gclb"
+      },
+      {
+        "src": "gclb",
+        "dst": "storage"
+      },
+      {
+        "src": "gclb",
+        "dst": "gke"
+      },
+      {
+        "src": "gke",
+        "dst": "gae"
+      },
+      {
+        "src": "gke",
+        "dst": "gce"
+      },
+      {
+        "src": "gce",
+        "dst": "database",
+        "dashType": "dot"
+      }
+    ]
+  }
+}

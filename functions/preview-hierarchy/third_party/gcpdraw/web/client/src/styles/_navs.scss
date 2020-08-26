@@ -1,0 +1,89 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/mixins';
+@import '../styles/variables';
+
+$pane-nav-color: lighten($headings-color, 35%);
+$pane-nav-link-padding-y:                .2rem !default;
+// $pane-nav-link-padding-y:                .2rem !default;
+$pane-nav-tab-padding-top:               0.2rem;
+$pane-nav-link-padding-x:                1rem !default;
+
+$pane-nav-link-disabled-color:           $gray-600 !default;
+$pane-nav-tabs-border-color:             darken($body-bg, 15%) !default;
+$pane-nav-tabs-border-width:             $border-width !default;
+$pane-nav-tabs-border-radius:            $border-radius !default;
+$pane-nav-tabs-link-color:        $pane-nav-color !default;
+$pane-nav-tabs-link-hover-border-color:  transparent;
+$pane-nav-tabs-link-active-color:        $pane-nav-color !default;
+$pane-nav-tabs-link-active-bg:           white !default;
+$pane-nav-tabs-link-active-border-color: $pane-nav-tabs-border-color $pane-nav-tabs-border-color $pane-nav-tabs-link-active-bg !default;
+
+
+.pane-nav {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 0;
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.pane-nav-link {
+  display: block;
+  padding: $pane-nav-link-padding-y $pane-nav-link-padding-x;
+  font-size: 0.8rem;
+
+  @include hover-focus {
+    text-decoration: none;
+  }
+
+  // Disabled state lightens text
+  &.disabled {
+    color: $pane-nav-link-disabled-color;
+    pointer-events: none;
+    cursor: default;
+  }
+}
+
+.pane-nav-tabs {
+  padding-left: 0.5rem;
+  padding-top: $pane-nav-tab-padding-top;
+  // border-bottom: $pane-nav-tabs-border-width solid $pane-nav-tabs-border-color;
+
+  .pane-nav-item {
+    margin-bottom: -$pane-nav-tabs-border-width;
+  }
+
+  .pane-nav-link {
+    background: transparent;
+    border: $pane-nav-tabs-border-width solid transparent;
+    @include border-top-radius($pane-nav-tabs-border-radius);
+    color: $pane-nav-tabs-link-color;
+
+    outline: 0;
+
+    @include hover-focus {
+      border-color: $pane-nav-tabs-link-hover-border-color;
+    }
+
+    &.disabled {
+      color: $pane-nav-link-disabled-color;
+      background-color: transparent;
+      border-color: transparent;
+    }
+  }
+
+  .pane-nav-link.active,
+  .pane-nav-item.show .pane-nav-link {
+    font-weight: 600;
+    color: $pane-nav-tabs-link-active-color;
+    background-color: $pane-nav-tabs-link-active-bg;
+    border-color: $pane-nav-tabs-link-active-border-color;
+  }
+
+  .dropdown-menu {
+    // Make dropdown border overlap tab border
+    margin-top: -$pane-nav-tabs-border-width;
+    // Remove the top rounded corners here since there is a hard edge above the menu
+    @include border-top-radius(0);
+  }
+}

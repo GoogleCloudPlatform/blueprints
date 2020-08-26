@@ -1,0 +1,6 @@
+runtime: go113
+service: renderer
+handlers:
+  - url: /.*
+    secure: always
+    script: auto

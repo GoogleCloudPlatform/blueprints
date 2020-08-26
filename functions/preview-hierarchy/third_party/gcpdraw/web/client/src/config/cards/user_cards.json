@@ -1,0 +1,73 @@
+[
+  {
+    "cardId": "users",
+    "aliases": [],
+    "iconUrl": "https://storage.googleapis.com/gcpdraw-icons/user/users.png"
+  },
+  {
+    "cardId": "office",
+    "aliases": [],
+    "displayName": "",
+    "iconUrl": "https://storage.googleapis.com/gcpdraw-icons/user/office.png"
+  },
+  {
+    "cardId": "shop",
+    "aliases": [],
+    "displayName": "",
+    "iconUrl": "https://storage.googleapis.com/gcpdraw-icons/user/shop.png"
+  },
+  {
+    "cardId": "laptop",
+    "aliases": ["pc"],
+    "displayName": "",
+    "iconUrl": "https://storage.googleapis.com/gcpdraw-icons/user/laptop.png"
+  },
+  {
+    "cardId": "desktop",
+    "aliases": [],
+    "displayName": "",
+    "iconUrl": "https://storage.googleapis.com/gcpdraw-icons/user/desktop.png"
+  },
+  {
+    "cardId": "laptop_and_phone",
+    "aliases": [],
+    "displayName": "",
+    "iconUrl": "https://storage.googleapis.com/gcpdraw-icons/user/laptop_and_phone.png"
+  },
+  {
+    "cardId": "mobile_devices",
+    "aliases": [],
+    "displayName": "",
+    "iconUrl": "https://storage.googleapis.com/gcpdraw-icons/user/mobile_devices.png"
+  },
+  {
+    "cardId": "phone",
+    "aliases": ["smartphone"],
+    "displayName": "",
+    "iconUrl": "https://storage.googleapis.com/gcpdraw-icons/user/phone.png"
+  },
+  {
+    "cardId": "game",
+    "aliases": [],
+    "displayName": "",
+    "iconUrl": "https://storage.googleapis.com/gcpdraw-icons/user/game.png"
+  },
+  {
+    "cardId": "microphone",
+    "aliases": ["mic"],
+    "displayName": "",
+    "iconUrl": "https://storage.googleapis.com/gcpdraw-icons/user/microphone.png"
+  },
+  {
+    "cardId": "server",
+    "aliases": [],
+    "displayName": "",
+    "iconUrl": "https://storage.googleapis.com/gcpdraw-icons/user/server.png"
+  },
+  {
+    "cardId": "gateway",
+    "aliases": [],
+    "displayName": "",
+    "iconUrl": "https://storage.googleapis.com/gcpdraw-icons/user/gateway.png"
+  }
+]

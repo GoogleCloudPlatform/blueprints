@@ -1,0 +1,56 @@
+@import '~bootstrap/scss/functions';
+@import '~bootstrap/scss/mixins';
+@import '../../styles/variables';
+
+$show-main-height: 500px;
+
+.diagram-preview {
+  background: white;
+  padding: 2rem 1rem 4rem 1rem;
+  margin-bottom: 1rem;
+  width:100%;
+  height: $show-main-height;
+  border: 1px solid darken($body-bg, 10%);
+
+  svg {
+    margin: 0 auto;
+    display: block;
+    max-width: 100%;
+    max-height: $show-main-height;
+  }
+}
+
+.code-preview {
+  font-size: 1rem;
+  width: 100%;
+  border: 1px solid #d1d5da;
+  height: $show-main-height;
+
+  .CodeMirror {
+    height: 100%;
+  }
+}
+
+.permalink {
+  width: 400px;
+}
+
+input.permalink-input[readonly] {
+  background: #fff;
+}
+
+button.btn-cb {
+  color: #495057;
+  background-color: #e9ecef;
+  border-color: #ced4da;
+
+  &:hover {
+    background-color: #007bff;
+    border-color: #007bff;
+    color: #fff;
+  }
+
+  &:active {
+    background-color: darken(#007bff, 10%);
+  }
+}

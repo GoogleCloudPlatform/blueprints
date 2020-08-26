@@ -1,0 +1,36 @@
+
+.page-title-bar {
+  margin: 1.5rem 0;
+}
+
+img.user-photo {
+  width: 25px;
+  height: 25px;
+  border-radius: 25px;
+}
+
+
+/*
+ * Navbar
+ */
+ .navbar {
+   min-width: 850px;
+ }
+
+input.gd-search-input {
+  width: 350px !important;
+  background: #f4f8f9;
+}
+
+@media (max-width: 1018px) {
+  input.gd-search-input {
+    width: 150px !important;
+  }
+}
+
+/*
+ * Flex
+ */
+.flex-even {
+  flex: 1;
+}

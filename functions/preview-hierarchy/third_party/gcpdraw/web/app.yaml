@@ -1,0 +1,8 @@
+runtime: go112
+service: default
+handlers:
+  - url: /static
+    static_dir: client/build/static
+  - url: /.*
+    secure: always
+    script: auto

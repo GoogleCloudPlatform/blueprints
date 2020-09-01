@@ -4,3 +4,11 @@ metadata:
   name: hierarchy
 packageMetadata:
   shortDescription: Resource hierarchy blueprint for GCP
+openAPI:
+  definitions:
+    io.k8s.cli.setters.organization-id:
+      description: Organization ID of where your folder hierarchy should be generated
+      x-k8s-cli:
+        setter:
+          name: organization-id
+          value: "123456789012"

@@ -26,6 +26,6 @@
     "typescript": "^3.5.3"
   },
   "kpt": {
-    "docker_repo_base": "gcr.io/krm-blueprints"
+    "docker_repo_base": "gcr.io/yakima-eap"
   }
 }

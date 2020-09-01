@@ -4,14 +4,14 @@ metadata:
   annotations:
     config.k8s.io/function: |
       container:
-        image: gcr.io/krm-blueprints/generate-folders:dev
+        image: gcr.io/yakima-eap/generate-folders:dev
     config.kubernetes.io/local-config: "true"
   name: root-hierarchy
 spec:
-  organization: 684124036889
+  organization: 123456789012 # {"$kpt-set":"organization-id"}
   layers:
-    - environments
-    - teams
+  - environments
+  - teams
   config:
     environments:
     - dev
@@ -20,3 +20,12 @@ spec:
     teams:
     - retail
     - finance
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    config.kubernetes.io/function: |
+      container:
+        image: gcr.io/yakima-eap/folder-ref:v1
+  name: folder-ref-kpt-fn

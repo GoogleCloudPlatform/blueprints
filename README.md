@@ -13,58 +13,16 @@ Overall top-level
 
 Landing Zone CUJs and associated blueprints.
 
-<table>
-  <tr>
-    <th>CUJ</th>
-    <th>Blueprints</th>
-  </tr>
-  <tr>
-    <td>CUJ1: Discovery/Set up</td>
-    <td><a href="https://cnrm.git.corp.google.com/yakima/+/refs/heads/master/bootstrap/script">Bootstrap</a><br>
-      <a href="https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/csr-git-ops-pipeline/">GitOps</a><br>
-      <a href="https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/landing-zone/">Landing Zone</a>
-    </td>
-  </tr>
-  <tr>
-    <td>CUJ2: Configure Resource Hierarchy</td>
-    <td><a href="https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/hierarchy/">Org hierarchy</a> (4 different options)
-    </td>
-  </tr>
-  <tr>
-    <td>CUJ3: Manage Project Factory</td>
-    <td><a href="https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/project/">Project</a>
-    </td>
-  </tr>
-  <tr>
-    <td>CUJ4: Set up networking</td>
-    <td><a href="https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/network/">Network</a><br>
-      <a href="https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/firewall/">Firewall</a>
-    </td>
-  </tr>
-  <tr>
-    <td>CUJ5: Set up access control</td>
-    <td><a href="https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/hierarchy/">Org hierarchy</a><br>
-      <a href="https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/project/">Project</a><br>
-      <a href="https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/network/">Network</a>
-    </td>
-  </tr>
-  <tr>
-    <td>CUJ6: Set up logging and monitoring</td>
-    <td><a href="https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/project/">Project</a><br>
-      <a href="https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/log-export/">Log export</a>
-    </td>
-  </tr>
-  <tr>
-    <td>CUJ7: Set up change control and security guardrails</td>
-    <td><a href="https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/policies/">Org policies</a>
-    </td>
-  </tr>
-  <tr>
-    <td>CUJ8: Collaborate</td>
-    <td><a href="https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/csr-git-ops-pipeline/">GitOps</a>
-    </td>
-  </tr>
-</table>
+CUJ                                                 | Blueprints
+--------------------------------------------------- | ----------
+CUJ1: Discovery/Set up                              | [Bootstrap](https://cnrm.git.corp.google.com/yakima/+/refs/heads/master/bootstrap/script)<br>[GitOps](https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/csr-git-ops-pipeline/)<br>[Landing Zone](https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/landing-zone/)
+CUJ2: Configure Resource Hierarchy                  | [Org hierarchy](https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/hierarchy/) (4 different options)
+CUJ3: Manage Project Factory                        | [Project](https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/project/)
+CUJ4: Set up networking                             | [Network](https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/network/)<br>[Firewall](https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/firewall/)
+CUJ5: Set up access control                         | [Org hierarchy](https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/hierarchy/)<br>[Project](https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/project/)<br>[Network](https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/network/)
+CUJ6: Set up logging and monitoring                 | [Project](https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/project/)<br>[Log export](https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/log-export/)
+CUJ7: Set up change control and security guardrails | [Org policies](https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/policies/)
+CUJ8: Collaborate                                   | [GitOps](https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/csr-git-ops-pipeline/)
 
 ## Contact information
 

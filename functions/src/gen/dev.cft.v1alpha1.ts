@@ -1,4 +1,4 @@
-import { KubernetesObject } from 'kpt-functions';
+import {KubernetesObject} from 'kpt-functions';
 import * as apisMetaV1 from './io.k8s.apimachinery.pkg.apis.meta.v1';
 
 export class ResourceHierarchy implements KubernetesObject {
@@ -38,13 +38,16 @@ export namespace ResourceHierarchy {
     spec: ResourceHierarchy.Spec;
   }
   export class Spec {
-    public environments: string[];
+    public config: {[key: string]: string[]};
 
-    public teams: string[];
+    public layers: string[];
+
+    public organization: string;
 
     constructor(desc: ResourceHierarchy.Spec) {
-      this.environments = desc.environments;
-      this.teams = desc.teams;
+      this.config = desc.config;
+      this.layers = desc.layers;
+      this.organization = desc.organization;
     }
   }
 }
@@ -101,7 +104,7 @@ export namespace ResourceHierarchyList {
     public resourceVersion?: string;
 
     // selfLink is a URL representing this object. Populated by the system. Read-only.
-    // 
+    //
     // DEPRECATED Kubernetes will stop propagating this field in 1.20 release and the field is planned to be removed in 1.21 release.
     public selfLink?: string;
   }

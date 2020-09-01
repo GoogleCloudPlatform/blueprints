@@ -25,15 +25,20 @@ spec:
             # ResourceHierarchySpec
             type: object
             properties:
-              environments:
+              layers:
                 type: array
                 items:
                   type: string
-              teams:
-                type: array
-                items:
-                  type: string
+              config:
+                type: object
+                additionalProperties:
+                  type: array
+                  items:
+                    type: string
+              organization:
+                type: string
             required:
-              - environments
-              - teams
+              - layers
+              - config
+              - organization
             # /ResourceHierarchySpec

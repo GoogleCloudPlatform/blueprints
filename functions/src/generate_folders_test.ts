@@ -1,7 +1,7 @@
-import { Configs, TestRunner, KubernetesObject } from 'kpt-functions';
-import { generateFolders } from './generate_folders';
-import { ResourceHierarchy } from './gen/dev.cft.v1alpha1';
-import { FolderList } from './gen/com.google.cloud.cnrm.resourcemanager.v1beta1';
+import {Configs, TestRunner, KubernetesObject} from 'kpt-functions';
+import {generateFolders} from './generate_folders';
+import {ResourceHierarchy} from './gen/dev.cft.v1alpha1';
+import {FolderList, Folder} from './gen/com.google.cloud.cnrm.resourcemanager.v1beta1';
 
 const RUNNER = new TestRunner(generateFolders);
 
@@ -12,30 +12,67 @@ describe('generateFolders', () => {
         name: "test-hierarchy"
       },
       spec: {
-        environments: ['dev', 'prod'],
-        teams: ['team1', 'team2']
+        organization: "test-organization",
+        layers: ['environments', 'teams'],
+        config: {
+          environments: ['dev', 'prod'],
+          teams: ['team1', 'team2']
+        }
       }
     });
-    const input = new Configs([hierarchy]);
 
-    const expectedOutput = new Configs([
-      hierarchy,
-      testFolder("dev-team1"),
-      testFolder("dev-team2"),
-      testFolder("prod-team1"),
-      testFolder("prod-team2"),
-    ]);
+    const input = new Configs([hierarchy]);
+    const expectedStructure = [
+      ['dev', 'prod'],
+      ['team1', 'team2', 'team1', 'team2']
+    ];
+
+    const expectedOutput = new Configs(
+      getHierarchyConfig(expectedStructure, 0, [], 'test-organization')
+    );
 
     await RUNNER.assert(input, expectedOutput);
   });
+
+  // TODO(jcwc): Add more test coverage
 });
 
-function testFolder(name: string): KubernetesObject {
-  return {
-    apiVersion: FolderList.apiVersion,
-    kind: "Folder",
-    metadata: {
-      name
-    }
+/**
+ * Generates the corresponding config array of the expected output given a 2D array representation
+ *
+ * @param folders 2D array containing a representation of the folder structure
+ * @param index The index of the first dimension of the folders 2D array. Used for recursion.
+ * @param path The name of folders preceeding the current layer. Used to generate the expected name of the k8s resource.
+ * @param organization The name of the expected organization
+ */
+function getHierarchyConfig(folders: string[][], index: number, path: string[], organization: string): KubernetesObject[] {
+  if (index >= folders.length) {
+    return [];
   }
+
+  let res: Folder[] = [];
+  const annotationName = index === 0 ? 'cnrm.cloud.google.com/organization-id' : 'cnrm.cloud.google.com/folder-ref';
+
+  for (const folder of folders[index]) {
+    res.push({
+      apiVersion: FolderList.apiVersion,
+      kind: "Folder",
+      metadata: {
+        name: [...path, folder].join('-'),
+        annotations: {
+          [annotationName]: index === 0 ? organization : path.join('-')
+        }
+      },
+      spec: {
+        displayName: folder
+      }
+    });
+
+    res = [
+      ...res,
+      ...getHierarchyConfig(folders, index + 1, [...path, folder], organization),
+    ];
+  }
+
+  return res as KubernetesObject[];
 }

@@ -82,3 +82,22 @@ func TestCorkWrap(t *testing.T) {
 		t.Fatal("Did not wrap in a future")
 	}
 }
+
+func TestRbac(t *testing.T) {
+	out, e := generateRbacObjs(map[string]bool{"my-namespace1": true, "my-other-namespace": true})
+	if e != nil {
+		t.Fatal(e)
+	}
+	if len(out) != 4 {
+		t.Fatalf("Expected 4 objects for 2 namespaces, got %v", len(out))
+	}
+	for _, oneObj := range out {
+		meta, err := oneObj.GetMeta()
+		if err != nil {
+			t.Fatal("fail to get meta\n", err)
+		}
+		if !(meta.Kind == "RoleBinding" || meta.Kind == "Role") {
+			t.Fatalf("Expected valid RBAC kind, got %v", meta.Kind)
+		}
+	}
+}

@@ -25,6 +25,8 @@ func main() {
 	resourceList := &framework.ResourceList{}
 	cmd := framework.Command(resourceList, func() error {
 		var refObjs []*yaml.RNode
+		var rbacObjs []*yaml.RNode
+		namespaceSet := make(map[string]bool)
 		for i := range resourceList.Items {
 			if !shouldRun(resourceList.Items[i]) {
 				continue
@@ -36,6 +38,7 @@ func main() {
 				return err
 			}
 			refObjs = append(refObjs, generatedRef)
+			namespaceSet[getNs(resourceList.Items[i])] = true
 
 			// Replace with a future
 			future, err := wrapInCork(resourceList.Items[i])
@@ -47,8 +50,14 @@ func main() {
 		// add generated fieldrefs
 		resourceList.Items = append(resourceList.Items, refObjs...)
 
+		// Add RBAC objects
+		rbacObjs, err := generateRbacObjs(namespaceSet)
+		if err != nil {
+			return err
+		}
+		resourceList.Items = append(resourceList.Items, rbacObjs...)
+
 		// merge the new copies with the old copies of each resource
-		var err error
 		resourceList.Items, err = filters.MergeFilter{}.Filter(resourceList.Items)
 		if err != nil {
 			return err
@@ -67,6 +76,45 @@ func main() {
 		fmt.Fprintf(os.Stderr, "%v\n", err)
 		os.Exit(1)
 	}
+}
+
+func getNs(r *yaml.RNode) string {
+	meta, err := r.GetMeta()
+	if err != nil {
+		return ""
+	}
+	return meta.ObjectMeta.Namespace
+}
+
+func generateRbacObjs(namespaces map[string]bool) ([]*yaml.RNode, error) {
+	var rbacObj []*yaml.RNode
+	t1 := template.Must(template.New("role-template").Parse(rbacRoleTemplate))
+	t2 := template.Must(template.New("binding-template").Parse(rbacBindingTemplate))
+	for ns := range namespaces {
+		// Role
+		buff := &bytes.Buffer{}
+		if err := t1.Execute(buff, map[string]string{"namespace": ns}); err != nil {
+			return nil, fmt.Errorf("Role template expansion error: %v", err)
+		}
+		s := buff.String()
+		rbac, err := yaml.Parse(s)
+		if err != nil {
+			return nil, fmt.Errorf("Yaml parsing of template error: %v.\nHydrated: %v", err, s)
+		}
+		rbacObj = append(rbacObj, rbac)
+		// Binding
+		buff.Reset()
+		if err := t2.Execute(buff, map[string]string{"namespace": ns}); err != nil {
+			return nil, fmt.Errorf("RoleBinding template expansion error: %v", err)
+		}
+		s = buff.String()
+		binding, err := yaml.Parse(s)
+		if err != nil {
+			return nil, fmt.Errorf("Yaml parsing of template error: %v.\nHydrated: %v", err, s)
+		}
+		rbacObj = append(rbacObj, binding)
+	}
+	return rbacObj, nil
 }
 
 // This generator should run IFF it's an operable kind & version with the right annotation.
@@ -185,3 +233,35 @@ spec:
     kind: Folder
     name: {{ .parent }}
     namespace: {{ .namespace }}`
+
+var rbacBindingTemplate = `apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: folder-ref-function-binding
+  namespace: {{ .namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: folder-ref-function-rw
+subjects:
+- kind: ServiceAccount
+  name: default
+  namespace: orchestrator-system`
+
+var rbacRoleTemplate = `apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: folder-ref-function-rw
+  namespace: {{ .namespace }}
+rules:
+- apiGroups:
+  - resourcemanager.cnrm.cloud.google.com
+  resources:
+  - folders
+  - projects
+  verbs:
+  - get
+  - list
+  - watch
+  - create
+  - update`

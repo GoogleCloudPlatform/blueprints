@@ -45,7 +45,12 @@ spec:
       - '-c'
       - |
         set -o pipefail # Fail if any piped command fails
-        kpt fn source . | kpt fn run | kpt fn sink /deployment-workspace/config
+        # TODO(jcwc): Remove "kpt cfg grep" line once Config Sync supports omitting local-configs
+        #   otherwise, temporarily force omit local-configs using kpt cfg grep.
+        kpt fn source . \
+        | kpt fn run \
+        | kpt cfg grep "metadata.annotations.config\.kubernetes\.io/local-config=true" --invert-match \
+        | kpt fn sink /deployment-workspace/config
       volumes:
       - name: deployment-workspace
         path: /deployment-workspace
@@ -118,7 +123,12 @@ spec:
       - '-c'
       - |
         set -o pipefail
-        kpt fn source . | kpt fn run | kpt fn sink /deployment-workspace/config
+        # TODO(jcwc): Remove "kpt cfg grep" line once Config Sync supports omitting local-configs
+        #   otherwise, temporarily force omit local-configs using kpt cfg grep.
+        kpt fn source . \
+        | kpt fn run \
+        | kpt cfg grep "metadata.annotations.config\.kubernetes\.io/local-config=true" --invert-match \
+        | kpt fn sink /deployment-workspace/config
       volumes:
       - name: deployment-workspace
         path: /deployment-workspace

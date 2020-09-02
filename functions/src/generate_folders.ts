@@ -35,11 +35,6 @@ export async function generateFolders(configs: Configs) {
       configs.addResults(errorResult);
     } else {
       insertConfigs(root, configs);
-
-      // TODO(jcwc): We shouldn't need to delete the hierarchy config since it
-      //   is tagged as a "local-config". Remove this line after Config Sync
-      //   supports a mechanism for local config not synced to cluster.
-      configs.delete(hierarchy);
     }
   }
 }

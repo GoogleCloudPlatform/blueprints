@@ -23,7 +23,7 @@ export async function generateFolders(configs: Configs) {
     // Root node is the organization
     const root: HierarchyNode = {
       children: [],
-      name: hierarchy.spec.organization
+      name: `${hierarchy.spec.organization}` // Annotation expects string type
     };
 
     // Represent results as a binary tree

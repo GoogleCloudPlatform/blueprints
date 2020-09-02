@@ -1,0 +1,20 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: env-bu-hierarchy
+packageMetadata:
+  shortDescription: Resource hierarchy blueprint for GCP
+openAPI:
+  definitions:
+    io.k8s.cli.setters.organization-id:
+      description: Organization ID of where your folder hierarchy should be generated
+      x-k8s-cli:
+        setter:
+          name: organization-id
+          value: "123456789012"
+    io.k8s.cli.setters.namespace:
+      description: Namespace to apply your k8s resources to. Cannot be cluster-scoped
+      x-k8s-cli:
+        setter:
+          name: namespace
+          value: my-namespace

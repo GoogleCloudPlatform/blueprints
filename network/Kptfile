@@ -1,0 +1,101 @@
+kind: Kptfile
+metadata:
+  name: network-package
+openAPI:
+  definitions:
+    io.k8s.cli.setters.networks-project-id:
+      x-k8s-cli:
+        setter:
+          name: networks-project-id
+          value: networks-project-id
+      description: Project ID
+    io.k8s.cli.setters.management-project-id:
+      x-k8s-cli:
+        setter:
+          name: management-project-id
+          value: management-project-id
+      description: Project ID for SAs and workload identity pool
+    io.k8s.cli.setters.region:
+      x-k8s-cli:
+        setter:
+          name: region
+          value: region
+      description: Region to deploy resources
+    io.k8s.cli.setters.vpn-prod-secret:
+      x-k8s-cli:
+        setter:
+          name: vpn-prod-secret
+          value: Ugi39AdpP2
+      description: Prod vpn secret
+    io.k8s.cli.setters.vpn-nonprod-secret:
+      x-k8s-cli:
+        setter:
+          name: vpn-nonprod-secret
+          value: 0D9aRO8sX
+      description: Nonprod vpn secret
+    io.k8s.cli.setters.vpn-dev-secret:
+      x-k8s-cli:
+        setter:
+          name: vpn-dev-secret
+          value: aG12auAQ
+      description: Dev vpn secret
+    io.k8s.cli.setters.vpn-shared-svc-secret:
+      x-k8s-cli:
+        setter:
+          name: vpn-shared-svc-secret
+          value: 1Ac0dAf7Kp
+      description: Shared services vpn secret
+    io.k8s.cli.setters.networks-namespace:
+      x-k8s-cli:
+        setter:
+          name: networks-namespace
+          value: networks-namespace
+      description: Namespace configured for managing resources defined in this package
+    io.k8s.cli.setters.network-prefix:
+      x-k8s-cli:
+        setter:
+          name: network-prefix
+          value: network-prefix
+      description: Project ID
+    io.k8s.cli.substitutions.network-prod:
+      x-k8s-cli:
+        substitution:
+          name: network-prod
+          pattern: NETWORK_PREFIX-prod
+          values:
+          - marker: NETWORK_PREFIX
+            ref: '#/definitions/io.k8s.cli.setters.network-prefix'
+    io.k8s.cli.substitutions.network-nonprod:
+      x-k8s-cli:
+        substitution:
+          name: network-nonprod
+          pattern: NETWORK_PREFIX-nonprod
+          values:
+          - marker: NETWORK_PREFIX
+            ref: '#/definitions/io.k8s.cli.setters.network-prefix'
+    io.k8s.cli.substitutions.network-dev:
+      x-k8s-cli:
+        substitution:
+          name: network-dev
+          pattern: NETWORK_PREFIX-dev
+          values:
+          - marker: NETWORK_PREFIX
+            ref: '#/definitions/io.k8s.cli.setters.network-prefix'
+    io.k8s.cli.substitutions.network-shared-svc:
+      x-k8s-cli:
+        substitution:
+          name: network-shared-svc
+          pattern: NETWORK_PREFIX-shared-svc
+          values:
+          - marker: NETWORK_PREFIX
+            ref: '#/definitions/io.k8s.cli.setters.network-prefix'
+    io.k8s.cli.substitutions.networks-project-id-sa-email:
+      x-k8s-cli:
+        substitution:
+          name: networks-project-id-sa-email
+          pattern: PROJECT_ID_SETTER-sa@MANAGEMENT_PROJECT_ID_SETTER.iam.gserviceaccount.com
+          values:
+          - marker: PROJECT_ID_SETTER
+            ref: '#/definitions/io.k8s.cli.setters.networks-project-id'
+          - marker: MANAGEMENT_PROJECT_ID_SETTER
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'

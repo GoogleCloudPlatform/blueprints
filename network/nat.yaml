@@ -1,0 +1,91 @@
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeRouterNAT
+metadata:
+  name: nat-prod
+  namespace: networks-namespace # {"$ref":"#/definitions/io.k8s.cli.setters.networks-namespace"}
+spec:
+  region: region  # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
+  routerRef:
+    name: cr-nat-prod
+  natIpAllocateOption: AUTO_ONLY
+  sourceSubnetworkIpRangesToNat: ALL_SUBNETWORKS_ALL_IP_RANGES
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeRouter
+metadata:
+  name: cr-nat-prod
+  namespace: networks-namespace # {"$ref":"#/definitions/io.k8s.cli.setters.networks-namespace"}
+spec:
+  description: example router description
+  region: region  # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
+  networkRef:
+    name: network-prefix-prod # {"$ref":"#/definitions/io.k8s.cli.substitutions.network-prod:"}
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeRouterNAT
+metadata:
+  name: nat-nonprod
+  namespace: networks-namespace # {"$ref":"#/definitions/io.k8s.cli.setters.networks-namespace"}
+spec:
+  region: region  # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
+  routerRef:
+    name: cr-nat-nonprod
+  natIpAllocateOption: AUTO_ONLY
+  sourceSubnetworkIpRangesToNat: ALL_SUBNETWORKS_ALL_IP_RANGES
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeRouter
+metadata:
+  name: cr-nat-nonprod
+  namespace: networks-namespace # {"$ref":"#/definitions/io.k8s.cli.setters.networks-namespace"}
+spec:
+  description: example router description
+  region: region  # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
+  networkRef:
+    name: network-prefix-nonprod # {"$ref":"#/definitions/io.k8s.cli.substitutions.network-nonprod:"}
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeRouterNAT
+metadata:
+  name: nat-dev
+  namespace: networks-namespace # {"$ref":"#/definitions/io.k8s.cli.setters.networks-namespace"}
+spec:
+  region: region  # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
+  routerRef:
+    name: cr-nat-dev
+  natIpAllocateOption: AUTO_ONLY
+  sourceSubnetworkIpRangesToNat: ALL_SUBNETWORKS_ALL_IP_RANGES
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeRouter
+metadata:
+  name: cr-nat-dev
+  namespace: networks-namespace # {"$ref":"#/definitions/io.k8s.cli.setters.networks-namespace"}
+spec:
+  description: example router description
+  region: region  # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
+  networkRef:
+    name: network-prefix-dev # {"$ref":"#/definitions/io.k8s.cli.substitutions.network-dev:"}
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeRouterNAT
+metadata:
+  name: nat-shared-svc
+  namespace: networks-namespace # {"$ref":"#/definitions/io.k8s.cli.setters.networks-namespace"}
+spec:
+  region: region  # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
+  routerRef:
+    name: cr-nat-shared-svc
+  natIpAllocateOption: AUTO_ONLY
+  sourceSubnetworkIpRangesToNat: ALL_SUBNETWORKS_ALL_IP_RANGES
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeRouter
+metadata:
+  name: cr-nat-shared-svc
+  namespace: networks-namespace # {"$ref":"#/definitions/io.k8s.cli.setters.networks-namespace"}
+spec:
+  description: example router description
+  region: region  # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
+  networkRef:
+    name: network-prefix-shared-svc # {"$ref":"#/definitions/io.k8s.cli.substitutions.network-shared-svc:"}

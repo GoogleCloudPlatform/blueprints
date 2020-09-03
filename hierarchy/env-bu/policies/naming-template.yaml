@@ -22,12 +22,18 @@ spec:
                 type: object
               type: array
   targets:
-  - rego: "package templates.gcp.GCPEnforceNamingConstraintV1\n\nviolation[{\"msg\":
-      msg}] {\n  rule := input.parameters.naming_rules[_]\n\n  kind := input.review.object.kind\n
-      \ kind == rule.kind\n  \n  # TODO: actually use params\n  pattern := rule.patterns[_]\n
-      \ name := input.review.object.metadata.name\n\n  not re_match(pattern, name)\n\n
-      \ msg := sprintf(\"The following %s didn't follow the naming convention (%s):
-      %s\", [kind, pattern, name])\n}"
+  - rego: |
+      package templates.gcp.GCPEnforceNamingConstraintV1
+
+      violation[{"msg": msg}] {
+        rule := input.parameters.naming_rules[_]
+        kind := input.review.object.kind
+        kind == rule.kind
+        pattern := rule.patterns[_]
+        name := input.review.object.metadata.name
+        not re_match(pattern, name)
+        msg := sprintf("The following %s didn't follow the naming convention (%s):%s", [kind, pattern, name])
+      }
     target: admission.k8s.gatekeeper.sh
 status: {}
 ---
@@ -42,4 +48,5 @@ spec:
     naming_rules:
     - kind: Folder
       patterns:
-      - (dev|prod)-.*
+      # Matches formats such as "prod" or "dev.something" or "qa.something.else"
+      - (^(dev|prod|staging|qa)$)|(^(dev|prod|staging|qa)[.][a-z0-9-]+$)|(^(dev|prod|staging|qa)[.][a-z0-9-]+[.][a-z0-9-]+$)

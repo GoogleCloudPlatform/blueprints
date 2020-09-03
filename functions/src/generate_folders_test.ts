@@ -15,21 +15,22 @@ describe('generateFolders', () => {
         organization: "test-organization",
         layers: ['environments', 'teams'],
         config: {
-          environments: ['dev', 'prod'],
-          teams: ['team1', 'team2']
+          environments: ['Dev', 'Prod'],
+          teams: ['Team "One"', 'Team_2']
         }
       }
     });
 
     const input = new Configs([hierarchy]);
     const expectedStructure = [
-      ['dev', 'prod'],
-      ['team1', 'team2', 'team1', 'team2']
+      ['Dev', 'Prod'],
+      ['Team "One"', 'Team_2', 'Team "One"', 'Team_2']
     ];
 
-    const expectedOutput = new Configs(
-      getHierarchyConfig(expectedStructure, 0, [], 'test-organization')
-    );
+    const expectedOutput = new Configs([
+      hierarchy,
+      ...getHierarchyConfig(expectedStructure, 0, [], 'test-organization')
+    ]);
 
     await RUNNER.assert(input, expectedOutput);
   });
@@ -58,9 +59,9 @@ function getHierarchyConfig(folders: string[][], index: number, path: string[], 
       apiVersion: FolderList.apiVersion,
       kind: "Folder",
       metadata: {
-        name: [...path, folder].join('-'),
+        name: normalize([...path, folder].join('.')),
         annotations: {
-          [annotationName]: index === 0 ? organization : path.join('-')
+          [annotationName]: index === 0 ? organization : path.join('.')
         }
       },
       spec: {
@@ -75,4 +76,16 @@ function getHierarchyConfig(folders: string[][], index: number, path: string[], 
   }
 
   return res as KubernetesObject[];
+}
+
+/**
+ * Normalizes name to fit the K8s DNS subdomain naming requirements
+ *
+ * @param name Non-normalized name
+ */
+function normalize(name: string) {
+  name = name.replace(/['"]/g, "");
+  name = name.replace(/[_ ]/g, "-");
+  name = name.toLowerCase();
+  return name;
 }

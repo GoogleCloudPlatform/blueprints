@@ -103,7 +103,7 @@ function generateHierarchyTree(node: HierarchyNode, layers: string[], layerIndex
 function generateManifest(name: string, path: string[], parent: HierarchyNode, namespace?: string): KubernetesObject {
   const annotationName = parent.config == null ? 'cnrm.cloud.google.com/organization-id' : 'cnrm.cloud.google.com/folder-ref';
   // Parent name is the metadata name
-  const parentName = path.length === 0 ? parent.name : path.join('-');
+  const parentName = path.join('.') || parent.name;
 
   const config = {
     apiVersion: FolderList.apiVersion,
@@ -111,7 +111,7 @@ function generateManifest(name: string, path: string[], parent: HierarchyNode, n
     metadata: {
       // TODO(jcwc): This only works up to 253 char (k8s name limit). Figure out
       //   how to handle the edge cases beyond the character limit.
-      name: [...path, name].join('-'),
+      name: normalize([...path, name].join('.')),
       annotations: {
         [annotationName]: parentName
       },
@@ -127,6 +127,18 @@ function generateManifest(name: string, path: string[], parent: HierarchyNode, n
   }
 
   return config;
+}
+
+/**
+ * Normalizes name to fit the K8s DNS subdomain naming requirements
+ *
+ * @param name Non-normalized name
+ */
+function normalize(name: string) {
+  name = name.replace(/['"]/g, "");
+  name = name.replace(/[_ ]/g, "-");
+  name = name.toLowerCase();
+  return name;
 }
 
 /**

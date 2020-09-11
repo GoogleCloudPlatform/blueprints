@@ -38,9 +38,9 @@ openAPI:
       x-k8s-cli:
         substitution:
           name: networkref
-          pattern: projects/PROJECT_ID_SETTER/global/networks/NETWORK_SETTER
+          pattern: projects/${PROJECT_ID}/global/networks/${NETWORK}
           values:
-          - marker: PROJECT_ID_SETTER
+          - marker: ${PROJECT_ID}
             ref: '#/definitions/io.k8s.cli.setters.project-id'
-          - marker: NETWORK_SETTER
+          - marker: ${NETWORK}
             ref: '#/definitions/io.k8s.cli.setters.network'

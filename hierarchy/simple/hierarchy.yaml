@@ -9,7 +9,7 @@ metadata:
   name: root-hierarchy
   namespace: my-namespace # {"$kpt-set":"namespace"}
 spec:
-  organization: 123456789012 # {"$kpt-set":"organization-id"}
+  organization: "123456789012" # {"$kpt-set":"organization-id"}
   layers:
   - environments
   config:

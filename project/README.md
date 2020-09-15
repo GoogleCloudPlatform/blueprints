@@ -5,13 +5,63 @@ manage this project with Yakima.
 
 Contents:
 
-*   `project.yaml` - contains project configuration.
-*   `project-management.yaml` - contains configuration needed in order for
-    Yakima to manage resources within that project:
-    *   Google Service Account to use for editing resources in the project.
-    *   Policy binding for permissions for this Google Service Account.
-    *   Namespace within Yakima for resources in this project.
-    *   Config Connector context to bind Config Connector controller for this
-        manespace with the Google Service Account.
-    *   Binding of the Google Service Account with the Kubernetes Service
-        Account used by Config Connector controller.
+- `project.yaml` - contains project configuration.
+- `project-management.yaml` - contains configuration needed in order for
+  Yakima to manage resources within that project:
+  - Google Service Account to use for editing resources in the project.
+  - Policy binding for permissions for this Google Service Account.
+  - Namespace within Yakima for resources in this project.
+  - Config Connector context to bind Config Connector controller for this
+    manespace with the Google Service Account.
+  - Binding of the Google Service Account with the Kubernetes Service
+    Account used by Config Connector controller.
+
+## Installation
+
+This setup will be repeated once for every project.
+Each project will create a different clone for the kpt package.
+
+1. This must be done within your DRY (aka "source") repository.
+
+   ```sh
+   cd ${SOURCE_REPO?}
+   ```
+
+2. Make a copy of the kpt package and find the setters. This project ID will be
+   the project to be created, **Not** the Yakima hosting cluster.
+
+   ```sh
+   kpt pkg get sso://cnrm/blueprints.git/project@master ${NEW_PROJECT_ID?}
+   kpt cfg list-setters ${NEW_PROJECT_ID?}
+   ```
+
+3. Specify the managing project. Note that this is the project which hosts the
+   yakima cluster.
+
+   ```sh
+   kpt cfg set ${NEW_PROJECT_ID?} management-namespace ${YAKIMA_PROJECT_ID?}
+   kpt cfg set ${NEW_PROJECT_ID?} management-project-id ${YAKIMA_PROJECT_ID?}
+   ```
+
+4. Set the rest of the project fields and commit!
+
+   ```sh
+   kpt cfg set ${NEW_PROJECT_ID?} billing-account-id ${BILLING_ACCOUNT_ID?}
+   kpt cfg set ${NEW_PROJECT_ID?} project-id ${NEW_PROJECT_ID?}
+   kpt cfg set ${NEW_PROJECT_ID?} project-id ${PARENT_FOLDER_ID?}
+
+   git add . && git commit -m "create project ${NEW_PROJECT_ID?}" && git push
+
+   # Verify project creation
+   kubectl -n ${YAKIMA_PROJECT_ID?} get projects \
+     -o custom-columns=NAME:.metadata.name,COND:.status.conditions[*].reason,READY:.status.conditions[*].status
+   ```
+
+## Verification
+
+```sh
+# YAKIMA_PROJECT_ID is the project that hosts the Yakima cluster
+kubectl -n ${YAKIMA_PROJECT_ID?} get projects \
+  -o custom-columns=NAME:.metadata.name,COND:.status.conditions[*].reason,READY:.status.conditions[*].status,MSG:.status.conditions[*].message \
+  -w
+```

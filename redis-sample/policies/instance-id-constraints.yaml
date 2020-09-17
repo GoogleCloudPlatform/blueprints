@@ -21,7 +21,7 @@ spec:
 
       violation[{"msg": msg, "details": {"provided_name": provided}}] {
         provided := input.review.object.spec.displayName
-        not re_match("-$", provided)
+        re_match("-$", provided)
         msg := "Invalid displayName. ID must not end with a hyphen."
       }
 

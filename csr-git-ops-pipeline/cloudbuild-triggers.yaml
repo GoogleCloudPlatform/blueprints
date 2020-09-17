@@ -30,40 +30,55 @@ spec:
         gcloud source repos clone $_DEPLOYMENT_REPO . && \
         git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)') && \
         mkdir -p /deployment-workspace/config
-        rm -rf /deployment-workspace/config/*
-        touch /deployment-workspace/config/.gitkeep
       timeout: 300s
       volumes:
       - name: deployment-workspace
         path: /deployment-workspace
     - id: "Apply Hydration and Validation"
-      waitFor:
-      - "Clone Deployment Repo"
       name: gcr.io/kpt-dev/kpt:latest
       entrypoint: /bin/sh
       args:
       - '-c'
       - |
         set -o pipefail # Fail if any piped command fails
+        mkdir -p /hydrated-workspace/config
         # TODO(jcwc): Remove "kpt cfg grep" line once Config Sync supports omitting local-configs
         #   otherwise, temporarily force omit local-configs using kpt cfg grep.
         kpt fn source . \
         | kpt fn run \
         | kpt cfg grep "metadata.annotations.config\.kubernetes\.io/local-config=true" --invert-match \
-        | kpt fn sink /deployment-workspace/config
+        | kpt fn sink /hydrated-workspace/config
       volumes:
+      - name: hydrated-workspace
+        path: /hydrated-workspace
+    - id: "Evaluate hydrated changes"
+      waitFor:
+      - "Apply Hydration and Validation"
+      - "Clone Deployment Repo"
+      name: gcr.io/yakima-eap/evaluate:latest
+      entrypoint: /bin/sh
+      args:
+      - '-c'
+      - |
+        evaluate --before="/deployment-workspace/config" --after="/hydrated-workspace/config"
+      volumes:
+      - name: hydrated-workspace
+        path: /hydrated-workspace
       - name: deployment-workspace
         path: /deployment-workspace
     - id: "Push Changes To Deployment Repo"
       waitFor:
-      - "Apply Hydration and Validation"
+      - "Evaluate hydrated changes"
       name: gcr.io/google.com/cloudsdktool/cloud-sdk
       dir: /deployment-workspace
       entrypoint: /bin/sh
       args:
       - '-c'
       - |
-        set -x && \
+        rm -r /deployment-workspace/config/*
+        cp -r /hydrated-workspace/config /deployment-workspace/
+        touch /deployment-workspace/config/.gitkeep
+
         # Configure Git to create commits with Cloud Build's service account
         git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
         git add -A
@@ -71,6 +86,8 @@ spec:
         if git diff --cached --exit-code; then echo "No changes"; true;
         else git commit -m "Resources from ${COMMIT_SHA}" && git push origin master; fi
       volumes:
+      - name: hydrated-workspace
+        path: /hydrated-workspace
       - name: deployment-workspace
         path: /deployment-workspace
 ---
@@ -108,40 +125,55 @@ spec:
         git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
         (git show-branch foo1 &>/dev/null) && (git checkout $_STAGING_BRANCH) || (git checkout -b $_STAGING_BRANCH)
         mkdir -p /deployment-workspace/config
-        rm -rf /deployment-workspace/config/*
-        touch /deployment-workspace/config/.gitkeep
       timeout: 300s
       volumes:
       - name: deployment-workspace
         path: /deployment-workspace
     - id: "Apply Hydration and Validation"
-      waitFor:
-      - "Clone Deployment Repo"
       name: gcr.io/kpt-dev/kpt:latest
       entrypoint: /bin/sh
       args:
       - '-c'
       - |
         set -o pipefail
+        mkdir -p /hydrated-workspace/config
         # TODO(jcwc): Remove "kpt cfg grep" line once Config Sync supports omitting local-configs
         #   otherwise, temporarily force omit local-configs using kpt cfg grep.
         kpt fn source . \
         | kpt fn run \
         | kpt cfg grep "metadata.annotations.config\.kubernetes\.io/local-config=true" --invert-match \
-        | kpt fn sink /deployment-workspace/config
+        | kpt fn sink /hydrated-workspace/config
       volumes:
+      - name: hydrated-workspace
+        path: /hydrated-workspace
+    - id: "Evaluate hydrated changes"
+      waitFor:
+      - "Apply Hydration and Validation"
+      - "Clone Deployment Repo"
+      name: gcr.io/yakima-eap/evaluate:latest
+      entrypoint: /bin/sh
+      args:
+      - '-c'
+      - |
+        evaluate --before="/deployment-workspace/config" --after="/hydrated-workspace/config"
+      volumes:
+      - name: hydrated-workspace
+        path: /hydrated-workspace
       - name: deployment-workspace
         path: /deployment-workspace
     - id: "Push Changes To Deployment Repo"
       waitFor:
-      - "Apply Hydration and Validation"
+      - "Evaluate hydrated changes"
       name: gcr.io/google.com/cloudsdktool/cloud-sdk
       dir: /deployment-workspace
       entrypoint: /bin/sh
       args:
       - '-c'
       - |
-        set -x && \
+        rm -r /deployment-workspace/config/*
+        cp -r /hydrated-workspace/config /deployment-workspace/
+        touch /deployment-workspace/config/.gitkeep
+
         # Configure Git to create commits with Cloud Build's service account
         git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
         git add -A
@@ -149,5 +181,7 @@ spec:
         if git diff --cached --exit-code; then echo "No changes"; true;
         else git commit -m "Resources from ${COMMIT_SHA}" && git push origin $_STAGING_BRANCH; fi
       volumes:
+      - name: hydrated-workspace
+        path: /hydrated-workspace
       - name: deployment-workspace
         path: /deployment-workspace

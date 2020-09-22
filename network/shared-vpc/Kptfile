@@ -1,15 +1,15 @@
 apiVersion: kpt.dev/v1alpha1
 kind: Kptfile
 metadata:
-  name: network-package
+  name: shared-vpc
 openAPI:
   definitions:
     io.k8s.cli.setters.namespace:
       description: Namespace configured for managing resources defined in this package
       x-k8s-cli:
         setter:
-          name: network
-          value: network
+          name: namespace
+          value: namespace
     io.k8s.cli.setters.project-id:
       description: Project ID for shared VPC
       x-k8s-cli:

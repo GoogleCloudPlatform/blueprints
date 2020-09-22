@@ -1,0 +1,61 @@
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeVPNGateway
+metadata:
+  name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
+  namespace: network-namespace # {"$kpt-set":"network-namespace"}
+spec:
+  description: "Compute VPN Gateway"
+  region: region  # {"$kpt-set":"region"}
+  networkRef:
+    name: network-name # {"$kpt-set":"network-name"}
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeVPNTunnel
+metadata:
+  name: network-name-vpn-tunnel # {"$kpt-set":"vpn-tunnel-name"}
+  namespace: network-namespace # {"$kpt-set":"network-namespace"}
+spec:
+  peerIp: "15.0.0.120"
+  region: region  # {"$kpt-set":"region"}
+  sharedSecret:
+    valueFrom:
+    secretKeyRef:
+      name: network-name-vpn-secret # {"$kpt-set":"vpn-secret-name"}
+      key: sharedSecret
+  targetVPNGatewayRef:
+    name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
+  localTrafficSelector:
+    - "192.168.0.0/16"
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeAddress
+metadata:
+  name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}
+  namespace: network-namespace # {"$kpt-set":"network-namespace"}
+spec:
+  location: region  # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
+  description: "Regional address"
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeForwardingRule
+metadata:
+  name: network-name-vpn-fr # {"$kpt-set":"vpn-fr-name"}
+  namespace: network-namespace # {"$kpt-set":"network-namespace"}
+spec:
+  description: "Regional forwarding rule"
+  target:
+    targetVPNGatewayRef:
+      name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
+  ipProtocol: "ESP"
+  location: region  # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
+  ipAddress:
+    addressRef:
+      name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: network-name-vpn-secret # {"$kpt-set":"vpn-secret-name"}
+  namespace: network-namespace # {"$kpt-set":"network-namespace"}
+stringData:
+  sharedSecret: Ugi39AdpP2 # {"$kpt-set":"vpn-secret"}

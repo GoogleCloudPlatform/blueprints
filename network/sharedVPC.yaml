@@ -1,7 +1,0 @@
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeSharedVPCHostProject
-metadata:
-  namespace: networks-namespace # {"$ref":"#/definitions/io.k8s.cli.setters.networks-namespace"}
-  annotations:
-    cnrm.cloud.google.com/project-id: project-id-networks # {"$ref":"#/definitions/io.k8s.cli.setters.project-id-networks"}    
-  name: sharedvpc-host-project

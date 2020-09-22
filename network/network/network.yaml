@@ -1,0 +1,9 @@
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeNetwork
+metadata:
+  name: network-name # {"$kpt-set":"network-name"}
+  namespace: network-namespace # {"$kpt-set":"network-namespace"}
+spec:
+  routingMode: GLOBAL
+  autoCreateSubnetworks: false
+  deleteDefaultRoutesOnCreate: false

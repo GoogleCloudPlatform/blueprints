@@ -1,0 +1,86 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: network-package
+openAPI:
+  definitions:
+    io.k8s.cli.setters.network-name:
+      description: Network name
+      x-k8s-cli:
+        setter:
+          name: network-name
+          value: network-name
+    io.k8s.cli.setters.network-namespace:
+      description: Namespace configured for managing resources defined in this package
+      x-k8s-cli:
+        setter:
+          name: network-namespace
+          value: network-namespace
+    io.k8s.cli.setters.region:
+      description: Region to deploy resources
+      x-k8s-cli:
+        setter:
+          name: region
+          value: region
+    io.k8s.cli.setters.vpn-secret:
+      description: VPN secret
+      x-k8s-cli:
+        setter:
+          name: vpn-secret
+          value: Ugi39AdpP2
+    io.k8s.cli.substitutions.network-router-name:
+      x-k8s-cli:
+        substitution:
+          name: network-router-name
+          pattern: ${NETWORK_NAME}-router
+          values:
+          - marker: ${NETWORK_NAME}
+            ref: '#/definitions/io.k8s.cli.setters.network-name'
+    io.k8s.cli.substitutions.network-nat-name:
+      x-k8s-cli:
+        substitution:
+          name: network-nat-name
+          pattern: ${NETWORK_NAME}-router-nat
+          values:
+          - marker: ${NETWORK_NAME}
+            ref: '#/definitions/io.k8s.cli.setters.network-name'
+    io.k8s.cli.substitutions.vpn-gateway-name:
+      x-k8s-cli:
+        substitution:
+          name: network-gateway-name
+          pattern: ${NETWORK_NAME}-vpn-gateway
+          values:
+          - marker: ${NETWORK_NAME}
+            ref: '#/definitions/io.k8s.cli.setters.network-name'
+    io.k8s.cli.substitutions.vpn-tunnel-name:
+      x-k8s-cli:
+        substitution:
+          name: vpn-tunnel-name
+          pattern: ${NETWORK_NAME}-vpn-tunnel
+          values:
+          - marker: ${NETWORK_NAME}
+            ref: '#/definitions/io.k8s.cli.setters.network-name'
+    io.k8s.cli.substitutions.vpn-secret-name:
+      x-k8s-cli:
+        substitution:
+          name: vpn-secret-name
+          pattern: ${NETWORK_NAME}-vpn-secret
+          values:
+          - marker: ${NETWORK_NAME}
+            ref: '#/definitions/io.k8s.cli.setters.network-name'
+    io.k8s.cli.substitutions.vpn-address-name:
+      x-k8s-cli:
+        substitution:
+          name: vpn-address-name
+          pattern: ${NETWORK_NAME}-vpn-address
+          values:
+          - marker: ${NETWORK_NAME}
+            ref: '#/definitions/io.k8s.cli.setters.network-name'
+    io.k8s.cli.substitutions.vpn-fr-name:
+      x-k8s-cli:
+        substitution:
+          name: vpn-fr-name
+          pattern: ${NETWORK_NAME}-vpn-fr
+          values:
+          - marker: ${NETWORK_NAME}
+            ref: '#/definitions/io.k8s.cli.setters.network-name'

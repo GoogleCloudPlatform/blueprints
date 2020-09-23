@@ -30,7 +30,7 @@ Landing Zone CUJs and associated blueprints.
 |                                                          | [Project](/project/)             | Ready                 |                                                                                     |
 |                                                          | [Network](/network/)             | **Needs** Network IAM |                                                                                     |
 | [CUJ6: Set up logging and monitoring][6]                 | [Project](/project/)             | **Not verified**      |                                                                                     |
-|                                                          | [Log export](/log-export/)       | **Missing**           |                                                                                     |
+|                                                          | [Log export](/log-export/)       | In progress           |                                                                                     |
 | [CUJ7: Set up change control and security guardrails][7] | [Org policies](/policies/)       | **Missing**           |                                                                                     |
 | [CUJ8: Collaborate][8]                                   | [GitOps](/csr-git-ops-pipeline/) | Ready                 | N/A - Tested by CUJ 2 through 7                                                     |
 

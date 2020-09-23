@@ -1,3 +1,5 @@
 # Log export blueprint
 
-Owner: [morgantep](http://who/morgantep@google.com)
+Owners:
+- [morgantep](http://who/morgantep@google.com)
+- [jcwc](http://who/jcwc@google.com)

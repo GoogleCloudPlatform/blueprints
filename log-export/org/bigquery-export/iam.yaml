@@ -1,0 +1,27 @@
+# IAM Policy Member
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: bq-project-iam-policy
+  namespace: my-namespace # {"$kpt-set":"namespace"}
+spec:
+  member:
+    resourceRef:
+      name: 123456789012-bqsink # {"$kpt-set":"log-sink-name"}
+  role: roles/bigquery.dataEditor
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: projects/my-project-id # {"$kpt-set":"iam-policy-project-subst"}
+---
+# Kpt fn for performing orchestration of LogSink's Unique Writer Identity.
+# This is needed for the IAM Policy Member "resourceRef" field
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    config.kubernetes.io/function: |
+      container:
+        image: gcr.io/yakima-eap/sink-policy:v1
+  name: log-sink-p4sa-binding-fn
+  namespace: my-namespace # {"$kpt-set":"namespace"}

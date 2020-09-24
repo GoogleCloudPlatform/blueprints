@@ -1,0 +1,41 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: pubsub-export
+packageMetadata:
+  shortDescription: Creates a log export on a organization that sinks to PubSub
+openAPI:
+  definitions:
+    io.k8s.cli.setters.namespace:
+      description: your KCC-enabled Kubernetes namespace to store your resources in
+      x-k8s-cli:
+        setter:
+          name: namespace
+          value: my-namespace
+    io.k8s.cli.setters.topic-name:
+      description: Name of your PubSub Topic
+      x-k8s-cli:
+        setter:
+          name: topic-name
+          value: pubsub-logexport-dataset
+    io.k8s.cli.setters.filter:
+      description: The filter to apply when exporting logs. Only log entries that
+        match the filter are exported. Default is '' which exports all logs.
+      x-k8s-cli:
+        setter:
+          name: filter
+          value: ""
+    io.k8s.cli.substitutions.log-sink-name:
+      x-k8s-cli:
+        substitution:
+          name: log-sink-name
+          pattern: ${organization-id}-pubsubsink
+          values:
+          - marker: ${organization-id}
+            ref: '#/definitions/io.k8s.cli.setters.organization-id'
+    io.k8s.cli.setters.organization-id:
+      description: The ID of the organization to sink logs from
+      x-k8s-cli:
+        setter:
+          name: organization-id
+          value: "123456789012"

@@ -5,3 +5,4 @@ node_modules/
 **/.build
 **/testing.tfvars
 **/terraform.tfvars
+.DS_Store

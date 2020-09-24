@@ -1,0 +1,27 @@
+# IAM Policy Member
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: storage-project-iam-policy
+  namespace: my-namespace # {"$kpt-set":"namespace"}
+spec:
+  member:
+    resourceRef:
+      name: my.folder.k8s.name-storagesink # {"$kpt-set":"log-sink-name"}
+  role: roles/storage.objectCreator
+  resourceRef:
+    apiVersion: storage.cnrm.cloud.google.com/v1beta1
+    kind: StorageBucket
+    name: my-storage-bucket # {"$kpt-set":"storage-bucket-name"}
+---
+# Kpt fn for performing orchestration of LogSink's Unique Writer Identity.
+# This is needed for the IAM Policy Member "resourceRef" field
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    config.kubernetes.io/function: |
+      container:
+        image: gcr.io/yakima-eap/sink-policy:v1
+  name: log-sink-p4sa-binding-fn
+  namespace: my-namespace # {"$kpt-set":"namespace"}

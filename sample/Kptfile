@@ -1,0 +1,24 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: project-hierarchy
+packageMetadata:
+  tags:
+  - kpt.dev/app=project-hierarchy
+  shortDescription: Config Orchestrator Sample - Project Hierarchy
+openAPI:
+  definitions:
+    io.k8s.cli.setters.project-id:
+      x-k8s-cli:
+        setter:
+          name: project-id
+          value: your-project-id
+      description: Project ID
+    io.k8s.cli.substitutions.project-id-ref:
+      x-k8s-cli:
+        substitution:
+          name: networkref
+          pattern: projects/PROJECT_ID_SETTER
+          values:
+          - marker: PROJECT_ID_SETTER
+            ref: '#/definitions/io.k8s.cli.setters.project-id'

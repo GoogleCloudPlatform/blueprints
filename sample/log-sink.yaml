@@ -1,0 +1,12 @@
+apiVersion: logging.cnrm.cloud.google.com/v1alpha1
+kind: FolderLogSink
+metadata:
+  name: folder-log-sink-1
+  namespace: log-sample
+spec:
+  destination:
+    bigQueryDatasetRef:
+      Name:  bqlogexportdataset
+  folderRef:
+    name: retail
+  includeChildren:  false

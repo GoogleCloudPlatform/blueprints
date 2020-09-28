@@ -22,18 +22,24 @@ openAPI:
           name: project-id
           value: project-id
       description: Project ID
-    io.k8s.cli.setters.management-namespace:
+    io.k8s.cli.setters.projects-namespace:
       x-k8s-cli:
         setter:
-          name: management-namespace
-          value: management-namespace
-      description: Namespace configured for managing resources defined in this package
-    io.k8s.cli.setters.management-project-id:
+          name: projects-namespace
+          value: projects-namespace
+      description: Namespace for projects.
+    io.k8s.cli.setters.iam-namespace:
       x-k8s-cli:
         setter:
-          name: management-project-id
-          value: management-project-id
-      description: Project ID for SAs and workload identity pool
+          name: iam-namespace
+          value: iam-namespace
+      description: Namespace for IAM resources.
+    io.k8s.cli.setters.iam-project-id:
+      x-k8s-cli:
+        setter:
+          name: iam-project-id
+          value: iam-project-id
+      description: Project ID for IAM resources and workload identity pool.
     io.k8s.cli.substitutions.project-namespace:
       x-k8s-cli:
         substitution:
@@ -62,12 +68,12 @@ openAPI:
       x-k8s-cli:
         substitution:
           name: project-id-sa-ref
-          pattern: serviceAccount:${PROJECT_ID}-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          pattern: serviceAccount:${PROJECT_ID}-sa@${IAM_PROJECT_ID}.iam.gserviceaccount.com
           values:
           - marker: ${PROJECT_ID}
             ref: '#/definitions/io.k8s.cli.setters.project-id'
-          - marker: ${MANAGEMENT_PROJECT_ID}
-            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+          - marker: ${IAM_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.iam-project-id'
     io.k8s.cli.substitutions.workload-identity-binding:
       x-k8s-cli:
         substitution:
@@ -80,19 +86,19 @@ openAPI:
       x-k8s-cli:
         substitution:
           name: workload-identity-sa
-          pattern: serviceAccount:${MANAGEMENT_PROJECT_ID}.svc.id.goog[cnrm-system/cnrm-controller-manager-${PROJECT_ID}]
+          pattern: serviceAccount:${IAM_PROJECT_ID}.svc.id.goog[cnrm-system/cnrm-controller-manager-${PROJECT_ID}]
           values:
           - marker: ${PROJECT_ID}
             ref: '#/definitions/io.k8s.cli.setters.project-id'
-          - marker: ${MANAGEMENT_PROJECT_ID}
-            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+          - marker: ${IAM_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.iam-project-id'
     io.k8s.cli.substitutions.project-id-sa-email:
       x-k8s-cli:
         substitution:
           name: project-id-sa-email
-          pattern: ${PROJECT_ID}-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          pattern: ${PROJECT_ID}-sa@${IAM_PROJECT_ID}.iam.gserviceaccount.com
           values:
           - marker: ${PROJECT_ID}
             ref: '#/definitions/io.k8s.cli.setters.project-id'
-          - marker: ${MANAGEMENT_PROJECT_ID}
-            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+          - marker: ${IAM_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.iam-project-id'

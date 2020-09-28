@@ -39,8 +39,9 @@ Each project will create a different clone for the kpt package.
    yakima cluster.
 
    ```sh
-   kpt cfg set ${NEW_PROJECT_ID?} management-namespace ${YAKIMA_PROJECT_ID?}
-   kpt cfg set ${NEW_PROJECT_ID?} management-project-id ${YAKIMA_PROJECT_ID?}
+   kpt cfg set ${NEW_PROJECT_ID?} projects-namespace ${YAKIMA_PROJECT_ID?}
+   kpt cfg set ${NEW_PROJECT_ID?} iam-namespace ${YAKIMA_PROJECT_ID?}
+   kpt cfg set ${NEW_PROJECT_ID?} iam-project-id ${YAKIMA_PROJECT_ID?}
    ```
 
 4. Set the rest of the project fields and commit!

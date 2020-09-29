@@ -78,14 +78,23 @@ openAPI:
           name: cluster-name
           value: my-yakima-cluster
           isSet: true
-    io.k8s.cli.substitutions.compute-sa:
+    io.k8s.cli.setters.config-sync-sa-name:
+      description: Name of the SA to use with Config Sync.
+      x-k8s-cli:
+        setter:
+          name: config-sync-sa-name
+          value: config-sync-sa
+          isSet: true
+    io.k8s.cli.substitutions.config-sync-sa:
       x-k8s-cli:
         substitution:
-          name: compute-sa
-          pattern: serviceAccount:${project-number}-compute@developer.gserviceaccount.com
+          name: config-sync-sa
+          pattern: serviceAccount:${config-sync-sa-name}@${project-id}.iam.gserviceaccount.com
           values:
-          - marker: ${project-number}
-            ref: '#/definitions/io.k8s.cli.setters.project-number'
+          - marker: ${project-id}
+            ref: '#/definitions/io.k8s.cli.setters.project-id'
+          - marker: ${config-sync-sa-name}
+            ref: '#/definitions/io.k8s.cli.setters.config-sync-sa-name'
     io.k8s.cli.substitutions.config-sync-workload-identity:
       x-k8s-cli:
         substitution:
@@ -94,16 +103,16 @@ openAPI:
           values:
           - marker: ${project-id}
             ref: '#/definitions/io.k8s.cli.setters.project-id'
-    io.k8s.cli.substitutions.compute-sa-external:
+    io.k8s.cli.substitutions.config-sync-sa-external:
       x-k8s-cli:
         substitution:
-          name: compute-sa-external
-          pattern: projects/${project-id}/serviceAccounts/${project-number}-compute@developer.gserviceaccount.com
+          name: config-sync-sa-external
+          pattern: projects/${project-id}/serviceAccounts/${config-sync-sa-name}@${project-id}.iam.gserviceaccount.com
           values:
           - marker: ${project-id}
             ref: '#/definitions/io.k8s.cli.setters.project-id'
-          - marker: ${project-number}
-            ref: '#/definitions/io.k8s.cli.setters.project-number'
+          - marker: ${config-sync-sa-name}
+            ref: '#/definitions/io.k8s.cli.setters.config-sync-sa-name'
     io.k8s.cli.substitutions.project-id-external:
       x-k8s-cli:
         substitution:

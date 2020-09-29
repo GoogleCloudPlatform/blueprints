@@ -20,8 +20,8 @@ spec:
   sharedSecret:
     valueFrom:
     secretKeyRef:
-      name: network-name-vpn-secret # {"$kpt-set":"vpn-secret-name"}
-      key: sharedSecret
+      name: vpn-shared-secret # {"$kpt-set":"vpn-secret-name"}
+      key: vpn-shared-secret # {"$kpt-set":"vpn-secret-key"}
   targetVPNGatewayRef:
     name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
   localTrafficSelector:
@@ -51,11 +51,3 @@ spec:
   ipAddress:
     addressRef:
       name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}
----
-apiVersion: v1
-kind: Secret
-metadata:
-  name: network-name-vpn-secret # {"$kpt-set":"vpn-secret-name"}
-  namespace: network-namespace # {"$kpt-set":"network-namespace"}
-stringData:
-  sharedSecret: Ugi39AdpP2 # {"$kpt-set":"vpn-secret"}

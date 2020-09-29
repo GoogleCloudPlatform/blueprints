@@ -22,12 +22,18 @@ openAPI:
         setter:
           name: region
           value: region
-    io.k8s.cli.setters.vpn-secret:
-      description: VPN secret
+    io.k8s.cli.setters.vpn-secret-name:
+      description: VPN secret name
       x-k8s-cli:
         setter:
-          name: vpn-secret
-          value: Ugi39AdpP2
+          name: vpn-secret-name
+          value: vpn-shared-secret
+    io.k8s.cli.setters.vpn-secret-key:
+      description: VPN secret key
+      x-k8s-cli:
+        setter:
+          name: vpn-secret-key
+          value: vpn-shared-secret
     io.k8s.cli.substitutions.network-router-name:
       x-k8s-cli:
         substitution:
@@ -57,14 +63,6 @@ openAPI:
         substitution:
           name: vpn-tunnel-name
           pattern: ${NETWORK_NAME}-vpn-tunnel
-          values:
-          - marker: ${NETWORK_NAME}
-            ref: '#/definitions/io.k8s.cli.setters.network-name'
-    io.k8s.cli.substitutions.vpn-secret-name:
-      x-k8s-cli:
-        substitution:
-          name: vpn-secret-name
-          pattern: ${NETWORK_NAME}-vpn-secret
           values:
           - marker: ${NETWORK_NAME}
             ref: '#/definitions/io.k8s.cli.setters.network-name'

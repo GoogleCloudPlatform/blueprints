@@ -25,12 +25,11 @@ Landing Zone CUJs and associated blueprints.
 |                                                          | [Env & BU](/hierarchy/env-bu)    | Ready                 | [hierarchy/folders][demo-2]                                                         |
 | [CUJ3: Manage Project Factory][3]                        | [Project](/project/)             | Ready                 | [project factory][demo-3]                                                           |
 | [CUJ4: Set up networking][4]                             | [Network](/network/)             | Ready                 |                                                                                     |
-|                                                          | [Firewall](/firewall/)           | **Missing**           |                                                                                     |
+|                                                          | [Firewall](/firewall/)           | Ready                 |                                                                                     |
 | [CUJ5: Set up access control][5]                         | [Org hierarchy](/hierarchy/)     | **Needs** Org IAM     |                                                                                     |
 |                                                          | [Project](/project/)             | Ready                 |                                                                                     |
 |                                                          | [Network](/network/)             | **Needs** Network IAM |                                                                                     |
-| [CUJ6: Set up logging and monitoring][6]                 | [Project](/project/)             | **Not verified**      |                                                                                     |
-|                                                          | [Log export](/log-export/)       | In progress           |                                                                                     |
+| [CUJ6: Set up logging and monitoring][6]                 | [Log export](/log-export/)       | In progress           |                                                                                     |
 | [CUJ7: Set up change control and security guardrails][7] | [Org policies](/policies/)       | **Missing**           |                                                                                     |
 | [CUJ8: Collaborate][8]                                   | [GitOps](/csr-git-ops-pipeline/) | Ready                 | N/A - Tested by CUJ 2 through 7                                                     |
 

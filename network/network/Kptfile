@@ -21,7 +21,7 @@ openAPI:
       x-k8s-cli:
         setter:
           name: region
-          value: region
+          value: us-central1
     io.k8s.cli.setters.vpn-secret-name:
       description: VPN secret name
       x-k8s-cli:
@@ -79,6 +79,14 @@ openAPI:
         substitution:
           name: vpn-fr-name
           pattern: ${NETWORK_NAME}-vpn-fr
+          values:
+          - marker: ${NETWORK_NAME}
+            ref: '#/definitions/io.k8s.cli.setters.network-name'
+    io.k8s.cli.substitutions.subnetwork-name:
+      x-k8s-cli:
+        substitution:
+          name: subnetwork-name
+          pattern: ${NETWORK_NAME}-subnetwork
           values:
           - marker: ${NETWORK_NAME}
             ref: '#/definitions/io.k8s.cli.setters.network-name'

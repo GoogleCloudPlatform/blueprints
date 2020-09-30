@@ -4,7 +4,7 @@ metadata:
   name: network-name-router-nat # {"$kpt-set":"network-nat-name"}
   namespace: network-namespace # {"$kpt-set":"network-namespace"}
 spec:
-  region: region  # {"$kpt-set":"region"}
+  region: us-central1 # {"$kpt-set":"region"}
   routerRef:
     name: network-name-router # {"$kpt-set":"network-router-name"}
   natIpAllocateOption: AUTO_ONLY
@@ -17,6 +17,6 @@ metadata:
   namespace: network-namespace # {"$kpt-set":"network-namespace"}
 spec:
   description: example router description
-  region: region  # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
+  region: us-central1 # {"$kpt-set":"region"}
   networkRef:
     name: network-name # {"$kpt-set":"network-name"}

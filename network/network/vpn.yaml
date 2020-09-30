@@ -5,7 +5,7 @@ metadata:
   namespace: network-namespace # {"$kpt-set":"network-namespace"}
 spec:
   description: "Compute VPN Gateway"
-  region: region  # {"$kpt-set":"region"}
+  region: us-central1 # {"$kpt-set":"region"}
   networkRef:
     name: network-name # {"$kpt-set":"network-name"}
 ---
@@ -16,7 +16,7 @@ metadata:
   namespace: network-namespace # {"$kpt-set":"network-namespace"}
 spec:
   peerIp: "15.0.0.120"
-  region: region  # {"$kpt-set":"region"}
+  region: us-central1 # {"$kpt-set":"region"}
   sharedSecret:
     valueFrom:
     secretKeyRef:
@@ -25,7 +25,7 @@ spec:
   targetVPNGatewayRef:
     name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
   localTrafficSelector:
-    - "192.168.0.0/16"
+  - "192.168.0.0/16"
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
@@ -33,7 +33,7 @@ metadata:
   name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}
   namespace: network-namespace # {"$kpt-set":"network-namespace"}
 spec:
-  location: region  # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
+  location: us-central1 # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
   description: "Regional address"
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
@@ -47,7 +47,7 @@ spec:
     targetVPNGatewayRef:
       name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
   ipProtocol: "ESP"
-  location: region  # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
+  location: us-central1 # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
   ipAddress:
     addressRef:
       name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}

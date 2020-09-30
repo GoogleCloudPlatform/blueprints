@@ -174,8 +174,13 @@ func fieldReference(r *yaml.RNode, kindMap map[string]string) (*yaml.RNode, erro
 	}
 	sinkName := yaml.GetValue(sinkRef)
 
+	kindStr, ok := kindMap[sinkName]
+	if !ok {
+		return nil, fmt.Errorf("Unknown kind for object named %v", sinkName)
+	}
+
 	buff := &bytes.Buffer{}
-	if err := fieldRefTemplateParsed.Execute(buff, map[string]string{"namespace": ns, "sink": sinkName, "kind": kindMap[sinkName]}); err != nil {
+	if err := fieldRefTemplateParsed.Execute(buff, map[string]string{"namespace": ns, "sink": sinkName, "kind": kindStr}); err != nil {
 		return nil, err
 	}
 	return yaml.Parse(buff.String())
@@ -196,7 +201,7 @@ func futureObject(r *yaml.RNode) (*yaml.RNode, error) {
 
 	// Replace spec.member value with key 'identity'
 	// NOTE: this variable must match the name in the spec.variables of the template below
-	err = r.PipeE(yaml.Lookup("spec"), yaml.Clear("member"), yaml.SetField("member", yaml.NewScalarRNode("${identity}")))
+	err = r.PipeE(yaml.Lookup("spec"), yaml.SetField("member", yaml.NewScalarRNode("${identity}")))
 	if err != nil {
 		return nil, fmt.Errorf("Failed to set spec.member: %v", err)
 	}
@@ -283,4 +288,13 @@ rules:
   - list
   - watch
   - create
-  - update`
+  - update
+- apiGroups:
+  - logging.cnrm.cloud.google.com
+  resources:
+  - organizationlogsinks
+  - folderlogsinks
+  verbs:
+  - get
+  - list
+  - watch`

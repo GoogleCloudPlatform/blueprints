@@ -63,6 +63,14 @@ func TestFieldGen(t *testing.T) {
 	if meta.Name != "another-resource-ref" {
 		t.Fatal("Wrong name: [", meta.Name, "] wanted [another-resource-ref]")
 	}
+	kind, e := out.Pipe(yaml.Lookup("spec", "resourceRef", "kind"))
+	if e != nil {
+		t.Fatal(e)
+	}
+	kindField := yaml.GetValue(kind)
+	if kindField != "FolderLogSink" {
+		t.Fatalf("Got [%v] Wanted [FolderLogSink]", kindField)
+	}
 }
 
 func TestCorkWrap(t *testing.T) {
@@ -80,6 +88,14 @@ func TestCorkWrap(t *testing.T) {
 	}
 	if m.Kind != "FutureObject" {
 		t.Fatal("Did not wrap in a future")
+	}
+	member, e := out.Pipe(yaml.Lookup("spec", "object", "spec", "member"))
+	if e != nil {
+		t.Fatal(e)
+	}
+	memField := yaml.GetValue(member)
+	if memField != "${identity}" {
+		t.Fatalf("Got [%v] Wanted [${identity}]", memField)
 	}
 }
 

@@ -4,3 +4,45 @@ metadata:
   name: landing-zone
 packageMetadata:
   shortDescription: Foundational landing zone blueprint for GCP
+openAPI:
+  definitions:
+    io.k8s.cli.setters.org-iam-namespace:
+      x-k8s-cli:
+        setter:
+          name: org-iam-namespace
+          value: gcp-organization
+      description: Namespace name for org level IAM resources.
+    io.k8s.cli.setters.org-id:
+      x-k8s-cli:
+        setter:
+          name: org-id
+          value: "123456789012"
+      description: Organization ID value.
+    io.k8s.cli.setters.group-org-admins:
+      x-k8s-cli:
+        setter:
+          name: group-org-admins
+          value: yakima-eap-users@googlegroups.com
+      description: Groupt to grant organization admin permissions.
+    io.k8s.cli.substitutions.group-org-admins-member:
+      x-k8s-cli:
+        substitution:
+          name: group-org-admins-member
+          pattern: group:${group-org-admins}
+          values:
+          - marker: ${group-org-admins}
+            ref: '#/definitions/io.k8s.cli.setters.group-org-admins'
+    io.k8s.cli.setters.group-billing-admins:
+      x-k8s-cli:
+        setter:
+          name: group-billing-admins
+          value: yakima-eap-users@googlegroups.com
+      description: Groupt to grant billing admin permissions.
+    io.k8s.cli.substitutions.group-billing-admins-member:
+      x-k8s-cli:
+        substitution:
+          name: group-billing-admins-member
+          pattern: group:${group-billing-admins}
+          values:
+          - marker: ${group-billing-admins}
+            ref: '#/definitions/io.k8s.cli.setters.group-billing-admins'

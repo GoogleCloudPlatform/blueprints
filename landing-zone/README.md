@@ -1,17 +1,3 @@
-landing-zone
-==================================================
+# Landing Zone
 
-# NAME
-
-  landing-zone
-
-# SYNOPSIS
-
-  kubectl apply --recursive -f landing-zone
-
-# Description
-
-Foundational landing zone blueprint for GCP
-
-# SEE ALSO
-
+This blueprint configures organization level IAM permissions.

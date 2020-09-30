@@ -1,0 +1,25 @@
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: org-admins-iam
+  namespace: gcp-organization # {"$kpt-set":"org-iam-namespace"}
+spec:
+  member: group:yakima-eap-users@googlegroups.com # {"$kpt-set":"group-org-admins-member"}
+  role: roles/resourcemanager.organizationAdmin
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # {"$kpt-set":"org-id"}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: billing-admins-iam
+  namespace: gcp-organization # {"$kpt-set":"org-iam-namespace"}
+spec:
+  member: group:yakima-eap-users@googlegroups.com # {"$kpt-set":"group-billing-admins-member"}
+  role: roles/billing.admin
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # {"$kpt-set":"org-id"}

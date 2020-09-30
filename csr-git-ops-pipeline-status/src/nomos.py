@@ -8,7 +8,7 @@ from google.cloud import storage
 from google.cloud.storage.blob import Blob
 import collections
 
-NomosSummary = collections.namedtuple('NomosSummary', ['status', 'logs', 'last_synced_token'])
+NomosSummary = collections.namedtuple('NomosSummary', ['status', 'logs', 'last_synced_token', 'up_to_date'])
 
 NOMOS_BUILD_DIR = "tmp"
 NOMOS_PATH = "{}/nomos".format(NOMOS_BUILD_DIR)
@@ -39,8 +39,8 @@ def extract_nomos_status(nomos_output, cluster_id):
   nomos_status_array = re.split('\s+', nomos_status_line.replace('*', '').strip())
 
   return {
-    "status": nomos_status_array[1] if len(nomos_status_array) > 1 else "CANNOT_RETRIEVE_NOMOS_STATUS",
-    "last_synced_token": nomos_status_array[2] if len(nomos_status_array) > 2 else "N/A"
+    "status": nomos_status_array[1] if len(nomos_status_array) > 1 else None,
+    "last_synced_token": nomos_status_array[2] if len(nomos_status_array) > 2 else None
   }
 
 def extract_nomos_errors(nomos_output, cluster_id):
@@ -55,7 +55,7 @@ def extract_nomos_errors(nomos_output, cluster_id):
 # This function downloads nomos and extracts the useful information pertaining
 # to a set of parameters (from the main function) and returns it in a summarized
 # format.
-def get_nomos_summary(parameters):
+def get_nomos_summary(parameters, latest_commit_sha):
   storage_client = storage.Client(parameters.project_id)
 
   if not os.path.exists(NOMOS_BUILD_DIR):
@@ -85,4 +85,9 @@ def get_nomos_summary(parameters):
   logs = extract_nomos_errors(nomos_output, cluster_id)
   shutil.rmtree(NOMOS_BUILD_DIR)
 
-  return NomosSummary(status=status, logs=logs, last_synced_token=last_synced_token)
+  up_to_date = None
+
+  if latest_commit_sha != None and last_synced_token != None and last_synced_token != "N/A":
+    up_to_date = latest_commit_sha.startswith(last_synced_token)
+
+  return NomosSummary(status=status, logs=logs, last_synced_token=last_synced_token, up_to_date=up_to_date)

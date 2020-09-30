@@ -63,7 +63,7 @@ def main():
       if not executed:
         get_kubectl_creds(parameters)
 
-      nomos_summary = get_nomos_summary(parameters)
+      nomos_summary = get_nomos_summary(parameters, cloudbuild_summary.commit_sha)
 
     print_results(PipelineSummary(git=git_summary, cloudbuild=cloudbuild_summary, nomos=nomos_summary))
     executed = True

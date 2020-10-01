@@ -1,5 +1,6 @@
 from colorize import Color, colorize
 from cloudbuild import BuildStatusSummary
+from actuation import ActuationSummaryStatus
 
 def get_nomos_status_formatted_text(nomos_status):
   NOMOS_STATUS_COLORIZED = {
@@ -44,6 +45,22 @@ def print_nomos_info(nomos_summary):
     if nomos_summary.logs != None and nomos_summary.logs != "":
       print("{}\n{}\n".format(colorize("Nomos logs:", Color.BOLD), nomos_summary.logs))
 
+def print_actuation_info(actuation_summary):
+  if actuation_summary != None:
+    status_dict = actuation_summary.status_dict
+
+    if len(status_dict) > 0:
+      print(colorize("Actuation status:", Color.BOLD))
+
+    for key in status_dict:
+      print("{} - {}".format(key, status_dict[key].status.value))
+
+      if status_dict[key].reason != None:
+        print("  Reason: " + str(status_dict[key].reason))
+      if status_dict[key].message != None:
+        print("  Message: " + str(status_dict[key].message))
+
+
 # Pretty prints the final results of the pipeline status summarized by info
 # extracted from various sources.
 def print_results(pipeline_summary):
@@ -51,6 +68,7 @@ def print_results(pipeline_summary):
   print_git_info(pipeline_summary.git)
   print_cloudbuild_info(pipeline_summary.cloudbuild)
   print_nomos_info(pipeline_summary.nomos)
+  print_actuation_info(pipeline_summary.actuation)
 
   nomos_status = "Unknown"
 
@@ -61,8 +79,8 @@ def print_results(pipeline_summary):
   print(colorize("\nOverall pipeline summary:", Color.BOLD))
   print("Git [{}] --> Build [{}] --> Sync to cluster [{}] --> Actuated [{}]".format(
     pipeline_summary.git.status.value,
-    pipeline_summary.cloudbuild.status.value if pipeline_summary.cloudbuild != None else BuildStatusSummary.UNKNOWN.value,
+    pipeline_summary.cloudbuild.status.value if pipeline_summary.cloudbuild != None else "Unknown",
     nomos_status,
-    "Unknown" # TODO(jcwc): Figure out how to add actuated state
+    pipeline_summary.actuation.overall_status.value if pipeline_summary.actuation != None else "Unknown"
   ))
   print("=======================================\n")

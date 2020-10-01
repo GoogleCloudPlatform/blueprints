@@ -13,9 +13,10 @@ from google.cloud import storage
 from nomos import get_nomos_summary
 from print import print_results
 from git_status import GitStatus, get_git_summary
+from actuation import get_actuation_summary
 import collections
 
-PipelineSummary = collections.namedtuple('PipelineSummary', ['git', 'cloudbuild', 'nomos'])
+PipelineSummary = collections.namedtuple('PipelineSummary', ['git', 'cloudbuild', 'nomos', 'actuation'])
 
 def get_parameters():
   parser = argparse.ArgumentParser(description='Process command line inputs on cluster and git info')
@@ -55,6 +56,7 @@ def main():
     git_summary = get_git_summary(parameters)
     cloudbuild_summary = None
     nomos_summary = None
+    actuation_summary = None
 
     if git_summary.status == GitStatus.PUSHED:
       cloudbuild_summary = get_cloudbuild_summary(parameters)
@@ -65,7 +67,10 @@ def main():
 
       nomos_summary = get_nomos_summary(parameters, cloudbuild_summary.commit_sha)
 
-    print_results(PipelineSummary(git=git_summary, cloudbuild=cloudbuild_summary, nomos=nomos_summary))
+    if nomos_summary != None and nomos_summary.up_to_date == True:
+      actuation_summary = get_actuation_summary(cloudbuild_summary.blast_radius)
+
+    print_results(PipelineSummary(git=git_summary, cloudbuild=cloudbuild_summary, nomos=nomos_summary, actuation=actuation_summary))
     executed = True
     time.sleep(1)
 

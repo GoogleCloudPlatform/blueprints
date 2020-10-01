@@ -7,8 +7,9 @@ from google.cloud import storage
 from google.cloud.devtools import cloudbuild_v1
 from google.cloud.devtools.cloudbuild_v1.types import Build
 from google.cloud.storage.blob import Blob
+from blast_radius import get_blast_radius
 
-CloudBuildSummary = collections.namedtuple('CloudBuildSummary', ['status', 'logs', 'logs_url', 'commit_sha'])
+CloudBuildSummary = collections.namedtuple('CloudBuildSummary', ['status', 'logs', 'logs_url', 'commit_sha', 'blast_radius'])
 
 class BuildStatusSummary(enum.Enum):
   UNKNOWN = "Unknown"
@@ -49,6 +50,7 @@ def get_cloudbuild_summary(parameters):
   build_info = filtered_builds[0]
   build_status = ""
   build_logs = ""
+  blast_radius = None
 
   blob = Blob.from_string("{}/log-{}.txt".format(build_info.logs_bucket, build_info.id), storage_client)
   log_entries = blob.download_as_string().decode("utf-8").rstrip().splitlines()
@@ -57,6 +59,8 @@ def get_cloudbuild_summary(parameters):
     build_status = BuildStatusSummary.UNKNOWN
   elif build_info.status == Build.Status.SUCCESS.value:
     build_status = BuildStatusSummary.BUILD_SUCCESS
+    blast_radius = get_blast_radius(log_entries)
+    build_logs = blast_radius.logs
   elif build_info.status == Build.Status.QUEUED.value or build_info.status == Build.Status.WORKING.value:
     build_status = BuildStatusSummary.BUILD_PENDING
   else:
@@ -67,4 +71,4 @@ def get_cloudbuild_summary(parameters):
 
   # Print only the last 10 lines
   build_logs = "\n".join(log_entries[-10:]) if build_logs == "" else build_logs
-  return CloudBuildSummary(status=build_status, logs=build_logs, logs_url=build_info.log_url, commit_sha=commit_sha)
+  return CloudBuildSummary(status=build_status, logs=build_logs, logs_url=build_info.log_url, commit_sha=commit_sha, blast_radius=blast_radius)

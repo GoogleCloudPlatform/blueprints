@@ -5,7 +5,7 @@ metadata:
     cnrm.cloud.google.com/auto-create-network: "false"
     cnrm.cloud.google.com/folder-id: parent-folder-id # {"$kpt-set":"parent-folder-id"}
   name: project-id # {"$kpt-set":"project-id"}
-  namespace: projects-namespace # {"$kpt-set":"projects-namespace"}
+  namespace: projects # {"$kpt-set":"projects-namespace"}
 spec:
   name: project-id # {"$kpt-set":"project-id"}
   billingAccountRef:

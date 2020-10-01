@@ -13,11 +13,10 @@ spec:
   triggerTemplate:
     repoRef:
       name: source-repo # {"$kpt-set":"source-repo"}
-    branchName: staging
+    branchName: "[^master]"
   substitutions:
     "_SOURCE_REPO": "source-repo" # {"$kpt-set":"source-repo"}
     "_DEPLOYMENT_REPO": "deployment-repo" # {"$kpt-set":"deployment-repo"}
-    "_STAGING_BRANCH": "staging"
   build:
     timeout: 600s
     step:
@@ -30,7 +29,6 @@ spec:
       - |
         gcloud source repos clone $_DEPLOYMENT_REPO .
         git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
-        (git show-branch foo1 &>/dev/null) && (git checkout $_STAGING_BRANCH) || (git checkout -b $_STAGING_BRANCH)
         mkdir -p /deployment-workspace/config
       timeout: 300s
       volumes:
@@ -62,6 +60,7 @@ spec:
       args:
       - '-c'
       - |
+        printf "\n\nDiffing against deployment repo master branch:\n"
         evaluate --before="/deployment-workspace/config" --after="/hydrated-workspace/config"
       volumes:
       - name: hydrated-workspace
@@ -77,6 +76,7 @@ spec:
       args:
       - '-c'
       - |
+        (git show-branch $BRANCH_NAME &>/dev/null) && (git checkout $BRANCH_NAME) || (git checkout -b $BRANCH_NAME)
         rm -r /deployment-workspace/config/*
         cp -r /hydrated-workspace/config /deployment-workspace/
         touch /deployment-workspace/config/.gitkeep
@@ -86,7 +86,7 @@ spec:
         git add -A
         git status
         if git diff --cached --exit-code; then echo "No changes"; true;
-        else git commit -m "Resources from ${COMMIT_SHA}" && git push origin $_STAGING_BRANCH; fi
+        else git commit -m "Resources from ${COMMIT_SHA}" && git push origin $BRANCH_NAME; fi
 
         printf "\n\nLatest deployment repo commit SHA: $(git rev-parse HEAD)\n"
       volumes:

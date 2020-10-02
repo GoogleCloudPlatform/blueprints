@@ -60,5 +60,5 @@ spec:
     naming_rules:
     - kind: Folder
       patterns:
-      # Matches formats such as "prod" or "dev.something" or "qa.something.else"
-      - (^(dev|prod|staging|qa)$)|(^(dev|prod|staging|qa)[.][a-z0-9-]+$)|(^(dev|prod|staging|qa)[.][a-z0-9-]+[.][a-z0-9-]+$)
+      # Matches formats such as "prod" or "dev.something" or "prod.something.else" or ".*shared.*"
+      - (^(dev|prod)$)|(^(dev|prod)[.][a-z0-9-]+$)|(^(dev|prod)[.][a-z0-9-]+[.][a-z0-9-]+$)|shared

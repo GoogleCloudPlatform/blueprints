@@ -61,4 +61,4 @@ spec:
     - kind: Folder
       patterns:
       # Matches only "dev", "prod", "staging" or "qa"
-      - ^(dev|prod|staging|qa)$
+      - ^(dev|prod|staging|qa|shared)$

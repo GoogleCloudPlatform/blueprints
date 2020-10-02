@@ -21,6 +21,7 @@ spec:
     - financial
     - commercial
     teams:
+    - shared
     - apps
     - web
     - core_service

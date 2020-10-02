@@ -3,7 +3,10 @@ kind: Project
 metadata:
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
-    cnrm.cloud.google.com/folder-id: parent-folder-id # {"$kpt-set":"parent-folder-id"}
+    cnrm.cloud.google.com/folder-ref: "name.of.folder" # {"$kpt-set":"folder-name"}
+    config.kubernetes.io/function: |
+      container:
+        image: gcr.io/yakima-eap/folder-ref:v1
   name: project-id # {"$kpt-set":"project-id"}
   namespace: projects # {"$kpt-set":"projects-namespace"}
 spec:

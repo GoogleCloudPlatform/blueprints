@@ -10,12 +10,12 @@ openAPI:
           name: billing-account-id
           value: AAAAAA-BBBBBB-CCCCCC
       description: Billing account ID
-    io.k8s.cli.setters.parent-folder-id:
+    io.k8s.cli.setters.folder-name:
       x-k8s-cli:
         setter:
-          name: parent-folder-id
-          value: parent-folder-id
-      description: Parent folder ID
+          name: folder-name
+          value: name.of.folder
+      description: Kubernetes metadata name of the parent folder resource.
     io.k8s.cli.setters.project-id:
       x-k8s-cli:
         setter:

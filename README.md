@@ -17,7 +17,7 @@ Landing Zone CUJs and associated blueprints.
 | -------------------------------------------------------- | -------------------------------- | --------------------- | ----------------------------------------------------------------------------------- |
 | [CUJ1: Discovery/Set up][1]                              | [Bootstrap]                      | Script, supports ACP  | [bootstrap, video][demo-1a] - [actuation][demo-1b], [shell](./demos/bootstrap.cast) |
 |                                                          | [GitOps](/csr-git-ops-pipeline/) | Ready                 | [Clone + LZ](./demos/lz.cast)                                                       |
-|                                                          | [Landing Zone](/landing-zone/)   | **requirements WIP**  |                                                                                     |
+|                                                          | [Landing Zone](/landing-zone/)   | Ready                 |                                                                                     |
 | [CUJ2: Configure Resource Hierarchy][2] - [4 Options][9] | [Overview Docs](/hierarchy)      | Ready                 |                                                                                     |
 |                                                          | [Simple](/hierarchy/simple)      | Ready                 |                                                                                     |
 |                                                          | [Team](/hierarchy/team)          | Ready                 |                                                                                     |
@@ -26,10 +26,11 @@ Landing Zone CUJs and associated blueprints.
 | [CUJ3: Manage Project Factory][3]                        | [Project](/project/)             | Ready                 | [project factory][demo-3]                                                           |
 | [CUJ4: Set up networking][4]                             | [Network](/network/)             | Ready                 |                                                                                     |
 |                                                          | [Firewall](/firewall/)           | Ready                 |                                                                                     |
-| [CUJ5: Set up access control][5]                         | [Org hierarchy](/hierarchy/)     | **Needs** Org IAM     |                                                                                     |
+| [CUJ5: Set up access control][5]                         | [Landing Zone](/landing-zone/)   | Ready                 |                                                                                     |
+|                                                          | [Org hierarchy](/hierarchy/)     | Ready                 |                                                                                     |
 |                                                          | [Project](/project/)             | Ready                 |                                                                                     |
-|                                                          | [Network](/network/)             | **Needs** Network IAM |                                                                                     |
-| [CUJ6: Set up logging and monitoring][6]                 | [Log export](/log-export/)       | In progress           |                                                                                     |
+|                                                          | [Network](/network/)             | Ready                 |                                                                                     |
+| [CUJ6: Set up logging and monitoring][6]                 | [Log export](/log-export/)       | Ready                 |                                                                                     |
 | [CUJ7: Set up change control and security guardrails][7] | [Org policies](/policies/)       | **Missing**           |                                                                                     |
 | [CUJ8: Collaborate][8]                                   | [GitOps](/csr-git-ops-pipeline/) | Ready                 | N/A - Tested by CUJ 2 through 7                                                     |
 

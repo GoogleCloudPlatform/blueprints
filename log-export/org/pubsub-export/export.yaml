@@ -16,7 +16,7 @@ metadata:
   namespace: my-namespace # {"$kpt-set":"namespace"}
 spec:
   filter: "" # {"$kpt-set":"filter"}
-  orgId: "123456789012" # {"$kpt-set":"organization-id"}
+  orgId: "123456789012" # {"$kpt-set":"org-id"}
   destination:
     pubSubTopicRef:
       name: pubsub-logexport-dataset # {"$kpt-set":"topic-name"}

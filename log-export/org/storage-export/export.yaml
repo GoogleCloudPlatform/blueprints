@@ -15,7 +15,7 @@ metadata:
   name: 123456789012-storagesink # {"$kpt-set":"log-sink-name"}
   namespace: my-namespace # {"$kpt-set":"namespace"}
 spec:
-  orgId: "123456789012" # {"$kpt-set":"organization-id"}
+  orgId: "123456789012" # {"$kpt-set":"org-id"}
   destination:
     storageBucketRef:
       name: my-storage-bucket # {"$kpt-set":"storage-bucket-name"}

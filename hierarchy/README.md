@@ -23,7 +23,7 @@ Replace step #3 with the following commands instead:
 kpt pkg get sso://cnrm/blueprints.git/hierarchy/<hierarchy option>@master hierarchy
 kpt cfg list-setters hierarchy
 kpt cfg set hierarchy namespace <your namespace>
-kpt cfg set hierarchy organization-id <your organization ID>
+kpt cfg set hierarchy org-id <your organization ID>
 ```
 
 As part of step #9, you can run the following command to verify the state and existence of the resources

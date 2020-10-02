@@ -29,13 +29,13 @@ openAPI:
       x-k8s-cli:
         substitution:
           name: log-sink-name
-          pattern: ${organization-id}-pubsubsink
+          pattern: ${org-id}-pubsubsink
           values:
-          - marker: ${organization-id}
-            ref: '#/definitions/io.k8s.cli.setters.organization-id'
-    io.k8s.cli.setters.organization-id:
+          - marker: ${org-id}
+            ref: '#/definitions/io.k8s.cli.setters.org-id'
+    io.k8s.cli.setters.org-id:
       description: The ID of the organization to sink logs from
       x-k8s-cli:
         setter:
-          name: organization-id
+          name: org-id
           value: "123456789012"

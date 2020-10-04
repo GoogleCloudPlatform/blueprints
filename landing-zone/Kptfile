@@ -102,3 +102,27 @@ openAPI:
           values:
           - marker: ${MANAGEMENT_PROJECT_ID}
             ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.networking-sa-ref:
+      x-k8s-cli:
+        substitution:
+          name: networking-sa-ref
+          pattern: serviceAccount:networking-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.networking-workload-identity-sa:
+      x-k8s-cli:
+        substitution:
+          name: networking-workload-identity-sa
+          pattern: serviceAccount:${MANAGEMENT_PROJECT_ID}.svc.id.goog[cnrm-system/cnrm-controller-manager-networking]
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.networking-sa-email:
+      x-k8s-cli:
+        substitution:
+          name: networking-sa-email
+          pattern: networking-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'

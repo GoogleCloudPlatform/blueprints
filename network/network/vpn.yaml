@@ -1,5 +1,5 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeVPNGateway
+kind: ComputeTargetVPNGateway
 metadata:
   name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
   namespace: networking # {"$kpt-set":"namespace"}

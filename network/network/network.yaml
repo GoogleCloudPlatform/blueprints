@@ -12,6 +12,7 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
   name: network-name-subnetwork # {"$kpt-set":"subnetwork-name"}
+  namespace: network-namespace # {"$kpt-set":"network-namespace"}
 spec:
   ipCidrRange: 10.2.0.0/16
   region: us-central1 # {"$kpt-set":"region"}

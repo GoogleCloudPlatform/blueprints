@@ -2,7 +2,9 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeVPNGateway
 metadata:
   name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
-  namespace: network-namespace # {"$kpt-set":"network-namespace"}
+  namespace: networking # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   description: "Compute VPN Gateway"
   region: us-central1 # {"$kpt-set":"region"}
@@ -13,7 +15,9 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeVPNTunnel
 metadata:
   name: network-name-vpn-tunnel # {"$kpt-set":"vpn-tunnel-name"}
-  namespace: network-namespace # {"$kpt-set":"network-namespace"}
+  namespace: networking # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   peerIp: "15.0.0.120"
   region: us-central1 # {"$kpt-set":"region"}
@@ -31,7 +35,9 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
   name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}
-  namespace: network-namespace # {"$kpt-set":"network-namespace"}
+  namespace: networking # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   location: us-central1 # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
   description: "Regional address"
@@ -40,7 +46,9 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeForwardingRule
 metadata:
   name: network-name-vpn-fr # {"$kpt-set":"vpn-fr-name"}
-  namespace: network-namespace # {"$kpt-set":"network-namespace"}
+  namespace: networking # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   description: "Regional forwarding rule"
   target:

@@ -9,7 +9,7 @@ openAPI:
       x-k8s-cli:
         setter:
           name: namespace
-          value: namespace
+          value: networking
     io.k8s.cli.setters.project-id:
       description: Project ID for shared VPC
       x-k8s-cli:

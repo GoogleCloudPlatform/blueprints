@@ -17,4 +17,4 @@ openAPI:
       x-k8s-cli:
         setter:
           name: namespace
-          value: my-namespace
+          value: hierarchy

@@ -4,7 +4,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/folder-ref: dev
   name: dev.shared
-  namespace: my-namespace # {"$kpt-set":"namespace"}
+  namespace: hierarchy # {"$kpt-set":"namespace"}
 spec:
   displayName: shared
 ---
@@ -14,6 +14,6 @@ metadata:
   annotations:
     cnrm.cloud.google.com/folder-ref: prod
   name: prod.shared
-  namespace: my-namespace # {"$kpt-set":"namespace"}
+  namespace: hierarchy # {"$kpt-set":"namespace"}
 spec:
   displayName: shared

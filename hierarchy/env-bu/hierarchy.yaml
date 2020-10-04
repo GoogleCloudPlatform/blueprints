@@ -7,7 +7,7 @@ metadata:
         image: gcr.io/yakima-eap/generate-folders:latest
     config.kubernetes.io/local-config: "true"
   name: root-hierarchy
-  namespace: my-namespace # {"$kpt-set":"namespace"}
+  namespace: hierarchy # {"$kpt-set":"namespace"}
 spec:
   organization: "123456789012" # {"$kpt-set":"org-id"}
   layers:
@@ -33,4 +33,4 @@ metadata:
       container:
         image: gcr.io/yakima-eap/folder-ref:v1
   name: folder-ref-kpt-fn
-  namespace: my-namespace # {"$kpt-set":"namespace"}
+  namespace: hierarchy # {"$kpt-set":"namespace"}

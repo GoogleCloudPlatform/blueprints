@@ -19,9 +19,9 @@ spec:
   region: us-central1 # {"$kpt-set":"region"}
   sharedSecret:
     valueFrom:
-    secretKeyRef:
-      name: vpn-shared-secret # {"$kpt-set":"vpn-secret-name"}
-      key: vpn-shared-secret # {"$kpt-set":"vpn-secret-key"}
+      secretKeyRef:
+        name: vpn-shared-secret # {"$kpt-set":"vpn-secret-name"}
+        key: vpn-shared-secret # {"$kpt-set":"vpn-secret-key"}
   targetVPNGatewayRef:
     name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
   localTrafficSelector:

@@ -2,7 +2,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
   name: project-id-sa # {"$kpt-set":"project-id-sa"}
-  namespace: iam-namespace # {"$kpt-set":"iam-namespace"}
+  namespace: management-namespace # {"$kpt-set":"management-namespace"}
 spec:
   displayName: project-id-sa # {"$kpt-set":"project-id-sa"}
 ---
@@ -10,9 +10,9 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: project-id-sa-owners-permissions # {"$kpt-set":"project-id-sa-owners-permissions"}
-  namespace: iam-namespace # {"$kpt-set":"iam-namespace"}
+  namespace: management-namespace # {"$kpt-set":"management-namespace"}
 spec:
-  member: "serviceAccount:project-id-sa@iam-project-id.iam.gserviceaccount.com" # {"$kpt-set":"project-id-sa-ref"}
+  member: "serviceAccount:project-id-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"project-id-sa-ref"}
   role: roles/owner
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -23,11 +23,11 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: project-id-sa-workload-identity-binding # {"$kpt-set":"workload-identity-binding"}
-  namespace: iam-namespace # {"$kpt-set":"iam-namespace"}
+  namespace: management-namespace # {"$kpt-set":"management-namespace"}
   annotations:
-    cnrm.cloud.google.com/project-id: iam-project-id # {"$kpt-set":"iam-project-id"}
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
-  member: serviceAccount:iam-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-project-id] # {"$kpt-set":"workload-identity-sa"}
+  member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-project-id] # {"$kpt-set":"workload-identity-sa"}
   role: roles/iam.workloadIdentityUser
   resourceRef:
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -47,4 +47,4 @@ metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: project-id # {"$kpt-set":"project-namespace"}
 spec:
-  googleServiceAccount: project-id-sa@iam-project-id.iam.gserviceaccount.com # {"$kpt-set":"project-id-sa-email"}
+  googleServiceAccount: project-id-sa@management-project-id.iam.gserviceaccount.com # {"$kpt-set":"project-id-sa-email"}

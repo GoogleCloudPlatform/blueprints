@@ -39,23 +39,61 @@ metadata:
   annotations:
     cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
-  location: us-central1 # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
+  location: us-central1 # {"$kpt-set":"region"}
   description: "Regional address"
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeForwardingRule
 metadata:
-  name: network-name-vpn-fr # {"$kpt-set":"vpn-fr-name"}
+  name: network-name-vpn-esp-fr # {"$kpt-set":"vpn-esp-fr-name"}
   namespace: networking # {"$kpt-set":"namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
-  description: "Regional forwarding rule"
+  description: "Regional ESP forwarding rule"
   target:
     targetVPNGatewayRef:
       name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
   ipProtocol: "ESP"
-  location: us-central1 # {"$ref":"#/definitions/io.k8s.cli.setters.region"}
+  location: us-central1 # {"$kpt-set":"region"}
+  ipAddress:
+    addressRef:
+      name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeForwardingRule
+metadata:
+  name: acme-vpc-dev-vpn-udp500-fr # {"$kpt-set":"vpn-udp500-fr-name"}
+  namespace: networking # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
+spec:
+  description: "Regional UDP 500 forwarding rule"
+  target:
+    targetVPNGatewayRef:
+      name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
+  ipProtocol: "UDP"
+  portRange: "500"
+  location: us-central1 # {"$kpt-set":"region"}
+  ipAddress:
+    addressRef:
+      name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeForwardingRule
+metadata:
+  name: acme-vpc-dev-vpn-udp4500-fr # {"$kpt-set":"vpn-udp4500-fr-name"}
+  namespace: networking # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
+spec:
+  description: "Regional UDP 4500 forwarding rule"
+  target:
+    targetVPNGatewayRef:
+      name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
+  ipProtocol: "UDP"
+  portRange: "4500"
+  location: us-central1 # {"$kpt-set":"region"}
   ipAddress:
     addressRef:
       name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}

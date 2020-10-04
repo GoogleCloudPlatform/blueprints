@@ -80,11 +80,27 @@ openAPI:
           values:
           - marker: ${NETWORK_NAME}
             ref: '#/definitions/io.k8s.cli.setters.network-name'
-    io.k8s.cli.substitutions.vpn-fr-name:
+    io.k8s.cli.substitutions.vpn-esp-fr-name:
       x-k8s-cli:
         substitution:
-          name: vpn-fr-name
-          pattern: ${NETWORK_NAME}-vpn-fr
+          name: vpn-esp-fr-name
+          pattern: ${NETWORK_NAME}-vpn-esp-fr
+          values:
+          - marker: ${NETWORK_NAME}
+            ref: '#/definitions/io.k8s.cli.setters.network-name'
+    io.k8s.cli.substitutions.vpn-udp500-fr-name:
+      x-k8s-cli:
+        substitution:
+          name: vpn-udp500-fr-name
+          pattern: ${NETWORK_NAME}-vpn-udp500-fr
+          values:
+          - marker: ${NETWORK_NAME}
+            ref: '#/definitions/io.k8s.cli.setters.network-name'
+    io.k8s.cli.substitutions.vpn-udp4500-fr-name:
+      x-k8s-cli:
+        substitution:
+          name: vpn-udp4500-fr-name
+          pattern: ${NETWORK_NAME}-vpn-udp4500-fr
           values:
           - marker: ${NETWORK_NAME}
             ref: '#/definitions/io.k8s.cli.setters.network-name'

@@ -2,6 +2,7 @@ package main
 
 import (
 	"bytes"
+	"encoding/json"
 	"fmt"
 	"os"
 	"text/template"
@@ -14,7 +15,19 @@ import (
 const annotation string = "cnrm.cloud.google.com/folder-ref"
 const operableVersion string = "resourcemanager.cnrm.cloud.google.com/v1beta1"
 
-var operableKindSet map[string]bool = map[string]bool{"Folder": true, "Project": true}
+var (
+	operableKindSet         = map[string]bool{"Folder": true, "Project": true}
+	parsedRoleTemplate      = template.Must(template.New("role-template").Parse(rbacRoleTemplate))
+	parsedBindingTemplate   = template.Must(template.New("binding-template").Parse(rbacBindingTemplate))
+	parsedFutureTemplate    = template.Must(template.New("future-obj").Parse(futureObjecTemplate))
+	parsedReferenceTemplate = template.Must(template.New("fieldref-obj").Parse(fieldRefTemplate))
+)
+
+// TODO: update kyaml and use yaml.NameMeta
+type namespacedName struct {
+	Namespace string
+	Name      string
+}
 
 func isOperableKind(kind string) bool {
 	_, ok := operableKindSet[kind]
@@ -33,12 +46,12 @@ func main() {
 			}
 
 			// Build new fieldref
-			generatedRef, err := genFieldRef(resourceList.Items[i])
+			generatedRef, err := fieldReference(resourceList.Items[i])
 			if err != nil {
 				return err
 			}
 			refObjs = append(refObjs, generatedRef)
-			namespaceSet[getNs(resourceList.Items[i])] = true
+			namespaceSet[namespace(resourceList.Items[i])] = true
 
 			// Replace with a future
 			future, err := wrapInCork(resourceList.Items[i])
@@ -51,7 +64,7 @@ func main() {
 		resourceList.Items = append(resourceList.Items, refObjs...)
 
 		// Add RBAC objects
-		rbacObjs, err := generateRbacObjs(namespaceSet)
+		rbacObjs, err := rbacObjects(namespaceSet)
 		if err != nil {
 			return err
 		}
@@ -78,7 +91,7 @@ func main() {
 	}
 }
 
-func getNs(r *yaml.RNode) string {
+func namespace(r *yaml.RNode) string {
 	meta, err := r.GetMeta()
 	if err != nil {
 		return ""
@@ -86,14 +99,12 @@ func getNs(r *yaml.RNode) string {
 	return meta.ObjectMeta.Namespace
 }
 
-func generateRbacObjs(namespaces map[string]bool) ([]*yaml.RNode, error) {
+func rbacObjects(namespaces map[string]bool) ([]*yaml.RNode, error) {
 	var rbacObj []*yaml.RNode
-	t1 := template.Must(template.New("role-template").Parse(rbacRoleTemplate))
-	t2 := template.Must(template.New("binding-template").Parse(rbacBindingTemplate))
 	for ns := range namespaces {
 		// Role
 		buff := &bytes.Buffer{}
-		if err := t1.Execute(buff, map[string]string{"namespace": ns}); err != nil {
+		if err := parsedRoleTemplate.Execute(buff, map[string]string{"namespace": ns}); err != nil {
 			return nil, fmt.Errorf("Role template expansion error: %v", err)
 		}
 		s := buff.String()
@@ -104,7 +115,7 @@ func generateRbacObjs(namespaces map[string]bool) ([]*yaml.RNode, error) {
 		rbacObj = append(rbacObj, rbac)
 		// Binding
 		buff.Reset()
-		if err := t2.Execute(buff, map[string]string{"namespace": ns}); err != nil {
+		if err := parsedBindingTemplate.Execute(buff, map[string]string{"namespace": ns}); err != nil {
 			return nil, fmt.Errorf("RoleBinding template expansion error: %v", err)
 		}
 		s = buff.String()
@@ -138,20 +149,24 @@ func shouldRun(r *yaml.RNode) bool {
 }
 
 // TODO: for now this means every child obj will create a field ref, even if they have parents in common. So there may be duplicate fieldrefs.
-func genFieldRef(r *yaml.RNode) (*yaml.RNode, error) {
+func fieldReference(r *yaml.RNode) (*yaml.RNode, error) {
 	meta, err := r.GetMeta()
 	if err != nil {
 		return nil, err
 	}
-	ns := meta.ObjectMeta.Namespace
+	workingNamespace := meta.ObjectMeta.Namespace
 	ps, ok := meta.Annotations[annotation]
 	if !ok {
 		return nil, fmt.Errorf("Missing %v annotation: %v", annotation, meta.Annotations)
 	}
+	namespacedParent := parseAnnotation(ps)
+	// Default to local working ns if one isn't specified in the annotation.
+	if namespacedParent.Namespace == "" {
+		namespacedParent.Namespace = workingNamespace
+	}
 
 	buff := &bytes.Buffer{}
-	t := template.Must(template.New("fieldref-obj").Parse(fieldRefTemplate))
-	if err := t.Execute(buff, map[string]string{"namespace": ns, "parent": ps}); err != nil {
+	if err := parsedReferenceTemplate.Execute(buff, map[string]string{"namespace": workingNamespace, "parentN": namespacedParent.Name, "parentNS": namespacedParent.Namespace}); err != nil {
 		return nil, err
 	}
 	return yaml.Parse(buff.String())
@@ -169,6 +184,7 @@ func wrapInCork(r *yaml.RNode) (*yaml.RNode, error) {
 	if !ok {
 		return nil, fmt.Errorf("Missing %v annotation: %v", annotation, meta.Annotations)
 	}
+	namespacedParent := parseAnnotation(ps)
 
 	// Set folder parent to cork var "${folder-name}"
 	// NOTE: this variable must match the name in the spec.variables of the template below
@@ -177,10 +193,10 @@ func wrapInCork(r *yaml.RNode) (*yaml.RNode, error) {
 		return nil, fmt.Errorf("Failed to add folder-id annotation: %v", err)
 	}
 
-	templateContext := map[string]string{"name": folderName, "namespace": ns, "parent": ps}
+	templateContext := map[string]string{"name": folderName, "namespace": ns, "parent": namespacedParent.Name}
 	buff := &bytes.Buffer{}
-	t := template.Must(template.New("future-obj").Parse(futureObjecTemplate))
-	if err := t.Execute(buff, templateContext); err != nil {
+
+	if err := parsedFutureTemplate.Execute(buff, templateContext); err != nil {
 		return nil, fmt.Errorf("Future template expansion error: %v", err)
 	}
 	s := buff.String()
@@ -201,6 +217,16 @@ func wrapInCork(r *yaml.RNode) (*yaml.RNode, error) {
 	return futureNode, nil
 }
 
+func parseAnnotation(annotation string) namespacedName {
+	var ref namespacedName
+	e := json.Unmarshal([]byte(annotation), &ref)
+	if e != nil {
+		// For backwards compat, assume any non-parseable annotations are simply a name alone
+		return namespacedName{Name: annotation}
+	}
+	return ref
+}
+
 var futureObjecTemplate = `apiVersion: orchestration.cnrm.cloud.google.com/v1alpha1
 kind: FutureObject
 metadata:
@@ -217,11 +243,11 @@ spec:
 var fieldRefTemplate = `apiVersion: orchestration.cnrm.cloud.google.com/v1alpha1
 kind: FieldReference
 metadata:
-  name: {{ .parent }}-ref
+  name: {{ .parentN }}-{{ .parentNS }}-ref
   namespace: {{ .namespace }}
 spec:
   configMapRef:
-    name: {{ .parent }}-ref-cm
+    name: {{ .parentN }}-ref-cm
     key: folder-name
   jsonPath: "{$.status.name}"
   mutators:
@@ -231,8 +257,8 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Folder
-    name: {{ .parent }}
-    namespace: {{ .namespace }}`
+    name: {{ .parentN }}
+    namespace: {{ .parentNS }}`
 
 var rbacBindingTemplate = `apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding

@@ -61,7 +61,7 @@ spec:
       - '-c'
       - |
         printf "\n\nDiffing against deployment repo master branch:\n"
-        evaluate --before="/deployment-workspace/config" --after="/hydrated-workspace/config"
+        evaluate --before="/deployment-workspace/config" --after="/hydrated-workspace/config" --max_additions=100 --max_modifications=100 --max_deletions=100
       volumes:
       - name: hydrated-workspace
         path: /hydrated-workspace

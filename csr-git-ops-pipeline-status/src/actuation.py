@@ -11,12 +11,14 @@ ActuationSummary = collections.namedtuple('ActuationSummary', ['status_dict', 'o
 # containing a `status.conditions[]` field to expose progress.
 #
 # For now, we assume any issues with this will show up in nomos and the existence of the resource means it is updated.
+# TODO(jcwc): Come up with a more programmatic way to do this rather than an allow list of resources
 ABERRANT_RESOURCES = [
   "role",
   "rolebinding",
   "configmap",
   "namespace",
-  "configconnectorcontext"
+  "configconnectorcontext",
+  "constrainttemplate"
 ]
 
 class ActuationSummaryStatus(enum.Enum):
@@ -34,12 +36,12 @@ def get_status_of_modify_or_add(k8s_object):
   reason = ""
   message = ""
 
-  if "status" in k8s_object:
+  if "status" in k8s_object and "conditions" in k8s_object["status"]:
     reason = k8s_object["status"]["conditions"][0]["reason"]
     message = k8s_object["status"]["conditions"][0]["message"]
 
     if k8s_object["status"]["conditions"][0]["type"] == "Ready":
-      status = ActuationSummaryStatus.UPDATED if k8s_object["status"]["conditions"][0]["status"] else ActuationSummaryStatus.ERROR
+      status = ActuationSummaryStatus.UPDATED if k8s_object["status"]["conditions"][0]["status"] == "True" else ActuationSummaryStatus.ERROR
     elif reason == "Updating":
       status = ActuationSummaryStatus.UPDATING
 
@@ -55,7 +57,6 @@ def get_overall_status(status_dict):
   status = ActuationSummaryStatus.UNKNOWN
   immediateStates = [
     ActuationSummaryStatus.ERROR,
-    ActuationSummaryStatus.UNKNOWN,
     ActuationSummaryStatus.UPDATING
   ]
 

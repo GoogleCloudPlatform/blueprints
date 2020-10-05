@@ -41,6 +41,7 @@ spec:
         rule := input.parameters.naming_rules[_]
         kind := input.review.object.kind
         kind == "FutureObject"
+        input.review.object.spec.object.kind == rule.kind
         pattern := rule.patterns[_]
         name := input.review.object.spec.object.metadata.name
         not re_match(pattern, name)
@@ -60,5 +61,4 @@ spec:
     naming_rules:
     - kind: Folder
       patterns:
-      # Matches formats such as "prod" or "dev.something" or "prod.something.else" or ".*shared.*"
       - (^(dev|prod)$)|(^(dev|prod)[.][a-z0-9-]+$)|(^(dev|prod)[.][a-z0-9-]+[.][a-z0-9-]+$)|shared

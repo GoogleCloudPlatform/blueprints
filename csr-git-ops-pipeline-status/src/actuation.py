@@ -12,9 +12,11 @@ ActuationSummary = collections.namedtuple('ActuationSummary', ['status_dict', 'o
 #
 # For now, we assume any issues with this will show up in nomos and the existence of the resource means it is updated.
 ABERRANT_RESOURCES = [
-  "Role",
-  "RoleBinding",
-  "ConfigMap"
+  "role",
+  "rolebinding",
+  "configmap",
+  "namespace",
+  "configconnectorcontext"
 ]
 
 class ActuationSummaryStatus(enum.Enum):
@@ -75,7 +77,7 @@ def get_actuation_summary(blast_radius):
       status_dict[get_key(change)] = ActuationItem(status=ActuationSummaryStatus.ERROR, message=str(e.output), reason=None)
       continue
 
-    if change.kind in ABERRANT_RESOURCES:
+    if change.kind.lower() in ABERRANT_RESOURCES:
       status_dict[get_key(change)] = ActuationItem(status=ActuationSummaryStatus.UPDATED, message=None, reason=None)
     else:
       k8s_object = json.loads(stdout)

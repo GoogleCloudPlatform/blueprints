@@ -35,6 +35,19 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
+  name: hierarchy-sa-billinguser-permissions
+  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+spec:
+  member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"hierarchy-sa-ref"}
+  role: roles/billing.user
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # {"$kpt-set":"org-id"}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
   name: hierarchy-sa-projectdeleter-permissions
   namespace: management-project-id # {"$kpt-set":"management-namespace"}
 spec:

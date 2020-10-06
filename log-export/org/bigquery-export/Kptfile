@@ -11,7 +11,7 @@ openAPI:
       x-k8s-cli:
         setter:
           name: namespace
-          value: my-namespace
+          value: logging
     io.k8s.cli.setters.project-id:
       description: The project ID of the destination of your log exports
       x-k8s-cli:

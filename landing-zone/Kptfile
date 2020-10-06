@@ -37,7 +37,7 @@ openAPI:
         setter:
           name: group-billing-admins
           value: yakima-eap-users@googlegroups.com
-      description: Groupt to grant billing admin permissions.
+      description: Group to grant billing admin permissions.
     io.k8s.cli.substitutions.group-billing-admins-member:
       x-k8s-cli:
         substitution:
@@ -129,6 +129,30 @@ openAPI:
         substitution:
           name: networking-sa-email
           pattern: networking-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.logging-sa-ref:
+      x-k8s-cli:
+        substitution:
+          name: logging-sa-ref
+          pattern: serviceAccount:logging-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.logging-workload-identity-sa:
+      x-k8s-cli:
+        substitution:
+          name: logging-workload-identity-sa
+          pattern: serviceAccount:${MANAGEMENT_PROJECT_ID}.svc.id.goog[cnrm-system/cnrm-controller-manager-logging]
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.logging-sa-email:
+      x-k8s-cli:
+        substitution:
+          name: logging-sa-email
+          pattern: logging-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
           values:
           - marker: ${MANAGEMENT_PROJECT_ID}
             ref: '#/definitions/io.k8s.cli.setters.management-project-id'

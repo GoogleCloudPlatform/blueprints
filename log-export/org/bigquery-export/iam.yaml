@@ -3,7 +3,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: bq-project-iam-policy
-  namespace: my-namespace # {"$kpt-set":"namespace"}
+  namespace: logging # {"$kpt-set":"namespace"}
 spec:
   member:
     resourceRef:
@@ -24,4 +24,4 @@ metadata:
       container:
         image: gcr.io/yakima-eap/sink-policy:v1
   name: log-sink-p4sa-binding-fn
-  namespace: my-namespace # {"$kpt-set":"namespace"}
+  namespace: logging # {"$kpt-set":"namespace"}

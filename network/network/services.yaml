@@ -4,4 +4,4 @@ metadata:
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
   name: compute.googleapis.com
-  namespace: project-id # {"$kpt-set":"project-id"}
+  namespace: hierarchy

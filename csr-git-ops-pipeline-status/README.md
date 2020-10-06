@@ -39,6 +39,11 @@ rm -rf tmp
 **Windows**
 TBD
 
+**If you encounter HTTP 503/ OAuth reauth issues when running due to cloud build, you may need to also run:**
+```
+gcloud auth application-default login
+```
+
 ### Using with your CSR Git Ops pipeline
 1. Navigate to your source repository
 2. Run the following command to track your changes on your latest commit of your current branch:

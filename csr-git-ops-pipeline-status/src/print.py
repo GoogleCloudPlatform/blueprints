@@ -59,6 +59,7 @@ def print_actuation_info(actuation_summary):
         print("  Reason: " + str(status_dict[key].reason))
       if status_dict[key].message != None:
         print("  Message: " + str(status_dict[key].message))
+        print("")
 
 
 # Pretty prints the final results of the pipeline status summarized by info

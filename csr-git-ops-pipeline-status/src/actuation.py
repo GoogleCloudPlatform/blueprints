@@ -37,8 +37,10 @@ def get_status_of_modify_or_add(k8s_object):
   message = ""
 
   if "status" in k8s_object and "conditions" in k8s_object["status"]:
-    reason = k8s_object["status"]["conditions"][0]["reason"]
-    message = k8s_object["status"]["conditions"][0]["message"]
+    conditions = k8s_object["status"]["conditions"]
+    latest_condition = k8s_object["status"]["conditions"][0] if len(conditions) > 0 else {}
+    reason = latest_condition["reason"] if "reason" in latest_condition else ""
+    message = latest_condition["message"] if "message" in latest_condition else ""
 
     if k8s_object["status"]["conditions"][0]["type"] == "Ready":
       status = ActuationSummaryStatus.UPDATED if k8s_object["status"]["conditions"][0]["status"] == "True" else ActuationSummaryStatus.ERROR

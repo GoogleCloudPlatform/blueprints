@@ -9,6 +9,19 @@ OUTPUT="$(kpt fn run sample/ --enable-exec --exec-path ./bin/main --dry-run)"
 # 2 pairs of RBAC; 1 per namespace x 2 namespaces
 # the root folder
 TOTAL_RESOURCES="11"
+
+# Expect these strings to be in the output.
+# These are two RBAC bindings with a deterministic hash suffix that should not change, unless the resources in sample change.
+EXPECTED=("name: folder-ref-binding-1m8f2xj" \
+"folder-ref-binding-g90evd")
+
+for expect in "${EXPECTED[@]}"; do
+	if [ "$(echo "$OUTPUT" | grep -c "$expect")" == "0" ]; then
+		echo "failed	kpt tests failed: output missing expected string ["$expect"]"
+		exit 1
+	fi
+done
+
 if [ "$(echo "$OUTPUT" | grep -cE ^kind)" != "$TOTAL_RESOURCES" ]
 then
 	echo "failed	kpt tests failed: insufficient resources generated"

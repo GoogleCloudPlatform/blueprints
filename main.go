@@ -4,7 +4,11 @@ import (
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"hash/fnv"
 	"os"
+	"sort"
+	"strconv"
+	"strings"
 	"text/template"
 
 	"sigs.k8s.io/kustomize/kyaml/fn/framework"
@@ -39,7 +43,8 @@ func main() {
 	cmd := framework.Command(resourceList, func() error {
 		var refObjs []*yaml.RNode
 		var rbacObjs []*yaml.RNode
-		namespaceSet := make(map[string]bool)
+		// Namespace: List(Operable Object Names)
+		namespaceSet := make(map[string][]string)
 		for i := range resourceList.Items {
 			if !shouldRun(resourceList.Items[i]) {
 				continue
@@ -51,7 +56,8 @@ func main() {
 				return err
 			}
 			refObjs = append(refObjs, generatedRef)
-			namespaceSet[namespace(resourceList.Items[i])] = true
+			// Append this operable object's name to the namespace's list of objects.
+			namespaceSet[mustNamespace(resourceList.Items[i])] = append(namespaceSet[mustNamespace(resourceList.Items[i])], mustName(resourceList.Items[i]))
 
 			// Replace with a future
 			future, err := wrapInCork(resourceList.Items[i])
@@ -91,20 +97,33 @@ func main() {
 	}
 }
 
-func namespace(r *yaml.RNode) string {
+// mustName will panic if the provided r doesn't have a metadata.name field. This assumes the object is already validated by shouldRun
+func mustName(r *yaml.RNode) string {
 	meta, err := r.GetMeta()
 	if err != nil {
-		return ""
+		panic(err)
+	}
+	return meta.Name
+}
+
+func mustNamespace(r *yaml.RNode) string {
+	meta, err := r.GetMeta()
+	if err != nil {
+		panic(err)
 	}
 	return meta.ObjectMeta.Namespace
 }
 
-func rbacObjects(namespaces map[string]bool) ([]*yaml.RNode, error) {
+func rbacObjects(namespaces map[string][]string) ([]*yaml.RNode, error) {
 	var rbacObj []*yaml.RNode
 	for ns := range namespaces {
+		fingerprint, err := uniqueFingerprint(namespaces[ns])
+		if err != nil {
+			return nil, fmt.Errorf("Failed to hash object names in ns %v.\n%v", ns, err)
+		}
 		// Role
 		buff := &bytes.Buffer{}
-		if err := parsedRoleTemplate.Execute(buff, map[string]string{"namespace": ns}); err != nil {
+		if err := parsedRoleTemplate.Execute(buff, map[string]string{"namespace": ns, "fingerprint": fingerprint}); err != nil {
 			return nil, fmt.Errorf("Role template expansion error: %v", err)
 		}
 		s := buff.String()
@@ -115,7 +134,7 @@ func rbacObjects(namespaces map[string]bool) ([]*yaml.RNode, error) {
 		rbacObj = append(rbacObj, rbac)
 		// Binding
 		buff.Reset()
-		if err := parsedBindingTemplate.Execute(buff, map[string]string{"namespace": ns}); err != nil {
+		if err := parsedBindingTemplate.Execute(buff, map[string]string{"namespace": ns, "fingerprint": fingerprint}); err != nil {
 			return nil, fmt.Errorf("RoleBinding template expansion error: %v", err)
 		}
 		s = buff.String()
@@ -227,6 +246,19 @@ func parseAnnotation(annotation string) namespacedName {
 	return ref
 }
 
+// uniqueFingerprint hashes a list of names to return a deterministic base36 value.
+func uniqueFingerprint(nameList []string) (string, error) {
+	sort.Strings(nameList)
+	h := fnv.New32a()
+	_, e := h.Write([]byte(strings.Join(nameList, "_")))
+	if e != nil {
+		return "", e
+	}
+	i := h.Sum32()
+	s := strconv.FormatInt(int64(i), 36)
+	return s, nil
+}
+
 var futureObjecTemplate = `apiVersion: orchestration.cnrm.cloud.google.com/v1alpha1
 kind: FutureObject
 metadata:
@@ -263,7 +295,7 @@ spec:
 var rbacBindingTemplate = `apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: folder-ref-function-binding
+  name: folder-ref-binding-{{ .fingerprint }}
   namespace: {{ .namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
@@ -277,7 +309,7 @@ subjects:
 var rbacRoleTemplate = `apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  name: folder-ref-function-rw
+  name: folder-ref-role-{{ .fingerprint }}
   namespace: {{ .namespace }}
 rules:
 - apiGroups:

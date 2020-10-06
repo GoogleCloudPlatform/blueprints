@@ -8,7 +8,7 @@ metadata:
       container:
         image: gcr.io/yakima-eap/folder-ref:v1
   name: project-id # {"$kpt-set":"project-id"}
-  namespace: projects # {"$kpt-set":"projects-namespace"}
+  namespace: hierarchy # {"$kpt-set":"projects-namespace"}
 spec:
   name: project-id # {"$kpt-set":"project-id"}
   billingAccountRef:

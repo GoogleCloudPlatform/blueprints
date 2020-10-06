@@ -54,16 +54,22 @@ func (g *gcpHierarchyResource) IsFolder() bool {
 	return g.Type == "Folder"
 }
 
+func gpcDrawSanitize(name string) string {
+	val := strings.ReplaceAll(name, "-", "_")
+	val = strings.ReplaceAll(val, ".", "_")
+	return val
+}
+
 // GCPDrawName changes the name of the object to one that is supported by the
 // GCPDraw DSL
 func (g *gcpHierarchyResource) GCPDrawName() string {
-	return strings.ReplaceAll(g.Name, "-", "_")
+	return gpcDrawSanitize(g.Name)
 }
 
 // GCPDrawParentName returns the name of the parent object and transforms it to
 // a version supported by the GCP Draw DSL
 func (g *gcpHierarchyResource) GCPDrawParentName() string {
-	return strings.ReplaceAll(g.Parent, "-", "_")
+	return gpcDrawSanitize(g.Parent)
 }
 
 func processHierarchy(resourceList *framework.ResourceList, output io.Writer) error {

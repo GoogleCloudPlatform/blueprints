@@ -1,0 +1,12 @@
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Project
+metadata:
+  annotations:
+    cnrm.cloud.google.com/folder-ref: "folder-b"
+    config.kubernetes.io/function: |
+      container:
+        image: gcr.io/yakima-eap/folder-ref:v1
+  name: kpt-project-in-folder
+  namespace: project-hierarchy
+spec:
+  name: kpt-project-in-folder

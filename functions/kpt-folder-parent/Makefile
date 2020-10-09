@@ -8,7 +8,7 @@ IMG ?= gcr.io/${PROJECT_ID}/folder-ref:v1
 all: fix vet fmt test lint build
 
 build:
-	go build -o bin/main ./...
+	go build -o bin/main ./main.go
 
 fix:
 	go fix ./...

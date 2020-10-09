@@ -1,12 +1,22 @@
 FROM golang:1.14
 ENV CGO_ENABLED=0
 WORKDIR /go/src/
+# Copy in source and modules
 COPY go.mod .
 COPY go.sum .
-RUN go mod download
 COPY main.go .
+COPY hack/3p/ hack/3p/
+COPY LICENSE .
+# Process imports' licenses
+RUN go mod vendor
+RUN go run hack/3p/main.go
+# Build function
 RUN go build -v -o /usr/local/bin/config-function ./
 
 FROM alpine:latest
+
+COPY --from=0 /go/src/LICENSE /go/src/LICENSE
+COPY --from=0 /go/src/THIRD_PARTY_NOTICES/ THIRD_PARTY_NOTICES/
+COPY --from=0 /go/src/MIRRORED_LIBRARY_SOURCE/ MIRRORED_LIBRARY_SOURCE/
 COPY --from=0 /usr/local/bin/config-function /usr/local/bin/config-function
 CMD ["/usr/local/bin/config-function"]

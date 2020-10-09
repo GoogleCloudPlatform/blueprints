@@ -6,3 +6,5 @@ node_modules/
 **/testing.tfvars
 **/terraform.tfvars
 .DS_Store
+bin/
+.vscode

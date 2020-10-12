@@ -9,6 +9,8 @@ all: fix vet fmt test lint build
 
 build:
 	go build -o bin/main ./...
+	# TLDR: `make` can access parent dirs but docker can't, so make the shared 3p licensetool.
+	go build -o bin/licensetool ../hack/3p/main.go
 
 fix:
 	go fix ./...
@@ -33,7 +35,7 @@ vet:
 
 docker-release: docker-build docker-push
 
-docker-build: fix vet fmt test lint
+docker-build: fix vet fmt test lint build
 	docker build . -t ${IMG}
 
 docker-push:

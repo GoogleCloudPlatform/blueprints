@@ -4,11 +4,13 @@ TODO: add more content
 
 ## Development
 ### To make changes to the src/
+1. Run `npm install` to fetch all dependencies
 1. Make your local changes
 2. Run `npm test` to ensure that the tests are still passing
   - If the tests fail, go into the corresponding _test.ts file to fix it
 3. Once all tests pass, you can run
-   1. `npm run kpt:docker-build` to build the image locally
+   1. *  `npm run kpt:docker-build` to build the image locally
+      *  Alternatively: `docker builder build -f build/generate_folders.Dockerfile`
    2. Run it using `docker run gcr.io/yakima-eap/generate_folders:dev --help`
       - Note that the input to the image expects a CRD that matches:
       ```yaml

@@ -12,3 +12,11 @@ spec:
     secretType: gcenode
     policyDir: config
   sourceFormat: unstructured
+  patches:
+    - apiVersion: v1
+      kind: ServiceAccount
+      metadata:
+        name: importer
+        namespace: config-management-system
+        annotations:
+          iam.gke.io/gcp-service-account: 1234567890123-compute@developer.gserviceaccount.com # {"$kpt-set":"compute-sa-importer"}

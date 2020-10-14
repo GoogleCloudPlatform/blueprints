@@ -69,11 +69,19 @@ openAPI:
           name: cluster-name
           value: my-yakima-cluster
           isSet: true
-    io.k8s.cli.substitutions.compute-sa:
+    io.k8s.cli.substitutions.compute-sa-iam:
       x-k8s-cli:
         substitution:
-          name: compute-sa
+          name: compute-sa-iam
           pattern: serviceAccount:${project-number}-compute@developer.gserviceaccount.com
+          values:
+          - marker: ${project-number}
+            ref: '#/definitions/io.k8s.cli.setters.project-number'
+    io.k8s.cli.substitutions.compute-sa-importer:
+      x-k8s-cli:
+        substitution:
+          name: compute-sa-importer
+          pattern: ${project-number}-compute@developer.gserviceaccount.com
           values:
           - marker: ${project-number}
             ref: '#/definitions/io.k8s.cli.setters.project-number'

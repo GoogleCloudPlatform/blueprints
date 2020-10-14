@@ -35,7 +35,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
 spec:
-  member: serviceAccount:1234567890123-compute@developer.gserviceaccount.com # {"$kpt-set":"compute-sa"}
+  member: serviceAccount:1234567890123-compute@developer.gserviceaccount.com # {"$kpt-set":"compute-sa-iam"}
   role: roles/source.reader
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1

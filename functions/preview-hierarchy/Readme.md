@@ -10,3 +10,7 @@ Currently, the fn can be run as follows:
 go build -o render-hierarchy .
 kpt fn run samples/ --enable-exec --exec-path ./render-hierarchy -- output=test.svg
 ```
+
+# Release
+
+This gets auto-released by prow as `gcr.io/yakima-eap/preview-hierarchy:v1`.

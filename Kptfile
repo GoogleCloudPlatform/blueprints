@@ -1,0 +1,158 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: landing-zone
+packageMetadata:
+  shortDescription: Foundational landing zone blueprint for GCP
+openAPI:
+  definitions:
+    io.k8s.cli.setters.org-id:
+      x-k8s-cli:
+        setter:
+          name: org-id
+          value: "123456789012"
+      description: Organization ID value.
+    io.k8s.cli.setters.billing-account-id:
+      x-k8s-cli:
+        setter:
+          name: billing-account-id
+          value: AAAAAA-BBBBBB-CCCCCC
+      description: Billing account ID
+    io.k8s.cli.setters.group-org-admins:
+      x-k8s-cli:
+        setter:
+          name: group-org-admins
+          value: yakima-eap-users@googlegroups.com
+      description: Groupt to grant organization admin permissions.
+    io.k8s.cli.substitutions.group-org-admins-member:
+      x-k8s-cli:
+        substitution:
+          name: group-org-admins-member
+          pattern: group:${group-org-admins}
+          values:
+          - marker: ${group-org-admins}
+            ref: '#/definitions/io.k8s.cli.setters.group-org-admins'
+    io.k8s.cli.setters.group-billing-admins:
+      x-k8s-cli:
+        setter:
+          name: group-billing-admins
+          value: yakima-eap-users@googlegroups.com
+      description: Group to grant billing admin permissions.
+    io.k8s.cli.substitutions.group-billing-admins-member:
+      x-k8s-cli:
+        substitution:
+          name: group-billing-admins-member
+          pattern: group:${group-billing-admins}
+          values:
+          - marker: ${group-billing-admins}
+            ref: '#/definitions/io.k8s.cli.setters.group-billing-admins'
+    io.k8s.cli.setters.management-project-id:
+      x-k8s-cli:
+        setter:
+          name: management-project-id
+          value: management-project-id
+      description: Yakima host project id.
+    io.k8s.cli.substitutions.management-namespace:
+      x-k8s-cli:
+        substitution:
+          name: management-project-id
+          pattern: ${MANAGEMENT_PROJECT_ID}
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.hierarchy-sa-ref:
+      x-k8s-cli:
+        substitution:
+          name: hierarchy-sa-ref
+          pattern: serviceAccount:hierarchy-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.hierarchy-workload-identity-sa:
+      x-k8s-cli:
+        substitution:
+          name: hierarchy-workload-identity-sa
+          pattern: serviceAccount:${MANAGEMENT_PROJECT_ID}.svc.id.goog[cnrm-system/cnrm-controller-manager-hierarchy]
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.hierarchy-sa-email:
+      x-k8s-cli:
+        substitution:
+          name: hierarchy-sa-email
+          pattern: hierarchy-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.projects-sa-ref:
+      x-k8s-cli:
+        substitution:
+          name: projects-sa-ref
+          pattern: serviceAccount:projects-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.projects-workload-identity-sa:
+      x-k8s-cli:
+        substitution:
+          name: projects-workload-identity-sa
+          pattern: serviceAccount:${MANAGEMENT_PROJECT_ID}.svc.id.goog[cnrm-system/cnrm-controller-manager-projects]
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.projects-sa-email:
+      x-k8s-cli:
+        substitution:
+          name: projects-sa-email
+          pattern: projects-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.networking-sa-ref:
+      x-k8s-cli:
+        substitution:
+          name: networking-sa-ref
+          pattern: serviceAccount:networking-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.networking-workload-identity-sa:
+      x-k8s-cli:
+        substitution:
+          name: networking-workload-identity-sa
+          pattern: serviceAccount:${MANAGEMENT_PROJECT_ID}.svc.id.goog[cnrm-system/cnrm-controller-manager-networking]
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.networking-sa-email:
+      x-k8s-cli:
+        substitution:
+          name: networking-sa-email
+          pattern: networking-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.logging-sa-ref:
+      x-k8s-cli:
+        substitution:
+          name: logging-sa-ref
+          pattern: serviceAccount:logging-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.logging-workload-identity-sa:
+      x-k8s-cli:
+        substitution:
+          name: logging-workload-identity-sa
+          pattern: serviceAccount:${MANAGEMENT_PROJECT_ID}.svc.id.goog[cnrm-system/cnrm-controller-manager-logging]
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.logging-sa-email:
+      x-k8s-cli:
+        substitution:
+          name: logging-sa-email
+          pattern: logging-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'

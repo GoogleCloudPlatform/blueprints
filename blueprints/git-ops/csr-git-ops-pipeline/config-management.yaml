@@ -1,4 +1,3 @@
-# TODO(jcwc): Consider changing this to a FutureObject when cluster-scoped resources are supported
 apiVersion: configmanagement.gke.io/v1
 kind: ConfigManagement
 metadata:
@@ -8,7 +7,7 @@ spec:
   clusterName: my-yakima-cluster # {"$kpt-set":"cluster-name"}
   git:
     syncRepo: https://source.developers.google.com/p/my-project-id/r/deployment-repo # {"$kpt-set":"config-sync-repo"}
-    syncBranch: master
+    syncBranch: main
     secretType: gcenode
     policyDir: config
   sourceFormat: unstructured

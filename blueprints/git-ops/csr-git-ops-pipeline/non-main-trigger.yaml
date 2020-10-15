@@ -13,7 +13,7 @@ spec:
   triggerTemplate:
     repoRef:
       name: source-repo # {"$kpt-set":"source-repo"}
-    branchName: "[^master]"
+    branchName: "[^main]"
   substitutions:
     "_SOURCE_REPO": "source-repo" # {"$kpt-set":"source-repo"}
     "_DEPLOYMENT_REPO": "deployment-repo" # {"$kpt-set":"deployment-repo"}
@@ -60,7 +60,7 @@ spec:
       args:
       - '-c'
       - |
-        printf "\n\nDiffing against deployment repo master branch:\n"
+        printf "\n\nDiffing against deployment repo main branch:\n"
         evaluate --before="/deployment-workspace/config" --after="/hydrated-workspace/config" --max_additions=100 --max_modifications=100 --max_deletions=100
       volumes:
       - name: hydrated-workspace

@@ -1,19 +1,19 @@
-# Trigger for CI/CD (master branch). Pushes to this branch will result in a full
+# Trigger for CI/CD (main branch). Pushes to this branch will result in a full
 # Yakima pipeline execution and actuation.
 apiVersion: cloudbuild.cnrm.cloud.google.com/v1beta1
 kind: CloudBuildTrigger
 metadata:
-  name: source-repo-cicd-master-trigger # {"$kpt-set":"master-trigger-name"}
+  name: source-repo-cicd-main-trigger # {"$kpt-set":"main-trigger-name"}
   namespace: yakima-system # {"$kpt-set":"namespace"}
 spec:
-  description: Cloud Build Trigger for building the master branch of the source (DRY)
+  description: Cloud Build Trigger for building the main branch of the source (DRY)
     repository. This runs all user defined kpt fns and pushes to the deployment (WET)
     repository.
   disabled: false
   triggerTemplate:
     repoRef:
       name: source-repo # {"$kpt-set":"source-repo"}
-    branchName: master
+    branchName: main
   substitutions:
     "_SOURCE_REPO": "source-repo" # {"$kpt-set":"source-repo"}
     "_DEPLOYMENT_REPO": "deployment-repo" # {"$kpt-set":"deployment-repo"}
@@ -84,7 +84,7 @@ spec:
         git add -A
         git status
         if git diff --cached --exit-code; then echo "No changes"; true;
-        else git commit -m "Resources from ${COMMIT_SHA}" && git push origin master; fi
+        else git commit -m "Resources from ${COMMIT_SHA}" && git push origin main; fi
 
         printf "\n\nLatest deployment repo commit SHA: $(git rev-parse HEAD)\n"
       volumes:

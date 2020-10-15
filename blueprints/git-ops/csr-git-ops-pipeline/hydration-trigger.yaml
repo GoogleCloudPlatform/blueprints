@@ -1,19 +1,21 @@
-# Trigger for staging. Pushes to this branch will result in validation
-# and hydration happening, but will not trigger the rest of Yakima.
+# Trigger for when changes are pushed into any branch of the yakima source repo.
+# This will run all your kpt functions and apply a blast radius analysis of
+# changes.
+# NOTE: Only changes to the "main" branch will result in actuation of resources.
 apiVersion: cloudbuild.cnrm.cloud.google.com/v1beta1
 kind: CloudBuildTrigger
 metadata:
-  name: source-repo-cicd-staging-trigger # {"$kpt-set":"staging-trigger-name"}
+  name: source-repo-cicd-trigger # {"$kpt-set":"trigger-name"}
   namespace: yakima-system # {"$kpt-set":"namespace"}
 spec:
-  description: Cloud Build Trigger for building the staging branch of the source (DRY)
-    repository. This runs all user defined kpt fns and pushes to the deployment (WET)
-    repository.
+  description: Cloud Build Trigger for building source (DRY) repository pushes.
+    This runs all user defined kpt fns applies a blast radius analysis and
+    pushes to the deployment (WET) repository.
   disabled: false
   triggerTemplate:
     repoRef:
       name: source-repo # {"$kpt-set":"source-repo"}
-    branchName: "[^main]"
+    branchName: ".*"
   substitutions:
     "_SOURCE_REPO": "source-repo" # {"$kpt-set":"source-repo"}
     "_DEPLOYMENT_REPO": "deployment-repo" # {"$kpt-set":"deployment-repo"}

@@ -111,19 +111,11 @@ openAPI:
           values:
           - marker: ${project-id}
             ref: '#/definitions/io.k8s.cli.setters.project-id'
-    io.k8s.cli.substitutions.main-trigger-name:
+    io.k8s.cli.substitutions.trigger-name:
       x-k8s-cli:
         substitution:
-          name: main-trigger-name
-          pattern: ${source-repo}-cicd-main-trigger
-          values:
-          - marker: ${source-repo}
-            ref: '#/definitions/io.k8s.cli.setters.source-repo'
-    io.k8s.cli.substitutions.staging-trigger-name:
-      x-k8s-cli:
-        substitution:
-          name: staging-trigger-name
-          pattern: ${source-repo}-cicd-staging-trigger
+          name: trigger-name
+          pattern: ${source-repo}-cicd-trigger
           values:
           - marker: ${source-repo}
             ref: '#/definitions/io.k8s.cli.setters.source-repo'

@@ -1,0 +1,42 @@
+apiVersion: cft.dev/v1alpha1
+kind: ResourceHierarchy
+metadata:
+  annotations:
+    config.k8s.io/function: |
+      container:
+        image: gcr.io/yakima-eap/generate-folders:latest
+    config.kubernetes.io/local-config: "true"
+  name: root-hierarchy
+  namespace: hierarchy # {"$kpt-set":"namespace"}
+spec:
+  organization: "123456789012" # {"$kpt-set":"org-id"}
+  layers:
+  - divisions
+  - teams
+  - environments
+  config:
+    divisions:
+    - retail
+    - risk_management
+    - financial
+    - commercial
+    teams:
+    - shared
+    - apps
+    - web
+    - core_service
+    - data_and_analysis
+    - ctrl_service
+    environments:
+    - dev
+    - prod
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  annotations:
+    config.kubernetes.io/function: |
+      container:
+        image: gcr.io/yakima-eap/folder-ref:v1
+  name: folder-ref-kpt-fn
+  namespace: hierarchy # {"$kpt-set":"namespace"}

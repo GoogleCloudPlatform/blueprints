@@ -1,0 +1,35 @@
+apiVersion: templates.gatekeeper.sh/v1beta1
+kind: ConstraintTemplate
+metadata:
+  name: gcpenforceincludechildren
+spec:
+  crd:
+    spec:
+      names:
+        kind: GCPEnforceIncludeChildren
+      validation:
+        openAPIV3Schema:
+          properties:
+  targets:
+  - rego: |
+      package templates.gcp.GCPEnforceIncludeChildrenConstraint
+
+      violation[{"msg": msg}] {
+        kind := input.review.object.kind
+        not input.review.object.spec.includeChildren
+        msg := sprintf("The field includeChildren on resource '%s' must be set to true", [kind])
+      }
+    target: admission.k8s.gatekeeper.sh
+status: {}
+---
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPEnforceIncludeChildren
+metadata:
+  annotations:
+    description: Checks that folder names follow the required standard.
+  name: enforce-include-children
+spec:
+  match:
+    kinds:
+    - apiGroups: ["logging.cnrm.cloud.google.com"]
+      kinds: ["OrganizationLogSink", "FolderLogSink"]

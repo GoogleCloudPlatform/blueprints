@@ -1,0 +1,37 @@
+# API Activation
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+  name: storage-component.googleapis.com
+  namespace: hierarchy
+---
+# Folder Sink to Storage
+apiVersion: logging.cnrm.cloud.google.com/v1alpha1
+kind: FolderLogSink
+metadata:
+  name: my.folder.k8s.name-storagesink # {"$kpt-set":"log-sink-name"}
+  namespace: my-namespace # {"$kpt-set":"namespace"}
+spec:
+  folderRef:
+    name: my.folder.k8s.name # {"$kpt-set":"folder-k8s-name"}
+  destination:
+    storageBucketRef:
+      name: my-storage-bucket # {"$kpt-set":"storage-bucket-name"}
+  includeChildren: true
+  filter: "" # {"$kpt-set":"filter"}
+---
+# Storage Dataset
+apiVersion: storage.cnrm.cloud.google.com/v1beta1
+kind: StorageBucket
+metadata:
+  annotations:
+    cnrm.cloud.google.com/force-destroy: "true"
+  name: my-storage-bucket # {"$kpt-set":"storage-bucket-name"}
+  namespace: my-namespace # {"$kpt-set":"namespace"}
+spec:
+  storageClass: MULTI_REGIONAL # {"$kpt-set":"storage-class"}
+  location: US # {"$kpt-set":"location"}
+  bucketPolicyOnly: false # {"$kpt-set":"bucket-policy-only"}

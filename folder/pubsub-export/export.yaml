@@ -1,0 +1,33 @@
+# API Activation
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/disable-dependent-services: "false"
+  name: pubsub.googleapis.com
+  namespace: hierarchy
+---
+# Folder Sink to PubSub
+apiVersion: logging.cnrm.cloud.google.com/v1alpha1
+kind: FolderLogSink
+metadata:
+  name: my.folder.k8s.name-pubsubsink # {"$kpt-set":"log-sink-name"}
+  namespace: my-namespace # {"$kpt-set":"namespace"}
+spec:
+  filter: "" # {"$kpt-set":"filter"}
+  folderRef:
+    name: my.folder.k8s.name # {"$kpt-set":"folder-k8s-name"}
+  destination:
+    pubSubTopicRef:
+      name: pubsub-logexport-dataset # {"$kpt-set":"topic-name"}
+  includeChildren: true
+---
+# Pubsub Topic
+apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
+kind: PubSubTopic
+metadata:
+  name: pubsub-logexport-dataset # {"$kpt-set":"topic-name"}
+  namespace: my-namespace # {"$kpt-set":"namespace"}
+
+# TODO(jcwc): Add support for creating subscribers (either a new blueprint or kpt fn)

@@ -1,0 +1,106 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: project-package
+openAPI:
+  definitions:
+    io.k8s.cli.setters.billing-account-id:
+      x-k8s-cli:
+        setter:
+          name: billing-account-id
+          value: AAAAAA-BBBBBB-CCCCCC
+      description: Billing account ID
+    io.k8s.cli.setters.folder-name:
+      x-k8s-cli:
+        setter:
+          name: folder-name
+          value: name.of.folder
+      description: Kubernetes metadata name of the parent folder resource.
+    io.k8s.cli.setters.project-id:
+      x-k8s-cli:
+        setter:
+          name: project-id
+          value: project-id
+      description: Project ID
+    io.k8s.cli.setters.projects-namespace:
+      x-k8s-cli:
+        setter:
+          name: projects-namespace
+          value: hierarchy
+      description: Namespace for projects.
+    io.k8s.cli.setters.management-project-id:
+      x-k8s-cli:
+        setter:
+          name: management-project-id
+          value: management-project-id
+      description: Yakima host project id.
+    io.k8s.cli.substitutions.management-namespace:
+      x-k8s-cli:
+        substitution:
+          name: management-project-id
+          pattern: ${MANAGEMENT_PROJECT_ID}
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.project-namespace:
+      x-k8s-cli:
+        substitution:
+          name: project-namespace
+          pattern: ${PROJECT_ID}
+          values:
+          - marker: ${PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.project-id'
+    io.k8s.cli.substitutions.project-id-sa:
+      x-k8s-cli:
+        substitution:
+          name: project-id-sa
+          pattern: ${PROJECT_ID}-sa
+          values:
+          - marker: ${PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.project-id'
+    io.k8s.cli.substitutions.project-id-sa-owners-permissions:
+      x-k8s-cli:
+        substitution:
+          name: project-id-sa-owners-permissions
+          pattern: ${PROJECT_ID}-sa-owners-permissions
+          values:
+          - marker: ${PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.project-id'
+    io.k8s.cli.substitutions.project-id-sa-ref:
+      x-k8s-cli:
+        substitution:
+          name: project-id-sa-ref
+          pattern: serviceAccount:${PROJECT_ID}-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          values:
+          - marker: ${PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.project-id'
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.workload-identity-binding:
+      x-k8s-cli:
+        substitution:
+          name: workload-identity-binding
+          pattern: ${PROJECT_ID}-sa-workload-identity-binding
+          values:
+          - marker: ${PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.project-id'
+    io.k8s.cli.substitutions.workload-identity-sa:
+      x-k8s-cli:
+        substitution:
+          name: workload-identity-sa
+          pattern: serviceAccount:${MANAGEMENT_PROJECT_ID}.svc.id.goog[cnrm-system/cnrm-controller-manager-${PROJECT_ID}]
+          values:
+          - marker: ${PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.project-id'
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.project-id-sa-email:
+      x-k8s-cli:
+        substitution:
+          name: project-id-sa-email
+          pattern: ${PROJECT_ID}-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          values:
+          - marker: ${PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.project-id'
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'

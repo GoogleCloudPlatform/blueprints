@@ -29,6 +29,7 @@ spec:
       args:
       - '-c'
       - |
+        set -e
         gcloud source repos clone $_DEPLOYMENT_REPO .
         git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
         mkdir -p /deployment-workspace/config
@@ -42,7 +43,7 @@ spec:
       args:
       - '-c'
       - |
-        set -o pipefail
+        set -eo pipefail
         mkdir -p /hydrated-workspace/config
         # TODO(jcwc): Remove "kpt cfg grep" line once Config Sync supports omitting local-configs
         #   otherwise, temporarily force omit local-configs using kpt cfg grep.
@@ -62,6 +63,7 @@ spec:
       args:
       - '-c'
       - |
+        set -e
         printf "\n\nDiffing against deployment repo main branch:\n"
         evaluate --before="/deployment-workspace/config" --after="/hydrated-workspace/config" --max_additions=100 --max_modifications=100 --max_deletions=100
       volumes:
@@ -78,6 +80,7 @@ spec:
       args:
       - '-c'
       - |
+        set -e
         (git show-branch $BRANCH_NAME &>/dev/null) && (git checkout $BRANCH_NAME) || (git checkout -b $BRANCH_NAME)
         rm -r /deployment-workspace/config/*
         cp -r /hydrated-workspace/config /deployment-workspace/

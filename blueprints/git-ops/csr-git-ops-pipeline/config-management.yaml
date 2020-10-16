@@ -18,4 +18,4 @@ spec:
         name: importer
         namespace: config-management-system
         annotations:
-          iam.gke.io/gcp-service-account: 1234567890123-compute@developer.gserviceaccount.com # {"$kpt-set":"compute-sa-importer"}
+          iam.gke.io/gcp-service-account: config-sync-sa@my-project-id.iam.gserviceaccount.com # {"$kpt-set":"config-sync-sa-importer"}

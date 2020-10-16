@@ -26,28 +26,36 @@ spec:
   role: roles/source.reader
   member: serviceAccount:1234567890123@cloudbuild.gserviceaccount.com # {"$kpt-set":"cloudbuild-sa"}
 ---
-# Provides compute service account w/ access to read CSR repo
+# SA for Config Sync to use for accessing the repo.
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: config-sync-sa # {"$kpt-set":"config-sync-sa-name"}
+  namespace: yakima-system # {"$kpt-set":"namespace"}
+spec:
+  displayName: config-sync-sa # {"$kpt-set":"config-sync-sa-name"}
+---
+# Provides Config Sync SA w/ access to read CSR repo
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: allow-computesa-read-csr
+  name: allow-configsync-sa-read-csr
   namespace: yakima-system # {"$kpt-set":"namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
 spec:
-  member: serviceAccount:1234567890123-compute@developer.gserviceaccount.com # {"$kpt-set":"compute-sa-iam"}
+  member: serviceAccount:config-sync-sa@my-project-id.iam.gserviceaccount.com # {"$kpt-set":"config-sync-sa-iam"}
   role: roles/source.reader
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: projects/my-project-id # {"$kpt-set":"project-id-external"}
 ---
-# Provides Config Sync with the proper access to read CSR repo
-# Needed per: https://cloud.google.com/kubernetes-engine/docs/add-on/config-sync/how-to/installing#git-creds-gcenode
+# Workload identity binding for Config Sync SA.
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: allow-configsync-use-computesa
+  name: configsync-sa-workload-identity-binding
   namespace: yakima-system # {"$kpt-set":"namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
@@ -57,4 +65,4 @@ spec:
   resourceRef:
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
-    external: projects/my-project-id/serviceAccounts/1234567890123-compute@developer.gserviceaccount.com # {"$kpt-set":"compute-sa-external"}
+    name: config-sync-sa # {"$kpt-set":"config-sync-sa-name"}

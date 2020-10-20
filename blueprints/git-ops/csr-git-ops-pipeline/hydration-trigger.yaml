@@ -82,7 +82,7 @@ spec:
       - |
         set -e
         (git show-branch $BRANCH_NAME &>/dev/null) && (git checkout $BRANCH_NAME) || (git checkout -b $BRANCH_NAME)
-        rm -r /deployment-workspace/config/*
+        [-d "/deployment-workspace/config"] && rm -r /deployment-workspace/config/*
         cp -r /hydrated-workspace/config /deployment-workspace/
         touch /deployment-workspace/config/.gitkeep
 

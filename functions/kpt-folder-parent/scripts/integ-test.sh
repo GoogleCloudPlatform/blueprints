@@ -28,6 +28,12 @@ then
 	exit 1
 fi
 
+if [ "$(echo "$OUTPUT" | grep -c 'name: folder-ref-role-g90evd')" != "2" ]
+then
+	echo "failed	kpt tests failed: should have role and binding yaml both reference role"
+	exit 1
+fi
+
 if [ "$(echo "$OUTPUT" | grep -c FutureObject)" == "3" ] && 
 	[ "$(echo "$OUTPUT" | grep -c FieldReference)" == "3" ] &&
 	[ "$(echo "$OUTPUT" | grep -c RoleBinding)" == "2" ] &&

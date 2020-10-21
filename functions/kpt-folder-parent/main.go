@@ -300,7 +300,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
-  name: folder-ref-function-rw
+  name: folder-ref-role-{{ .fingerprint }}
 subjects:
 - kind: ServiceAccount
   name: default

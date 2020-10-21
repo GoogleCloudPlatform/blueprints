@@ -32,4 +32,4 @@ spec:
   match:
     kinds:
     - apiGroups: ["logging.cnrm.cloud.google.com"]
-      kinds: ["OrganizationLogSink", "FolderLogSink"]
+      kinds: ["LoggingLogSink"]

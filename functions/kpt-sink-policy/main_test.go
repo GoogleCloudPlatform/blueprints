@@ -52,7 +52,7 @@ func TestFieldGen(t *testing.T) {
 	if err != nil {
 		t.Fatal("Failed to parse test constant operableIamKRM\n", err)
 	}
-	out, err := fieldReference(r, map[string]string{"another-resource": "FolderLogSink"})
+	out, err := fieldReference(r, map[string]string{"another-resource": "LoggingLogSink"})
 	if err != nil {
 		t.Fatal("failed generation\n", err)
 	}
@@ -68,8 +68,8 @@ func TestFieldGen(t *testing.T) {
 		t.Fatal(e)
 	}
 	kindField := yaml.GetValue(kind)
-	if kindField != "FolderLogSink" {
-		t.Fatalf("Got [%v] Wanted [FolderLogSink]", kindField)
+	if kindField != "LoggingLogSink" {
+		t.Fatalf("Got [%v] Wanted [LoggingLogSink]", kindField)
 	}
 }
 

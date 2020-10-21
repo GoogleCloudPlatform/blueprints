@@ -254,7 +254,7 @@ spec:
   jsonPath: "{$.status.writerIdentity}"
   mutators: []
   resourceRef:
-    apiVersion: logging.cnrm.cloud.google.com/v1alpha1
+    apiVersion: logging.cnrm.cloud.google.com/v1beta1
     kind: {{ .kind }}
     name: {{ .sink }}
     namespace: {{ .namespace }}`
@@ -292,8 +292,7 @@ rules:
 - apiGroups:
   - logging.cnrm.cloud.google.com
   resources:
-  - organizationlogsinks
-  - folderlogsinks
+  - logginglogsinks
   verbs:
   - get
   - list

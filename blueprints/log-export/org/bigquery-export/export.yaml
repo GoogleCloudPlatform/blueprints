@@ -10,13 +10,14 @@ metadata:
   namespace: hierarchy
 ---
 # Org Sink to BQ
-apiVersion: logging.cnrm.cloud.google.com/v1alpha1
-kind: OrganizationLogSink
+apiVersion: logging.cnrm.cloud.google.com/v1beta1
+kind: LoggingLogSink
 metadata:
   name: 123456789012-bqsink # {"$kpt-set":"log-sink-name"}
   namespace: logging # {"$kpt-set":"namespace"}
 spec:
-  orgId: "123456789012" # {"$kpt-set":"org-id"}
+  organizationRef:
+    external: "123456789012" # {"$kpt-set":"org-id"}
   destination:
     bigQueryDatasetRef:
       name: bqlogexportdataset

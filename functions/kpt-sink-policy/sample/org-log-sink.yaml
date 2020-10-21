@@ -1,5 +1,5 @@
-apiVersion: logging.cnrm.cloud.google.com/v1alpha1
-kind: OrganizationLogSink
+apiVersion: logging.cnrm.cloud.google.com/v1beta1
+kind: LoggingLogSink
 metadata:
   name: org-log-sink-1
   namespace: log-sample
@@ -7,5 +7,6 @@ spec:
   destination:
     bigQueryDatasetRef:
       Name:  bqlogexportdataset
-  orgId: "123456789012"
+  organizationRef:
+    external: "123456789012"
   includeChildren:  false

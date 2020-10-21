@@ -34,13 +34,13 @@ kpt cfg set ...
 As part of step #9, you can run the following command to verify the state and existence of the resources
 ```
 # For folder w/ bigquery
-kubectl -n ${YOUR_NAMESPACE} get bigquerydataset,folderlogsink -o custom-columns=NAME:.metadata.name,ID:.status.name,STATUS_MESSAGE:.status.conditions[0].message,STATUS:.status.conditions[0].reason
+kubectl -n ${YOUR_NAMESPACE} get bigquerydataset,logginglogsink -o custom-columns=NAME:.metadata.name,ID:.status.name,STATUS_MESSAGE:.status.conditions[0].message,STATUS:.status.conditions[0].reason
 
 # For org w/ pubsub
-kubectl -n ${YOUR_NAMESPACE} get pubsubtopic,organizationlogsink -o custom-columns=NAME:.metadata.name,ID:.status.name,STATUS_MESSAGE:.status.conditions[0].message,STATUS:.status.conditions[0].reason
+kubectl -n ${YOUR_NAMESPACE} get pubsubtopic,logginglogsink -o custom-columns=NAME:.metadata.name,ID:.status.name,STATUS_MESSAGE:.status.conditions[0].message,STATUS:.status.conditions[0].reason
 
 # For folder w/ storage
-kubectl -n ${YOUR_NAMESPACE} get storagebucket,folderlogsink -o custom-columns=NAME:.metadata.name,ID:.status.name,STATUS_MESSAGE:.status.conditions[0].message,STATUS:.status.conditions[0].reason
+kubectl -n ${YOUR_NAMESPACE} get storagebucket,logginglogsink -o custom-columns=NAME:.metadata.name,ID:.status.name,STATUS_MESSAGE:.status.conditions[0].message,STATUS:.status.conditions[0].reason
 ```
 
 Owners:

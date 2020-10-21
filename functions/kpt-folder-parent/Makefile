@@ -3,7 +3,7 @@
 GOPATH := $(shell go env GOPATH)
 
 PROJECT_ID ?= $(shell gcloud config get-value project)
-IMG ?= gcr.io/${PROJECT_ID}/folder-ref:v1
+IMG ?= gcr.io/${PROJECT_ID}/folder-ref:latest
 
 all: fix vet fmt test lint build
 

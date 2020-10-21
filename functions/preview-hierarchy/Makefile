@@ -1,5 +1,5 @@
 PROJECT_ID ?= $(shell gcloud config get-value project)
-IMG ?= gcr.io/${PROJECT_ID}/preview-hierarchy:v1
+IMG ?= gcr.io/${PROJECT_ID}/preview-hierarchy:latest
 
 debug: build
 	kpt fn run samples/ --enable-exec --exec-path ./render-hierarchy -- output=test.svg

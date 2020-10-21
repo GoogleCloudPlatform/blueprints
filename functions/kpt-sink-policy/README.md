@@ -16,12 +16,12 @@ For container runtime:
 
 ```
 # From this directory
-gcloud builds submit -t gcr.io/$YOUR_PROJECT_ID/sink-policy:v1.
+gcloud builds submit -t gcr.io/$YOUR_PROJECT_ID/sink-policy:latest.
 ```
 
 For exec: `go build -v -o config-function ./`
 
-3. Run `kpt fn run sample/ --image gcr.io/$YOUR_PROJECT_ID/sink-policy:v1` if you have a gcr image cut.
+3. Run `kpt fn run sample/ --image gcr.io/$YOUR_PROJECT_ID/sink-policy:latest` if you have a gcr image cut.
 
 OR
 

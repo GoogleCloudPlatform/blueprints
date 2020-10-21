@@ -22,12 +22,12 @@ For container runtime:
 
 ```
 # From this directory
-gcloud builds submit -t gcr.io/$YOUR_PROJECT_ID/folder-ref:v1 .
+gcloud builds submit -t gcr.io/$YOUR_PROJECT_ID/folder-ref:latest .
 ```
 
 For exec: `go build -v -o config-function ./`
 
-3. Run `kpt fn run sample/ --image gcr.io/$YOUR_PROJECT_ID/folder-ref:v1` if you have a gcr image cut.
+3. Run `kpt fn run sample/ --image gcr.io/$YOUR_PROJECT_ID/folder-ref:latest` if you have a gcr image cut.
 
 OR
 
@@ -44,7 +44,7 @@ NOTE: If you sudo docker then you need to sudo kpt and there's an obnoxious set 
 
 # How do I "release" it to prod
 
-For now: `gcloud builds submit -t gcr.io/yakima-eap/folder-ref:v1 .`
+For now: `gcloud builds submit -t gcr.io/yakima-eap/folder-ref:latest .`
 
 # Further Reading
 

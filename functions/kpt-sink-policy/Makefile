@@ -3,7 +3,7 @@
 GOPATH := $(shell go env GOPATH)
 
 PROJECT_ID ?= $(shell gcloud config get-value project)
-IMG ?= gcr.io/${PROJECT_ID}/sink-policy:v1
+IMG ?= gcr.io/${PROJECT_ID}/sink-policy:latest
 
 all: fix vet fmt test lint build
 

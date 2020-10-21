@@ -13,4 +13,4 @@ kpt fn run samples/ --enable-exec --exec-path ./render-hierarchy -- output=test.
 
 # Release
 
-This gets auto-released by prow as `gcr.io/yakima-eap/preview-hierarchy:v1`.
+This gets auto-released by prow as `gcr.io/yakima-eap/preview-hierarchy:latest`.

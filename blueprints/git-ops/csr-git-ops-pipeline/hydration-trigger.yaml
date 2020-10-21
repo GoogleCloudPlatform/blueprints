@@ -7,10 +7,12 @@ kind: CloudBuildTrigger
 metadata:
   name: source-repo-cicd-trigger # {"$kpt-set":"trigger-name"}
   namespace: yakima-system # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
 spec:
-  description: Cloud Build Trigger for building source (DRY) repository pushes.
-    This runs all user defined kpt fns applies a blast radius analysis and
-    pushes to the deployment (WET) repository.
+  description: Cloud Build Trigger for building source (DRY) repository pushes. This
+    runs all user defined kpt fns applies a blast radius analysis and pushes to the
+    deployment (WET) repository.
   disabled: false
   triggerTemplate:
     repoRef:

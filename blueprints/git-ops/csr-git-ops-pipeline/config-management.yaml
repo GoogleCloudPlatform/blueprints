@@ -12,10 +12,10 @@ spec:
     policyDir: config
   sourceFormat: unstructured
   patches:
-    - apiVersion: v1
-      kind: ServiceAccount
-      metadata:
-        name: importer
-        namespace: config-management-system
-        annotations:
-          iam.gke.io/gcp-service-account: config-sync-sa@my-project-id.iam.gserviceaccount.com # {"$kpt-set":"config-sync-sa-importer"}
+  - apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: importer
+      namespace: config-management-system
+      annotations:
+        iam.gke.io/gcp-service-account: config-sync-sa@my-project-id.iam.gserviceaccount.com # {"$kpt-set":"config-sync-sa-importer"}

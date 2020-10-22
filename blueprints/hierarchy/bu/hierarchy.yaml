@@ -17,16 +17,16 @@ spec:
   config:
     divisions:
     - retail
-    - risk_management
+    - risk-management
     - financial
     - commercial
     teams:
     - shared
     - apps
     - web
-    - core_service
-    - data_and_analysis
-    - ctrl_service
+    - core-service
+    - data-and-analysis
+    - ctrl-service
     environments:
     - dev
     - prod

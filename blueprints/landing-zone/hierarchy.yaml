@@ -2,7 +2,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
   name: hierarchy-sa
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
 spec:
   displayName: hierarchy-sa
 ---
@@ -10,7 +10,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: hierarchy-sa-serviceusageadmin-permissions
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
 spec:
   member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"hierarchy-sa-ref"}
   role: roles/serviceusage.serviceUsageAdmin
@@ -23,7 +23,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: hierarchy-sa-projectcreator-permissions
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
 spec:
   member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"hierarchy-sa-ref"}
   role: roles/resourcemanager.projectCreator
@@ -36,7 +36,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: hierarchy-sa-projectmover-permissions
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
 spec:
   member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"hierarchy-sa-ref"}
   role: roles/resourcemanager.projectMover
@@ -49,7 +49,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: hierarchy-sa-billinguser-permissions
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
 spec:
   member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"hierarchy-sa-ref"}
   role: roles/billing.user
@@ -62,7 +62,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: hierarchy-sa-projectdeleter-permissions
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
 spec:
   member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"hierarchy-sa-ref"}
   role: roles/resourcemanager.projectDeleter
@@ -75,7 +75,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: hierarchy-sa-orgpolicyadmin-permissions
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
 spec:
   member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"hierarchy-sa-ref"}
   role: roles/orgpolicy.policyAdmin
@@ -88,7 +88,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: hierarchy-sa-folderadmin-permissions
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
 spec:
   member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"hierarchy-sa-ref"}
   role: roles/resourcemanager.folderAdmin
@@ -101,7 +101,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: hierarchy-sa-workload-identity-binding
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:

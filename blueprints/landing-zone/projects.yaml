@@ -2,7 +2,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
   name: projects-sa
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
 spec:
   displayName: projects-sa
 ---
@@ -10,7 +10,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: projects-sa-projectcreator-permissions
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
 spec:
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"projects-sa-ref"}
   role: roles/resourcemanager.projectCreator
@@ -23,7 +23,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: projects-sa-projectmover-permissions
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
 spec:
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"projects-sa-ref"}
   role: roles/resourcemanager.projectMover
@@ -36,7 +36,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: projects-sa-projectdeleter-permissions
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
 spec:
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"projects-sa-ref"}
   role: roles/resourcemanager.projectDeleter
@@ -49,7 +49,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: projects-sa-workload-identity-binding
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:

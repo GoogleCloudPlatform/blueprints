@@ -52,14 +52,11 @@ openAPI:
           name: management-project-id
           value: management-project-id
       description: Yakima host project id.
-    io.k8s.cli.substitutions.management-namespace:
+    io.k8s.cli.setters.management-namespace:
       x-k8s-cli:
-        substitution:
-          name: management-project-id
-          pattern: ${MANAGEMENT_PROJECT_ID}
-          values:
-          - marker: ${MANAGEMENT_PROJECT_ID}
-            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+        setter:
+          name: management-namespace
+          value: yakima-system
     io.k8s.cli.substitutions.hierarchy-sa-ref:
       x-k8s-cli:
         substitution:

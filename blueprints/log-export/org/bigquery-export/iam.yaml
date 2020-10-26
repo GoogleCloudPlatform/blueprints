@@ -22,6 +22,6 @@ metadata:
   annotations:
     config.kubernetes.io/function: |
       container:
-        image: gcr.io/yakima-eap/sink-policy:v1
+        image: gcr.io/yakima-eap/sink-policy:latest
   name: log-sink-p4sa-binding-fn
   namespace: logging # {"$kpt-set":"namespace"}

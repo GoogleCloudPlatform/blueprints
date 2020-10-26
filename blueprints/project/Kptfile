@@ -26,7 +26,7 @@ openAPI:
       x-k8s-cli:
         setter:
           name: projects-namespace
-          value: hierarchy
+          value: projects
       description: Namespace for projects.
     io.k8s.cli.setters.management-project-id:
       x-k8s-cli:

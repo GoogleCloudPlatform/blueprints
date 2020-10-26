@@ -84,7 +84,7 @@ spec:
       - '-c'
       - |
         set -e
-        git pull origin $BRANCH_NAME
+        git pull origin $BRANCH_NAME || true # Ignore errors in case branch doesn't exist
         rm -rf /deployment-workspace/config/*
         cp -r /hydrated-workspace/config /deployment-workspace/
         touch /deployment-workspace/config/.gitkeep

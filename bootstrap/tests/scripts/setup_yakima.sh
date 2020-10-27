@@ -7,7 +7,7 @@ PROJECT_ID=$1
 CLUSTER_NAME=$2
 CLUSTER_REGION=$3
 SOURCE_REPO=$4
-DEPLOYMENT_REPO="yakima-deployment-repo"
+DEPLOYMENT_REPO=$5
 CLOUDBUILD_TRIGGER_NAME="yakima-source-repo-cicd-trigger"
 
 ACP_CLUSTER_NAME="krmapihost-${CLUSTER_NAME}"
@@ -37,7 +37,7 @@ main() {
 
 
   teardown_existing_yakimas
-  ${test_dir}/../bootstrap.sh create -c ${CLUSTER_NAME} -p ${PROJECT_ID}
+  ${test_dir}/../bootstrap.sh create -c ${CLUSTER_NAME} -p ${PROJECT_ID} -d ${DEPLOYMENT_REPO}
 }
 
 main $@

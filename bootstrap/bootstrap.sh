@@ -29,7 +29,11 @@ create_cluster() {
     gcloud alpha admin-service-cluster instances create "${CLUSTER_NAME}" \
         --location "${CLUSTER_REGION}" \
         --bundles "Yakima" \
-        --project "${PROJECT_ID}"
+        --project "${PROJECT_ID}" \
+        --git-sync-repo "https://source.developers.google.com/p/${PROJECT_ID}/r/${DEPLOYMENT_REPO}" \
+        --git-branch "main" \
+        --git-secret-type "gcenode" \
+        --git-policy-dir "config"
 }
 
 delete_cluster() {
@@ -77,14 +81,28 @@ wait_for_components() {
         echo "Waiting for Config Connector..."
         sleep ${poll_interval}
     done
+
+    echo "Waiting for Config Sync installation."
+    until kubectl describe serviceaccount/importer -n config-management-system 2> /dev/null
+    do
+        echo "Waiting for Config Sync..."
+        sleep 5
+    done
 }
 
 set_sa_permissions() {
+    # Grant project owner to the Config Connector Kubernetes service account.
     SA_EMAIL="$(kubectl get ConfigConnectorContext -n yakima-system -o jsonpath='{.items[0].spec.googleServiceAccount}')"
     gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
         --member "serviceAccount:${SA_EMAIL}" \
         --role "roles/owner" \
         --project "${PROJECT_ID}"
+
+    # Set up a workload identity binding between the Config Sync importer
+    # Kubernetes service account and the GCP service account that will be
+    # created by the csr-git-ops-pipeline blueprint.
+    kubectl annotate serviceaccount/importer -n config-management-system \
+        iam.gke.io/gcp-service-account="config-sync-sa@${PROJECT_ID}.iam.gserviceaccount.com"
 }
 
 enable_services() {
@@ -103,8 +121,9 @@ Commands:
     delete - Delete admin cluster.
 
 Flags:
-    -c, --cluster <cluster_name> - Override default admin cluster name.
-    -p, --project <project_id>   - Specify project for admin cluster. Default - use gcloud default project.
+    -c, --cluster <cluster_name>      - Override admin cluster name. Default - "krmapihost-landing-zone-cluster".
+    -p, --project <project_id>        - Override project for admin cluster. Default - current gcloud project.
+    -d, --deployment-repo <repo_name> - Override deployment repository name. Default - "deployment-repo".
 
 EOF
     exit 1
@@ -129,6 +148,7 @@ SERVICE_ACCOUNT="service-953545698565@gcp-sa-saasmanagement.iam.gserviceaccount.
 
 PROJECT_ID="$(gcloud config get-value project -q)"
 CLUSTER_NAME="krmapihost-landing-zone-cluster"
+DEPLOYMENT_REPO="deployment-repo"
 CLUSTER_REGION="us-central1"
 MASTER_IPV4_CIDR=172.16.0.128/28
 
@@ -159,7 +179,11 @@ do
         shift # Remove argument name from processing
         shift # Remove argument value from processing
         ;;
-
+        -d|--deployment-repo)
+        DEPLOYMENT_REPO="$2"
+        shift # Remove argument name from processing
+        shift # Remove argument value from processing
+        ;;
         *)
         echo >&2 "Invalid command line parameter: ${arg}"
         print_usage_exit

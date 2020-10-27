@@ -34,12 +34,12 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
-  name: config-sync-sa # {"$kpt-set":"config-sync-sa-name"}
+  name: config-sync-sa
   namespace: yakima-system # {"$kpt-set":"namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
 spec:
-  displayName: config-sync-sa # {"$kpt-set":"config-sync-sa-name"}
+  displayName: config-sync-sa
 ---
 # Provides Config Sync SA w/ access to read CSR repo
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -71,4 +71,4 @@ spec:
   resourceRef:
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
-    name: config-sync-sa # {"$kpt-set":"config-sync-sa-name"}
+    name: config-sync-sa

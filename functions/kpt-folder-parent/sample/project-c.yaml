@@ -5,7 +5,7 @@ metadata:
     cnrm.cloud.google.com/folder-ref: "folder-b"
     config.kubernetes.io/function: |
       container:
-        image: gcr.io/yakima-eap/folder-ref:v1
+        image: gcr.io/yakima-eap/folder-ref:latest
   name: kpt-project-in-folder
   namespace: project-hierarchy
 spec:

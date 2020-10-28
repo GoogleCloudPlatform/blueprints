@@ -5,8 +5,10 @@ set -o pipefail
 
 
 enable_krmapi() {
-    gcloud services enable "${API_ENDPOINT}" \
-        --project "${PROJECT_ID}"
+    if [ ${ENABLE_KRMAPIHOSTING} = true ]; then
+      gcloud services enable "${API_ENDPOINT}" \
+          --project "${PROJECT_ID}"
+    fi
 
     gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
         --member "serviceAccount:${SERVICE_ACCOUNT}" \
@@ -26,14 +28,15 @@ enable_krmapi() {
 create_cluster() {
     gcloud alpha admin-service-cluster instances create "${CLUSTER_NAME}" \
         --location "${CLUSTER_REGION}" \
-        --master-ipv4-cidr-block "${MASTER_IPV4_CIDR}" \
         --bundles "Yakima" \
         --project "${PROJECT_ID}"
 }
 
 delete_cluster() {
     gcloud alpha admin-service-cluster instances delete "${CLUSTER_NAME}" \
-        --location "${CLUSTER_REGION}"
+        --location "${CLUSTER_REGION}" \
+        --project "${PROJECT_ID}" \
+        --quiet
 }
 
 connect_to_cluster() {
@@ -112,6 +115,9 @@ CLUSTER_REGION="us-central1"
 MASTER_IPV4_CIDR=172.16.0.128/28
 
 KUBECTL_WAIT_TIMEOUT="10m"
+if [ -z "${ENABLE_KRMAPIHOSTING:-}" ]; then
+  ENABLE_KRMAPIHOSTING=true
+fi
 
 COMMAND="$1"
 if [ -z "${COMMAND}" ]

@@ -5,7 +5,7 @@ import (
 	"testing"
 	"time"
 
-	helpers "tests.helpers"
+	helpers "cnrm.googlesource.com/blueprints/bootstrap/tests/helpers"
 )
 
 // Tests the Shared VPC + Networking blueprint using BlueprintTest helper

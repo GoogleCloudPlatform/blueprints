@@ -8,7 +8,7 @@ import (
 	"testing"
 	"time"
 
-	helpers "tests.helpers"
+	helpers "cnrm.googlesource.com/blueprints/bootstrap/tests/helpers"
 )
 
 var timestamp = time.Now().Unix()

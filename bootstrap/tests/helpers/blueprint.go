@@ -112,13 +112,15 @@ func (b *BlueprintTest) Run(t *testing.T) {
 		t.Fatal("Error setting git config\n", err)
 	}
 
-	t.Log("Setting up resources...")
+	if err := b.runScriptAndVerify(t, sourceRepoPath, b.TeardownCommand, retryCount, pollDuration, true); err != nil {
+		t.Error("Teardown failed (before running test)\n", err)
+	}
 
 	if err := b.runScriptAndVerify(t, sourceRepoPath, b.SetupCommand, retryCount, pollDuration, false); err != nil {
 		t.Error("Setup failed\n", err)
 	}
 
 	if err := b.runScriptAndVerify(t, sourceRepoPath, b.TeardownCommand, retryCount, pollDuration, true); err != nil {
-		t.Error("Teardown failed\n", err)
+		t.Error("Teardown failed (after running test)\n", err)
 	}
 }

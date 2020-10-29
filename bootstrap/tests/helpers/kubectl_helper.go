@@ -55,12 +55,18 @@ func resourceStatus(resource KubernetesResource, deletion bool) func() (bool, er
 			if err != nil && strings.Contains(trimmedOut, "NotFound") {
 				return false, nil
 			} else {
+				log.Printf("`kubectl describe -n %s %s %s` command returned:", resource.Namespace, resource.Type, resource.Name)
+				out, _ := exec.Command("kubectl", "describe", "-n", resource.Namespace, resource.Type, resource.Name).CombinedOutput()
+				fmt.Println(string(out))
 				return true, err
 			}
 		} else {
 			if trimmedOut == resource.SuccessValue {
 				return false, nil // don't retry, no errors
 			} else {
+				log.Printf("`kubectl describe -n %s %s %s` command returned:", resource.Namespace, resource.Type, resource.Name)
+				out, _ := exec.Command("kubectl", "describe", "-n", resource.Namespace, resource.Type, resource.Name).CombinedOutput()
+				fmt.Println(string(out))
 				return true, err // retry, error
 			}
 		}

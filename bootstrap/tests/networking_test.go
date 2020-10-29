@@ -19,13 +19,13 @@ func TestNetworking(t *testing.T) {
 
 	networkingTest := helpers.BlueprintTest{
 		Name:            "Networking blueprints can create respective compute resources via Yakima",
-		TeardownCommand: fmt.Sprintf("../../scripts/teardown_lz.sh %s %s %s", p.Project, p.Org, p.BillingAccount),
-		SetupCommand:    fmt.Sprintf("../../scripts/setup_networking.sh %s %s %s %s %s %s %s", p.Project, p.SourceRepo, p.Namespace, networkName, networkNamespace, p.Org, p.BillingAccount),
+		TeardownCommand: fmt.Sprintf("../../scripts/reset_lz_blueprint.sh %s %s %s", p.Project, p.Org, p.BillingAccount),
+		SetupCommand:    fmt.Sprintf("../../scripts/setup_networking.sh %s %s %s", p.Project, networkName, networkNamespace),
 		KubernetesResourceList: []helpers.KubernetesResource{
 			helpers.NewKccResource(networkNamespace, "ComputeSharedVPCHostProject", p.Project+"-sharedvpc"),
-			helpers.NewKccResource(networkNamespace, "ComputeRouterNAT", networkName+"-router-nat"),
-			helpers.NewKccResource(networkNamespace, "ComputeRouter", networkName+"-router"),
 			helpers.NewKccResource(networkNamespace, "ComputeNetwork", networkName),
+			helpers.NewKccResource(networkNamespace, "ComputeRouter", networkName+"-router"),
+			helpers.NewKccResource(networkNamespace, "ComputeRouterNAT", networkName+"-router-nat"),
 			helpers.NewKccResource(networkNamespace, "ComputeSubnetwork", networkName+"-subnetwork"),
 			helpers.NewKccResource(networkNamespace, "ComputeTargetVPNGateway", networkName+"-vpn-gateway"),
 			helpers.NewKccResource(networkNamespace, "ComputeVPNTunnel", networkName+"-vpn-tunnel"),

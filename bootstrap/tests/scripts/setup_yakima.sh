@@ -13,13 +13,12 @@ CLOUDBUILD_TRIGGER_NAME="yakima-source-repo-cicd-trigger"
 ACP_CLUSTER_NAME="krmapihost-${CLUSTER_NAME}"
 CLUSTER_REGION="us-central1"
 
-# TODO(jcwc): Move this logic into a go function and parallelize Yakima teardown w/ multithreading
 teardown_existing_yakimas() {
-  local old_cluster=$(gcloud container clusters list --project ${PROJECT_ID} --format="get(name)" | head -n 1)
-  while [[ ! -z ${old_cluster} ]]; do
-    gcloud container clusters delete ${old_cluster} --quiet --project ${PROJECT_ID} --region ${CLUSTER_REGION}
-    old_cluster=$(gcloud container clusters list --project ${PROJECT_ID} --format="get(name)" | head -n 1)
-  done
+  local old_clusters=$(gcloud container clusters list --project ${PROJECT_ID} --format="get(name)")
+
+  if [ -n "${old_clusters}" ]; then
+    gcloud container clusters delete ${old_clusters} --quiet --project ${PROJECT_ID} --region ${CLUSTER_REGION}
+  fi
 
   gcloud source repos delete ${SOURCE_REPO} --project ${PROJECT_ID} --quiet 2>/dev/null || true
   gcloud source repos delete ${DEPLOYMENT_REPO} --project ${PROJECT_ID} --quiet 2>/dev/null || true
@@ -46,17 +45,19 @@ install_gitops_blueprint() {
 
   kubectl apply --wait -f ${csr_gitops_blueprint_path}
 
-  kubectl wait --for=condition=READY --timeout="10m" -f ${csr_gitops_blueprint_path}
-  kubectl wait --for=condition=READY --timeout="10m" -f ${csr_gitops_blueprint_path}
-  kubectl wait --for=condition=READY --timeout="10m" -f ${csr_gitops_blueprint_path}
+  kubectl wait --for=condition=READY --timeout="10m" -f ${csr_gitops_blueprint_path}/hydration-trigger.yaml
+  kubectl wait --for=condition=READY --timeout="10m" -f ${csr_gitops_blueprint_path}/source-repositories.yaml
+  kubectl wait --for=condition=READY --timeout="10m" -f ${csr_gitops_blueprint_path}/iam.yaml
 }
 
+# From: https://docs.google.com/document/d/1VeC6cNo5vsD3-niYNZYfWZxsrqGxoKjpfDSY5QLH3a4/edit#
+# TODO(b/171985454): Delete this function once ACP push to prod is successful
 workarounds() {
   local build_dir=$1
   kubectl delete --wait Deployment bootstrap -n krmapihosting-system --ignore-not-found
+  kubectl delete k8sallowedresources restricthumanresourceaccess || true # This might not exist yet
   gsutil cp gs://configconnector-operator/latest/release-bundle.tar.gz ${build_dir}/release-bundle.tar.gz
   tar zxvf ${build_dir}/release-bundle.tar.gz -C ${build_dir}
-  kubectl apply -f ${build_dir}/operator-system/configconnector-operator.yaml
 }
 
 main() {
@@ -71,10 +72,15 @@ main() {
   teardown_existing_yakimas
   ${test_dir}/../bootstrap.sh create -c ${CLUSTER_NAME} -p ${PROJECT_ID}
 
-  # TODO(jcwc): Remove this command once ACP Config Sync is supported and KCC is using latest
+  # TODO(b/171985454): Remove this command once ACP Config Sync is supported and is using latest KCC
   workarounds ${build_dir}
 
   install_gitops_blueprint ${build_dir}
+
+  # TODO(b/171985454): This should be part of workarounds and removed . For some reason, transient error
+  #   occurs if I run this immediately after work arounds. Even sleep doesn't seem to fix it, but
+  #   running it after installing git ops seems to work
+  kubectl apply -f ${build_dir}/operator-system/configconnector-operator.yaml
 }
 
 main $@

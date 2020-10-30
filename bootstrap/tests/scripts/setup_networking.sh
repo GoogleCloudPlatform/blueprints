@@ -22,8 +22,8 @@ kubectl create namespace ${NETWORK_NAMESPACE} || true
 kubectl create secret generic vpn-shared-secret --from-literal=vpn-shared-secret="1234567890" -n ${NETWORK_NAMESPACE} || true
 
 cp -rf ${ROOT_DIR}/blueprints/landing-zone .
-cp -rf ${ROOT_DIR}/blueprints/networking/shared-vpc@master  landing-zone/network/shared-vpc
-cp -rf ${ROOT_DIR}/blueprints/networking/network@master  landing-zone/network/dev
+cp -rf ${ROOT_DIR}/blueprints/networking/shared-vpc  landing-zone/network/shared-vpc
+cp -rf ${ROOT_DIR}/blueprints/networking/network  landing-zone/network/dev
 
 kpt cfg set landing-zone billing-account-id ${BILLING_ACCOUNT_ID}
 kpt cfg set landing-zone management-project-id ${PROJECT_ID}

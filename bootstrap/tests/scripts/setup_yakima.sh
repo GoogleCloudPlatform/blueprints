@@ -20,9 +20,11 @@ teardown_existing_yakimas() {
     gcloud container clusters delete ${old_clusters} --quiet --project ${PROJECT_ID} --region ${CLUSTER_REGION}
   fi
 
-  gcloud source repos delete ${SOURCE_REPO} --project ${PROJECT_ID} --quiet 2>/dev/null || true
-  gcloud source repos delete ${DEPLOYMENT_REPO} --project ${PROJECT_ID} --quiet 2>/dev/null || true
-  gcloud alpha builds triggers delete ${CLOUDBUILD_TRIGGER_NAME} --project ${PROJECT_ID} --quiet 2>/dev/null || true
+  echo "Attempting to delete old repos and triggers (to avoid conflicting resources)"
+  echo "You may see some 404 errors; these are fine..."
+  gcloud source repos delete ${SOURCE_REPO} --project ${PROJECT_ID} --quiet || true
+  gcloud source repos delete ${DEPLOYMENT_REPO} --project ${PROJECT_ID} --quiet || true
+  gcloud alpha builds triggers delete ${CLOUDBUILD_TRIGGER_NAME} --project ${PROJECT_ID} --quiet || true
 }
 
 install_gitops_blueprint() {
@@ -58,6 +60,17 @@ workarounds() {
   kubectl delete k8sallowedresources restricthumanresourceaccess || true # This might not exist yet
   gsutil cp gs://configconnector-operator/latest/release-bundle.tar.gz ${build_dir}/release-bundle.tar.gz
   tar zxvf ${build_dir}/release-bundle.tar.gz -C ${build_dir}
+
+  local configconnector_output=$(kubectl apply -f ${build_dir}/operator-system/configconnector-operator.yaml 2>&1)
+  echo ${configconnector_output}
+
+  while [[ ${configconnector_output} =~ "Internal error occurred: failed calling webhook" ]]
+  do
+    echo "Retrying to apply config connector operator..."
+    configconnector_output=$(kubectl apply -f ${build_dir}/operator-system/configconnector-operator.yaml 2>&1)
+    echo ${configconnector_output}
+    sleep 5
+  done
 }
 
 main() {
@@ -76,11 +89,6 @@ main() {
   workarounds ${build_dir}
 
   install_gitops_blueprint ${build_dir}
-
-  # TODO(b/171985454): This should be part of workarounds and removed . For some reason, transient error
-  #   occurs if I run this immediately after work arounds. Even sleep doesn't seem to fix it, but
-  #   running it after installing git ops seems to work
-  kubectl apply -f ${build_dir}/operator-system/configconnector-operator.yaml
 }
 
 main $@

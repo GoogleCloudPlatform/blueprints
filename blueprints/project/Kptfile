@@ -16,6 +16,22 @@ openAPI:
           name: folder-name
           value: name.of.folder
       description: Kubernetes metadata name of the parent folder resource.
+    io.k8s.cli.setters.folder-namespace:
+      x-k8s-cli:
+        setter:
+          name: folder-namespace
+          value: hierarchy
+      description: Kubernetes metadata namespace of the parent folder resource.
+    io.k8s.cli.substitutions.folder-ref:
+      x-k8s-cli:
+        substitution:
+          name: folder-ref
+          pattern: '{"namespace": "${FOLDER_NAMESPACE}", "name": "${FOLDER_NAME}"}'
+          values:
+          - marker: ${FOLDER_NAME}
+            ref: '#/definitions/io.k8s.cli.setters.folder-name'
+          - marker: ${FOLDER_NAMESPACE}
+            ref: '#/definitions/io.k8s.cli.setters.folder-namespace'
     io.k8s.cli.setters.project-id:
       x-k8s-cli:
         setter:

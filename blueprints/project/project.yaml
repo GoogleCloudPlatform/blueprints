@@ -3,7 +3,7 @@ kind: Project
 metadata:
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
-    cnrm.cloud.google.com/folder-ref: "name.of.folder" # {"$kpt-set":"folder-name"}
+    cnrm.cloud.google.com/folder-ref: '{"namespace": "hierarchy", "name": "name.of.folder"}' # {"$kpt-set":"folder-ref"}
   name: project-id # {"$kpt-set":"project-id"}
   namespace: projects # {"$kpt-set":"projects-namespace"}
 spec:

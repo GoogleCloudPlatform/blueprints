@@ -45,9 +45,9 @@ install_gitops_blueprint() {
 
   kubectl apply --wait -f ${csr_gitops_blueprint_path}
 
-  kubectl wait --for=condition=READY --timeout="10m" -f ${csr_gitops_blueprint_path}/hydration-trigger.yaml
-  kubectl wait --for=condition=READY --timeout="10m" -f ${csr_gitops_blueprint_path}/source-repositories.yaml
   kubectl wait --for=condition=READY --timeout="10m" -f ${csr_gitops_blueprint_path}/iam.yaml
+  kubectl wait --for=condition=READY --timeout="10m" -f ${csr_gitops_blueprint_path}/source-repositories.yaml
+  kubectl wait --for=condition=READY --timeout="10m" -f ${csr_gitops_blueprint_path}/hydration-trigger.yaml
 }
 
 # From: https://docs.google.com/document/d/1VeC6cNo5vsD3-niYNZYfWZxsrqGxoKjpfDSY5QLH3a4/edit#

@@ -31,7 +31,7 @@ install_gitops_blueprint() {
 
   rm -rf ${csr_gitops_blueprint_path}
   mkdir -p ${build_dir}
-  kpt pkg get sso://cnrm/blueprints.git/blueprints/git-ops/csr-git-ops-pipeline@master ${build_dir}
+  cp -rf $(dirname "${BASH_SOURCE}")/../../../blueprints/git-ops/csr-git-ops-pipeline ${csr_gitops_blueprint_path}
 
   kpt cfg set ${csr_gitops_blueprint_path} namespace "yakima-system"
   kpt cfg set ${csr_gitops_blueprint_path} project-id "${PROJECT_ID}"

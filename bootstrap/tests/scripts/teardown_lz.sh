@@ -11,7 +11,7 @@ BILLING_ACCOUNT_ID=$3
 (git show-branch main &>/dev/null) && (git checkout main) || (git checkout -b main)
 
 rm -rf * # Remove everything for a clean start for Landing Zone blueprint
-kpt pkg get sso://cnrm/blueprints.git/blueprints/landing-zone@master ./landing-zone/
+cp -rf $(dirname "${BASH_SOURCE}")/../../../blueprints/landing-zone ./landing-zone
 
 kpt cfg set landing-zone billing-account-id ${BILLING_ACCOUNT_ID}
 kpt cfg set landing-zone management-project-id ${PROJECT_ID}

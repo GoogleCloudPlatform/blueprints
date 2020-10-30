@@ -11,6 +11,8 @@ NETWORK_NAMESPACE=$5
 ORG_ID=$6
 BILLING_ACCOUNT_ID=$7
 
+ROOT_DIR=$(dirname "${BASH_SOURCE}")/../../..
+
 (git show-branch main &>/dev/null) && (git checkout main) || (git checkout -b main)
 
 rm -rf * # Remove everything for a clean start for Landing Zone blueprint
@@ -19,9 +21,9 @@ rm -rf * # Remove everything for a clean start for Landing Zone blueprint
 kubectl create namespace ${NETWORK_NAMESPACE} || true
 kubectl create secret generic vpn-shared-secret --from-literal=vpn-shared-secret="1234567890" -n ${NETWORK_NAMESPACE} || true
 
-kpt pkg get sso://cnrm/blueprints.git/blueprints/landing-zone@master ./landing-zone/
-kpt pkg get sso://cnrm/blueprints.git/blueprints/networking/shared-vpc@master  landing-zone/network/shared-vpc
-kpt pkg get sso://cnrm/blueprints.git/blueprints/networking/network@master  landing-zone/network/dev
+cp -rf ${ROOT_DIR}/blueprints/landing-zone .
+cp -rf ${ROOT_DIR}/blueprints/networking/shared-vpc@master  landing-zone/network/shared-vpc
+cp -rf ${ROOT_DIR}/blueprints/networking/network@master  landing-zone/network/dev
 
 kpt cfg set landing-zone billing-account-id ${BILLING_ACCOUNT_ID}
 kpt cfg set landing-zone management-project-id ${PROJECT_ID}

@@ -5,6 +5,7 @@ import (
 	"log"
 	"os"
 	"os/exec"
+	"strings"
 	"testing"
 	"time"
 
@@ -27,6 +28,32 @@ func GlobalTestParameters() helpers.Parameters {
 	}
 }
 
+// From: https://docs.google.com/document/d/1VeC6cNo5vsD3-niYNZYfWZxsrqGxoKjpfDSY5QLH3a4/edit#
+// TODO(b/171985454): Delete this function once ACP push to prod is successful
+func acpWorkarounds() {
+	err := helpers.ExecuteCommands([][]string{
+		strings.Split("kubectl delete --wait Deployment bootstrap -n krmapihosting-system --ignore-not-found", " "),
+		strings.Split("gsutil cp gs://configconnector-operator/latest/release-bundle.tar.gz build/release-bundle.tar.gz", " "),
+		strings.Split("tar zxvf build/release-bundle.tar.gz -C build", " "),
+	}, ".")
+
+	if err != nil {
+		log.Fatal("ACP workarounds failed with error:\n", err)
+	}
+
+	err = helpers.Poll(func() (bool, error) {
+		err := helpers.ExecuteCommands([][]string{
+			strings.Split("kubectl apply -f build/operator-system/configconnector-operator.yaml", " "),
+		}, ".")
+
+		return err != nil, err
+	}, 120, 5)
+
+	if err != nil {
+		log.Fatal("Could not apply Config Connector workaround...\n", err)
+	}
+}
+
 func TestMain(m *testing.M) {
 	p := GlobalTestParameters()
 	// TODO(jcwc): This command doesn't output in real time and can run for a long time
@@ -35,6 +62,9 @@ func TestMain(m *testing.M) {
 	if err != nil {
 		log.Fatal("Yakima setup failed\n", err)
 	}
+
+	// TODO(b/171985454): Delete this function once ACP push to prod is successful
+	acpWorkarounds()
 
 	testExitCode := m.Run()
 

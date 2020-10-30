@@ -52,27 +52,6 @@ install_gitops_blueprint() {
   kubectl wait --for=condition=READY --timeout="10m" -f ${csr_gitops_blueprint_path}/hydration-trigger.yaml
 }
 
-# From: https://docs.google.com/document/d/1VeC6cNo5vsD3-niYNZYfWZxsrqGxoKjpfDSY5QLH3a4/edit#
-# TODO(b/171985454): Delete this function once ACP push to prod is successful
-workarounds() {
-  local build_dir=$1
-  kubectl delete --wait Deployment bootstrap -n krmapihosting-system --ignore-not-found
-  kubectl delete k8sallowedresources restricthumanresourceaccess || true # This might not exist yet
-  gsutil cp gs://configconnector-operator/latest/release-bundle.tar.gz ${build_dir}/release-bundle.tar.gz
-  tar zxvf ${build_dir}/release-bundle.tar.gz -C ${build_dir}
-
-  local configconnector_output=$(kubectl apply -f ${build_dir}/operator-system/configconnector-operator.yaml 2>&1)
-  echo ${configconnector_output}
-
-  while [[ ${configconnector_output} =~ "Internal error occurred: failed calling webhook" ]]
-  do
-    echo "Retrying to apply config connector operator..."
-    configconnector_output=$(kubectl apply -f ${build_dir}/operator-system/configconnector-operator.yaml 2>&1)
-    echo ${configconnector_output}
-    sleep 5
-  done
-}
-
 main() {
   echo "Setting up Yakima..."
   cd $(dirname "${BASH_SOURCE}")/..
@@ -84,9 +63,6 @@ main() {
 
   teardown_existing_yakimas
   ${test_dir}/../bootstrap.sh create -c ${CLUSTER_NAME} -p ${PROJECT_ID}
-
-  # TODO(b/171985454): Remove this command once ACP Config Sync is supported and is using latest KCC
-  workarounds ${build_dir}
 
   install_gitops_blueprint ${build_dir}
 }

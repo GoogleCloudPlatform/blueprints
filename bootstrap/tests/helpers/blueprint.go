@@ -105,6 +105,13 @@ func (b *BlueprintTest) Run(t *testing.T) {
 		t.Fatal("Could not clone source repo\n", err)
 	}
 
+	if err = ExecuteCommands([][]string{
+		[]string{"git", "config", "user.email", "yakima@google.com"},
+		[]string{"git", "config", "user.name", "YakimaTester"},
+	}, sourceRepoPath); err != nil {
+		t.Fatal("Error setting git config\n", err)
+	}
+
 	t.Log("Setting up resources...")
 
 	if err := b.runScriptAndVerify(t, sourceRepoPath, b.SetupCommand, retryCount, pollDuration, false); err != nil {

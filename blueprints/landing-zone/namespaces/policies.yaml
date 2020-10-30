@@ -3,6 +3,8 @@ kind: IAMServiceAccount
 metadata:
   name: policies-sa
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   displayName: policies-sa
 ---
@@ -11,6 +13,8 @@ kind: IAMPolicyMember
 metadata:
   name: policies-sa-orgpolicyadmin-permissions
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:policies-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"policies-sa-ref"}
   role: roles/orgpolicy.policyAdmin

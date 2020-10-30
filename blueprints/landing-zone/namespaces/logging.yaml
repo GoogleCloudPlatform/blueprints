@@ -18,6 +18,8 @@ kind: IAMServiceAccount
 metadata:
   name: logging-sa
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   displayName: logging-sa
 ---
@@ -26,6 +28,8 @@ kind: IAMPolicyMember
 metadata:
   name: logging-sa-logadmin-permissions
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"logging-sa-ref"}
   role: roles/logging.admin
@@ -39,6 +43,8 @@ kind: IAMPolicyMember
 metadata:
   name: logging-sa-bigqueryadmin-permissions
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"logging-sa-ref"}
   role: roles/bigquery.admin

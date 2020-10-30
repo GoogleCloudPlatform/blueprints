@@ -3,6 +3,8 @@ kind: IAMServiceAccount
 metadata:
   name: networking-sa
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   displayName: networking-sa
 ---
@@ -11,6 +13,8 @@ kind: IAMPolicyMember
 metadata:
   name: networking-sa-networkadmin-permissions
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"networking-sa-ref"}
   role: roles/compute.networkAdmin
@@ -24,6 +28,8 @@ kind: IAMPolicyMember
 metadata:
   name: networking-sa-xpnadmin-permissions
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"networking-sa-ref"}
   role: roles/compute.xpnAdmin

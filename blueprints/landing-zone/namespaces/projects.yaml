@@ -3,6 +3,8 @@ kind: IAMServiceAccount
 metadata:
   name: projects-sa
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   displayName: projects-sa
 ---
@@ -11,6 +13,8 @@ kind: IAMPolicyMember
 metadata:
   name: projects-sa-projectcreator-permissions
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"projects-sa-ref"}
   role: roles/resourcemanager.projectCreator
@@ -24,6 +28,8 @@ kind: IAMPolicyMember
 metadata:
   name: projects-sa-projectmover-permissions
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"projects-sa-ref"}
   role: roles/resourcemanager.projectMover
@@ -37,6 +43,8 @@ kind: IAMPolicyMember
 metadata:
   name: projects-sa-projectdeleter-permissions
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"projects-sa-ref"}
   role: roles/resourcemanager.projectDeleter
@@ -50,6 +58,8 @@ kind: IAMPolicyMember
 metadata:
   name: projects-sa-billinguser-permissions
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"projects-sa-ref"}
   role: roles/billing.user
@@ -63,6 +73,8 @@ kind: IAMPolicyMember
 metadata:
   name: projects-sa-serviceusageadmin-permissions
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"projects-sa-ref"}
   role: roles/serviceusage.serviceUsageAdmin

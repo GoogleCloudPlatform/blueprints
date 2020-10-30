@@ -3,6 +3,8 @@ kind: IAMServiceAccount
 metadata:
   name: hierarchy-sa
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   displayName: hierarchy-sa
 ---
@@ -11,6 +13,8 @@ kind: IAMPolicyMember
 metadata:
   name: hierarchy-sa-folderadmin-permissions
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"hierarchy-sa-ref"}
   role: roles/resourcemanager.folderAdmin

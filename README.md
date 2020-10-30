@@ -13,26 +13,26 @@ Overall top-level
 
 Landing Zone CUJs and associated blueprints.
 
-| CUJ                                                      | Blueprint                        | Status                | Demo Recordings                                                                     |
-| -------------------------------------------------------- | -------------------------------- | --------------------- | ----------------------------------------------------------------------------------- |
-| [CUJ1: Discovery/Set up][1]                              | [Bootstrap]                      | Script, supports ACP  | [bootstrap, video][demo-1a] - [actuation][demo-1b], [shell](./demos/bootstrap.cast) |
-|                                                          | [GitOps](/csr-git-ops-pipeline/) | Ready                 | [Clone + LZ](./demos/lz.cast)                                                       |
-|                                                          | [Landing Zone](/landing-zone/)   | Ready                 |                                                                                     |
-| [CUJ2: Configure Resource Hierarchy][2] - [4 Options][9] | [Overview Docs](/hierarchy)      | Ready                 |                                                                                     |
-|                                                          | [Simple](/hierarchy/simple)      | Ready                 |                                                                                     |
-|                                                          | [Team](/hierarchy/team)          | Ready                 |                                                                                     |
-|                                                          | [BU](/hierarchy/bu)              | Ready                 |                                                                                     |
-|                                                          | [Env & BU](/hierarchy/env-bu)    | Ready                 | [hierarchy/folders][demo-2]                                                         |
-| [CUJ3: Manage Project Factory][3]                        | [Project](/project/)             | Ready                 | [project factory][demo-3]                                                           |
-| [CUJ4: Set up networking][4]                             | [Network](/network/)             | Ready                 |                                                                                     |
-|                                                          | [Firewall](/firewall/)           | Ready                 |                                                                                     |
-| [CUJ5: Set up access control][5]                         | [Landing Zone](/landing-zone/)   | Ready                 |                                                                                     |
-|                                                          | [Org hierarchy](/hierarchy/)     | Ready                 |                                                                                     |
-|                                                          | [Project](/project/)             | Ready                 |                                                                                     |
-|                                                          | [Network](/network/)             | Ready                 |                                                                                     |
-| [CUJ6: Set up logging and monitoring][6]                 | [Log export](/log-export/)       | Ready                 |                                                                                     |
-| [CUJ7: Set up change control and security guardrails][7] | [Org policies](/policies/)       | **Missing**           |                                                                                     |
-| [CUJ8: Collaborate][8]                                   | [GitOps](/csr-git-ops-pipeline/) | Ready                 | N/A - Tested by CUJ 2 through 7                                                     |
+| CUJ                                                      | Blueprint                                           | Status                | Demo Recordings                                                                     |
+| -------------------------------------------------------- | --------------------------------------------------- | --------------------- | ----------------------------------------------------------------------------------- |
+| [CUJ1: Discovery/Set up][1]                              | [Bootstrap]                                         | Script, supports ACP  | [bootstrap, video][demo-1a] - [actuation][demo-1b], [shell](./demos/bootstrap.cast) |
+|                                                          | [GitOps](/blueprints/git-ops/csr-git-ops-pipeline/) | Ready                 | [Clone + LZ](./demos/lz.cast)                                                       |
+|                                                          | [Landing Zone](/blueprints/landing-zone/)           | Ready                 |                                                                                     |
+| [CUJ2: Configure Resource Hierarchy][2] - [4 Options][9] | [Overview Docs](/blueprints/hierarchy)              | Ready                 |                                                                                     |
+|                                                          | [Simple](/blueprints/hierarchy/simple)              | Ready                 |                                                                                     |
+|                                                          | [Team](/blueprints/hierarchy/team)                  | Ready                 |                                                                                     |
+|                                                          | [BU](/blueprints/hierarchy/bu)                      | Ready                 |                                                                                     |
+|                                                          | [Env & BU](/blueprints/hierarchy/env-bu)            | Ready                 | [hierarchy/folders][demo-2]                                                         |
+| [CUJ3: Manage Project Factory][3]                        | [Project](/blueprints/project/)                     | Ready                 | [project factory][demo-3]                                                           |
+| [CUJ4: Set up networking][4]                             | [Network](/blueprints/networking/network/)          | Ready                 |                                                                                     |
+|                                                          | [Firewall](/blueprints/networking/firewall/)        | Ready                 |                                                                                     |
+| [CUJ5: Set up access control][5]                         | [Landing Zone](/blueprints/landing-zone/)           | Ready                 |                                                                                     |
+|                                                          | [Org hierarchy](/blueprints/hierarchy/)             | Ready                 |                                                                                     |
+|                                                          | [Project](/blueprints/project/)                     | Ready                 |                                                                                     |
+|                                                          | [Network](/blueprints/networking/network/)          | Ready                 |                                                                                     |
+| [CUJ6: Set up logging and monitoring][6]                 | [Log export](/blueprints/log-export/)               | Ready                 |                                                                                     |
+| [CUJ7: Set up change control and security guardrails][7] | [Landing Zone](/blueprints/landing-zone/)           | Ready                 |                                                                                     |
+| [CUJ8: Collaborate][8]                                   | [GitOps](/blueprints/git-ops/csr-git-ops-pipeline/) | Ready                 | N/A - Tested by CUJ 2 through 7                                                     |
 
 [bootstrap]: https://cnrm.git.corp.google.com/yakima/+/refs/heads/master/bootstrap/script
 [1]: https://docs.google.com/document/d/1uaWE2_MZs5GDA1jRbs5EcCdL2nBNQ6YQiINxtnhcTsM/edit#heading=h.umcqf3j6dgca

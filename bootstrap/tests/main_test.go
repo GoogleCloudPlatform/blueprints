@@ -37,6 +37,8 @@ func acpWorkarounds() {
 		strings.Split("tar zxvf build/release-bundle.tar.gz -C build", " "),
 	}, ".")
 
+	exec.Command("kubectl", "delete", "k8sallowedresources", "restricthumanresourceaccess").Run() // Ignore errors here
+
 	if err != nil {
 		log.Fatal("ACP workarounds failed with error:\n", err)
 	}

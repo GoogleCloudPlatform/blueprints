@@ -108,12 +108,10 @@ func (b *BlueprintTest) Run(t *testing.T) {
 	t.Log("Setting up resources...")
 
 	if err := b.runScriptAndVerify(t, sourceRepoPath, b.SetupCommand, retryCount, pollDuration, false); err != nil {
-		t.Fatal("Setup failed\n", err)
+		t.Error("Setup failed\n", err)
 	}
 
-	t.Cleanup(func() {
-		if err := b.runScriptAndVerify(t, sourceRepoPath, b.TeardownCommand, retryCount, pollDuration, true); err != nil {
-			t.Error("Test was successful but teardown failed\n", err)
-		}
-	})
+	if err := b.runScriptAndVerify(t, sourceRepoPath, b.TeardownCommand, retryCount, pollDuration, true); err != nil {
+		t.Error("Teardown failed\n", err)
+	}
 }

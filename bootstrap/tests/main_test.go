@@ -69,7 +69,7 @@ func installGitOps(p helpers.Parameters) {
 		[]string{"cp", "-rf", "../../blueprints/git-ops/csr-git-ops-pipeline", csrGitOpsBlueprintPath},
 		[]string{"kpt", "cfg", "set", csrGitOpsBlueprintPath, "namespace", p.Namespace},
 		[]string{"kpt", "cfg", "set", csrGitOpsBlueprintPath, "project-id", p.Project},
-		[]string{"kpt", "cfg", "set", csrGitOpsBlueprintPath, "project-number", projectNumber},
+		[]string{"kpt", "cfg", "set", csrGitOpsBlueprintPath, "project-number", string(projectNumber)},
 		[]string{"kpt", "cfg", "set", csrGitOpsBlueprintPath, "cluster-name", p.Cluster},
 		[]string{"kpt", "cfg", "set", csrGitOpsBlueprintPath, "source-repo", p.SourceRepo},
 		[]string{"kpt", "cfg", "set", csrGitOpsBlueprintPath, "deployment-repo", p.DeploymentRepo},

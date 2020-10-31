@@ -58,8 +58,9 @@ func acpWorkarounds() {
 
 func installGitOps(p helpers.Parameters) {
 	csrGitOpsBlueprintPath := "build/" + p.SourceRepo
-	projectNumber, err := exec.Command("gcloud", "projects", "describe", p.Project, "--format='get(projectNumber)'").CombinedOutput()
+	projectNumber, err := exec.Command("gcloud", "projects", "describe", p.Project, "--format=get(projectNumber)").CombinedOutput()
 	if err != nil {
+		fmt.Println(string(projectNumber))
 		log.Fatal("Could not get project number\n", err)
 	}
 

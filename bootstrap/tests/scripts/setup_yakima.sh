@@ -27,31 +27,6 @@ teardown_existing_yakimas() {
   gcloud alpha builds triggers delete ${CLOUDBUILD_TRIGGER_NAME} --project ${PROJECT_ID} --quiet || true
 }
 
-install_gitops_blueprint() {
-  local build_dir=$1
-  local csr_gitops_blueprint_path=${build_dir}/csr-git-ops-pipeline
-
-  rm -rf ${csr_gitops_blueprint_path}
-  mkdir -p ${build_dir}
-  cp -rf $(dirname "${BASH_SOURCE}")/../../../blueprints/git-ops/csr-git-ops-pipeline ${csr_gitops_blueprint_path}
-
-  kpt cfg set ${csr_gitops_blueprint_path} namespace "yakima-system"
-  kpt cfg set ${csr_gitops_blueprint_path} project-id "${PROJECT_ID}"
-  kpt cfg set ${csr_gitops_blueprint_path} project-number "$(gcloud projects describe ${PROJECT_ID} --format='get(projectNumber)')"
-  kpt cfg set ${csr_gitops_blueprint_path} cluster-name "${ACP_CLUSTER_NAME}"
-
-  kpt cfg set ${csr_gitops_blueprint_path} source-repo "${SOURCE_REPO}"
-  kpt cfg set ${csr_gitops_blueprint_path} deployment-repo "${DEPLOYMENT_REPO}"
-
-  kpt cfg list-setters ${csr_gitops_blueprint_path}
-
-  kubectl apply --wait -f ${csr_gitops_blueprint_path}
-
-  kubectl wait --for=condition=READY --timeout="30m" -f ${csr_gitops_blueprint_path}/source-repositories.yaml
-  kubectl wait --for=condition=READY --timeout="30m" -f ${csr_gitops_blueprint_path}/hydration-trigger.yaml
-  kubectl wait --for=condition=READY --timeout="30m" -f ${csr_gitops_blueprint_path}/iam.yaml
-}
-
 main() {
   echo "Setting up Yakima..."
   cd $(dirname "${BASH_SOURCE}")/..
@@ -63,8 +38,6 @@ main() {
 
   teardown_existing_yakimas
   ${test_dir}/../bootstrap.sh create -c ${CLUSTER_NAME} -p ${PROJECT_ID}
-
-  install_gitops_blueprint ${build_dir}
 }
 
 main $@

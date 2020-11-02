@@ -6,11 +6,11 @@ metadata:
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
   name: bigquery.googleapis.com
-  namespace: hierarchy
+  namespace: projects
 ---
 # Folder Sink to BQ
-apiVersion: logging.cnrm.cloud.google.com/v1alpha1
-kind: FolderLogSink
+apiVersion: logging.cnrm.cloud.google.com/v1beta1
+kind: LoggingLogSink
 metadata:
   name: my.folder.k8s.name-bqsink # {"$kpt-set":"log-sink-name"}
   namespace: my-namespace # {"$kpt-set":"namespace"}

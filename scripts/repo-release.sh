@@ -7,6 +7,7 @@ set -o pipefail
 PROD_PROJECT="yakima-eap"
 PROD_REPO="blueprints"
 PROD_BRANCH="main"
+BW_COMPAT_BRANCH="master"
 
 # This script assumes it is running in the root of gob/blueprints.
 [ -d "./blueprints" ] || { echo "Missing blueprints dir, is this the right env?"; exit 1; }
@@ -27,3 +28,8 @@ git add -A **
 git commit -m "$(date -u +%Y-%m-%dT%H) Updates"
 
 git push origin ${PROD_BRANCH}
+
+# Keep both backwards compatibility and prod branches in-sync.
+git checkout ${BW_COMPAT_BRANCH}
+git merge ${PROD_BRANCH}
+git push origin ${BW_COMPAT_BRANCH}

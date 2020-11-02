@@ -1,0 +1,55 @@
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: policies-sa
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
+spec:
+  displayName: policies-sa
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: policies-sa-orgpolicyadmin-permissions
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
+spec:
+  member: "serviceAccount:policies-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"policies-sa-ref"}
+  role: roles/orgpolicy.policyAdmin
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # {"$kpt-set":"org-id"}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: policies-sa-workload-identity-binding
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
+spec:
+  member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-policies] # {"$kpt-set":"policies-workload-identity-sa"}
+  role: roles/iam.workloadIdentityUser
+  resourceRef:
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+    name: policies-sa
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: policies
+  annotations:
+    cnrm.cloud.google.com/organization-id: "123456789012" # {"$kpt-set":"org-id"}
+---
+apiVersion: core.cnrm.cloud.google.com/v1beta1
+kind: ConfigConnectorContext
+metadata:
+  name: configconnectorcontext.core.cnrm.cloud.google.com
+  namespace: policies
+spec:
+  googleServiceAccount: policies-sa@management-project-id.iam.gserviceaccount.com # {"$kpt-set":"policies-sa-email"}
+

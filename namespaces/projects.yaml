@@ -2,7 +2,9 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
   name: projects-sa
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   displayName: projects-sa
 ---
@@ -10,7 +12,9 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: projects-sa-projectcreator-permissions
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"projects-sa-ref"}
   role: roles/resourcemanager.projectCreator
@@ -23,7 +27,9 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: projects-sa-projectmover-permissions
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"projects-sa-ref"}
   role: roles/resourcemanager.projectMover
@@ -36,7 +42,9 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: projects-sa-projectdeleter-permissions
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"projects-sa-ref"}
   role: roles/resourcemanager.projectDeleter
@@ -48,8 +56,38 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
+  name: projects-sa-billinguser-permissions
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
+spec:
+  member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"projects-sa-ref"}
+  role: roles/billing.user
+  resourceRef:
+    apiVersion: billing.cnrm.cloud.google.com/v1beta1
+    kind: BillingAccount
+    external: AAAAAA-BBBBBB-CCCCCC # {"$kpt-set":"billing-account-id"}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: projects-sa-serviceusageadmin-permissions
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
+spec:
+  member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"projects-sa-ref"}
+  role: roles/serviceusage.serviceUsageAdmin
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # {"$kpt-set":"org-id"}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
   name: projects-sa-workload-identity-binding
-  namespace: management-project-id # {"$kpt-set":"management-namespace"}
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:

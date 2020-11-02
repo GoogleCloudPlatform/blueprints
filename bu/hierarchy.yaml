@@ -17,16 +17,16 @@ spec:
   config:
     divisions:
     - retail
-    - risk_management
+    - risk-management
     - financial
     - commercial
     teams:
     - shared
     - apps
     - web
-    - core_service
-    - data_and_analysis
-    - ctrl_service
+    - core-service
+    - data-and-analysis
+    - ctrl-service
     environments:
     - dev
     - prod
@@ -37,6 +37,6 @@ metadata:
   annotations:
     config.kubernetes.io/function: |
       container:
-        image: gcr.io/yakima-eap/folder-ref:v1
+        image: gcr.io/yakima-eap/folder-ref:latest
   name: folder-ref-kpt-fn
   namespace: hierarchy # {"$kpt-set":"namespace"}

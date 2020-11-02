@@ -4,7 +4,6 @@
 
 ## Prerequisites
 - Yakima cluster w/ Git Ops enabled
-- TODO(jcwc): This blueprint will need Folder creator privileges at the org level. Will Yakima cluster bootstrap cover all of this?
 
 ## What is this?
 This folder contains 4 different blueprint options for org hierarchy folder structures: simple, team, bu and env-bu.
@@ -20,7 +19,7 @@ To run this blueprint, you can run the steps listed [here](https://cnrm.git.corp
 
 Replace step #3 with the following commands instead:
 ```bash
-kpt pkg get https://source.developers.google.com/p/yakima-eap/r/blueprints.git/hierarchy/<hierarchy option>@main hierarchy
+kpt pkg get sso://cnrm/blueprints.git/blueprints/hierarchy/<hierarchy option>@master hierarchy
 kpt cfg list-setters hierarchy
 kpt cfg set hierarchy namespace <your namespace>
 kpt cfg set hierarchy org-id <your organization ID>

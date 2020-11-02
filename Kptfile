@@ -16,6 +16,22 @@ openAPI:
           name: folder-name
           value: name.of.folder
       description: Kubernetes metadata name of the parent folder resource.
+    io.k8s.cli.setters.folder-namespace:
+      x-k8s-cli:
+        setter:
+          name: folder-namespace
+          value: hierarchy
+      description: Kubernetes metadata namespace of the parent folder resource.
+    io.k8s.cli.substitutions.folder-ref:
+      x-k8s-cli:
+        substitution:
+          name: folder-ref
+          pattern: '{"namespace": "${FOLDER_NAMESPACE}", "name": "${FOLDER_NAME}"}'
+          values:
+          - marker: ${FOLDER_NAME}
+            ref: '#/definitions/io.k8s.cli.setters.folder-name'
+          - marker: ${FOLDER_NAMESPACE}
+            ref: '#/definitions/io.k8s.cli.setters.folder-namespace'
     io.k8s.cli.setters.project-id:
       x-k8s-cli:
         setter:
@@ -26,7 +42,7 @@ openAPI:
       x-k8s-cli:
         setter:
           name: projects-namespace
-          value: hierarchy
+          value: projects
       description: Namespace for projects.
     io.k8s.cli.setters.management-project-id:
       x-k8s-cli:
@@ -34,14 +50,11 @@ openAPI:
           name: management-project-id
           value: management-project-id
       description: Yakima host project id.
-    io.k8s.cli.substitutions.management-namespace:
+    io.k8s.cli.setters.management-namespace:
       x-k8s-cli:
-        substitution:
-          name: management-project-id
-          pattern: ${MANAGEMENT_PROJECT_ID}
-          values:
-          - marker: ${MANAGEMENT_PROJECT_ID}
-            ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+        setter:
+          name: management-namespace
+          value: yakima-system
     io.k8s.cli.substitutions.project-namespace:
       x-k8s-cli:
         substitution:

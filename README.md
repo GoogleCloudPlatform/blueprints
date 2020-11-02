@@ -31,7 +31,7 @@ Each project will create a different clone for the kpt package.
    the project to be created, **Not** the Yakima hosting cluster.
 
    ```sh
-   kpt pkg get https://source.developers.google.com/p/yakima-eap/r/blueprints.git/project@main ${NEW_PROJECT_ID?}
+   kpt pkg get sso://cnrm/blueprints.git/project@master ${NEW_PROJECT_ID?}
    kpt cfg list-setters ${NEW_PROJECT_ID?}
    ```
 

@@ -80,3 +80,22 @@ openAPI:
           values:
           - marker: ${org-id}
             ref: '#/definitions/io.k8s.cli.setters.org-id'
+    io.k8s.cli.setters.management-project-id:
+      x-k8s-cli:
+        setter:
+          name: management-project-id
+          value: management-project-id
+      description: Yakima host project id.
+    io.k8s.cli.setters.management-namespace:
+      x-k8s-cli:
+        setter:
+          name: management-namespace
+          value: yakima-system
+    io.k8s.cli.substitutions.logging-sa-ref:
+      x-k8s-cli:
+        substitution:
+          name: logging-sa-ref
+          pattern: serviceAccount:logging-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'

@@ -30,6 +30,7 @@ kind: BigQueryDataset
 metadata:
   annotations:
     cnrm.cloud.google.com/delete-contents-on-destroy: "false" # {"$kpt-set":"delete-contents-on-destroy"}
+    cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
   name: bqlogexportdataset
   namespace: logging # {"$kpt-set":"namespace"}
 spec:

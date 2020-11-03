@@ -26,7 +26,7 @@ To run this blueprint, you can run the steps listed [here](https://cnrm.git.corp
 
 Replace step #3 with the following commands instead:
 ```bash
-kpt pkg get sso://cnrm/blueprints.git/blueprints/log-export/<source option>/<dest option>@master landing-zone/log-export
+kpt pkg get https://source.developers.google.com/p/yakima-eap/r/blueprints.git/blueprints/log-export/<source option>/<dest option>@master landing-zone/log-export
 kpt cfg list-setters log-export
 kpt cfg set ...
 ```

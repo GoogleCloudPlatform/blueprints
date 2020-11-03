@@ -9,11 +9,6 @@ set -o pipefail
 # To run a single test:
 # ./run_blueprints_test.sh TestNetworking # Name of go test function
 
-# Only run this if in prow w/ GOOGLE_APPLICATION_CREDENTIALS
-if [ -n "${GOOGLE_APPLICATION_CREDENTIALS:-}" ]; then
-  gcloud auth activate-service-account --key-file "${GOOGLE_APPLICATION_CREDENTIALS}"
-fi
-
 gcloud components update --quiet
 gcloud components install pkg --quiet
 gcloud components install alpha --quiet

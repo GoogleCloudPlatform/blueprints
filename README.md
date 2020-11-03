@@ -19,7 +19,7 @@ To run this blueprint, you can run the steps listed [here](https://cnrm.git.corp
 
 Replace step #3 with the following commands instead:
 ```bash
-kpt pkg get sso://cnrm/blueprints.git/blueprints/hierarchy/<hierarchy option>@master hierarchy
+kpt pkg get https://source.developers.google.com/p/yakima-eap/r/blueprints.git/blueprints/hierarchy/<hierarchy option>@master hierarchy
 kpt cfg list-setters hierarchy
 kpt cfg set hierarchy namespace <your namespace>
 kpt cfg set hierarchy org-id <your organization ID>

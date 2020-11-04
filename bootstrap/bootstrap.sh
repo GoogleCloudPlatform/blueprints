@@ -50,36 +50,18 @@ connect_to_cluster() {
 }
 
 wait_for_components() {
-    local max_retries=120
-    local poll_interval=5
-    local i=0
-
     echo "Waiting for Gatekeeper service to become available. This might take several minutes."
     until kubectl wait --for=condition=available --timeout="${KUBECTL_WAIT_TIMEOUT}" deployment/gatekeeper-controller-manager -n gatekeeper-system 2> /dev/null
     do
-        if [ ${i} -eq  ${max_retries} ]; then
-          echo "Timed out waiting for Gatekeeper" >&2
-          exit 1
-        fi
-
-        ((i++))
         echo "Waiting for Gatekeeper..."
-        sleep ${poll_interval}
+        sleep 5
     done
-
-    i=0
 
     echo "Waiting for Config Connector CRDs."
     until kubectl wait --for=condition=established --timeout="${KUBECTL_WAIT_TIMEOUT}" crd/configconnectors.core.cnrm.cloud.google.com 2> /dev/null
     do
-        if [ ${i} -eq  ${max_retries} ]; then
-          echo "Timed out waiting for Config Connector" >&2
-          exit 1
-        fi
-
-        ((i++))
         echo "Waiting for Config Connector..."
-        sleep ${poll_interval}
+        sleep 5
     done
 
     echo "Waiting for Config Sync installation."

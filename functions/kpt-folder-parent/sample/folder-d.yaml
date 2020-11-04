@@ -3,7 +3,7 @@ kind: Folder
 metadata:
   annotations:
     cnrm.cloud.google.com/organization-id: "your-organization-id" # {"$ref":"#/definitions/io.k8s.cli.setters.organization-id"}
-  name: top-folder
-  namespace: one
+  name: fourth-folder
+  namespace: three
 spec:
-  displayName: top-folder
+  displayName: fourth-folder

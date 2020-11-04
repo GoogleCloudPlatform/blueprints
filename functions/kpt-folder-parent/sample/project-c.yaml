@@ -7,6 +7,6 @@ metadata:
       container:
         image: gcr.io/yakima-eap/folder-ref:latest
   name: kpt-project-in-folder
-  namespace: project-hierarchy
+  namespace: one
 spec:
   name: kpt-project-in-folder

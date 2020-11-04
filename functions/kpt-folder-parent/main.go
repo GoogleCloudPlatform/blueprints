@@ -57,7 +57,12 @@ func main() {
 			}
 			refObjs = append(refObjs, generatedRef)
 			// Append this operable object's name to the namespace's list of objects.
-			namespaceSet[mustNamespace(resourceList.Items[i])] = append(namespaceSet[mustNamespace(resourceList.Items[i])], mustName(resourceList.Items[i]))
+			referentNamespace := mustNamespace(resourceList.Items[i])
+			targetReference := mustParseAnnotation(resourceList.Items[i])
+			if targetReference.Namespace != "" && targetReference.Namespace != referentNamespace {
+				namespaceSet[targetReference.Namespace] = append(namespaceSet[targetReference.Namespace], targetReference.Name)
+			}
+			namespaceSet[referentNamespace] = append(namespaceSet[referentNamespace], mustName(resourceList.Items[i]))
 
 			// Replace with a future
 			future, err := wrapInCork(resourceList.Items[i])
@@ -114,33 +119,46 @@ func mustNamespace(r *yaml.RNode) string {
 	return meta.ObjectMeta.Namespace
 }
 
+// mustParseAnnotation will panic if the provided r doesn't have the expected annotation in a parsable format
+func mustParseAnnotation(r *yaml.RNode) namespacedName {
+	meta, err := r.GetMeta()
+	if err != nil {
+		panic(err)
+	}
+	ps, ok := meta.Annotations[annotation]
+	if !ok {
+		panic(fmt.Errorf("missing %v annotation: %v", annotation, meta.Annotations))
+	}
+	return parseAnnotation(ps)
+}
+
 func rbacObjects(namespaces map[string][]string) ([]*yaml.RNode, error) {
 	var rbacObj []*yaml.RNode
 	for ns := range namespaces {
 		fingerprint, err := uniqueFingerprint(namespaces[ns])
 		if err != nil {
-			return nil, fmt.Errorf("Failed to hash object names in ns %v.\n%v", ns, err)
+			return nil, fmt.Errorf("failed to hash object names in ns %v.\n%v", ns, err)
 		}
 		// Role
 		buff := &bytes.Buffer{}
 		if err := parsedRoleTemplate.Execute(buff, map[string]string{"namespace": ns, "fingerprint": fingerprint}); err != nil {
-			return nil, fmt.Errorf("Role template expansion error: %v", err)
+			return nil, fmt.Errorf("role template expansion error: %v", err)
 		}
 		s := buff.String()
 		rbac, err := yaml.Parse(s)
 		if err != nil {
-			return nil, fmt.Errorf("Yaml parsing of template error: %v.\nHydrated: %v", err, s)
+			return nil, fmt.Errorf("yaml parsing of template error: %v.\nHydrated: %v", err, s)
 		}
 		rbacObj = append(rbacObj, rbac)
 		// Binding
 		buff.Reset()
 		if err := parsedBindingTemplate.Execute(buff, map[string]string{"namespace": ns, "fingerprint": fingerprint}); err != nil {
-			return nil, fmt.Errorf("RoleBinding template expansion error: %v", err)
+			return nil, fmt.Errorf("roleBinding template expansion error: %v", err)
 		}
 		s = buff.String()
 		binding, err := yaml.Parse(s)
 		if err != nil {
-			return nil, fmt.Errorf("Yaml parsing of template error: %v.\nHydrated: %v", err, s)
+			return nil, fmt.Errorf("yaml parsing of template error: %v.\nHydrated: %v", err, s)
 		}
 		rbacObj = append(rbacObj, binding)
 	}
@@ -174,11 +192,7 @@ func fieldReference(r *yaml.RNode) (*yaml.RNode, error) {
 		return nil, err
 	}
 	workingNamespace := meta.ObjectMeta.Namespace
-	ps, ok := meta.Annotations[annotation]
-	if !ok {
-		return nil, fmt.Errorf("Missing %v annotation: %v", annotation, meta.Annotations)
-	}
-	namespacedParent := parseAnnotation(ps)
+	namespacedParent := mustParseAnnotation(r)
 	// Default to local working ns if one isn't specified in the annotation.
 	if namespacedParent.Namespace == "" {
 		namespacedParent.Namespace = workingNamespace
@@ -194,34 +208,30 @@ func fieldReference(r *yaml.RNode) (*yaml.RNode, error) {
 func wrapInCork(r *yaml.RNode) (*yaml.RNode, error) {
 	meta, err := r.GetMeta()
 	if err != nil {
-		return nil, fmt.Errorf("Unable to parse metadata: %v", err)
+		return nil, fmt.Errorf("unable to parse metadata: %v", err)
 	}
 	ns := meta.ObjectMeta.Namespace
 	folderName := meta.ObjectMeta.Name
 
-	ps, ok := meta.Annotations[annotation]
-	if !ok {
-		return nil, fmt.Errorf("Missing %v annotation: %v", annotation, meta.Annotations)
-	}
-	namespacedParent := parseAnnotation(ps)
+	namespacedParent := mustParseAnnotation(r)
 
 	// Set folder parent to cork var "${folder-name}"
 	// NOTE: this variable must match the name in the spec.variables of the template below
 	err = r.PipeE(yaml.Lookup("metadata", "annotations"), yaml.SetField("cnrm.cloud.google.com/folder-id", yaml.NewScalarRNode("${folder-name}")))
 	if err != nil {
-		return nil, fmt.Errorf("Failed to add folder-id annotation: %v", err)
+		return nil, fmt.Errorf("failed to add folder-id annotation: %v", err)
 	}
 
 	templateContext := map[string]string{"name": folderName, "namespace": ns, "parent": namespacedParent.Name}
 	buff := &bytes.Buffer{}
 
 	if err := parsedFutureTemplate.Execute(buff, templateContext); err != nil {
-		return nil, fmt.Errorf("Future template expansion error: %v", err)
+		return nil, fmt.Errorf("future template expansion error: %v", err)
 	}
 	s := buff.String()
 	futureNode, err := yaml.Parse(s)
 	if err != nil {
-		return nil, fmt.Errorf("Yaml parsing of template error: %v.\nHydrated: %v", err, s)
+		return nil, fmt.Errorf("yaml parsing of template error: %v.\nHydrated: %v", err, s)
 	}
 
 	// copy this Folder krm, r, to the future nested object
@@ -230,7 +240,7 @@ func wrapInCork(r *yaml.RNode) (*yaml.RNode, error) {
 		yaml.SetField("object", r))
 
 	if err != nil {
-		return nil, fmt.Errorf("Nesting folder in future error: %v", err)
+		return nil, fmt.Errorf("nesting folder in future error: %v", err)
 	}
 
 	return futureNode, nil

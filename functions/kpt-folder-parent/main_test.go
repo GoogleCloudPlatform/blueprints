@@ -188,3 +188,17 @@ func TestUniqueFingerprint(t *testing.T) {
 		t.Fatal("These unique contexts shouldn't have the same fingerprint!")
 	}
 }
+
+func TestMustParseAnnotation(t *testing.T) {
+	r, err := yaml.Parse(annotatedFolderDiffNamespaceKrm)
+	if err != nil {
+		t.Fatal("This shouldn't fail if the test is written correctly:\n", err)
+	}
+	ref := mustParseAnnotation(r)
+	if ref.Name != "top-folder" {
+		t.Fatalf("Got [%v] Expected [top-folder]", ref.Name)
+	}
+	if ref.Namespace != "namespace-two" {
+		t.Fatalf("Got [%v] Expected [namespace-two]", ref.Namespace)
+	}
+}

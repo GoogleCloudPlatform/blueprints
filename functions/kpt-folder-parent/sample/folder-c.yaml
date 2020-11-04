@@ -3,11 +3,11 @@ kind: Folder
 metadata:
   annotations:
     cnrm.cloud.google.com/folder-ref: |
-      {"namespace": "project-hierarchy", "name": "top-folder"}
+      {"namespace": "one", "name": "top-folder"}
     config.kubernetes.io/function: |
       container:
         image: gcr.io/yakima-eap/folder-ref:latest
   name: third-folder
-  namespace: second-namespace
+  namespace: two
 spec:
   displayName: third-folder

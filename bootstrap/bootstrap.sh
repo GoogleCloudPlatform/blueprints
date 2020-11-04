@@ -73,8 +73,15 @@ wait_for_components() {
 }
 
 set_sa_permissions() {
-    # Grant project owner to the Config Connector Kubernetes service account.
-    SA_EMAIL="$(kubectl get ConfigConnectorContext -n yakima-system -o jsonpath='{.items[0].spec.googleServiceAccount}')"
+    # Grab the Config Connector service account from the ConfigConnectorContext
+    # resource.
+    until SA_EMAIL="$(kubectl get ConfigConnectorContext -n yakima-system -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
+    do
+        echo "Waiting for ConfigConnectorContext..."
+        sleep 5
+    done
+
+    # Grant project owner to the Config Connector service account.
     gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
         --member "serviceAccount:${SA_EMAIL}" \
         --role "roles/owner" \

@@ -26,8 +26,9 @@ git checkout ${PROD_BRANCH}
 # Delete and replace files, in this way removals and additions alike will propagate.
 rm -rf *
 cp -r ../blueprints/* ./
-mkdir bootstrap
+mkdir -p bootstrap/csr-git-ops-pipeline
 cp ../bootstrap/bootstrap.sh ./bootstrap/bootstrap.sh
+cp -r ../bootstrap/csr-git-ops-pipeline/* ./bootstrap/csr-git-ops-pipeline/
 # Replace GOB/sso references in readmes to GCP CSR.
 find ./ -type f | grep README | xargs sed -i 's/sso:\/\/cnrm\/blueprints.git/https:\/\/source.developers.google.com\/p\/yakima-eap\/r\/blueprints.git/g'
 # Create new commit with all changes.

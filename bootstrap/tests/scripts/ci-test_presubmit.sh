@@ -12,8 +12,9 @@ if [ -n "${GOOGLE_APPLICATION_CREDENTIALS:-}" ]; then
   gcloud auth activate-service-account --key-file "${GOOGLE_APPLICATION_CREDENTIALS}"
 fi
 
-gcloud components update
-gcloud components install alpha
+gcloud components update --quiet
+gcloud components install pkg --quiet
+gcloud components install alpha --quiet
 
 export ENABLE_KRMAPIHOSTING=false
 

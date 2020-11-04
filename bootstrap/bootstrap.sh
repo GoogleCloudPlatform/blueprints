@@ -101,6 +101,31 @@ enable_services() {
         --project "${PROJECT_ID}"
 }
 
+setup_git_ops() {
+    if [ ${SKIP_GIT_OPS} = 1 ]
+    then
+        return
+    fi
+    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline namespace "yakima-system"
+    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline project-id "${PROJECT_ID}"
+    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline project-number "${PROJECT_NUMBER}"
+    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline source-repo "${SOURCE_REPO}"
+    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline deployment-repo "${DEPLOYMENT_REPO}"
+    kubectl apply --wait -f ${SOURCE_DIR}/csr-git-ops-pipeline/
+    echo "Waiting for creation of GitOps resources. This might take a few minutes."
+    kubectl wait --for=condition=READY --timeout="${KUBECTL_WAIT_TIMEOUT}" -f ${SOURCE_DIR}/csr-git-ops-pipeline/source-repositories.yaml
+    kubectl wait --for=condition=READY --timeout="${KUBECTL_WAIT_TIMEOUT}" -f ${SOURCE_DIR}/csr-git-ops-pipeline/hydration-trigger.yaml
+    kubectl wait --for=condition=READY --timeout="${KUBECTL_WAIT_TIMEOUT}" -f ${SOURCE_DIR}/csr-git-ops-pipeline/iam.yaml
+}
+
+remove_git_ops() {
+    if [ ${SKIP_GIT_OPS} = 1 ]
+    then
+        return
+    fi
+    kubectl delete --wait -f ${SOURCE_DIR}/csr-git-ops-pipeline/ || true
+}
+
 print_usage_exit() {
     cat << EOF
 Usage: bootstrap.sh <command> [<flags>]
@@ -113,6 +138,8 @@ Flags:
     -c, --cluster <cluster_name>      - Override admin cluster name. Default - "krmapihost-landing-zone-cluster".
     -p, --project <project_id>        - Override project for admin cluster. Default - current gcloud project.
     -d, --deployment-repo <repo_name> - Override deployment repository name. Default - "deployment-repo".
+    -s, --source-repo <repo_name>     - Override source repository name. Default - "source-repo".
+    --skip-git-ops                    - Skip creation/deletion of GitOps pipeline.
 
 EOF
     exit 1
@@ -138,6 +165,7 @@ SERVICE_ACCOUNT="service-953545698565@gcp-sa-saasmanagement.iam.gserviceaccount.
 PROJECT_ID="$(gcloud config get-value project -q)"
 CLUSTER_NAME="krmapihost-landing-zone-cluster"
 DEPLOYMENT_REPO="deployment-repo"
+SOURCE_REPO="source-repo"
 CLUSTER_REGION="us-central1"
 MASTER_IPV4_CIDR=172.16.0.128/28
 
@@ -145,6 +173,7 @@ KUBECTL_WAIT_TIMEOUT="10m"
 if [ -z "${ENABLE_KRMAPIHOSTING:-}" ]; then
   ENABLE_KRMAPIHOSTING=true
 fi
+SKIP_GIT_OPS=0
 
 COMMAND="$1"
 if [ -z "${COMMAND}" ]
@@ -173,6 +202,15 @@ do
         shift # Remove argument name from processing
         shift # Remove argument value from processing
         ;;
+        -s|--source-repo)
+        SOURCE_REPO="$2"
+        shift # Remove argument name from processing
+        shift # Remove argument value from processing
+        ;;
+        --skip-git-ops)
+        SKIP_GIT_OPS=1
+        shift # Remove flag from processing
+        ;;
         *)
         echo >&2 "Invalid command line parameter: ${arg}"
         print_usage_exit
@@ -194,6 +232,7 @@ fi
 if [ ${COMMAND} = "delete" ]
 then
     echo "Deleting admin cluster..."
+    remove_git_ops
     delete_cluster
     exit 0
 fi
@@ -207,6 +246,7 @@ then
     wait_for_components
     set_sa_permissions
     enable_services
+    setup_git_ops
     exit 0
 fi
 

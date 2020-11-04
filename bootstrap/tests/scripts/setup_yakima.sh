@@ -37,7 +37,7 @@ main() {
 
 
   teardown_existing_yakimas
-  ${test_dir}/../bootstrap.sh create -c ${CLUSTER_NAME} -p ${PROJECT_ID} -d ${DEPLOYMENT_REPO}
+  ${test_dir}/../bootstrap.sh create -c ${CLUSTER_NAME} -p ${PROJECT_ID} -d ${DEPLOYMENT_REPO} -s ${SOURCE_REPO}
 }
 
 main $@

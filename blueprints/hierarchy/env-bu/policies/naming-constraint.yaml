@@ -1,0 +1,12 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPEnforceNamingV2
+metadata:
+  annotations:
+    description: Checks that folder names follow the required standard.
+  name: enforce-folder-names
+spec:
+  parameters:
+    naming_rules:
+    - kind: Folder
+      patterns:
+      - (^(dev|prod)$)|(^(dev|prod)[.][a-z0-9-]+$)|(^(dev|prod)[.][a-z0-9-]+[.][a-z0-9-]+$)|shared

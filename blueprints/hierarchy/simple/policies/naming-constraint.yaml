@@ -1,0 +1,13 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPEnforceNamingV2
+metadata:
+  annotations:
+    description: Checks that folder names follow the required standard.
+  name: enforce-folder-names
+spec:
+  parameters:
+    naming_rules:
+    - kind: Folder
+      patterns:
+      # Matches only "dev", "prod", "staging" or "qa"
+      - ^(dev|prod|staging|qa|shared)$

@@ -18,5 +18,7 @@ cd $(dirname "${BASH_SOURCE}")/.. # Goes to bootstrap/tests directory
 if [ -z "${1:-}" ]; then
   go test ./... -timeout 0 -test.v
 else
-  go test -run ${1} -timeout 0 -test.v
+  test_name=${1}
+  shift
+  go test -run ${test_name} -timeout 0 -test.v $@
 fi

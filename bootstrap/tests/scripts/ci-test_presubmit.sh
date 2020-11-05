@@ -8,9 +8,24 @@ TIMESTAMP=$(date +"%Y%m%d-%H%M%S")
 CLUSTER_NAME="presub-${TIMESTAMP}"
 ACP_CLUSTER_NAME="krmapihost-${CLUSTER_NAME}"
 
-if [ -n "${GOOGLE_TEST_CREDENTIALS}" ]; then
+while [[ $# -gt 0 ]]
+do
+  arg="$1"
+  case "${arg}" in
+    -p|--project)
+      PROJECT_ID="$2"
+      shift # Remove argument name from processing
+      shift # Remove argument value from processing
+      ;;
+    *)
+      echo >&2 "Invalid command line parameter: ${arg}"
+      exit 1
+  esac
+done
+
+if [ -n "${GOOGLE_TEST_CREDENTIALS:-}" ]; then
   gcloud auth activate-service-account --key-file "${GOOGLE_TEST_CREDENTIALS}"
-elif [ -n "${GOOGLE_APPLICATION_CREDENTIALS}" ]; then
+elif [ -n "${GOOGLE_APPLICATION_CREDENTIALS:-}" ]; then
   gcloud auth activate-service-account --key-file "${GOOGLE_APPLICATION_CREDENTIALS}"
 fi
 

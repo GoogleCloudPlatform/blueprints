@@ -3,6 +3,13 @@
 set -o errexit
 set -o pipefail
 
+check_dependencies() {
+  echo "Checking dependencies."
+
+  gcloud version
+  kubectl version
+  kpt version
+}
 
 enable_krmapi() {
     if [ ${ENABLE_KRMAPIHOSTING} = true ]; then
@@ -60,7 +67,7 @@ wait_for_components() {
     echo "Waiting for Config Connector CRDs."
     until kubectl wait --for=condition=established --timeout="${KUBECTL_WAIT_TIMEOUT}" crd/configconnectors.core.cnrm.cloud.google.com 2> /dev/null
     do
-        echo "Waiting for Config Connector..."
+        echo "Waiting for Config Connector Operator..."
         sleep 5
     done
 
@@ -69,6 +76,14 @@ wait_for_components() {
     do
         echo "Waiting for Config Sync..."
         sleep 5
+    done
+
+    echo "Checking Config Connector health."
+    until [ "$(kubectl get configconnector configconnector.core.cnrm.cloud.google.com -o jsonpath='{.status.healthy}')" = "true" ]
+    do
+        kubectl annotate configconnector configconnector.core.cnrm.cloud.google.com reconcile=true --overwrite
+        echo "Waiting for Config Connector health check..."
+        sleep 15
     done
 }
 
@@ -169,7 +184,7 @@ SOURCE_REPO="source-repo"
 CLUSTER_REGION="us-central1"
 MASTER_IPV4_CIDR=172.16.0.128/28
 
-KUBECTL_WAIT_TIMEOUT="10m"
+KUBECTL_WAIT_TIMEOUT="15m"
 if [ -z "${ENABLE_KRMAPIHOSTING:-}" ]; then
   ENABLE_KRMAPIHOSTING=true
 fi
@@ -240,6 +255,7 @@ fi
 if [ ${COMMAND} = "create" ]
 then
     echo "Creating admin cluster..."
+    check_dependencies
     enable_krmapi
     create_cluster
     connect_to_cluster

@@ -1,0 +1,74 @@
+# Provides write access to deployment repo for cloudbuild trigger
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: deployment-repo-cloudbuild-write
+  namespace: yakima-system # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
+spec:
+  resourceRef:
+    apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
+    kind: SourceRepoRepository
+    name: deployment-repo # {"$kpt-set":"deployment-repo"}
+  role: roles/source.writer
+  member: serviceAccount:1234567890123@cloudbuild.gserviceaccount.com # {"$kpt-set":"cloudbuild-sa"}
+---
+# Provides read access to source repo for cloudbuild trigger
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: source-repo-cloudbuild-read
+  namespace: yakima-system # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
+spec:
+  resourceRef:
+    apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
+    kind: SourceRepoRepository
+    name: source-repo # {"$kpt-set":"source-repo"}
+  role: roles/source.reader
+  member: serviceAccount:1234567890123@cloudbuild.gserviceaccount.com # {"$kpt-set":"cloudbuild-sa"}
+---
+# SA for Config Sync to use for accessing the repo.
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: config-sync-sa
+  namespace: yakima-system # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
+spec:
+  displayName: config-sync-sa
+---
+# Provides Config Sync SA w/ access to read CSR repo
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: allow-configsync-sa-read-csr
+  namespace: yakima-system # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
+spec:
+  member: serviceAccount:config-sync-sa@my-project-id.iam.gserviceaccount.com # {"$kpt-set":"config-sync-sa-iam"}
+  role: roles/source.reader
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: projects/my-project-id # {"$kpt-set":"project-id-external"}
+---
+# Workload identity binding for Config Sync SA.
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: configsync-sa-workload-identity-binding
+  namespace: yakima-system # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
+spec:
+  member: serviceAccount:my-project-id.svc.id.goog[config-management-system/importer] # {"$kpt-set":"config-sync-workload-identity"}
+  role: roles/iam.workloadIdentityUser
+  resourceRef:
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+    name: config-sync-sa

@@ -13,14 +13,15 @@ openAPI:
       x-k8s-cli:
         setter:
           name: source-repo
-          value: source-repo
+          value: yakima-source-repo
+          isSet: true
     io.k8s.cli.setters.deployment-repo:
       description: Name of the deployment repository where your hydrated (WET) configuration
         will live
       x-k8s-cli:
         setter:
           name: deployment-repo
-          value: deployment-repo
+          value: yakima-deployment-repo
           isSet: true
     io.k8s.cli.setters.namespace:
       description: Namespace to store Git Ops pipeline components under
@@ -34,7 +35,7 @@ openAPI:
       x-k8s-cli:
         setter:
           name: project-id
-          value: my-project-id
+          value: blueprints-eap-testing
           isSet: true
     io.k8s.cli.substitutions.cloudbuild-sa:
       x-k8s-cli:
@@ -50,7 +51,7 @@ openAPI:
       x-k8s-cli:
         setter:
           name: project-number
-          value: "1234567890123"
+          value: "801006214208"
           isSet: true
     io.k8s.cli.substitutions.config-sync-sa-iam:
       x-k8s-cli:

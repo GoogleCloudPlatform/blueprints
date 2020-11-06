@@ -13,8 +13,8 @@ BW_COMPAT_BRANCH="master"
 [ -d "./blueprints" ] || { echo "Missing blueprints dir, is this the right env?"; exit 1; }
 [ -d "./cloned_csr" ] && { echo "cloned_csr already exists, the logic requires this to be a clean directory"; exit 1; }
 
-if [ -n "${GOOGLE_APPLICATION_CREDENTIALS:-}" ]; then
-  gcloud auth activate-service-account --key-file "${GOOGLE_APPLICATION_CREDENTIALS}"
+if [ -n "${GOOGLE_RELEASE_CREDENTIALS:-}" ]; then
+  gcloud auth activate-service-account --key-file "${GOOGLE_RELEASE_CREDENTIALS}"
 fi
 
 # Clone CSR to "cloned_csr" directory, which better not already exist!

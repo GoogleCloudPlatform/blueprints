@@ -7,7 +7,7 @@ check_dependencies() {
   echo "Checking dependencies."
 
   gcloud version
-  kubectl version
+  kubectl version --client
   kpt version
 }
 

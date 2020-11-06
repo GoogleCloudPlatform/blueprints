@@ -4,12 +4,18 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"os"
 	"os/exec"
 	"strings"
 	"time"
 
 	cloudbuild "cloud.google.com/go/cloudbuild/apiv1"
+	"google.golang.org/api/option"
 	cloudbuildpb "google.golang.org/genproto/googleapis/devtools/cloudbuild/v1"
+)
+
+const (
+	testCredentialsVar = "GOOGLE_TEST_CREDENTIALS"
 )
 
 func commitSha(sourceRepo string) (string, error) {
@@ -32,7 +38,15 @@ func PollCloudBuild(project string, sourceRepo string) error {
 	log.Printf("Polling cloudbuild results for commit: %s", commit)
 
 	ctx := context.Background()
-	c, err := cloudbuild.NewClient(ctx)
+
+	var c *cloudbuild.Client
+	// Check if test credentials were specified.
+	testCredentialsPath := os.Getenv(testCredentialsVar)
+	if testCredentialsPath != "" {
+		c, err = cloudbuild.NewClient(ctx, option.WithCredentialsFile(testCredentialsPath))
+	} else {
+		c, err = cloudbuild.NewClient(ctx)
+	}
 	if err != nil {
 		return err
 	}

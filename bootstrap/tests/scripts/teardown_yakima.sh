@@ -7,5 +7,7 @@ PROJECT_ID=$1
 CLUSTER_NAME=$2
 
 cd $(dirname "${BASH_SOURCE}")/..
-kubectl delete --wait -f build/csr-git-ops-pipeline/
-../bootstrap.sh delete -c ${CLUSTER_NAME} -p ${PROJECT_ID}
+test_dir=$(pwd)
+
+kubectl delete --wait -f ${test_dir}/../csr-git-ops-pipeline/
+${test_dir}/../bootstrap.sh delete -c ${CLUSTER_NAME} -p ${PROJECT_ID}

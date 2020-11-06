@@ -81,7 +81,8 @@ wait_for_components() {
     echo "Checking Config Connector health."
     until [ "$(kubectl get configconnector configconnector.core.cnrm.cloud.google.com -o jsonpath='{.status.healthy}')" = "true" ]
     do
-        kubectl annotate configconnector configconnector.core.cnrm.cloud.google.com reconcile=true --overwrite
+        kubectl annotate configconnector configconnector.core.cnrm.cloud.google.com reconcile=true 1> /dev/null
+        kubectl annotate configconnector configconnector.core.cnrm.cloud.google.com reconcile- 1> /dev/null
         echo "Waiting for Config Connector health check..."
         sleep 15
     done

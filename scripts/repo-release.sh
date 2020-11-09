@@ -33,7 +33,7 @@ cp -r ../bootstrap/csr-git-ops-pipeline/* ./bootstrap/csr-git-ops-pipeline/
 find ./ -type f | grep README | xargs sed -i 's/sso:\/\/cnrm\/blueprints.git/https:\/\/source.developers.google.com\/p\/yakima-eap\/r\/blueprints.git/g'
 # Create new commit with all changes.
 git add -A .
-git commit -m "$(date -u +%Y-%m-%dT%H) Updates"
+git commit --allow-empty -m "$(date -u +%Y-%m-%dT%H) Updates"
 
 git push origin ${PROD_BRANCH}
 

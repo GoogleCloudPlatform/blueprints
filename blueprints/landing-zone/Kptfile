@@ -23,7 +23,7 @@ openAPI:
         setter:
           name: group-org-admins
           value: yakima@google.com
-      description: Groupt to grant organization admin permissions.
+      description: Group which will be granted organization admin permissions.
     io.k8s.cli.substitutions.group-org-admins-member:
       x-k8s-cli:
         substitution:
@@ -37,7 +37,7 @@ openAPI:
         setter:
           name: group-billing-admins
           value: yakima@google.com
-      description: Group to grant billing admin permissions.
+      description: Group which will be granted billing admin permissions.
     io.k8s.cli.substitutions.group-billing-admins-member:
       x-k8s-cli:
         substitution:

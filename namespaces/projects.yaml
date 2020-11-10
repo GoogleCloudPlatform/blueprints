@@ -64,9 +64,9 @@ spec:
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"projects-sa-ref"}
   role: roles/billing.user
   resourceRef:
-    apiVersion: billing.cnrm.cloud.google.com/v1beta1
-    kind: BillingAccount
-    external: AAAAAA-BBBBBB-CCCCCC # {"$kpt-set":"billing-account-id"}
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # {"$kpt-set":"org-id"}
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember

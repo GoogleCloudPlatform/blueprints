@@ -89,7 +89,7 @@ openAPI:
           values:
           - marker: ${NETWORK_NAME}
             ref: '#/definitions/io.k8s.cli.setters.network-name'
-    io.k8s.cli.substitutions.network-fw-deny-all-egress
+    io.k8s.cli.substitutions.network-fw-deny-all-egress:
       x-k8s-cli:
         substitution:
           name: network-fw-deny-all-egress
@@ -97,7 +97,7 @@ openAPI:
           values:
           - marker: ${NETWORK_NAME}
             ref: '#/definitions/io.k8s.cli.setters.network-name'
-    io.k8s.cli.substitutions.network-fw-allow-google-apis
+    io.k8s.cli.substitutions.network-fw-allow-google-apis:
       x-k8s-cli:
         substitution:
           name: network-fw-allow-google-apis
@@ -105,7 +105,7 @@ openAPI:
           values:
           - marker: ${NETWORK_NAME}
             ref: '#/definitions/io.k8s.cli.setters.network-name'
-    io.k8s.cli.substitutions.network-fw-allow-windows-kms
+    io.k8s.cli.substitutions.network-fw-allow-windows-kms:
       x-k8s-cli:
         substitution:
           name: network-fw-allow-windows-kms

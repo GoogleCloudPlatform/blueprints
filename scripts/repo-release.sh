@@ -31,6 +31,13 @@ cp ../bootstrap/bootstrap.sh ./bootstrap/bootstrap.sh
 cp -r ../bootstrap/csr-git-ops-pipeline/* ./bootstrap/csr-git-ops-pipeline/
 # Replace GOB/sso references in readmes to GCP CSR.
 find ./ -type f | grep README | xargs sed -i 's/sso:\/\/cnrm\/blueprints.git/https:\/\/source.developers.google.com\/p\/yakima-eap\/r\/blueprints.git/g'
+
+# Check if there are any new updates.
+if [[ -z $(git status -s) ]]; then
+  echo "There are no updates to commit."
+  exit 0
+fi
+
 # Create new commit with all changes.
 git add -A .
 git commit --allow-empty -m "$(date -u +%Y-%m-%dT%H) Updates"

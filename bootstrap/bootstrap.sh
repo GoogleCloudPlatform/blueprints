@@ -3,6 +3,8 @@
 set -o errexit
 set -o pipefail
 
+START_TIME="$(date -u +%s)"
+
 check_dependencies() {
   echo "Checking dependencies."
 
@@ -191,6 +193,7 @@ if [ -z "${ENABLE_KRMAPIHOSTING:-}" ]; then
   ENABLE_KRMAPIHOSTING=true
 fi
 SKIP_GIT_OPS=0
+BENCHMARK=0
 
 COMMAND="$1"
 if [ -z "${COMMAND}" ]
@@ -228,6 +231,10 @@ do
         SKIP_GIT_OPS=1
         shift # Remove flag from processing
         ;;
+        --benchmark)
+        BENCHMARK=1
+        shift # Remove flag from processing
+        ;;
         *)
         echo >&2 "Invalid command line parameter: ${arg}"
         print_usage_exit
@@ -250,7 +257,16 @@ if [ ${COMMAND} = "delete" ]
 then
     echo "Deleting admin cluster..."
     remove_git_ops
+    REMOVE_GIT_OPS_END_TIME="$(date -u +%s)"
+
     delete_cluster
+    if [ ${BENCHMARK} = 1 ]
+    then
+      END_TIME="$(date -u +%s)"
+      echo "Remove git ops elapsed time: $(($REMOVE_GIT_OPS_END_TIME-$START_TIME))s"
+      echo "Cluster deletion elapsed time: $(($END_TIME-$REMOVE_GIT_OPS_END_TIME))s"
+      echo "Total elapsed time: $(($END_TIME-$START_TIME))s"
+    fi
     exit 0
 fi
 
@@ -259,12 +275,31 @@ then
     echo "Creating admin cluster..."
     check_dependencies
     enable_krmapi
+    ENABLEMENT_END_TIME="$(date -u +%s)"
+
     create_cluster
+    CREATE_CLUSTER_END_TIME="$(date -u +%s)"
+
     connect_to_cluster
     wait_for_components
+    WAIT_FOR_COMPONENTS_END_TIME="$(date -u +%s)"
+
     set_sa_permissions
     enable_services
+    ENABLE_SERVICES_END_TIME="$(date -u +%s)"
+
     setup_git_ops
+
+    if [ ${BENCHMARK} = 1 ]
+    then
+      END_TIME="$(date -u +%s)"
+      echo "API enablement elapsed time: $(($ENABLEMENT_END_TIME-$START_TIME))s"
+      echo "Cluster creation elapsed time: $(($CREATE_CLUSTER_END_TIME-$ENABLEMENT_END_TIME))s"
+      echo "Wait for components elapsed time: $(($WAIT_FOR_COMPONENTS_END_TIME-$CREATE_CLUSTER_END_TIME))s"
+      echo "Enable services elapsed time: $(($ENABLE_SERVICES_END_TIME-$WAIT_FOR_COMPONENTS_END_TIME))s"
+      echo "Set up git ops elapsed time: $(($END_TIME-$ENABLE_SERVICES_END_TIME))s"
+      echo "Total elapsed time: $(($END_TIME-$START_TIME))s"
+    fi
     exit 0
 fi
 

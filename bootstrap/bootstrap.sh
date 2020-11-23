@@ -51,7 +51,7 @@ delete_cluster() {
 }
 
 connect_to_cluster() {
-    gcloud container clusters get-credentials "${CLUSTER_NAME}" \
+    gcloud container clusters get-credentials "krmapihost-${CLUSTER_NAME}" \
         --region "${CLUSTER_REGION}" \
         --project "${PROJECT_ID}"
 }
@@ -151,7 +151,7 @@ Commands:
     delete - Delete admin cluster.
 
 Flags:
-    -c, --cluster <cluster_name>      - Override admin cluster name. Default - "krmapihost-landing-zone-cluster".
+    -c, --cluster <cluster_name>      - Override admin cluster name. Default - "${DEFAULT_CLUSTER_NAME}".
     -p, --project <project_id>        - Override project for admin cluster. Default - current gcloud project.
     -d, --deployment-repo <repo_name> - Override deployment repository name. Default - "deployment-repo".
     -s, --source-repo <repo_name>     - Override source repository name. Default - "source-repo".
@@ -179,7 +179,8 @@ API_ENDPOINT="krmapihosting.googleapis.com"
 SERVICE_ACCOUNT="service-953545698565@gcp-sa-saasmanagement.iam.gserviceaccount.com"
 
 PROJECT_ID="$(gcloud config get-value project -q)"
-CLUSTER_NAME="krmapihost-landing-zone-cluster"
+DEFAULT_CLUSTER_NAME="landing-zone-cluster"
+CLUSTER_NAME=${DEFAULT_CLUSTER_NAME}
 DEPLOYMENT_REPO="deployment-repo"
 SOURCE_REPO="source-repo"
 CLUSTER_REGION="us-central1"
@@ -204,7 +205,7 @@ do
     arg="$1"
     case "${arg}" in
         -c|--cluster)
-        CLUSTER_NAME="krmapihost-$2"
+        CLUSTER_NAME="$2"
         shift # Remove argument name from processing
         shift # Remove argument value from processing
         ;;

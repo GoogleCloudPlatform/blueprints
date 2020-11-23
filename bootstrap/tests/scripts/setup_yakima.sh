@@ -10,7 +10,6 @@ SOURCE_REPO=$4
 DEPLOYMENT_REPO=$5
 CLOUDBUILD_TRIGGER_NAME="yakima-source-repo-cicd-trigger"
 
-ACP_CLUSTER_NAME="krmapihost-${CLUSTER_NAME}"
 CLUSTER_REGION="us-central1"
 
 teardown_existing_yakimas() {

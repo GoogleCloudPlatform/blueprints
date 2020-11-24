@@ -3,5 +3,6 @@ kind: Service
 metadata:
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
   name: compute.googleapis.com
   namespace: projects

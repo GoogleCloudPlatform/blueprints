@@ -18,20 +18,6 @@ enable_krmapi() {
       gcloud services enable "${API_ENDPOINT}" \
           --project "${PROJECT_ID}"
     fi
-
-    gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
-        --member "serviceAccount:${SERVICE_ACCOUNT}" \
-        --role "roles/container.admin" \
-        --project "${PROJECT_ID}"
-    gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
-        --member "serviceAccount:${SERVICE_ACCOUNT}" \
-        --role "roles/iam.serviceAccountUser" \
-        --project "${PROJECT_ID}"
-    gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
-        --member "serviceAccount:${SERVICE_ACCOUNT}" \
-        --role "roles/compute.instanceAdmin" \
-        --project "${PROJECT_ID}"
-
 }
 
 create_cluster() {
@@ -178,7 +164,6 @@ then
 fi
 
 API_ENDPOINT="krmapihosting.googleapis.com"
-SERVICE_ACCOUNT="service-953545698565@gcp-sa-saasmanagement.iam.gserviceaccount.com"
 
 PROJECT_ID="$(gcloud config get-value project -q)"
 DEFAULT_CLUSTER_NAME="landing-zone-cluster"

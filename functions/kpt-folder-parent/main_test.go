@@ -37,6 +37,39 @@ metadata:
 spec:
     displayName: parent-folder`
 
+const childSameParentOne string = `apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Folder
+metadata:
+    annotations:
+        cnrm.cloud.google.com/folder-ref: |
+            {"namespace": "ns-two", "name": "parent-obj"}
+    name: child-folder
+    namespace: ns-one
+spec:
+    displayName: nested-folder-a`
+
+const childSameParentTwo string = `apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Folder
+metadata:
+    annotations:
+        cnrm.cloud.google.com/folder-ref: |
+            {"namespace": "ns-two", "name": "parent-obj"}
+    name: child-folder2
+    namespace: ns-one
+spec:
+    displayName: nested-folder-b`
+
+const childSimilarParent string = `apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Folder
+metadata:
+    annotations:
+        cnrm.cloud.google.com/folder-ref: |
+            {"namespace": "ns-one", "name": "parent-obj"}
+    name: child-folder
+    namespace: ns-two
+spec:
+    displayName: nested-folder-b`
+
 func TestShouldRun(t *testing.T) {
 	r, err := yaml.Parse(annotatedFolderKrm)
 	if err != nil {
@@ -71,8 +104,8 @@ func TestFieldGen(t *testing.T) {
 	if err != nil {
 		t.Fatal("fail to get meta\n", err)
 	}
-	if meta.Name != "top-folder-project-hierarchy-ref" {
-		t.Fatal("Wrong name: [", meta.Name, "] wanted [top-folder-project-hierarchy-ref]")
+	if meta.Name != "1lqrf51-ref" {
+		t.Fatal("Wrong name: [", meta.Name, "] wanted [1lqrf51-ref]")
 	}
 }
 
@@ -89,8 +122,8 @@ func TestFieldGenJson(t *testing.T) {
 	if err != nil {
 		t.Fatal("fail to get meta\n", err)
 	}
-	if meta.Name != "top-folder-namespace-two-ref" {
-		t.Fatal("Wrong name: [", meta.Name, "] wanted [top-folder-namespace-two-ref]")
+	if meta.Name != "1xokn1q-ref" {
+		t.Fatal("Wrong name: [", meta.Name, "] wanted [1xokn1q-ref]")
 	}
 }
 
@@ -200,5 +233,98 @@ func TestMustParseAnnotation(t *testing.T) {
 	}
 	if ref.Namespace != "namespace-two" {
 		t.Fatalf("Got [%v] Expected [namespace-two]", ref.Namespace)
+	}
+}
+
+func TestFieldReferenceUnique(t *testing.T) {
+	// same parent 1&2 refer to the same parent from the same ns
+	// similar parent has the same identifying namespaced name strings but in slightly different arrangement
+	// none should share a reference name or collide
+	r1, err := yaml.Parse(childSameParentOne)
+	if err != nil {
+		t.Fatal("Failed to parse childSameParentOne")
+	}
+	r2, err := yaml.Parse(childSameParentTwo)
+	if err != nil {
+		t.Fatal("Failed to parse childSameParentTwo")
+	}
+	r3, err := yaml.Parse(childSimilarParent)
+	if err != nil {
+		t.Fatal("Failed to parse childSimilarParent")
+	}
+
+	ref1, err := fieldReference(r1)
+	if err != nil {
+		t.Fatal("failed generation for childSameParentOne\n", err)
+	}
+	ref2, err := fieldReference(r2)
+	if err != nil {
+		t.Fatal("failed generation for childSameParentTwo\n", err)
+	}
+	ref3, err := fieldReference(r3)
+	if err != nil {
+		t.Fatal("failed generation for childSimilarParent\n", err)
+	}
+
+	m1, err := ref1.GetMeta()
+	if err != nil {
+		t.Fatal(err)
+	}
+	m2, err := ref2.GetMeta()
+	if err != nil {
+		t.Fatal(err)
+	}
+	m3, err := ref3.GetMeta()
+	if err != nil {
+		t.Fatal(err)
+	}
+	// Parsing done, test for (incorrect) matches.
+	if m1.Name == m2.Name {
+		t.Fatalf("Got [%v] [%v], expected unique FieldReference names.", m1.Name, m2.Name)
+	}
+	if m1.Name == m3.Name {
+		t.Fatalf("Got [%v] [%v], expected unique FieldReference names.", m1.Name, m3.Name)
+	}
+	if m3.Name == m2.Name {
+		t.Fatalf("Got [%v] [%v], expected unique FieldReference names.", m3.Name, m2.Name)
+	}
+}
+
+func TestFieldRefMatchFuture(t *testing.T) {
+	r, err := yaml.Parse(childSameParentOne)
+	if err != nil {
+		t.Fatal("Failed to parse childSameParentOne")
+	}
+	reference, err := fieldReference(r)
+	if err != nil {
+		t.Fatal("failed FieldReference generation\n", err)
+	}
+	future, err := wrapInCork(r)
+	if err != nil {
+		t.Fatal("failed FutureObject generation\n", err)
+	}
+	cName1, err := reference.Pipe(yaml.Lookup("spec", "configMapRef", "name"))
+	if err != nil {
+		t.Fatal("failed FieldReference parsing\n", err)
+	}
+	cName2, err := future.Pipe(yaml.Lookup("spec", "configMapRef", "name"))
+	if err != nil {
+		t.Fatal("failed FutureObject parsing\n", err)
+	}
+	cNameStr1 := yaml.GetValue(cName1)
+	cNameStr2 := yaml.GetValue(cName2)
+	if cNameStr1 != cNameStr2 {
+		t.Fatalf("Got [%v] [%v], expected configMapRef names should match.", cNameStr1, cNameStr2)
+	}
+}
+
+func TestNameStringSwapsUnique(t *testing.T) {
+	s1, _ := referenceNamer("foo", "bar", "baz", "qux")
+	s2, _ := referenceNamer("foo", "qux", "baz", "bar")
+	if len(s1) == 0 {
+		t.Fatal("referenceNamer note generating valid hash string")
+	}
+	if s1 == s2 {
+		t.Fatalf("Got [%v], expected unique name hashes.", s1)
 	}
 }

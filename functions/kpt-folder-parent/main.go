@@ -185,21 +185,28 @@ func shouldRun(r *yaml.RNode) bool {
 	return !yaml.IsEmpty(parent)
 }
 
-// TODO: for now this means every child obj will create a field ref, even if they have parents in common. So there may be duplicate fieldrefs.
 func fieldReference(r *yaml.RNode) (*yaml.RNode, error) {
 	meta, err := r.GetMeta()
 	if err != nil {
 		return nil, err
 	}
 	workingNamespace := meta.ObjectMeta.Namespace
+	referrerName := meta.ObjectMeta.Name
 	namespacedParent := mustParseAnnotation(r)
 	// Default to local working ns if one isn't specified in the annotation.
 	if namespacedParent.Namespace == "" {
 		namespacedParent.Namespace = workingNamespace
 	}
 
+	// Generate a unique name from referrer namespaced name and parent namespaced name
+	// This is necessary to prevent otherwise same-named objects from colliding in k8s.
+	uniqueRefName, err := referenceNamer(referrerName, workingNamespace, namespacedParent.Name, namespacedParent.Namespace)
+	if err != nil {
+		return nil, err
+	}
+
 	buff := &bytes.Buffer{}
-	if err := parsedReferenceTemplate.Execute(buff, map[string]string{"namespace": workingNamespace, "parentN": namespacedParent.Name, "parentNS": namespacedParent.Namespace}); err != nil {
+	if err := parsedReferenceTemplate.Execute(buff, map[string]string{"hashName": uniqueRefName, "namespace": workingNamespace, "parentN": namespacedParent.Name, "parentNS": namespacedParent.Namespace}); err != nil {
 		return nil, err
 	}
 	return yaml.Parse(buff.String())
@@ -214,6 +221,10 @@ func wrapInCork(r *yaml.RNode) (*yaml.RNode, error) {
 	folderName := meta.ObjectMeta.Name
 
 	namespacedParent := mustParseAnnotation(r)
+	// Default to ns of referring child object if one isn't specified in the annotation.
+	if namespacedParent.Namespace == "" {
+		namespacedParent.Namespace = ns
+	}
 
 	// Set folder parent to cork var "${folder-name}"
 	// NOTE: this variable must match the name in the spec.variables of the template below
@@ -222,7 +233,13 @@ func wrapInCork(r *yaml.RNode) (*yaml.RNode, error) {
 		return nil, fmt.Errorf("failed to add folder-id annotation: %v", err)
 	}
 
-	templateContext := map[string]string{"name": folderName, "namespace": ns, "parent": namespacedParent.Name}
+	// Generate a unique name from referrer namespaced name and parent namespaced name
+	uniqueRefName, err := referenceNamer(folderName, ns, namespacedParent.Name, namespacedParent.Namespace)
+	if err != nil {
+		return nil, err
+	}
+
+	templateContext := map[string]string{"name": folderName, "namespace": ns, "hashName": uniqueRefName}
 	buff := &bytes.Buffer{}
 
 	if err := parsedFutureTemplate.Execute(buff, templateContext); err != nil {
@@ -256,7 +273,12 @@ func parseAnnotation(annotation string) namespacedName {
 	return ref
 }
 
-// uniqueFingerprint hashes a list of names to return a deterministic base36 value.
+// referenceNamer makes a deterministic unique (hopefully) hash from parent/child namespaced names
+func referenceNamer(childName string, childNS string, parentName string, parentNS string) (string, error) {
+	return uniqueFingerprint([]string{strings.Join([]string{childName, childNS, parentName, parentNS}, "_")})
+}
+
+// uniqueFingerprint hashes an unordered list of names to return a deterministic base36 value.
 func uniqueFingerprint(nameList []string) (string, error) {
 	sort.Strings(nameList)
 	h := fnv.New32a()
@@ -277,7 +299,7 @@ metadata:
 spec:
   object: {}
   configMapRef:
-    name: {{ .parent }}-ref-cm
+    name: {{ .hashName }}-ref-cm
   variables:
   - name: folder-name
     type: string`
@@ -285,11 +307,11 @@ spec:
 var fieldRefTemplate = `apiVersion: orchestration.cnrm.cloud.google.com/v1alpha1
 kind: FieldReference
 metadata:
-  name: {{ .parentN }}-{{ .parentNS }}-ref
+  name: {{ .hashName }}-ref
   namespace: {{ .namespace }}
 spec:
   configMapRef:
-    name: {{ .parentN }}-ref-cm
+    name: {{ .hashName }}-ref-cm
     key: folder-name
   jsonPath: "{$.status.name}"
   mutators:

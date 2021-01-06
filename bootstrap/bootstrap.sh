@@ -52,10 +52,17 @@ wait_for_components() {
         sleep 5
     done
 
+    echo "Waiting for Config Connector Pods."
+    until kubectl wait --for=condition=Ready --timeout="${KUBECTL_WAIT_TIMEOUT}" pod --all -n cnrm-system 2> /dev/null
+    do
+        echo "Waiting for Config Connector Pods..."
+        sleep 5
+    done
+
     echo "Waiting for Config Connector CRDs."
     until kubectl wait --for=condition=established --timeout="${KUBECTL_WAIT_TIMEOUT}" crd/configconnectors.core.cnrm.cloud.google.com 2> /dev/null
     do
-        echo "Waiting for Config Connector Operator..."
+        echo "Waiting for Config Connector CRDs..."
         sleep 5
     done
 

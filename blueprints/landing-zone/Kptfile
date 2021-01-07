@@ -12,6 +12,7 @@ openAPI:
           name: org-id
           value: "123456789012"
       description: Organization ID value.
+      type: integer
     io.k8s.cli.setters.billing-account-id:
       x-k8s-cli:
         setter:
@@ -52,6 +53,10 @@ openAPI:
           name: management-project-id
           value: management-project-id
       description: Yakima host project id.
+      maxLength: 30
+      minLength: 6
+      pattern: '^[a-z]([-a-z0-9]*[a-z0-9])?$'
+      type: string
     io.k8s.cli.setters.management-namespace:
       x-k8s-cli:
         setter:

@@ -60,7 +60,10 @@ func main() {
 			referentNamespace := mustNamespace(resourceList.Items[i])
 			targetReference := mustParseAnnotation(resourceList.Items[i])
 			if targetReference.Namespace != "" && targetReference.Namespace != referentNamespace {
+				// Add both the target AND the source name. This avoids collision in distinct runs if two different directories
+				// refer to the same target in a namespace with no local resources (b/176816568).
 				namespaceSet[targetReference.Namespace] = append(namespaceSet[targetReference.Namespace], targetReference.Name)
+				namespaceSet[targetReference.Namespace] = append(namespaceSet[targetReference.Namespace], mustName(resourceList.Items[i]))
 			}
 			namespaceSet[referentNamespace] = append(namespaceSet[referentNamespace], mustName(resourceList.Items[i]))
 

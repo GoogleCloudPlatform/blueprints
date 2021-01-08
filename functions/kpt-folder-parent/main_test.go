@@ -222,6 +222,32 @@ func TestUniqueFingerprint(t *testing.T) {
 	}
 }
 
+func TestDeterminismForIntegration(t *testing.T) {
+	// Test hash determinism for specific cases
+	// Element 0 is the expected hash
+	testLists := [][]string{
+		{"1ip8jcq", "outer-folder", "project-ref-other"},
+		{"g90evd", "third-folder"},
+	}
+	var testResults []string
+	var testExpected []string
+
+	for _, testList := range testLists {
+		testExpected = append(testExpected, testList[0])
+		fingerprintStr, e := uniqueFingerprint(testList[1:])
+		if e != nil {
+			t.Fatal("Failed to hash testList\n", e)
+		}
+		testResults = append(testResults, fingerprintStr)
+	}
+
+	for i := range testResults {
+		if testResults[i] != testExpected[i] {
+			t.Fatalf("Expected [%s] Got [%s]", testExpected[i], testResults[i])
+		}
+	}
+}
+
 func TestMustParseAnnotation(t *testing.T) {
 	r, err := yaml.Parse(annotatedFolderDiffNamespaceKrm)
 	if err != nil {

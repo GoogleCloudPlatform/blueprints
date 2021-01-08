@@ -15,18 +15,22 @@ OUTPUT="$(kpt fn run sample/ --enable-exec --exec-path ./bin/main --dry-run)"
 # folder-d (ns 3)
 # |- project-d (ns 1)
 # |- project-e (ns 1)
+#
+# outer-folder (other-ns -- not defined in sample)
+# |- project-ref-other (ns 1)
 
 # There should be a total of 18 resources:
-# 4 Folders, 3 Projects
-# 5 Cork References
-# 6 RBAC Objects, 1 role and 1 binding for 3 namespaces
-TOTAL_RESOURCES="18"
+# 4 Folders, 4 Projects
+# 6 Cork References
+# 8 RBAC Objects, 1 role and 1 binding for 4 namespaces
+TOTAL_RESOURCES="22"
 
 # Expect these strings to be in the output.
 # These are three RBAC bindings with a deterministic hash suffix that should not change, unless the resources in sample change.
-EXPECTED=("name: folder-ref-binding-ujs6y0" \
+EXPECTED=("folder-ref-binding-edd7ym" \
 "folder-ref-binding-g90evd" \
-"folder-ref-binding-18ihtb6")
+"folder-ref-binding-f7vffq" \
+"folder-ref-binding-1ip8jcq") # 1ip8jcq is expected for other-ns, a hash composed of the referring and referred objects (see TestDeterminismForIntegration)
 
 for expect in "${EXPECTED[@]}"; do
 	if [ "$(echo "$OUTPUT" | grep -c "$expect")" == "0" ]; then
@@ -55,10 +59,10 @@ then
 	exit 1
 fi
 
-if [ "$(echo "$OUTPUT" | grep -c FutureObject)" == "5" ] && 
-	[ "$(echo "$OUTPUT" | grep -c FieldReference)" == "5" ] &&
-	[ "$(echo "$OUTPUT" | grep -c RoleBinding)" == "3" ] &&
-	[ "$(echo "$OUTPUT" | grep -cE "^kind: Role")" == "6" ]
+if [ "$(echo "$OUTPUT" | grep -c FutureObject)" == "6" ] && 
+	[ "$(echo "$OUTPUT" | grep -c FieldReference)" == "6" ] &&
+	[ "$(echo "$OUTPUT" | grep -c RoleBinding)" == "4" ] &&
+	[ "$(echo "$OUTPUT" | grep -cE "^kind: Role")" == "8" ]
 then
 	echo "ok	kpt tests passed"
 	exit 0

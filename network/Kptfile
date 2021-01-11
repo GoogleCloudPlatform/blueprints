@@ -5,6 +5,10 @@ metadata:
 openAPI:
   definitions:
     io.k8s.cli.setters.network-name:
+      maxLength: 48
+      minLength: 1
+      pattern: '^[a-z]([-a-z0-9]*[a-z0-9])?$'
+      type: string
       description: Network name
       x-k8s-cli:
         setter:
@@ -17,6 +21,10 @@ openAPI:
           name: namespace
           value: networking
     io.k8s.cli.setters.project-id:
+      maxLength: 30
+      minLength: 6
+      pattern: '^[a-z]([-a-z0-9]*[a-z0-9])?$'
+      type: string
       description: Project to host network resources.
       x-k8s-cli:
         setter:

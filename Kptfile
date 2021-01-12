@@ -12,7 +12,7 @@ openAPI:
           name: org-id
           value: "123456789012"
       description: Organization ID value.
-      type: integer
+      type: string
     io.k8s.cli.setters.billing-account-id:
       x-k8s-cli:
         setter:

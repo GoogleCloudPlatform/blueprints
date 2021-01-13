@@ -3,6 +3,8 @@ kind: IAMServiceAccount
 metadata:
   name: project-id-sa # {"$kpt-set":"project-id-sa"}
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   displayName: project-id-sa # {"$kpt-set":"project-id-sa"}
 ---
@@ -10,7 +12,9 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: project-id-sa-owners-permissions # {"$kpt-set":"project-id-sa-owners-permissions"}
-  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  namespace: projects # {"$kpt-set":"projects-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:project-id-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"project-id-sa-ref"}
   role: roles/owner

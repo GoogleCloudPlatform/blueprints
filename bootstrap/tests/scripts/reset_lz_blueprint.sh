@@ -27,4 +27,3 @@ COMMIT_COUNT=$(git rev-list --all --count)
 if [ "${COMMIT_COUNT}" -eq "1" ]; then
   touch README.md && git add -A && git commit -m "Temporary commit for b/165011580" --allow-empty && git push origin main --force
 fi
-

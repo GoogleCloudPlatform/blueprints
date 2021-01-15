@@ -2,6 +2,7 @@ package helpers
 
 import (
 	"fmt"
+	"os"
 	"os/exec"
 )
 
@@ -29,5 +30,19 @@ func ExecuteCommands(cmds [][]string, dir string) error {
 		}
 	}
 
+	return nil
+}
+
+// Runs a shell command and streams output to terminal
+func ExecuteStreamingCommand(c []string) error {
+	cmd := exec.Command(c[0], c[1:]...)
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	if err := cmd.Start(); err != nil {
+		return err
+	}
+	if err := cmd.Wait(); err != nil {
+		return err
+	}
 	return nil
 }

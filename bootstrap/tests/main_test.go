@@ -5,7 +5,6 @@ import (
 	"fmt"
 	"log"
 	"os"
-	"os/exec"
 	"testing"
 	"time"
 
@@ -41,18 +40,14 @@ func TestMain(m *testing.M) {
 
 	log.Printf("Executing tests using project '%s' in org '%s' with billing account '%s'", project, org, billingAccount)
 
-	// TODO(jcwc): This command doesn't output in real time and can run for a long time
-	out, err := exec.Command("./scripts/setup_yakima.sh", p.Project, p.Cluster, p.Region, p.SourceRepo, p.DeploymentRepo).CombinedOutput()
-	fmt.Println(string(out))
+	err := helpers.ExecuteStreamingCommand([]string{"./scripts/setup_yakima.sh", p.Project, p.Cluster, p.Region, p.SourceRepo, p.DeploymentRepo})
 	if err != nil {
 		log.Fatal("Yakima setup failed\n", err)
 	}
 
 	testExitCode := m.Run()
 
-	// TODO(jcwc): This command doesn't output in real time and can run for a long time
-	out, err = exec.Command("./scripts/teardown_yakima.sh", p.Project, p.Cluster).CombinedOutput()
-	fmt.Println(string(out))
+	err = helpers.ExecuteStreamingCommand([]string{"./scripts/teardown_yakima.sh", p.Project, p.Cluster})
 	if err != nil {
 		log.Fatal("Yakima teardown failed\n", err)
 	}

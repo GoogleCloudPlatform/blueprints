@@ -1,22 +1,22 @@
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
-  name: project-id-sa # {"$kpt-set":"project-id-sa"}
+  name: kcc-project-id # {"$kpt-set":"project-id-sa"}
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
-  displayName: project-id-sa # {"$kpt-set":"project-id-sa"}
+  displayName: kcc-project-id # {"$kpt-set":"project-id-sa"}
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: project-id-sa-owners-permissions # {"$kpt-set":"project-id-sa-owners-permissions"}
+  name: kcc-project-id-owners-permissions # {"$kpt-set":"project-id-sa-owners-permissions"}
   namespace: projects # {"$kpt-set":"projects-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
-  member: "serviceAccount:project-id-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"project-id-sa-ref"}
+  member: "serviceAccount:kcc-project-id@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"project-id-sa-ref"}
   role: roles/owner
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -36,7 +36,7 @@ spec:
   resourceRef:
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
-    name: project-id-sa # {"$kpt-set":"project-id-sa"}
+    name: kcc-project-id # {"$kpt-set":"project-id-sa"}
 ---
 apiVersion: v1
 kind: Namespace
@@ -51,4 +51,4 @@ metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: project-id # {"$kpt-set":"project-namespace"}
 spec:
-  googleServiceAccount: project-id-sa@management-project-id.iam.gserviceaccount.com # {"$kpt-set":"project-id-sa-email"}
+  googleServiceAccount: kcc-project-id@management-project-id.iam.gserviceaccount.com # {"$kpt-set":"project-id-sa-email"}

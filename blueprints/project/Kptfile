@@ -38,7 +38,7 @@ openAPI:
           name: project-id
           value: project-id
       description: Project ID
-      maxLength: 27
+      maxLength: 26
       minLength: 6
       pattern: '^[a-z]([-a-z0-9]*[a-z0-9])?$'
       type: string
@@ -75,7 +75,7 @@ openAPI:
       x-k8s-cli:
         substitution:
           name: project-id-sa
-          pattern: ${PROJECT_ID}-sa
+          pattern: kcc-${PROJECT_ID}
           values:
           - marker: ${PROJECT_ID}
             ref: '#/definitions/io.k8s.cli.setters.project-id'
@@ -83,7 +83,7 @@ openAPI:
       x-k8s-cli:
         substitution:
           name: project-id-sa-owners-permissions
-          pattern: ${PROJECT_ID}-sa-owners-permissions
+          pattern: kcc-${PROJECT_ID}-owners-permissions
           values:
           - marker: ${PROJECT_ID}
             ref: '#/definitions/io.k8s.cli.setters.project-id'
@@ -91,7 +91,7 @@ openAPI:
       x-k8s-cli:
         substitution:
           name: project-id-sa-ref
-          pattern: serviceAccount:${PROJECT_ID}-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          pattern: serviceAccount:kcc-${PROJECT_ID}@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
           values:
           - marker: ${PROJECT_ID}
             ref: '#/definitions/io.k8s.cli.setters.project-id'
@@ -119,7 +119,7 @@ openAPI:
       x-k8s-cli:
         substitution:
           name: project-id-sa-email
-          pattern: ${PROJECT_ID}-sa@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
+          pattern: kcc-${PROJECT_ID}@${MANAGEMENT_PROJECT_ID}.iam.gserviceaccount.com
           values:
           - marker: ${PROJECT_ID}
             ref: '#/definitions/io.k8s.cli.setters.project-id'

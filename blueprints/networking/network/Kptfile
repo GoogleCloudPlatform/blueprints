@@ -48,22 +48,6 @@ openAPI:
         setter:
           name: vpn-secret-key
           value: vpn-shared-secret
-    io.k8s.cli.substitutions.network-router-name:
-      x-k8s-cli:
-        substitution:
-          name: network-router-name
-          pattern: ${NETWORK_NAME}-router
-          values:
-          - marker: ${NETWORK_NAME}
-            ref: '#/definitions/io.k8s.cli.setters.network-name'
-    io.k8s.cli.substitutions.network-nat-name:
-      x-k8s-cli:
-        substitution:
-          name: network-nat-name
-          pattern: ${NETWORK_NAME}-router-nat
-          values:
-          - marker: ${NETWORK_NAME}
-            ref: '#/definitions/io.k8s.cli.setters.network-name'
     io.k8s.cli.substitutions.vpn-gateway-name:
       x-k8s-cli:
         substitution:
@@ -109,14 +93,6 @@ openAPI:
         substitution:
           name: vpn-udp4500-fr-name
           pattern: ${NETWORK_NAME}-vpn-udp4500-fr
-          values:
-          - marker: ${NETWORK_NAME}
-            ref: '#/definitions/io.k8s.cli.setters.network-name'
-    io.k8s.cli.substitutions.subnetwork-name:
-      x-k8s-cli:
-        substitution:
-          name: subnetwork-name
-          pattern: ${NETWORK_NAME}-subnetwork
           values:
           - marker: ${NETWORK_NAME}
             ref: '#/definitions/io.k8s.cli.setters.network-name'

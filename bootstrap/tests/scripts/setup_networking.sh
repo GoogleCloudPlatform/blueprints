@@ -18,8 +18,8 @@ kpt cfg set landing-zone/network/shared-vpc project-id ${PROJECT_ID}
 kpt cfg list-setters landing-zone/network/shared-vpc
 
 cp -rf ${ROOT_DIR}/blueprints/networking/network landing-zone/network/dev
-kpt cfg set landing-zone/network/dev network-name ${NETWORK_NAME}
-kpt cfg set landing-zone/network/dev project-id ${PROJECT_ID}
-kpt cfg list-setters landing-zone/network
+kpt cfg set landing-zone/network/dev network-name ${NETWORK_NAME} -R
+kpt cfg set landing-zone/network/dev project-id ${PROJECT_ID} -R
+kpt cfg list-setters landing-zone/network -R
 
 git add -A && git commit -m "Create landing zones networking" && git push origin main --force

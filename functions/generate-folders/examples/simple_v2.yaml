@@ -1,0 +1,17 @@
+apiVersion: cft.dev/v1alpha2
+kind: ResourceHierarchy
+metadata:
+  name: test-simple
+spec:
+  parentRef:
+    kind: Organization
+    external: test-organization
+  config:
+    - Dev:
+      - Team "One"
+      - Team_2
+    - Prod:
+      - Team "One"
+      - Team_2
+    - Foo:
+      - bar

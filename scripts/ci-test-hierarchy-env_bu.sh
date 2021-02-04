@@ -15,7 +15,7 @@ verify_cloudbuild_success ${SOURCE_REPO_PATH} ${PROJECT_ID}
 verify_kubernetes_resources ${SOURCE_REPO_PATH} ${PROJECT_ID} 300 hierarchy folders \
   dev prod \
   dev.retail dev.finance prod.retail prod.finance \
-  dev.retail.apps dev.retail.data-and-analysis prod.finance.apps prod.finance.data-and-analysis
+  dev.retail.apps dev.retail.data-and-analysis prod.finance.commercial prod.finance.retail
 teardown
 
 echo "SUCCESS"

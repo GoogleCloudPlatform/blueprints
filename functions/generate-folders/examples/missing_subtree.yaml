@@ -1,0 +1,18 @@
+apiVersion: cft.dev/v1alpha2
+kind: ResourceHierarchy
+metadata:
+  name: test-simple
+spec:
+  parentRef:
+    kind: Organization
+    external: test-organization
+  subtrees:
+    teams:
+      - Team "One"
+      - Team_2
+  config:
+    - Dev:
+        $subtree: teams
+    - Prod:
+        # This is an intentional typo to test referencing non-existent subtrees
+        $subtree: taems

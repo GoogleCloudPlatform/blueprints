@@ -14,7 +14,8 @@ spec:
   versions:
   - name: v1alpha1
     served: true
-    storage: true
+    storage: false
+    deprecated: true
     schema:
       openAPIV3Schema:
         type: object
@@ -42,3 +43,43 @@ spec:
               - config
               - organization
             # /ResourceHierarchySpec
+  - name: v1alpha2
+    served: true
+    storage: true
+    schema:
+      openAPIV3Schema:
+        type: object
+        required:
+        - spec
+        properties:
+          spec:
+            # ResourceHierarchySpec
+            type: object
+            properties:
+              subtrees:
+                type: object
+                additionalProperties:
+                  x-kubernetes-preserve-unknown-fields: true
+              config:
+                type: array
+                items:
+                  type: object
+                  additionalProperties:
+                    x-kubernetes-preserve-unknown-fields: true
+              parentRef:
+                type: object
+                properties:
+                  kind:
+                    type: string
+                    enum:
+                      - Organization
+                  external:
+                    type: string
+                required:
+                  - external
+            required:
+              - config
+              - parentRef
+            # /ResourceHierarchySpec
+
+

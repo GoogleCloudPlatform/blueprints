@@ -28,7 +28,7 @@ Well-formed YAML samples exist in this repo in the `hierarchy` folder, e.g. `sim
 # Cannot just pass the raw YAML files directly. Need to wrap with "items"
 apiVersion: v1
 items:
-- apiVersion: cft.dev/v1alpha1
+- apiVersion: cft.dev/v1alpha2
   kind: ResourceHierarchy
   metadata:
     name: test-hierarchy
@@ -37,39 +37,41 @@ items:
 
 This outer resource is technically of `kind: ResourceList` ([reference](https://googlecontainertools.github.io/kpt/guides/producer/functions/#resourcelistitems)), but the `kind` is optional.
 
-### `layers`
+### `config`
 
-Without a `layers` dictionary present in the YAML, `generate-folders` will essentially do nothing (i.e. the output will just be a rearranged version of the input). Here's a sample `layers` input:
+The `config` array within `spec` represents the desired folder hierarchy.
+Each item represents a top level folder.
+Nested folders can be created within the config.
 
 ```yaml
 layers:
 - layer_one
 - layer_two
 config:
-  layer_one:
-  - apple
-  - banana
-  layer_two:
-  - carrot
-  - tomato
+  - vegetables:
+    - carrot
+    - tomato
+  - fruits:
+    - apple
+    - banana
 ```
 
 This will produce the following folders:
-- `apple`, `apple.carrot`, `apple.tomato`
-- `banana`, `banana.carrot`, `banana.tomato`
+- `vegetables`, `vegetables.carrot`, `vegetables.tomato`
+- `fruits`, `fruits.apple`, `fruits.banana`
 
-A `folder-ref` annotation will automatically be created for all but the root folders. For example, `banana.tomato` points to `banana`:
+A `folder-ref` annotation will automatically be created for all but the root folders. For example, `fruits.apple` points to `fruits`:
 
 ```yaml
 - apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
   kind: Folder
   metadata:
-    name: banana.tomato
+    name: fruits.apple
     annotations:
-      cnrm.cloud.google.com/folder-ref: banana
+      cnrm.cloud.google.com/folder-ref: fruits
     namespace: hierarchy
   spec:
-    displayName: tomato
+    displayName: apple
 ```
 
 For more information about _why_ `folder-ref` is needed, see the README located at `functions/kpt-folder-parent` in this repo.

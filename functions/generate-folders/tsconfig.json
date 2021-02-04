@@ -6,7 +6,7 @@
         "esModuleInterop": true,
         "strict": true,
         "forceConsistentCasingInFileNames": true,
-        "noUnusedLocals": true,
+        "noUnusedLocals": false,
         "noImplicitAny": true,
         "noImplicitReturns": true,
         "moduleResolution": "node",

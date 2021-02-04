@@ -23,7 +23,8 @@
     "@types/node": "^12.7.2",
     "jasmine": "^3.4.0",
     "tslint": "^5.19.0",
-    "typescript": "^3.5.3"
+    "typescript": "^3.5.3",
+    "js-yaml": "^4.0.0"
   },
   "kpt": {
     "docker_repo_base": "gcr.io/yakima-eap"

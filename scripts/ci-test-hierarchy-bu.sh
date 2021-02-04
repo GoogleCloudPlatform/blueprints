@@ -14,7 +14,7 @@ verify_cloudbuild_success ${SOURCE_REPO_PATH} ${PROJECT_ID}
 # Note, this doesn't cover the whole hierarchy. Just a sample set
 verify_kubernetes_resources ${SOURCE_REPO_PATH} ${PROJECT_ID} 600 hierarchy folders \
   retail risk-management financial commercial \
-  retail.shared risk-management.web financial.data-and-analysis commercial.ctrl-service \
+  retail.shared financial.web risk-management.data-and-analysis commercial.ctrl-service \
   retail.apps.dev risk-management.core-service.prod
 teardown
 

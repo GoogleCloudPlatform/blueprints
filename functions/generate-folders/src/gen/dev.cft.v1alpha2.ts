@@ -26,9 +26,9 @@ export function isResourceHierarchy(o: any): o is ResourceHierarchy {
 }
 
 export namespace ResourceHierarchy {
-  export const apiVersion = "cft.dev/v1alpha1";
+  export const apiVersion = "cft.dev/v1alpha2";
   export const group = "cft.dev";
-  export const version = "v1alpha1";
+  export const version = "v1alpha2";
   export const kind = "ResourceHierarchy";
 
   export interface Interface {
@@ -38,16 +38,29 @@ export namespace ResourceHierarchy {
     spec: ResourceHierarchy.Spec;
   }
   export class Spec {
-    public config: {[key: string]: string[]};
+    public config: {[key: string]: object}[];
 
-    public layers: string[];
+    public parentRef: ResourceHierarchy.Spec.ParentRef;
 
-    public organization: string;
+    public subtrees?: {[key: string]: object};
 
     constructor(desc: ResourceHierarchy.Spec) {
       this.config = desc.config;
-      this.layers = desc.layers;
-      this.organization = desc.organization;
+      this.parentRef = desc.parentRef;
+      this.subtrees = desc.subtrees;
+    }
+  }
+
+  export namespace Spec {
+    export class ParentRef {
+      public external: string;
+
+      public kind?: string;
+
+      constructor(desc: ResourceHierarchy.Spec.ParentRef) {
+        this.external = desc.external;
+        this.kind = desc.kind;
+      }
     }
   }
 }
@@ -79,9 +92,9 @@ export function isResourceHierarchyList(o: any): o is ResourceHierarchyList {
 }
 
 export namespace ResourceHierarchyList {
-  export const apiVersion = "cft.dev/v1alpha1";
+  export const apiVersion = "cft.dev/v1alpha2";
   export const group = "cft.dev";
-  export const version = "v1alpha1";
+  export const version = "v1alpha2";
   export const kind = "ResourceHierarchyList";
 
   // ResourceHierarchyList is a list of ResourceHierarchy

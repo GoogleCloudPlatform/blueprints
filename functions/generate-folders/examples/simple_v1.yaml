@@ -1,0 +1,16 @@
+apiVersion: cft.dev/v1alpha1
+kind: ResourceHierarchy
+metadata:
+  name: test-simple
+spec:
+  organization: "test-organization"
+  layers:
+    - environments
+    - teams
+  config:
+    environments:
+      - Dev
+      - Prod
+    teams:
+      - Team "One"
+      - Team_2

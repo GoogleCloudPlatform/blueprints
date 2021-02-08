@@ -1,0 +1,3 @@
+# Test KPT pkg
+
+<!-- BEGINNING OF PRE-COMMIT-KPT DOCS HOOK -->

@@ -1,0 +1,16 @@
+# limitations under the License.
+# create an external HTTP load balancer.
+apiVersion: v1 # The hello service provides a load-balancing proxy over the hello-app
+kind: Service
+metadata:
+  name: helloworld-gke
+  labels:
+    app: hello
+spec:
+  type: NodePort
+  selector:
+    app: hello
+  ports:
+  - protocol: TCP
+    port: 80 # {"$kpt-set":"http-port"}
+    targetPort: http

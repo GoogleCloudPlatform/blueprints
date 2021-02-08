@@ -1,0 +1,27 @@
+# limitations under the License.
+# This file configures the hello-world app which serves public web traffic.
+apiVersion: apps/v1 # This file configures the hello-world app which serves public web traffic.
+kind: Deployment
+metadata:
+  name: helloworld-gke
+  labels:
+    app: hello
+spec:
+  replicas: 5 # {"$kpt-set":"replicas"}
+  selector:
+    matchLabels:
+      app: hello
+  template:
+    metadata:
+      labels:
+        app: hello
+    spec:
+      containers:
+      - name: helloworld-gke
+        image: gcr.io/kpt-dev/helloworld-gke:v0.3.0 # {"$kpt-set":"image"}
+        ports:
+        - name: http
+          containerPort: 80 # {"$kpt-set":"http-port"}
+        env:
+        - name: PORT
+          value: "80" # {"$kpt-set":"http-port"}

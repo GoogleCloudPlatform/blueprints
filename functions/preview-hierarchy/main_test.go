@@ -12,20 +12,30 @@ import (
 func TestPreviewHierarchy(t *testing.T) {
 	rl := &framework.ResourceList{}
 
-	err := loadYAMLs(rl, "retail.yaml", "retail-apps.yaml", "retail-apps-dev.yaml")
-	if err != nil {
-		t.Errorf("Error when loading yaml files %s", err.Error())
-		return
+	cases := []struct {
+		name  string
+		files []string
+	}{
+		{name: "simple", files: []string{"simple/retail.yaml", "simple/retail-apps.yaml", "simple/retail-apps-dev.yaml"}},
 	}
 
-	var buf bytes.Buffer
-	err = processHierarchy(rl, &buf)
-	if err != nil {
-		t.Errorf("Error when calling processFramework %s", err.Error())
+	for i := range cases {
+		c := cases[i]
+		err := loadYAMLs(rl, c.files...)
+		if err != nil {
+			t.Errorf("Error when loading yaml files %s", err.Error())
+			return
+		}
+
+		var buf bytes.Buffer
+		err = processHierarchy(rl, &buf)
+		if err != nil {
+			t.Errorf("Error when calling processFramework %s", err.Error())
+		}
 	}
 }
 
-const samplesDirectory = "samples"
+const samplesDirectory = "testdata"
 
 func loadYAMLs(rl *framework.ResourceList, filenames ...string) error {
 

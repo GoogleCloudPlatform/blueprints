@@ -283,9 +283,10 @@ function generateManifest(name: string, path: string[], parent: HierarchyNode, n
  *
  * @param name Non-normalized name
  */
-function normalize(name: string) {
+export function normalize(name: string) {
   name = name.replace(/['"]/g, "");
   name = name.replace(/[_ ]/g, "-");
+  name = name.replace(/[^a-z0-9 -]/g, '')
   name = name.toLowerCase();
   return name;
 }

@@ -2,7 +2,7 @@ import {Configs, TestRunner, KubernetesObject, isKubernetesObject} from 'kpt-fun
 import { load } from 'js-yaml';
 import { readFileSync } from 'fs';
 import * as path from 'path';
-import {generateFolders, missingSubtreeErrorResult, badParentErrorResult} from './generate_folders';
+import {generateFolders, missingSubtreeErrorResult, badParentErrorResult, normalize} from './generate_folders';
 import {FolderList, Folder} from './gen/com.google.cloud.cnrm.resourcemanager.v1beta1';
 
 const RUNNER = new TestRunner(generateFolders);
@@ -19,6 +19,20 @@ function readTestFile(name: string): KubernetesObject {
 
   return <KubernetesObject>contents;
 }
+
+describe('normalize', () => {
+  const tests = new Map([
+    ['test', 'test'],
+    ['test spaced', 'test-spaced'],
+    ['test: spaced colon', 'test-spaced-colon'],
+    ['test:colon', 'testcolon']
+  ]);
+  for (const [original, normalized] of tests) {
+    it(`converts ${original} to ${normalized}`, () => {
+      expect(normalize(original)).toEqual(normalized);
+    });
+  }
+});
 
 describe('generateFolders', () => {
   const tests =[
@@ -138,16 +152,4 @@ function makeFolder(name: string, path: string[], organization: string): Folder 
       displayName: name
     }
   };
-}
-
-/**
- * Normalizes name to fit the K8s DNS subdomain naming requirements
- *
- * @param name Non-normalized name
- */
-function normalize(name: string) {
-  name = name.replace(/['"]/g, "");
-  name = name.replace(/[_ ]/g, "-");
-  name = name.toLowerCase();
-  return name;
 }

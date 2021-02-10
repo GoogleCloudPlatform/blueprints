@@ -168,6 +168,10 @@ func repoToLicenseURL(repo string, licenseFilename string) string {
 		return fmt.Sprintf("https://github.com/kubernetes/%v/blob/master/%v", repoRoot, licensePathInRepo)
 	case "go.uber.org":
 		return fmt.Sprintf("https://github.com/uber-go/%v/blob/master/%v", repoRoot, licensePathInRepo)
+	case "go.mongodb.org":
+		return fmt.Sprintf("https://github.com/mongodb/%v/blob/master/%v", repoRoot, licensePathInRepo)
+	case "go.starlark.net":
+		return fmt.Sprintf("https://github.com/google/%v/blob/master/%v", repoRoot, licensePathInRepo)
 	case "gopkg.in":
 		switch repoRoot {
 		case "yaml.v3":
@@ -206,6 +210,7 @@ var manualLicenseURLMapping = map[string]string{
 	"google.golang.org/api/googleapi/internal/uritemplates": "https://github.com/googleapis/google-api-go-client/blob/master/googleapi/internal/uritemplates/LICENSE",
 	"google.golang.org/genproto":                            "https://github.com/google/go-genproto/blob/master/LICENSE",
 	"google.golang.org/grpc":                                "https://github.com/grpc/grpc-go/blob/master/LICENSE",
+	"google.golang.org/protobuf":                            "https://github.com/protocolbuffers/protobuf-go/blob/master/LICENSE",
 	"gopkg.in/fsnotify.v1":                                  "https://github.com/fsnotify/fsnotify/blob/master/LICENSE",
 	"gopkg.in/inf.v0":                                       "https://github.com/go-inf/inf/blob/master/LICENSE",
 	"gopkg.in/tomb.v1":                                      "https://github.com/go-tomb/tomb/blob/v1/LICENSE",

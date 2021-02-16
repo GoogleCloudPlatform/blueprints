@@ -15,7 +15,7 @@ This folder contains 4 different blueprint options for org hierarchy folder stru
 - **Env BU:** Three level folder hierarchy which is similar to BU structured but inverted. From top down: environments -> divisions -> teams -> projects
 
 ## How to use it
-To run this blueprint, you can run the steps listed [here](https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/csr-git-ops-pipeline/#Making-your-first-git-ops-change).
+To run this blueprint, you can run the steps listed [here](../../bootstrap/csr-git-ops-pipeline/#Making-your-first-git-ops-change).
 
 Replace step #3 with the following commands instead:
 ```bash

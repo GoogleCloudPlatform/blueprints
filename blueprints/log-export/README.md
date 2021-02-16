@@ -22,7 +22,7 @@ In this directory, we have log exports that source from a Folder resource type i
 This directory has the same content as the folder directory except the source is from an Organization.
 
 ## How to use it
-To run this blueprint, you can run the steps listed [here](https://cnrm.git.corp.google.com/blueprints/+/refs/heads/master/csr-git-ops-pipeline/#Making-your-first-git-ops-change).
+To run this blueprint, you can run the steps listed [here](../../bootstrap/csr-git-ops-pipeline/#Making-your-first-git-ops-change).
 
 Replace step #3 with the following commands instead:
 ```bash

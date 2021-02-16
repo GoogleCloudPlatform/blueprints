@@ -37,6 +37,10 @@ main() {
 
   teardown_existing_yakimas
   ${test_dir}/../bootstrap.sh create -c ${CLUSTER_NAME} -p ${PROJECT_ID} -d ${DEPLOYMENT_REPO} -s ${SOURCE_REPO} --benchmark
+  # Give Yakima SA org admin permissions per http://go/landing-zone-user-guide#heading=h.uy5ctyzfekh0
+  CNRM_SA="$(kubectl get ConfigConnectorContext -n yakima-system -o jsonpath='{.items[0].spec.googleServiceAccount}')"
+  ORG_ID=$(gcloud projects get-ancestors ${PROJECT_ID} --format='get(id)' | tail -1)
+  gcloud organizations add-iam-policy-binding $ORG_ID --role=roles/resourcemanager.organizationAdmin --member="serviceAccount:${CNRM_SA}"
 }
 
 main $@

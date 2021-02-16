@@ -34,7 +34,7 @@ Landing Zone CUJs and associated blueprints.
 | [CUJ7: Set up change control and security guardrails][7] | [Landing Zone](/blueprints/landing-zone/)           | Ready                 |                                                                                     |
 | [CUJ8: Collaborate][8]                                   | [GitOps](/blueprints/git-ops/csr-git-ops-pipeline/) | Ready                 | N/A - Tested by CUJ 2 through 7                                                     |
 
-[bootstrap]: https://cnrm.git.corp.google.com/yakima/+/refs/heads/master/bootstrap/script
+[bootstrap]: ./bootstrap
 [1]: https://docs.google.com/document/d/1uaWE2_MZs5GDA1jRbs5EcCdL2nBNQ6YQiINxtnhcTsM/edit#heading=h.umcqf3j6dgca
 [2]: https://docs.google.com/document/d/1uaWE2_MZs5GDA1jRbs5EcCdL2nBNQ6YQiINxtnhcTsM/edit#heading=h.qz2xkc2cigyf
 [3]: https://docs.google.com/document/d/1uaWE2_MZs5GDA1jRbs5EcCdL2nBNQ6YQiINxtnhcTsM/edit#heading=h.gzafg45s2dia

@@ -1,0 +1,11 @@
+apiVersion: constraints.gatekeeper.sh/v1beta1
+kind: GCPRequireDeletionPolicy
+metadata:
+  annotations:
+    description: Checks that resource has deletion-policy annotation set.
+  name: enforce-deletion-policy-annotation-spanner-instance
+spec:
+  match:
+    kinds:
+    - apiGroups: ["spanner.cnrm.cloud.google.com"]
+      kinds: ["SpannerInstance", "SpannerDatabase"]

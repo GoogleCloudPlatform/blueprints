@@ -2,7 +2,7 @@ import {Configs, TestRunner, KubernetesObject, isKubernetesObject} from 'kpt-fun
 import { load } from 'js-yaml';
 import { readFileSync } from 'fs';
 import * as path from 'path';
-import {generateFolders, missingSubtreeErrorResult, badParentErrorResult, normalize} from './generate_folders';
+import {generateFolders, missingSubtreeErrorResult, badParentErrorResult, badParentKindErrorResult, normalize} from './generate_folders';
 import {FolderList, Folder} from './gen/com.google.cloud.cnrm.resourcemanager.v1beta1';
 
 const RUNNER = new TestRunner(generateFolders);
@@ -48,8 +48,17 @@ describe('generateFolders', () => {
       expected: [
         ['Dev', ['Team "One"', 'Team_2']],
         ['Prod', ['Team "One"', 'Team_2']],
-        ['Foo', ['bar']] 
+        ['Foo', ['bar']]
       ]
+    },
+    {
+      file: 'simple_v2_folder_parent',
+      expected: [
+        ['Dev', ['Team "One"', 'Team_2']],
+        ['Prod', ['Team "One"', 'Team_2']],
+        ['Foo', ['bar']]
+      ],
+      parent: {'folder':'123'}
     },
     {
       file: 'nested_v2',
@@ -76,6 +85,13 @@ describe('generateFolders', () => {
       ]
     },
     {
+      file: 'deep_subtree_v2_no_kind',
+      expected: [
+        ['prod', [['subtree', [['nested', ['very']]]]]],
+        ['dev', [['subtree', [['nested', ['very']]]]]]
+      ]
+    },
+    {
       file: 'missing_org',
       expected: [],
       errors: [badParentErrorResult]
@@ -84,6 +100,11 @@ describe('generateFolders', () => {
       file: 'missing_subtree',
       expected: [],
       errors: [(o: KubernetesObject) => missingSubtreeErrorResult("taems", o)]
+    },
+    {
+      file: 'wrong_parent_kind',
+      expected: [],
+      errors: [badParentKindErrorResult]
     },
   ];
 
@@ -97,11 +118,13 @@ describe('generateFolders', () => {
 
       const errorResults = (test.errors || []).map((errorFunction) => errorFunction(hierarchy));
 
+      const parentType = test.parent?.folder ? "Folder" : "Organization"
+      const parentRef = test.parent?.folder  ? test.parent.folder : "test-organization"
+
       const expectedOutput = new Configs([
         hierarchy,
-        ...getHierarchyConfig(expectedStructure, [], 'test-organization')
+        ...getHierarchyConfig(expectedStructure, [], parentRef, parentType)
       ], undefined, errorResults);
-
       await RUNNER.assert(input, expectedOutput);
     });
   }
@@ -113,16 +136,16 @@ describe('generateFolders', () => {
  * @param children array containing a representation of the folder structure
  * @param organization The name of the expected organization
  */
-function getHierarchyConfig(children: any[], parents: string[], organization: string): KubernetesObject[] {
+function getHierarchyConfig(children: any[], parents: string[], rootRef:string, rootType:string): KubernetesObject[] {
   let res: Folder[] = [];
   for (const child of children) {
     if (Array.isArray(child)) {
       const name = child[0];
-      res.push(makeFolder(name, parents, organization));
-      const childTree = getHierarchyConfig(child[1], [...parents, name], organization);
+      res.push(makeFolder(name, parents, rootRef,rootType));
+      const childTree = getHierarchyConfig(child[1], [...parents, name], rootRef, rootType);
       res = res.concat(childTree);
     } else if (typeof child == 'string') {
-      res.push(makeFolder(child, parents, organization));
+      res.push(makeFolder(child, parents, rootRef, rootType));
     }
   }
   return res as KubernetesObject[];
@@ -135,9 +158,9 @@ function getHierarchyConfig(children: any[], parents: string[], organization: st
  * @param path The ancestry path of folders above this folder
  * @param organization The name of the expected organization
  */
-function makeFolder(name: string, path: string[], organization: string): Folder {
+function makeFolder(name: string, path: string[], rootRef:string, rootType:string): Folder {
   const isRoot = path.length === 0;
-  const annotationName = isRoot ? 'cnrm.cloud.google.com/organization-id' : 'cnrm.cloud.google.com/folder-ref';
+  const annotationName = isRoot && rootType === "Organization" ? 'cnrm.cloud.google.com/organization-id' : 'cnrm.cloud.google.com/folder-ref';
 
   return {
     apiVersion: FolderList.apiVersion,
@@ -145,7 +168,7 @@ function makeFolder(name: string, path: string[], organization: string): Folder 
     metadata: {
       name: normalize([...path, name].join('.')),
       annotations: {
-        [annotationName]: isRoot ? organization : normalize(path.join('.'))
+        [annotationName]: isRoot ? rootRef : normalize(path.join('.'))
       }
     },
     spec: {

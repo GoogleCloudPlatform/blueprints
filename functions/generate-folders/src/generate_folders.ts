@@ -45,6 +45,10 @@ export async function generateFolders(configs: Configs) {
       configs.addResults(badParentErrorResult(hierarchy));
       return;
     }
+    if (hierarchy.spec.parentRef.kind !== undefined && ! ["Organization","Folder"].includes(hierarchy.spec.parentRef.kind)) {
+      configs.addResults(badParentKindErrorResult(hierarchy));
+      return;
+    }
     try {
       generateV2HierarchyTree(hierarchy, configs);
     } catch(e) {
@@ -64,6 +68,19 @@ export async function generateFolders(configs: Configs) {
 export function badParentErrorResult(hierarchy: KubernetesObject): Result {
   return kubernetesObjectResult(
     `ResourceHierarchy ${hierarchy.metadata.name} has an undefined parentRef`,
+    hierarchy,
+    undefined,
+    "error"
+  );
+}
+
+/**
+ * Generate an error for a hierarchy with an unsupported parentRef kind
+ * @param hierarchy The hierarchy to yield an error for
+ */
+export function badParentKindErrorResult(hierarchy: KubernetesObject): Result {
+  return kubernetesObjectResult(
+    `ResourceHierarchy ${hierarchy.metadata.name} has an unsupported parentRef kind`,
     hierarchy,
     undefined,
     "error"
@@ -102,7 +119,7 @@ class MissingSubteeError extends Error {
 function generateV2HierarchyTree(hierarchy: ResourceHierarchy, configs: Configs): Result | null {
   const root: HierarchyNode = {
     children: [],
-    kind: "Organization",
+    kind: `${hierarchy.spec.parentRef.kind ?? "Organization"}`, // if no kind is specified, default to Organization
     name: `${hierarchy.spec.parentRef.external}` // Annotation expects string type
   };
   const namespace = hierarchy.metadata.namespace;

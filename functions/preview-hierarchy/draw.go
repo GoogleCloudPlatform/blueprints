@@ -35,7 +35,7 @@ func invokeGCPDraw(input string, output io.Writer) error {
 // createDiagram creates a GCP Draw diagram by rendering the list of folders
 // into the GCPDraw DSL format and then invoking GCPDraw to output the
 // SVG
-func createDiagram(hierarchy []gcpHierarchyResource, output io.Writer) error {
+func createDiagram(hierarchy []*gcpHierarchyResource, output io.Writer) error {
 	// Convert to GCP Draw DSL format
 	tmpl, err := template.ParseFiles("template.tmpl")
 	if err != nil {

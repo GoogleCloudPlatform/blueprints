@@ -1,0 +1,9 @@
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Folder
+metadata:
+  name: retaildev
+  annotations:
+    cnrm.cloud.google.com/folder-ref: retail
+  namespace: hierarchy
+spec:
+  displayName: dev

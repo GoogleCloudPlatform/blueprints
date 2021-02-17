@@ -1,0 +1,9 @@
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Folder
+metadata:
+  name: risk-managementcore-service
+  annotations:
+    cnrm.cloud.google.com/folder-ref: risk-management
+  namespace: hierarchy
+spec:
+  displayName: core-service

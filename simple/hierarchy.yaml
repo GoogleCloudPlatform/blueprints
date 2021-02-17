@@ -1,4 +1,4 @@
-apiVersion: cft.dev/v1alpha1
+apiVersion: cft.dev/v1alpha2
 kind: ResourceHierarchy
 metadata:
   annotations:
@@ -9,11 +9,9 @@ metadata:
   name: root-hierarchy
   namespace: hierarchy # {"$kpt-set":"namespace"}
 spec:
-  organization: "123456789012" # {"$kpt-set":"org-id"}
-  layers:
-  - environments
+  parentRef:
+    external: "123456789012" # {"$kpt-set":"org-id"}
   config:
-    environments:
     - shared
     - dev
     - prod

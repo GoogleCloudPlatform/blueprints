@@ -1,4 +1,4 @@
-apiVersion: cft.dev/v1alpha1
+apiVersion: cft.dev/v1alpha2
 kind: ResourceHierarchy
 metadata:
   annotations:
@@ -9,27 +9,31 @@ metadata:
   name: root-hierarchy
   namespace: hierarchy # {"$kpt-set":"namespace"}
 spec:
-  organization: "123456789012" # {"$kpt-set":"org-id"}
-  layers:
-  - divisions
-  - teams
-  - environments
-  config:
-    divisions:
-    - retail
-    - risk-management
-    - financial
-    - commercial
-    teams:
-    - shared
-    - apps
-    - web
-    - core-service
-    - data-and-analysis
-    - ctrl-service
+  parentRef:
+    external: "123456789012" # {"$kpt-set":"org-id"}
+  subtrees:
     environments:
     - dev
     - prod
+  config:
+    - retail:
+      - shared:
+          $subtree: environments
+      - apps:
+          $subtree: environments
+    - financial:
+      - web:
+          $subtree: environments
+      - core-services:
+          $subtree: environments
+    - risk-management:
+      - core-service:
+          $subtree: environments
+      - data-and-analysis:
+          $subtree: environments
+    - commercial:
+      - ctrl-service:
+          $subtree: environments
 ---
 apiVersion: v1
 kind: ConfigMap

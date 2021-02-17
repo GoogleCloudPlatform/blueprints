@@ -9,18 +9,18 @@ metadata:
   name: root-hierarchy
   namespace: hierarchy # {"$kpt-set":"namespace"}
 spec:
-  organization: "123456789012" # {"$kpt-set":"org-id"}
-  layers:
-  - teams
-  - environments
-  config:
-    teams:
-    - retail
-    - finance
+  parentRef:
+    external: "123456789012" # {"$kpt-set":"org-id"}
+  subtrees:
     environments:
     - dev
     - prod
     - qa
+  config:
+    - retail:
+        $subtree: environments
+    - finance:
+        $subtree: environments
 ---
 apiVersion: v1
 kind: ConfigMap

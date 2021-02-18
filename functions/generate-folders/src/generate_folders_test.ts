@@ -25,7 +25,8 @@ describe('normalize', () => {
     ['test', 'test'],
     ['test spaced', 'test-spaced'],
     ['test: spaced colon', 'test-spaced-colon'],
-    ['test:colon', 'testcolon']
+    ['test:colon', 'testcolon'],
+    ['Environ Set.Environ.Team', 'environ-set.environ.team']
   ]);
   for (const [original, normalized] of tests) {
     it(`converts ${original} to ${normalized}`, () => {

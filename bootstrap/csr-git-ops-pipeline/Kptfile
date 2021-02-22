@@ -100,3 +100,19 @@ openAPI:
           values:
           - marker: ${source-repo}
             ref: '#/definitions/io.k8s.cli.setters.source-repo'
+    io.k8s.cli.substitutions.services-cloudbuild:
+      x-k8s-cli:
+        substitution:
+          name: services-cloudbuild
+          pattern: ${project-id}-cloudbuild
+          values:
+          - marker: ${project-id}
+            ref: '#/definitions/io.k8s.cli.setters.project-id'
+    io.k8s.cli.substitutions.services-sourcerepo:
+      x-k8s-cli:
+        substitution:
+          name: services-sourcerepo
+          pattern: ${project-id}-sourcerepo
+          values:
+          - marker: ${project-id}
+            ref: '#/definitions/io.k8s.cli.setters.project-id'

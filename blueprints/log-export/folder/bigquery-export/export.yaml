@@ -5,8 +5,11 @@ metadata:
   annotations:
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
-  name: bigquery.googleapis.com
+    cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
+  name: my-project-id-bigquery # {"$kpt-set":"services-bigquery"}
   namespace: projects
+spec:
+  resourceID: bigquery.googleapis.com
 ---
 # Folder Sink to BQ
 apiVersion: logging.cnrm.cloud.google.com/v1beta1

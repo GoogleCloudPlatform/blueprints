@@ -44,3 +44,11 @@ openAPI:
             ref: '#/definitions/io.k8s.cli.setters.project-id'
           - marker: ${NETWORK}
             ref: '#/definitions/io.k8s.cli.setters.network'
+    io.k8s.cli.substitutions.services-redis:
+      x-k8s-cli:
+        substitution:
+          name: services-redis
+          pattern: ${project-id}-redis
+          values:
+          - marker: ${project-id}
+            ref: '#/definitions/io.k8s.cli.setters.project-id'

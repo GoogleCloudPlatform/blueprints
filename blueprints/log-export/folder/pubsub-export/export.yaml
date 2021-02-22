@@ -5,8 +5,11 @@ metadata:
   annotations:
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
-  name: pubsub.googleapis.com
+    cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
+  name: my-project-id-pubsub # {"$kpt-set":"services-pubsub"}
   namespace: projects
+spec:
+  resourceID: pubsub.googleapis.com
 ---
 # Folder Sink to PubSub
 apiVersion: logging.cnrm.cloud.google.com/v1beta1

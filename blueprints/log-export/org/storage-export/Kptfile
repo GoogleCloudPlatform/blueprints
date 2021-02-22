@@ -59,3 +59,21 @@ openAPI:
         setter:
           name: org-id
           value: "123456789012"
+    io.k8s.cli.setters.project-id:
+      maxLength: 30
+      minLength: 6
+      pattern: '^[a-z]([-a-z0-9]*[a-z0-9])?$'
+      type: string
+      description: The project ID of the destination of your log exports
+      x-k8s-cli:
+        setter:
+          name: project-id
+          value: my-project-id
+    io.k8s.cli.substitutions.services-storage:
+      x-k8s-cli:
+        substitution:
+          name: services-storage
+          pattern: ${project-id}-storage
+          values:
+          - marker: ${project-id}
+            ref: '#/definitions/io.k8s.cli.setters.project-id'

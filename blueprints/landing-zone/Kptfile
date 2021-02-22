@@ -182,3 +182,11 @@ openAPI:
           values:
           - marker: ${MANAGEMENT_PROJECT_ID}
             ref: '#/definitions/io.k8s.cli.setters.management-project-id'
+    io.k8s.cli.substitutions.services-cloudbilling:
+      x-k8s-cli:
+        substitution:
+          name: services-cloudbilling
+          pattern: ${MANAGEMENT_PROJECT_ID}}-cloudbilling
+          values:
+          - marker: ${MANAGEMENT_PROJECT_ID}}
+            ref: '#/definitions/io.k8s.cli.setters.management-project-id'

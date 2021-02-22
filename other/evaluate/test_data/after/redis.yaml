@@ -1,0 +1,27 @@
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/disable-on-destroy: "false"
+  name: redis.googleapis.com
+---
+apiVersion: redis.cnrm.cloud.google.com/v1beta1
+kind: RedisInstance
+metadata:
+  name: redis-sample-001
+spec:
+  displayName: redis-sample-001
+  memorySizeGb: 4
+  region: us-central1
+  tier: BASIC
+---
+apiVersion: redis.cnrm.cloud.google.com/v1beta1
+kind: RedisInstance
+metadata:
+  name: redis-sample-003
+  namespace: my-namespace
+spec:
+  displayName: redis-sample-003
+  memorySizeGb: 64
+  region: us-west1
+  tier: BASIC

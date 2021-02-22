@@ -1,0 +1,20 @@
+apiVersion: redis.cnrm.cloud.google.com/v1beta1
+kind: RedisInstance
+metadata:
+  name: redis-sample-001
+spec:
+  displayName: redis-sample-001
+  memorySizeGb: 5
+  region: us-central1
+  tier: BASIC
+---
+apiVersion: redis.cnrm.cloud.google.com/v1beta1
+kind: RedisInstance
+metadata:
+  name: redis-sample-002
+spec:
+  displayName: redis-sample-002
+  memorySizeGb: 5
+  region: us-central1
+  tier: BASIC
+

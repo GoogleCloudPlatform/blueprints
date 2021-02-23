@@ -10,7 +10,7 @@ spec:
   routerRef:
     name: network-name-router # {"$kpt-set":"network-router-name"}
   natIpAllocateOption: AUTO_ONLY
-  sourceSubnetworkIpRangesToNat: ALL_SUBNETWORKS_ALL_IP_RANGES
+  sourceSubnetworkIpRangesToNat: ALL_SUBNETWORKS_ALL_IP_RANGES # {"$kpt-set":"source-subnetwork-ip-ranges-to-nat"}
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouter

@@ -34,10 +34,16 @@ gcloud components install alpha --quiet
 export ENABLE_KRMAPIHOSTING=false
 
 OLD_CLUSTERS=$(gcloud container clusters list --project ${PROJECT_ID} --format="get(name)")
+OLD_FW_RULES=$(gcloud compute firewall-rules list --project="${PROJECT_ID}" --filter="acp-cnrm-fw" --format="get(name)")
 
 if [ -n "${OLD_CLUSTERS}" ]; then
   echo "Deleting stale cluster(s): ${OLD_CLUSTERS}"
   gcloud container clusters delete ${OLD_CLUSTERS} --quiet --project ${PROJECT_ID} --region us-central1
+fi
+
+if [ -n "${OLD_FW_RULES}" ]; then
+  echo "Deleting stale firewall rule(s): ${OLD_FW_RULES}"
+  gcloud compute firewall-rules delete ${OLD_FW_RULES} --project="${PROJECT_ID}" --quiet
 fi
 
 $(dirname "$BASH_SOURCE")/../../bootstrap.sh create -c ${CLUSTER_NAME} -p ${PROJECT_ID} --skip-git-ops --benchmark

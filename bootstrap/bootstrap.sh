@@ -110,7 +110,11 @@ create_cnrm_fw() {
     # find target tags that existing GKE FW rules use
     gke_target_tag=$(gcloud compute firewall-rules list --filter "name~^gke-krmapihost-${CLUSTER_NAME}" --format "value(targetTags)" --project="${PROJECT_ID}" --limit=1)
     # create fw rule targeting nodes and allow ingress from MASTER_IPV4_CIDR
-    gcloud compute firewall-rules create acp-cnrm-fw --action ALLOW --direction INGRESS --source-ranges "${MASTER_IPV4_CIDR}" --rules tcp:9443 --target-tags "${gke_target_tag}" --project="${PROJECT_ID}"
+    gcloud compute firewall-rules create "acp-cnrm-fw-${CLUSTER_NAME}" --action ALLOW --direction INGRESS --source-ranges "${MASTER_IPV4_CIDR}" --rules tcp:9443 --target-tags "${gke_target_tag}" --project="${PROJECT_ID}"
+}
+
+delete_cnrm_fw() {
+    gcloud compute firewall-rules delete "acp-cnrm-fw-${CLUSTER_NAME}" --project="${PROJECT_ID}" --quiet
 }
 
 enable_services() {
@@ -259,6 +263,7 @@ then
     remove_git_ops
     REMOVE_GIT_OPS_END_TIME="$(date -u +%s)"
 
+    delete_cnrm_fw
     delete_cluster
     if [ ${BENCHMARK} = 1 ]
     then

@@ -32,6 +32,16 @@ openAPI:
         setter:
           name: filter
           value: ""
+    io.k8s.cli.setters.project-id:
+      maxLength: 30
+      minLength: 6
+      pattern: '^[a-z]([-a-z0-9]*[a-z0-9])?$'
+      type: string
+      description: The project ID of the destination of your log exports
+      x-k8s-cli:
+        setter:
+          name: project-id
+          value: my-project-id
     io.k8s.cli.substitutions.log-sink-name:
       x-k8s-cli:
         substitution:
@@ -40,3 +50,11 @@ openAPI:
           values:
           - marker: ${folder-k8s-name}
             ref: '#/definitions/io.k8s.cli.setters.folder-k8s-name'
+    io.k8s.cli.substitutions.services-pubsub:
+      x-k8s-cli:
+        substitution:
+          name: services-pubsub
+          pattern: ${project-id}-pubsub
+          values:
+          - marker: ${project-id}
+            ref: '#/definitions/io.k8s.cli.setters.project-id'

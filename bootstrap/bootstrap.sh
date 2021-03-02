@@ -39,7 +39,7 @@ delete_cluster() {
 }
 
 connect_to_cluster() {
-    gcloud container clusters get-credentials "krmapihost-${CLUSTER_NAME}" \
+    gcloud container clusters get-credentials "${ADMIN_CLUSTER_NAME_PREFIX}${CLUSTER_NAME}" \
         --region "${CLUSTER_REGION}" \
         --project "${PROJECT_ID}"
 }
@@ -108,7 +108,7 @@ set_sa_permissions() {
 # create explicit FW rule to allow communication btw hosted control plane and private nodes for webhook
 create_cnrm_fw() {
     # find target tags that existing GKE FW rules use
-    gke_target_tag=$(gcloud compute firewall-rules list --filter "name~^gke-krmapihost-${CLUSTER_NAME}" --format "value(targetTags)" --project="${PROJECT_ID}" --limit=1)
+    gke_target_tag=$(gcloud compute firewall-rules list --filter "name~^gke-${ADMIN_CLUSTER_NAME_PREFIX}${CLUSTER_NAME}" --format "value(targetTags)" --project="${PROJECT_ID}" --limit=1)
     # create fw rule targeting nodes and allow ingress from MASTER_IPV4_CIDR
     gcloud compute firewall-rules create "acp-cnrm-fw-${CLUSTER_NAME}" --action ALLOW --direction INGRESS --source-ranges "${MASTER_IPV4_CIDR}" --rules tcp:9443 --target-tags "${gke_target_tag}" --project="${PROJECT_ID}"
 }
@@ -134,6 +134,7 @@ setup_git_ops() {
     kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline project-number "${PROJECT_NUMBER}"
     kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline source-repo "${SOURCE_REPO}"
     kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline deployment-repo "${DEPLOYMENT_REPO}"
+    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline admin-cluster-name "${ADMIN_CLUSTER_NAME_PREFIX}${CLUSTER_NAME}"
     kubectl apply --wait -f ${SOURCE_DIR}/csr-git-ops-pipeline/
     echo "Waiting for creation of GitOps resources. This might take a few minutes."
     kubectl wait --for=condition=READY --timeout="${KUBECTL_WAIT_TIMEOUT}" -f ${SOURCE_DIR}/csr-git-ops-pipeline/source-repositories.yaml
@@ -187,6 +188,7 @@ API_ENDPOINT="krmapihosting.googleapis.com"
 PROJECT_ID="$(gcloud config get-value project -q)"
 DEFAULT_CLUSTER_NAME="landing-zone-cluster"
 CLUSTER_NAME=${DEFAULT_CLUSTER_NAME}
+ADMIN_CLUSTER_NAME_PREFIX="krmapihost-"
 DEPLOYMENT_REPO="deployment-repo"
 SOURCE_REPO="source-repo"
 CLUSTER_REGION="us-central1"

@@ -23,6 +23,14 @@ openAPI:
           name: deployment-repo
           value: yakima-deployment-repo
           isSet: true
+    io.k8s.cli.setters.admin-cluster-name:
+      description: Name of the Admin Service Cluster, to use as default cluster-name-selector
+        for ConfigSync
+      x-k8s-cli:
+        setter:
+          name: admin-cluster-name
+          value: krmapihost-probe-1614899966
+          isSet: true
     io.k8s.cli.setters.namespace:
       description: Namespace to store Git Ops pipeline components under
       x-k8s-cli:

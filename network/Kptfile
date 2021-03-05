@@ -104,11 +104,3 @@ openAPI:
           values:
           - marker: ${NETWORK_NAME}
             ref: '#/definitions/io.k8s.cli.setters.network-name'
-    io.k8s.cli.substitutions.services-compute:
-      x-k8s-cli:
-        substitution:
-          name: services-compute
-          pattern: ${project-id}-compute
-          values:
-          - marker: ${project-id}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'

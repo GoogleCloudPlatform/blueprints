@@ -21,7 +21,7 @@ spec:
   substitutions:
     "_SOURCE_REPO": "yakima-source-repo" # {"$kpt-set":"source-repo"}
     "_DEPLOYMENT_REPO": "yakima-deployment-repo" # {"$kpt-set":"deployment-repo"}
-    "_ADMIN_CLUSTER_NAME": "krmapihost-probe-1614945794" # {"$kpt-set":"admin-cluster-name"}
+    "_ADMIN_CLUSTER_NAME": "krmapihost-probe-1615204968" # {"$kpt-set":"admin-cluster-name"}
   build:
     timeout: 600s
     step:

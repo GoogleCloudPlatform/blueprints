@@ -1,0 +1,13 @@
+# Grant permission to read/write all artifacts/images in this image repository
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: example-admins-artifactregistry-admin # {"$kpt-set":"_subst-1"}
+  namespace: project-id # {"$kpt-set":"platform-project-id"}
+spec:
+  member: group:example-admins@environblueprint.joonix.net # {"$kpt-set":"_subst-2"}
+  role: roles/artifactregistry.repoAdmin
+  resourceRef:
+    apiVersion: artifactregistry.cnrm.cloud.google.com/v1beta1
+    kind: ArtifactRegistryRepository
+    name: example # {"$kpt-set":"image-repo-name"}

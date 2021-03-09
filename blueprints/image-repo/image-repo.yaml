@@ -1,0 +1,12 @@
+# Image Repository
+apiVersion: artifactregistry.cnrm.cloud.google.com/v1beta1
+kind: ArtifactRegistryRepository
+metadata:
+  name: example # {"$kpt-set":"image-repo-name"}
+  namespace: project-id # {"$kpt-set":"platform-project-id"}
+spec:
+  format: DOCKER
+  # Eventually AR should handle multi-repo for us,
+  # But for now, we just have to pick a region as a SPOF.
+  location: us-central1 # {"$kpt-set":"registry-location"}
+  description: Docker Image Repository

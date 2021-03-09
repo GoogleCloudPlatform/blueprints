@@ -1,0 +1,44 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: image-repo
+packageMetadata:
+  shortDescription: Artifact Registry Image Repository
+openAPI:
+  definitions:
+    io.k8s.cli.setters.image-repo-name:
+      x-k8s-cli:
+        setter:
+          name: image-repo-name
+          value: example
+    io.k8s.cli.setters.platform-project-id:
+      x-k8s-cli:
+        setter:
+          name: platform-project-id
+          value: project-id
+    io.k8s.cli.setters.registry-location:
+      x-k8s-cli:
+        setter:
+          name: registry-location
+          value: us-central1
+    io.k8s.cli.setters.image-repo-admin-group:
+      x-k8s-cli:
+        setter:
+          name: image-repo-admin-group
+          value: example-admins@environblueprint.joonix.net
+    io.k8s.cli.substitutions._subst-1:
+      x-k8s-cli:
+        substitution:
+          name: _subst-1
+          pattern: ${image-repo-name}-admins-artifactregistry-admin
+          values:
+          - marker: ${image-repo-name}
+            ref: '#/definitions/io.k8s.cli.setters.image-repo-name'
+    io.k8s.cli.substitutions._subst-2:
+      x-k8s-cli:
+        substitution:
+          name: _subst-2
+          pattern: group:${image-repo-admin-group}
+          values:
+          - marker: ${image-repo-admin-group}
+            ref: '#/definitions/io.k8s.cli.setters.image-repo-admin-group'

@@ -65,3 +65,27 @@ func TestComposedNetworking(t *testing.T) {
 
 	networkingTest.Run(t)
 }
+
+// Tests dns subpackages using BlueprintTest helper
+func TestDNSNetworking(t *testing.T) {
+	p := GlobalTestParameters()
+
+	networkingTest := helpers.BlueprintTest{
+		Name:            "DNS blueprints can create respective compute resources via Yakima",
+		TeardownCommand: fmt.Sprintf("../../scripts/reset_lz_blueprint.sh %s %s %s", p.Project, p.Org, p.BillingAccount),
+		SetupCommand:    fmt.Sprintf("../../scripts/setup_networking_dns.sh %s %s %s %s", p.Project, networkName, networkNamespace, p.Org),
+		KubernetesResourceList: []helpers.KubernetesResource{
+			helpers.NewKccResource(networkNamespace, "ComputeNetwork", networkName),
+			helpers.NewKccResource(networkNamespace, "ComputeNetwork", networkName+"-peer"),
+			helpers.NewKccResource(networkNamespace, "DNSManagedZone", networkName+"-mz-private"),
+			helpers.NewKccResource(networkNamespace, "DNSRecordSet", networkName+"-mz-rs"),
+			helpers.NewKccResource(networkNamespace, "DNSManagedZone", networkName+"-mz-fwd"),
+			helpers.NewKccResource(networkNamespace, "DNSManagedZone", networkName+"-mz-peer"),
+		},
+		Parameters:   p,
+		RetryCount:   30,
+		PollDuration: 60 * time.Second,
+	}
+
+	networkingTest.Run(t)
+}

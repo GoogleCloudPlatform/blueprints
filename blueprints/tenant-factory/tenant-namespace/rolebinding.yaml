@@ -1,0 +1,16 @@
+# Give namespace-admin permission to the example-admins group on the example namespace
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: namespace-admins
+  namespace: example # {"$kpt-set":"tenant-name"}
+  annotations:
+    configsync.gke.io/cluster-name-selector: "" # {"$kpt-set":"cluster-name"}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: admin
+subjects:
+- apiGroup: rbac.authorization.k8s.io
+  kind: Group
+  name: example-admins@environblueprint.joonix.net # {"$kpt-set":"tenant-admin-group"}

@@ -1,0 +1,47 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: tenant-project-contents
+packageMetadata:
+  shortDescription: sample description
+openAPI:
+  definitions:
+    io.k8s.cli.setters.tenant-project-id:
+      maximum: 30 # TODO: kpt should do this automatically based on the Project schema
+      x-k8s-cli:
+        setter:
+          name: tenant-project-id
+          value: example-dev-div1-envb
+    io.k8s.cli.setters.admin-project-id:
+      maximum: 30
+      x-k8s-cli:
+        setter:
+          name: admin-project-id
+          value: admin-project-id
+    io.k8s.cli.setters.network-project-id:
+      maximum: 30
+      x-k8s-cli:
+        setter:
+          name: network-project-id
+          value: network-project-id
+    io.k8s.cli.setters.tenant-admin-group:
+      x-k8s-cli:
+        setter:
+          name: tenant-admin-group
+          value: example-admins@environblueprint.joonix.net
+    io.k8s.cli.substitutions._subst-1:
+      x-k8s-cli:
+        substitution:
+          name: _subst-4
+          pattern: group:${tenant-admin-group}
+          values:
+          - marker: ${tenant-admin-group}
+            ref: '#/definitions/io.k8s.cli.setters.tenant-admin-group'
+    io.k8s.cli.substitutions._subst-2:
+      x-k8s-cli:
+        substitution:
+          name: _subst-7
+          pattern: gcp-org-admins-${tenant-project-id}-owner-permissions
+          values:
+          - marker: ${tenant-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.tenant-project-id'

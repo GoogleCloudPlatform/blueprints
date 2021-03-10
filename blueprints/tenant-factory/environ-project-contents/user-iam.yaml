@@ -1,0 +1,15 @@
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: gcp-org-admins-platform-project-id-owner-permissions # {"$kpt-set":"_subst-12"}
+  namespace: platform-project-id # {"$kpt-set":"platform-project-id"}
+spec:
+  member: group:platform-admins@example.com # {"$kpt-set":"_subst-9"}
+  role: roles/owner
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: platform-project-id # {"$kpt-set":"platform-project-id"}
+    # Cross-namespace resourceRef requires KCC v1.34.0+
+    # https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/320#issuecomment-755768361
+    namespace: projects

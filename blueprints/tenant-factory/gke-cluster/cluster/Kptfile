@@ -1,0 +1,62 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: gke-cluster-cluster
+packageMetadata:
+  shortDescription: GKE cluster with public masters and private nodes
+openAPI:
+  definitions:
+    io.k8s.cli.setters.location:
+      x-k8s-cli:
+        setter:
+          name: location
+          value: us-east4
+    io.k8s.cli.setters.cluster-name:
+      x-k8s-cli:
+        setter:
+          name: cluster-name
+          value: example-us-west4
+    io.k8s.cli.setters.platform-project-id:
+      x-k8s-cli:
+        setter:
+          name: platform-project-id
+          value: platform-project-id
+    io.k8s.cli.setters.environ:
+      x-k8s-cli:
+        setter:
+          name: environ
+          value: dev
+    io.k8s.cli.setters.network-name:
+      x-k8s-cli:
+        setter:
+          name: network-name
+          value: div1-dev-net
+    io.k8s.cli.setters.security-group:
+      x-k8s-cli:
+        setter:
+          name: security-group
+          value: gke-security-group@example.com
+    io.k8s.cli.substitutions.identity-namespace:
+      x-k8s-cli:
+        substitution:
+          name: identity-namespace
+          pattern: ${platform-project-id}.svc.id.goog
+          values:
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
+    io.k8s.cli.setters.subnet-id:
+      x-k8s-cli:
+        substitution:
+          name: subnet-id
+          # recommened pattern: ${platform-project-id}-${cluster-name}
+          value: platform-project-id-example-us-west4
+    io.k8s.cli.setters.master-ip-range:
+      x-k8s-cli:
+        setter:
+          name: master-ip-range
+          value: 10.254.0.0/28
+    io.k8s.cli.setters.networking-namespace:
+      x-k8s-cli:
+        setter:
+          name: networking-namespace
+          value: networking

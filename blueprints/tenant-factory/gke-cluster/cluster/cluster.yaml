@@ -1,0 +1,106 @@
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerCluster
+metadata:
+  name: example-us-east4 # {"$kpt-set":"cluster-name"}
+  namespace: platform-project-id # {"$kpt-set":"platform-project-id"}
+  annotations:
+    cnrm.cloud.google.com/remove-default-node-pool: "true"
+  labels:
+    gke.io/environ: dev # {"$kpt-set":"environ"}
+spec:
+  location: us-east4 # {"$kpt-set":"location"}
+  releaseChannel:
+    channel: REGULAR
+  workloadIdentityConfig:
+    identityNamespace: platform-project-id.svc.id.goog # {"$kpt-set":"identity-namespace"}
+  addonsConfig:
+    # Enable internal and external L4 and L7 load balancers by default.
+    # https://cloud.google.com/kubernetes-engine/docs/concepts/ingress
+    httpLoadBalancing:
+      disabled: false
+    # Enable Network Policy by default.
+    # https://cloud.google.com/kubernetes-engine/docs/how-to/network-policy
+    networkPolicyConfig:
+      disabled: false
+    # Enable NodeLocal DNSCache by default.
+    # Improves DNS speed and scaling.
+    # https://cloud.google.com/kubernetes-engine/docs/how-to/nodelocal-dns-cache
+    dnsCacheConfig:
+      enabled: true
+    # Disable Config Connector by default.
+    # Prefer centralized config management on the admin cluster.
+    configConnectorConfig:
+      enabled: false
+    # Enable Horizontal Pod Autoscaling by default.
+    # https://cloud.google.com/kubernetes-engine/docs/concepts/horizontalpodautoscaler
+    horizontalPodAutoscaling:
+      disabled: false
+    # Enable Compute Engine persistent disk CSI Driver by default.
+    # https://cloud.google.com/kubernetes-engine/docs/how-to/persistent-volumes/gce-pd-csi-driver
+    gcePersistentDiskCsiDriverConfig:
+      enabled: true
+    # Disable Cloud Run on Anthos by default.
+    # https://cloud.google.com/kuberun
+    cloudrunConfig:
+      disabled: true
+    # Disable Istio by Default (Beta).
+    # https://cloud.google.com/istio/docs/istio-on-gke/overview
+    istioConfig:
+      disabled: true
+    # Disable KALM by Default (Beta).
+    # https://cloud.google.com/kubernetes-engine/docs/how-to/add-on/application-delivery
+    kalmConfig:
+      enabled: false
+  # Disable application secret encryption by default.
+  # Requires an encryption key in Cloud KMS to use.
+  # https://cloud.google.com/kubernetes-engine/docs/how-to/encrypting-secrets
+  databaseEncryption:
+    state: DECRYPTED
+  # Disable Pod Security Policy by default.
+  # Deprecated as of K8s v1.21
+  # https://github.com/kubernetes/kubernetes/pull/97171
+  podSecurityPolicyConfig:
+    enabled: false
+  # Enable Vertical Pod Autoscaling by default.
+  # https://cloud.google.com/kubernetes-engine/docs/concepts/verticalpodautoscaler
+  verticalPodAutoscaling:
+    enabled: true
+  # Enable Binary Authorization by default.
+  # https://cloud.google.com/binary-authorization/docs/overview
+  enableBinaryAuthorization: true
+  # Enable Shielded GKE Nodes by default.
+  # https://cloud.google.com/kubernetes-engine/docs/how-to/shielded-gke-nodes
+  enableShieldedNodes: true
+  ipAllocationPolicy:
+    clusterSecondaryRangeName: pods
+    servicesSecondaryRangeName: services
+  networkRef:
+    name: div1-dev-net # {"$kpt-set":"network-name"}
+    namespace: networking # {"$kpt-set":"networking-namespace"}
+  subnetworkRef:
+    name: platform-project-id-example-us-east4 # {"$kpt-set":"subnet-id"}
+    namespace: networking # {"$kpt-set":"networking-namespace"}
+  authenticatorGroupsConfig:
+    securityGroup: gke-security-group@example.com # {"$kpt-set":"security-group"}
+  masterAuthorizedNetworksConfig:
+    cidrBlocks:
+    # TODO: Disable whole internet allowlist
+    # This workaround allows Hub Operators (on ACP cluster) direct access to the GKE masters.
+    # This is required to register for Hub and install ACM (for now).
+    - cidrBlock: 0.0.0.0/0
+      displayName: Whole Internet
+    # - cidrBlock: 10.0.0.0/8
+    #   displayName: Intranet RFC 1918 block A
+    # - cidrBlock: 172.16.0.0/12
+    #   displayName: Intranet RFC 1918 block B
+    # - cidrBlock: 192.168.0.0/16
+    #   displayName: Intranet RFC 1918 block C
+  privateClusterConfig:
+    # TODO: Default to private GKE endpoint (requires VPN between Admin <-> Environ networks)
+    enablePrivateEndpoint: false
+    enablePrivateNodes: true
+    masterGlobalAccessConfig:
+      enabled: true
+    masterIpv4CidrBlock: 10.254.0.0/28 # {"$kpt-set":"master-ip-range"}
+  defaultMaxPodsPerNode: 64
+  initialNodeCount: 1

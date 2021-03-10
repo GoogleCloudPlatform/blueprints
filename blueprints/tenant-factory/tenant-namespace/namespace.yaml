@@ -1,0 +1,7 @@
+# This is the namespace for tenant workloads
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: example # {"$kpt-set":"tenant-name"}
+  annotations:
+    configsync.gke.io/cluster-name-selector: "" # {"$kpt-set":"cluster-name"}

@@ -1,0 +1,95 @@
+# Extract the project number from the platform project resource
+apiVersion: orchestration.cnrm.cloud.google.com/v1alpha1
+kind: FieldReference
+metadata:
+  name: platform-project-id # {"$kpt-set":"platform-project-id"}
+  namespace: network-project-id # {"$kpt-set":"network-project-id"}
+spec:
+  configMapRef:
+    key: project-number
+    name: platform-project-id # {"$kpt-set":"platform-project-id"}
+  jsonPath: '{$.status.number}'
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: platform-project-id # {"$kpt-set":"platform-project-id"}
+    namespace: projects
+---
+# Grant GKE GSA in the platform project permission to use the Shared VPC
+apiVersion: orchestration.cnrm.cloud.google.com/v1alpha1
+kind: FutureObject
+metadata:
+  name: gke-platform-project-id-network-user # {"$kpt-set":"_subst-5"}
+  namespace: network-project-id # {"$kpt-set":"network-project-id"}
+spec:
+  configMapRef:
+    name: platform-project-id # {"$kpt-set":"platform-project-id"}
+  object:
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMPolicyMember
+    metadata:
+      name: gke-platform-project-id-network-user # {"$kpt-set":"_subst-5"}
+      namespace: network-project-id # {"$kpt-set":"network-project-id"}
+      annotations:
+        cnrm.cloud.google.com/project-id: admin-project-id # {"$kpt-set":"admin-project-id"}
+    spec:
+      member: "serviceAccount:service-${project-number}@container-engine-robot.iam.gserviceaccount.com"
+      role: roles/compute.networkUser
+      resourceRef:
+        apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+        kind: Project
+        name: network-project-id # {"$kpt-set":"network-project-id"}
+        namespace: projects
+---
+# Grant "Google APIs Service Agent" in the platform project permission to use the Shared VPC
+# https://cloud.google.com/iam/docs/service-accounts#google-managed
+apiVersion: orchestration.cnrm.cloud.google.com/v1alpha1
+kind: FutureObject
+metadata:
+  name: gcp-platform-project-id-network-user # {"$kpt-set":"_subst-6"}
+  namespace: network-project-id # {"$kpt-set":"network-project-id"}
+spec:
+  configMapRef:
+    name: platform-project-id # {"$kpt-set":"platform-project-id"}
+  object:
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMPolicyMember
+    metadata:
+      name: gcp-platform-project-id-network-user # {"$kpt-set":"_subst-6"}
+      namespace: network-project-id # {"$kpt-set":"network-project-id"}
+      annotations:
+        cnrm.cloud.google.com/project-id: admin-project-id # {"$kpt-set":"admin-project-id"}
+    spec:
+      member: "serviceAccount:${project-number}@cloudservices.gserviceaccount.com"
+      role: roles/compute.networkUser
+      resourceRef:
+        apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+        kind: Project
+        name: network-project-id # {"$kpt-set":"network-project-id"}
+        namespace: projects
+---
+# Grant GKE GSA in the platform project permission to act as the "Google APIs Service Agent"
+apiVersion: orchestration.cnrm.cloud.google.com/v1alpha1
+kind: FutureObject
+metadata:
+  name: gke-platform-project-id-service-agent-user # {"$kpt-set":"_subst-8"}
+  namespace: network-project-id # {"$kpt-set":"network-project-id"}
+spec:
+  configMapRef:
+    name: platform-project-id # {"$kpt-set":"platform-project-id"}
+  object:
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMPolicyMember
+    metadata:
+      name: gke-platform-project-id-service-agent-user # {"$kpt-set":"_subst-8"}
+      namespace: network-project-id # {"$kpt-set":"network-project-id"}
+      annotations:
+        cnrm.cloud.google.com/project-id: admin-project-id # {"$kpt-set":"admin-project-id"}
+    spec:
+      member: "serviceAccount:service-${project-number}@container-engine-robot.iam.gserviceaccount.com"
+      role: roles/container.hostServiceAgentUser
+      resourceRef:
+        apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+        kind: Project
+        name: network-project-id # {"$kpt-set":"network-project-id"}
+        namespace: projects

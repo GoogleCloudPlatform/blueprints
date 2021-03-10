@@ -1,0 +1,28 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: tenant
+packageMetadata:
+  shortDescription: A GCP/GKE/AR Tenant
+openAPI:
+  definitions:
+    io.k8s.cli.setters.tenant-name:
+      x-k8s-cli:
+        setter:
+          name: tenant-name
+          required: true
+    io.k8s.cli.setters.tenant-admin-group:
+      x-k8s-cli:
+        setter:
+          name: tenant-admin-group
+          required: true
+    io.k8s.cli.setters.org-id:
+      x-k8s-cli:
+        setter:
+          name: org-id
+          required: true
+    io.k8s.cli.setters.billing-account-id:
+      x-k8s-cli:
+        setter:
+          name: billing-account-id
+          required: true

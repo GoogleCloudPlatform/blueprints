@@ -1,0 +1,12 @@
+# Add this project as a service project of the shared VPC for this Environ
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeSharedVPCServiceProject
+metadata:
+  name: example-dev-div1-envb # {"$kpt-set":"tenant-project-id"}
+  namespace: networking
+  annotations:
+    cnrm.cloud.google.com/project-id: network-project-id # {"$kpt-set":"network-project-id"}
+spec:
+  projectRef:
+    name: example-dev-div1-envb # {"$kpt-set":"tenant-project-id"}
+    namespace: projects

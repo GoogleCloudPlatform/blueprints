@@ -1,0 +1,26 @@
+# Enable the GKE service in the platform project
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: abandon
+    cnrm.cloud.google.com/project-id: platform-project-id # {"$kpt-set":"platform-project-id"}
+  # unique name to avoid overlap with other platform projects
+  name: platform-project-id-container # {"$kpt-set":"platform-service-container"}
+  namespace: projects
+spec:
+  resourceID: container.googleapis.com
+---
+# Enable the GKE service in the network project
+# Required to peer the GKE master network with the shared VPC.
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: abandon
+    cnrm.cloud.google.com/project-id: network-project-id # {"$kpt-set":"network-project-id"}
+  # unique name to avoid overlap with other network projects
+  name: network-project-id-container # {"$kpt-set":"network-service-container"}
+  namespace: projects
+spec:
+  resourceID: container.googleapis.com

@@ -1,0 +1,16 @@
+# Grant tenant admin group members permission to edit project resources
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: gcp-org-admins-example-dev-div1-envb-owner-permissions # {"$kpt-set":"_subst-2"}
+  # Must be in same namespace as the project, or else KCC validation fails
+  namespace: projects
+  annotations:
+    cnrm.cloud.google.com/project-id: admin-project-id # {"$kpt-set":"admin-project-id"}
+spec:
+  member: group:example-admins@environblueprint.joonix.net # {"$kpt-set":"_subst-1"}
+  role: roles/editor
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: example-dev-div1-envb # {"$kpt-set":"tenant-project-id"}

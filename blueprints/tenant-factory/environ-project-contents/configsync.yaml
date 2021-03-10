@@ -1,0 +1,38 @@
+# ConfigSync GCP ServiceAccount (GSA)
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: configsync
+  namespace: platform-project-id # {"$kpt-set":"platform-project-id"}
+spec:
+  displayName: ConfigSync in platform-project-id # {"$kpt-set":"_subst-3"}
+---
+# Allow ConfigSync Kubernetes ServiceAccount (KSA) to use the ConfigSync GSA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: configsync
+  namespace: platform-project-id # {"$kpt-set":"platform-project-id"}
+spec:
+  member: serviceAccount:platform-project-id.svc.id.goog[config-management-system/importer] # {"$kpt-set":"_subst-18"}
+  role: roles/iam.workloadIdentityUser
+  resourceRef:
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+    name: configsync
+---
+# Allow ConfigSync GSA to read from CSR repos in the admin project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: configsync-platform-project-id-source-reader-permissions # {"$kpt-set":"_subst-13"}
+  # In yakima-system because only the yakima GSA has permission to edit IAM in the admin project.
+  # Owner on the admin project is granted by the Landing zones bootstrap script.
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+spec:
+  member: "serviceAccount:configsync@platform-project-id.iam.gserviceaccount.com" # {"$kpt-set":"_subst-15"}
+  role: roles/source.reader
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: projects/admin-project-id # {"$kpt-set":"_subst-4"}

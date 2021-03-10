@@ -1,0 +1,9 @@
+apiVersion: cft.dev/v1alpha1
+kind: Tenant
+metadata:
+  name: example # {"$kpt-set":"tenant-name"}
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  adminGroup: example-admins@example.com # {"$kpt-set":"tenant-admin-group"}
+  environRefs: [] # empty list == all known environs

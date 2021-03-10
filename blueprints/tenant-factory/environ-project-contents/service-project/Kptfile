@@ -1,0 +1,18 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: service-project
+packageMetadata:
+  shortDescription: Allow the platform project to use the Shared VPC
+openAPI:
+  definitions:
+    io.k8s.cli.setters.platform-project-id:
+      x-k8s-cli:
+        setter:
+          name: platform-project-id
+          value: platform-project-id
+    io.k8s.cli.setters.network-project-id:
+      x-k8s-cli:
+        setter:
+          name: network-project-id
+          value: network-project-id

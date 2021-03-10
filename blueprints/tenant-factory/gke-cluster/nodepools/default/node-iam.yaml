@@ -1,0 +1,62 @@
+# Service Account for GKE nodes
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: gke-example-us-east4-default # {"$kpt-set":"krm-service-account-name"}
+  namespace: platform-project-id # {"$kpt-set":"platform-project-id"}
+spec:
+  displayName: gke-example-us-east4-default # {"$kpt-set":"krm-service-account-name"}
+---
+# Allow fluentd to send logs to StackDriver
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: logwriter-gke-example-us-east4-default # {"$kpt-set":"krm-logwriter-policy-name"}
+  namespace: platform-project-id # {"$kpt-set":"platform-project-id"}
+spec:
+  memberFrom:
+    serviceAccountRef:
+      name: gke-example-us-east4-default # {"$kpt-set":"krm-service-account-name"}
+      namespace: platform-project-id # {"$kpt-set":"platform-project-id"}
+  role: roles/logging.logWriter
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: platform-project-id # {"$kpt-set":"platform-project-id"}
+    namespace: projects
+---
+# Allow fluentd to send metrics to StackDriver
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: metricwriter-gke-example-us-east4-default # {"$kpt-set":"krm-metricwriter-policy-name"}
+  namespace: platform-project-id # {"$kpt-set":"platform-project-id"}
+spec:
+  memberFrom:
+    serviceAccountRef:
+      name: gke-example-us-east4-default # {"$kpt-set":"krm-service-account-name"}
+      namespace: platform-project-id # {"$kpt-set":"platform-project-id"}
+  role: roles/monitoring.metricWriter
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: platform-project-id # {"$kpt-set":"platform-project-id"}
+    namespace: projects
+---
+# Allow kubelet/docker/containerd to read all artifacts/images in the platform-project-id project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: artifactreader-gke-example-us-east4-default # {"$kpt-set":"krm-artifactreader-policy-name"}
+  namespace: platform-project-id # {"$kpt-set":"platform-project-id"}
+spec:
+  memberFrom:
+    serviceAccountRef:
+      name: gke-example-us-east4-default # {"$kpt-set":"krm-service-account-name"}
+      namespace: platform-project-id # {"$kpt-set":"platform-project-id"}
+  role: roles/artifactregistry.reader
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: platform-project-id # {"$kpt-set":"platform-project-id"}
+    namespace: projects

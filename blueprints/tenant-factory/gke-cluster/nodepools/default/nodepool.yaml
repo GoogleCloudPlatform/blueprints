@@ -1,0 +1,30 @@
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerNodePool
+metadata:
+  name: example-us-east4-default # {"$kpt-set":"krm-nodepool-name"}
+  namespace: platform-project-id # {"$kpt-set":"platform-project-id"}
+spec:
+  clusterRef:
+    name: example-us-east4 # {"$kpt-set":"cluster-name"}
+  location: us-east4 # {"$kpt-set":"location"}
+  initialNodeCount: 1
+  autoscaling:
+    # minNodeCount & maxNodeCount are per-zone, for regional clusters
+    maxNodeCount: 2 # {"$kpt-set":"max-node-count"}
+    minNodeCount: 1
+  nodeConfig:
+    diskSizeGb: 100 # Room for docker images
+    diskType: pd-ssd # Higher IOPS / $ vs pd-standard
+    machineType: e2-standard-16 # e2: Most modern & efficient family
+    oauthScopes: # Required when using a custom serice account
+    - storage-ro
+    - https://www.googleapis.com/auth/logging.write
+    - https://www.googleapis.com/auth/monitoring
+    serviceAccountRef:
+      name: gke-example-us-east4-default # {"$kpt-set":"krm-service-account-name"}
+    labels:
+      gke.io/nodepool: default # {"$kpt-set":"nodepool-name"}
+  maxPodsPerNode: 64 # Approx one per GB of the machineType
+  management:
+    autoRepair: true
+    autoUpgrade: true

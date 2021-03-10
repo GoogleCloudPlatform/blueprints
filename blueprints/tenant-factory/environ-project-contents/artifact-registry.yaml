@@ -1,0 +1,11 @@
+# Enable the ArtifactRegistry service
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: abandon
+    cnrm.cloud.google.com/project-id: platform-project-id # {"$kpt-set":"platform-project-id"}
+  name: platform-project-id-artifactregistry # {"$kpt-set":"platform-service-artifactregistry"}
+  namespace: projects
+spec:
+  resourceID: artifactregistry.googleapis.com

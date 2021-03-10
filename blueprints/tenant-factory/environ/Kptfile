@@ -1,0 +1,43 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: environ
+packageMetadata:
+  shortDescription: An Anthos Environ that supports multiple clusters and multiple tenants
+openAPI:
+  definitions:
+    io.k8s.cli.setters.environ:
+      x-k8s-cli:
+        setter:
+          name: environ
+          value: dev
+    io.k8s.cli.setters.org-id:
+      x-k8s-cli:
+        setter:
+          name: org-id
+          value: "123456789012"
+    io.k8s.cli.setters.billing-account-id:
+      x-k8s-cli:
+        setter:
+          name: billing-account-id
+          value: AAAAAA-BBBBBB-CCCCCC
+    io.k8s.cli.setters.admin-project-id:
+      x-k8s-cli:
+        setter:
+          name: admin-project-id
+          value: admin-project-id
+    io.k8s.cli.setters.platform-project-id:
+      x-k8s-cli:
+        setter:
+          name: platform-project-id
+          value: platform-project-id
+    io.k8s.cli.setters.network-project-id:
+      x-k8s-cli:
+        setter:
+          name: network-project-id
+          value: network-project-id
+    io.k8s.cli.setters.registry-location:
+      x-k8s-cli:
+        setter:
+          name: registry-location
+          value: us-central1

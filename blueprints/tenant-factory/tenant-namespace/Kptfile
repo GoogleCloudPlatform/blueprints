@@ -1,0 +1,23 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: tenant-namespace
+packageMetadata:
+  shortDescription: A GKE Namespace with admin group
+openAPI:
+  definitions:
+    io.k8s.cli.setters.tenant-name:
+      x-k8s-cli:
+        setter:
+          name: tenant-name
+          value: example
+    io.k8s.cli.setters.tenant-admin-group:
+      x-k8s-cli:
+        setter:
+          name: tenant-admin-group
+          value: example-admins@environblueprint.joonix.net
+    io.k8s.cli.setters.cluster-name:
+      x-k8s-cli:
+        setter:
+          name: cluster-name
+          required: true

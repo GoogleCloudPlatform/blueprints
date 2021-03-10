@@ -1,0 +1,19 @@
+apiVersion: cft.dev/v1alpha1
+kind: Environ
+metadata:
+  name: dev # {"$kpt-set":"environ"}
+  annotations:
+    config.kubernetes.io/local-config: "true"
+spec:
+  organizationId: "123456789012" # {"$kpt-set":"org-id"}
+  billingAccountId: "AAAAAA-BBBBBB-CCCCCC" # {"$kpt-set":"billing-account-id"}
+  adminProjectRef:
+    name: admin-project-id # {"$kpt-set":"admin-project-id"}
+    namespace: projects
+  networkProjectRef:
+    name: network-project-id # {"$kpt-set":"network-project-id"}
+    namespace: projects
+  platformProjectRef:
+    name: platform-project-id # {"$kpt-set":"platform-project-id"}
+    namespace: projects
+  registryLocation: us-central1 # {"$kpt-set":"registry-location"}

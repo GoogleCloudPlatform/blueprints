@@ -98,3 +98,34 @@ func TestDNSNetworking(t *testing.T) {
 
 	networkingTest.Run(t)
 }
+
+
+// Tests vpc-service-controls packages using BlueprintTest helper
+func TestServiceControls(t *testing.T) {
+	p := GlobalTestParameters()
+
+	projectNamespace := "projects"
+	randSuffix := helpers.RandStr(4)
+	perimeterProjectID := fmt.Sprintf("test-vpcsc-%s", randSuffix)
+	vpcName := fmt.Sprintf("vpc-%s", randSuffix)
+	accessPolicyName := fmt.Sprintf("ap-%s", randSuffix)
+
+	networkingTest := helpers.BlueprintTest{
+		Name:            "vpc-service-controls blueprints can create respective  resources via Yakima",
+		TeardownCommand: fmt.Sprintf("../../scripts/reset_lz_blueprint.sh %s %s %s", p.Project, p.Org, p.BillingAccount),
+		SetupCommand:    fmt.Sprintf("../../scripts/setup_servicecontrols.sh %s %s %s %s %s %s %s", p.Org, randSuffix, perimeterProjectID, vpcName, accessPolicyName, p.BillingAccount, p.Project),
+		KubernetesResourceList: []helpers.KubernetesResource{
+			helpers.NewKccResource(projectNamespace, "Project", perimeterProjectID),
+			helpers.NewKccResource(networkNamespace, "ComputeNetwork", vpcName),
+			helpers.NewKccResource(networkNamespace, "AccessContextManagerAccessPolicy", accessPolicyName),
+			// flaky due to b/175841381
+			// helpers.NewKccResource(networkNamespace, "AccessContextManagerAccessLevel", fmt.Sprintf("al%ssharedrestricted", randSuffix)),
+			helpers.NewKccResource(networkNamespace, "AccessContextManagerServicePerimeter", fmt.Sprintf("sp%ssharedrestricted", randSuffix)),
+		},
+		Parameters:   p,
+		RetryCount:   50,
+		PollDuration: 60 * time.Second,
+	}
+
+	networkingTest.Run(t)
+}

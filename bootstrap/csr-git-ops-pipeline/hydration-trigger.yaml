@@ -26,7 +26,7 @@ spec:
     timeout: 600s
     step:
     - id: "Clone Deployment Repo"
-      name: gcr.io/google.com/cloudsdktool/cloud-sdk
+      name: gcr.io/cloud-builders/gcloud:latest
       dir: /deployment-workspace
       entrypoint: /bin/sh
       args:
@@ -97,7 +97,7 @@ spec:
     - id: "Push Changes To Deployment Repo"
       waitFor:
       - "Evaluate hydrated changes"
-      name: gcr.io/google.com/cloudsdktool/cloud-sdk
+      name: gcr.io/cloud-builders/gcloud:latest
       dir: /deployment-workspace
       entrypoint: /bin/sh
       args:

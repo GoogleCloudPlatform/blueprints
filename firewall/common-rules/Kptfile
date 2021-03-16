@@ -113,3 +113,10 @@ openAPI:
           values:
           - marker: ${NETWORK_NAME}
             ref: '#/definitions/io.k8s.cli.setters.network-name'
+    io.k8s.cli.setters.google-api-cidr:
+      type: array
+      x-k8s-cli:
+        setter:
+          name: google-api-cidr
+          listValues:
+          - "199.36.153.8/30"

@@ -16,5 +16,5 @@ spec:
   targetTags:
    - allow-google-apis
   direction: EGRESS
-  destinationRanges:
+  destinationRanges: # {"$kpt-set":"google-api-cidr"}
    - "199.36.153.8/30"

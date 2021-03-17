@@ -50,7 +50,7 @@ func TestComposedNetworking(t *testing.T) {
 	networkingTest := helpers.BlueprintTest{
 		Name:            "Networking blueprints can be composed individually",
 		TeardownCommand: fmt.Sprintf("../../scripts/reset_lz_blueprint.sh %s %s %s", p.Project, p.Org, p.BillingAccount),
-		SetupCommand:    fmt.Sprintf("../../scripts/setup_networking_composed.sh %s %s %s %s %s", p.Project, networkName, networkNamespace, prefix, p.Org,),
+		SetupCommand:    fmt.Sprintf("../../scripts/setup_networking_composed.sh %s %s %s %s %s", p.Project, networkName, networkNamespace, prefix, p.Org),
 		KubernetesResourceList: []helpers.KubernetesResource{
 			helpers.NewKccResource(networkNamespace, "ComputeSharedVPCHostProject", p.Project+"-sharedvpc"),
 			helpers.NewKccResource(networkNamespace, "ComputeNetwork", networkName),
@@ -85,6 +85,7 @@ func TestDNSNetworking(t *testing.T) {
 		KubernetesResourceList: []helpers.KubernetesResource{
 			helpers.NewKccResource(networkNamespace, "ComputeNetwork", networkName),
 			helpers.NewKccResource(networkNamespace, "ComputeNetwork", networkName+"-peer"),
+			helpers.NewKccResource(networkNamespace, "DNSPolicy", networkName+"-policy"),
 			helpers.NewKccResource(networkNamespace, "DNSManagedZone", networkName+"-mz-private"),
 			helpers.NewKccResource(networkNamespace, "DNSRecordSet", networkName+"-mz-rs"),
 			helpers.NewKccResource(networkNamespace, "DNSManagedZone", networkName+"-mz-fwd"),

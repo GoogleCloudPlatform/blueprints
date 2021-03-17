@@ -41,6 +41,10 @@ EOF
 cp -rf ${ROOT_DIR}/blueprints/networking/dns/managedzone-private landing-zone/network/dnsnet/mz-priv
 kpt cfg set landing-zone/network/dnsnet/mz-priv managed-zone-name "${NETWORK_NAME}-mz-private"
 
+# create DNS Policy
+cp -rf ${ROOT_DIR}/blueprints/networking/dns/policy landing-zone/network/dnsnet/policy
+kpt cfg set landing-zone/network/dnsnet/policy dns-policy-name "${NETWORK_NAME}-policy"
+
 # create recordset in the private managed zone
 cp -rf ${ROOT_DIR}/blueprints/networking/dns/recordset landing-zone/network/dnsnet/mz-priv/rs
 kpt cfg set landing-zone/network/dnsnet/mz-priv/rs managed-zone-name "${NETWORK_NAME}-mz-private"

@@ -6,7 +6,7 @@ set -o pipefail
 START_TIME="$(date -u +%s)"
 
 check_dependencies() {
-  echo "Checking dependencies."
+  echo "Checking dependencies..."
 
   gcloud version
   kubectl version --client
@@ -15,12 +15,14 @@ check_dependencies() {
 
 enable_krmapi() {
     if [ ${ENABLE_KRMAPIHOSTING} = true ]; then
+      echo "Enabling ${API_ENDPOINT} service..."
       gcloud services enable "${API_ENDPOINT}" \
           --project "${PROJECT_ID}"
     fi
 }
 
 create_cluster() {
+    echo "Creating admin cluster..."
     gcloud alpha admin-service-cluster instances create "${CLUSTER_NAME}" \
         --location "${CLUSTER_REGION}" \
         --bundles "Yakima" \
@@ -32,6 +34,7 @@ create_cluster() {
 }
 
 delete_cluster() {
+    echo "Deleting admin cluster..."
     gcloud alpha admin-service-cluster instances delete "${CLUSTER_NAME}" \
         --location "${CLUSTER_REGION}" \
         --project "${PROJECT_ID}" \
@@ -39,65 +42,76 @@ delete_cluster() {
 }
 
 connect_to_cluster() {
+    echo "Getting admin cluster credentials..."
     gcloud container clusters get-credentials "${ADMIN_CLUSTER_NAME_PREFIX}${CLUSTER_NAME}" \
         --region "${CLUSTER_REGION}" \
         --project "${PROJECT_ID}"
 }
 
+# kubectl wait in a loop with retries on failure.
+kubectl_wait() {
+    local stdout=""
+    local errcode=0
+    for i in $(seq 1 ${KUBECTL_WAIT_RETRIES})
+    do
+        if stdout=$(kubectl wait "$@" --timeout="${KUBECTL_WAIT_TIMEOUT}" 2>&1)
+        then
+            errcode=$?
+            break
+        fi
+        errcode=$?
+        sleep 1
+        echo "Retrying..."
+    done
+    if [[ -n "${stdout}" ]]
+    then
+        echo "${stdout}"
+    fi
+    return ${errcode}
+}
+
 wait_for_components() {
-    echo "Waiting for Gatekeeper service to become available. This might take several minutes."
-    until kubectl wait --for=condition=available --timeout="${KUBECTL_WAIT_TIMEOUT}" deployment/gatekeeper-controller-manager -n gatekeeper-system 2> /dev/null
-    do
-        echo "Waiting for Gatekeeper..."
-        sleep 5
-    done
+    echo "Waiting for Gatekeeper..."
+    kubectl_wait --for=condition=available deployment/gatekeeper-controller-manager -n gatekeeper-system
 
-    echo "Waiting for Config Connector Pods."
-    until kubectl wait --for=condition=Ready --timeout="${KUBECTL_WAIT_TIMEOUT}" pod --all -n cnrm-system 2> /dev/null
-    do
-        echo "Waiting for Config Connector Pods..."
-        sleep 5
-    done
+    echo "Waiting for Config Connector Pods..."
+    kubectl_wait --for=condition=Ready pod --all -n cnrm-system
 
-    echo "Waiting for Config Connector CRDs."
-    until kubectl wait --for=condition=established --timeout="${KUBECTL_WAIT_TIMEOUT}" crd/configconnectors.core.cnrm.cloud.google.com 2> /dev/null
-    do
-        echo "Waiting for Config Connector CRDs..."
-        sleep 5
-    done
+    echo "Waiting for Config Connector CRDs..."
+    kubectl_wait --for=condition=established crd/configconnectors.core.cnrm.cloud.google.com
 
-    echo "Waiting for Config Sync installation."
+    echo "Waiting for Config Sync..."
     until kubectl describe serviceaccount/importer -n config-management-system 2> /dev/null
     do
-        echo "Waiting for Config Sync..."
+        echo "Retrying..."
         sleep 5
     done
 
-    echo "Checking Config Connector health."
-    until [ "$(kubectl get configconnector configconnector.core.cnrm.cloud.google.com -o jsonpath='{.status.healthy}')" = "true" ]
+    echo "Waiting for Config Connector..."
+    until [[ "$(kubectl get configconnector configconnector.core.cnrm.cloud.google.com -o jsonpath='{.status.healthy}')" == "true" ]]
     do
         kubectl annotate configconnector configconnector.core.cnrm.cloud.google.com reconcile=true 1> /dev/null
         kubectl annotate configconnector configconnector.core.cnrm.cloud.google.com reconcile- 1> /dev/null
-        echo "Waiting for Config Connector health check..."
+        echo "Waiting for Config Connector..."
         sleep 15
     done
 }
 
 set_sa_permissions() {
-    # Grab the Config Connector service account from the ConfigConnectorContext
-    # resource.
+    echo "Looking up Config Connector service account..."
     until SA_EMAIL="$(kubectl get ConfigConnectorContext -n yakima-system -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
     do
-        echo "Waiting for ConfigConnectorContext..."
+        echo "Retrying..."
         sleep 5
     done
 
-    # Grant project owner to the Config Connector service account.
+    echo "Granting Config Connector project owner..."
     gcloud projects add-iam-policy-binding "${PROJECT_ID}" \
         --member "serviceAccount:${SA_EMAIL}" \
         --role "roles/owner" \
         --project "${PROJECT_ID}"
 
+    echo "Configuring Config Connector workload identity..."
     # Set up a workload identity binding between the Config Sync importer
     # Kubernetes service account and the GCP service account that will be
     # created by the csr-git-ops-pipeline blueprint.
@@ -107,6 +121,7 @@ set_sa_permissions() {
 
 # create explicit FW rule to allow communication btw hosted control plane and private nodes for webhook
 create_cnrm_fw() {
+    echo "Creating CNRM firewall (ALLOW tcp:9443)..."
     # find target tags that existing GKE FW rules use
     gke_target_tag=$(gcloud compute firewall-rules list --filter "name~^gke-${ADMIN_CLUSTER_NAME_PREFIX}${CLUSTER_NAME}" --format "value(targetTags)" --project="${PROJECT_ID}" --limit=1)
     # create fw rule targeting nodes and allow ingress from MASTER_IPV4_CIDR
@@ -114,14 +129,16 @@ create_cnrm_fw() {
 }
 
 delete_cnrm_fw() {
+    echo "Deleting CNRM firewall..."
     gcloud compute firewall-rules delete "acp-cnrm-fw-${CLUSTER_NAME}" --project="${PROJECT_ID}" --quiet
 }
 
 enable_services() {
-    gcloud services enable \
-        iam.googleapis.com \
-        cloudresourcemanager.googleapis.com \
-        --project "${PROJECT_ID}"
+    echo "Enabling iam.googleapis.com service..."
+    gcloud services enable iam.googleapis.com --project "${PROJECT_ID}"
+
+    echo "Enabling cloudresourcemanager.googleapis.com service..."
+    gcloud services enable cloudresourcemanager.googleapis.com --project "${PROJECT_ID}"
 }
 
 setup_git_ops() {
@@ -129,17 +146,26 @@ setup_git_ops() {
     then
         return
     fi
+
+    echo "Configuring GitOps pipeline..."
     kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline namespace "yakima-system"
     kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline project-id "${PROJECT_ID}"
     kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline project-number "${PROJECT_NUMBER}"
     kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline source-repo "${SOURCE_REPO}"
     kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline deployment-repo "${DEPLOYMENT_REPO}"
     kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline admin-cluster-name "${ADMIN_CLUSTER_NAME_PREFIX}${CLUSTER_NAME}"
+
+    echo "Creating GitOps pipeline..."
     kubectl apply --wait -f ${SOURCE_DIR}/csr-git-ops-pipeline/
-    echo "Waiting for creation of GitOps resources. This might take a few minutes."
-    kubectl wait --for=condition=READY --timeout="${KUBECTL_WAIT_TIMEOUT}" -f ${SOURCE_DIR}/csr-git-ops-pipeline/source-repositories.yaml
-    kubectl wait --for=condition=READY --timeout="${KUBECTL_WAIT_TIMEOUT}" -f ${SOURCE_DIR}/csr-git-ops-pipeline/hydration-trigger.yaml
-    kubectl wait --for=condition=READY --timeout="${KUBECTL_WAIT_TIMEOUT}" -f ${SOURCE_DIR}/csr-git-ops-pipeline/iam.yaml
+
+    echo "Waiting for source repos..."
+    kubectl_wait --for=condition=READY -f ${SOURCE_DIR}/csr-git-ops-pipeline/source-repositories.yaml
+
+    echo "Waiting for hydration trigger..."
+    kubectl_wait --for=condition=READY -f ${SOURCE_DIR}/csr-git-ops-pipeline/hydration-trigger.yaml
+
+    echo "Waiting for IAM..."
+    kubectl_wait --for=condition=READY -f ${SOURCE_DIR}/csr-git-ops-pipeline/iam.yaml
 }
 
 remove_git_ops() {
@@ -147,6 +173,7 @@ remove_git_ops() {
     then
         return
     fi
+    echo "Deleting GitOps resources..."
     kubectl delete --wait -f ${SOURCE_DIR}/csr-git-ops-pipeline/ || true
 }
 
@@ -194,7 +221,8 @@ SOURCE_REPO="source-repo"
 CLUSTER_REGION="us-central1"
 MASTER_IPV4_CIDR=172.16.0.128/28
 
-KUBECTL_WAIT_TIMEOUT="30m"
+KUBECTL_WAIT_RETRIES="3"
+KUBECTL_WAIT_TIMEOUT="10m"
 if [ -z "${ENABLE_KRMAPIHOSTING:-}" ]; then
   ENABLE_KRMAPIHOSTING=true
 fi
@@ -279,7 +307,6 @@ fi
 
 if [ ${COMMAND} = "create" ]
 then
-    echo "Creating admin cluster..."
     check_dependencies
     enable_krmapi
     ENABLEMENT_END_TIME="$(date -u +%s)"

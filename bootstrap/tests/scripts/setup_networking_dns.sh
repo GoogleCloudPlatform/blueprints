@@ -19,24 +19,6 @@ mkdir -p landing-zone/network/dnsnetpeer
 cp -rf ${ROOT_DIR}/blueprints/networking/network/vpc landing-zone/network/dnsnetpeer
 rm -rf landing-zone/network/dnsnetpeer/vpc/services.yaml
 
-# add DNS Admin role to networking SA
-cat > landing-zone/network/dnsnet/iam.yaml <<EOF
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: networking-sa-dns-permissions
-  namespace: yakima-system
-  annotations:
-    cnrm.cloud.google.com/project-id: ${PROJECT_ID}
-spec:
-  member: "serviceAccount:networking-sa@${PROJECT_ID}.iam.gserviceaccount.com"
-  role: roles/dns.admin
-  resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Organization
-    external: "${ORG_ID}"
-EOF
-
 # create private managedzones
 cp -rf ${ROOT_DIR}/blueprints/networking/dns/managedzone-private landing-zone/network/dnsnet/mz-priv
 kpt cfg set landing-zone/network/dnsnet/mz-priv managed-zone-name "${NETWORK_NAME}-mz-private"

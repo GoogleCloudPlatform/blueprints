@@ -25,5 +25,6 @@ COMMIT_COUNT=$(git rev-list --all --count)
 
 # TODO(b/165011580): Remove this once first commit in CSR consistently triggers Cloud Build
 if [ "${COMMIT_COUNT}" -eq "1" ]; then
+  sleep 120 # sleep for 2 mins as this force push will trigger another build and if it's during push to deploy of another repo, this can fail
   touch README.md && git add -A && git commit -m "Temporary commit for b/165011580" --allow-empty && git push origin main --force
 fi

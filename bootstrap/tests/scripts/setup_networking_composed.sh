@@ -24,23 +24,7 @@ cp -rf ${ROOT_DIR}/blueprints/networking/routes/routes-igw landing-zone/network/
 cp -rf ${ROOT_DIR}/blueprints/networking/firewall/common-rules landing-zone/network/customnet/vpc/fw-rules
 kpt cfg set landing-zone/network/customnet network-name ${NETWORK_NAME} -R
 kpt cfg set landing-zone/network/customnet project-id ${PROJECT_ID} -R
-# add Security Admin role to networking SA for fw-rules
-cat > landing-zone/network/customnet/iam.yaml <<EOF
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: networking-sa-security-permissions
-  namespace: yakima-system
-  annotations:
-    cnrm.cloud.google.com/project-id: ${PROJECT_ID}
-spec:
-  member: "serviceAccount:networking-sa@${PROJECT_ID}.iam.gserviceaccount.com"
-  role: roles/compute.securityAdmin
-  resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Organization
-    external: "${ORG_ID}"
-EOF
+
 # set a custom prefix, cidr range, nat config for subnet
 kpt cfg set landing-zone/network/customnet/subnet prefix ${REGIONAL_PREFIX}
 kpt cfg set landing-zone/network/customnet/subnet ip-cidr-range 10.3.0.0/16

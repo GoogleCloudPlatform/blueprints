@@ -41,6 +41,9 @@ main() {
   CNRM_SA="$(kubectl get ConfigConnectorContext -n yakima-system -o jsonpath='{.items[0].spec.googleServiceAccount}')"
   ORG_ID=$(gcloud projects get-ancestors ${PROJECT_ID} --format='get(id)' | tail -1)
   gcloud organizations add-iam-policy-binding $ORG_ID --role=roles/resourcemanager.organizationAdmin --member="serviceAccount:${CNRM_SA}"
+  # ACM can OOM during build, this patch increases mem limit
+  # b/182570433 b/183159948 workaround via go/acm-support-playbook:memory
+  kubectl patch ConfigManagement config-management --patch "$(cat scripts/acm-patch.yaml)" --type=merge
 }
 
 main $@

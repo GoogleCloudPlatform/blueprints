@@ -1,0 +1,15 @@
+spec:
+  patches:
+  - apiVersion: apps/v1
+    kind: Deployment
+    metadata:
+      name: git-importer
+      namespace: config-management-system
+    spec:
+      template:
+        spec:
+          containers:
+          - name: importer
+            resources:
+              limits:
+                memory: "500Mi"

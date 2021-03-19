@@ -23,7 +23,7 @@ recursive_delete_folder() {
         else
             echo "No subfolders found for ${folder_name}"
             delete=$(gcloud alpha resource-manager folders delete ${folder_id})
-            if [[  $?==1 ]]; then
+            if [[  $? -eq 1 ]]; then
                 echo "Unable to delete folder ${folder_name} with id ${folder_id}"
             else
                 echo "Folder ${folder_name} with id ${folder_id} deleted"

@@ -16,7 +16,7 @@ gcloud components install alpha --quiet
 cd $(dirname "${BASH_SOURCE}")/.. # Goes to bootstrap/tests directory
 
 if [ -z "${1:-}" ]; then
-  go test ./... -timeout 0 -test.v
+  go test -run '' -failfast -timeout 0 -test.v
 else
   test_name=${1}
   shift

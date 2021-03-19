@@ -46,13 +46,13 @@ func (b *BlueprintTest) runScriptAndVerify(t *testing.T, sourceRepoPath string, 
 	}
 
 	t.Log("Polling Cloudbuild status...")
-	// Retry 3 times since sometimes cloudbuild takes some time to trigger
+	// Retry 10 times since sometimes cloudbuild takes some time to trigger
 	if err := Poll(func() (bool, error) {
 		if err = PollCloudBuild(p.Project, p.SourceRepo); err != nil {
 			return true, err
 		}
 		return false, nil
-	}, 3, 1*time.Second); err != nil {
+	}, 10, 2*time.Second); err != nil {
 		return err
 	}
 

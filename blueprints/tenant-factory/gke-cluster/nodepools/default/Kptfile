@@ -31,7 +31,7 @@ openAPI:
         type: integer
         setter:
           name: max-node-count
-          value: 2
+          value: '2'
     io.k8s.cli.substitutions.krm-nodepool-name:
       x-k8s-cli:
         substitution:

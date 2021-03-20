@@ -46,7 +46,7 @@ openAPI:
             ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
     io.k8s.cli.setters.subnet-id:
       x-k8s-cli:
-        substitution:
+        setter:
           name: subnet-id
           # recommened pattern: ${platform-project-id}-${cluster-name}
           value: platform-project-id-example-us-west4

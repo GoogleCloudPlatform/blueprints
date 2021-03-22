@@ -61,7 +61,6 @@ done
 gcloud alpha billing accounts add-iam-policy-binding ${BILLING_ACCOUNT} --role=roles/billing.admin --member="serviceAccount:${PFACTORY_SA}"
 
 # setup project to use within perimeter
-mkdir -p landing-zone/projects/${PROJECT_ID}
 cp -rf ${ROOT_DIR}/blueprints/project/  landing-zone/projects/${PROJECT_ID}/
 kpt cfg set landing-zone/projects/${PROJECT_ID} project-id ${PROJECT_ID}
 kpt cfg set landing-zone/projects/${PROJECT_ID} folder-name "vpcsc-test-${RAND_SUFFIX}"

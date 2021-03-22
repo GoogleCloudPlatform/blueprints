@@ -56,6 +56,21 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
+  name: networking-sa-service-control-permissions
+  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
+spec:
+  member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"networking-sa-ref"}
+  role: roles/accesscontextmanager.policyAdmin
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # {"$kpt-set":"org-id"}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
   name: networking-sa-xpnadmin-permissions
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
   annotations:
@@ -98,7 +113,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: cnrm-viewer
+  name: cnrm-viewer-landing-zone
 subjects:
 - kind: ServiceAccount
   name: cnrm-controller-manager-networking

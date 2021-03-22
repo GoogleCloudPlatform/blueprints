@@ -62,7 +62,7 @@ gcloud alpha billing accounts add-iam-policy-binding ${BILLING_ACCOUNT} --role=r
 
 # setup project to use within perimeter
 mkdir -p landing-zone/projects/${PROJECT_ID}
-cp -rf ${ROOT_DIR}/blueprints/project/  landing-zone/projects/${PROJECT_ID}
+cp -rf ${ROOT_DIR}/blueprints/project/  landing-zone/projects/${PROJECT_ID}/
 kpt cfg set landing-zone/projects/${PROJECT_ID} project-id ${PROJECT_ID}
 kpt cfg set landing-zone/projects/${PROJECT_ID} folder-name "vpcsc-test-${RAND_SUFFIX}"
 kpt cfg set landing-zone/projects/${PROJECT_ID} billing-account-id ${BILLING_ACCOUNT}
@@ -78,25 +78,6 @@ mkdir -p landing-zone/network/shared
 cp -rf ${ROOT_DIR}/blueprints/networking/vpc-service-controls/access-policy landing-zone/network/shared/accesspolicy
 kpt cfg set landing-zone/network/shared/accesspolicy access-policy-name ${ACCESS_POLICY_NAME}
 kpt cfg set landing-zone/network/shared/accesspolicy org-id ${ORG_ID}
-
-# add accesscontextmanager Admin role to networking SA
-cat > landing-zone/network/shared/iam.yaml <<EOF
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: networking-sa-dns-permissions
-  namespace: yakima-system
-  annotations:
-    cnrm.cloud.google.com/project-id: ${TEST_PROJECT_ID}
-spec:
-  member: "serviceAccount:networking-sa@${TEST_PROJECT_ID}.iam.gserviceaccount.com"
-  role: roles/accesscontextmanager.policyAdmin
-  resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Organization
-    external: "${ORG_ID}"
-EOF
-
 
 # set up perimeter for vpc
 cp -rf ${ROOT_DIR}/blueprints/networking/vpc-service-controls/perimeter landing-zone/network/${VPC_NAME}/perimeter

@@ -21,12 +21,12 @@ spec:
   substitutions:
     "_SOURCE_REPO": "yakima-source-repo" # {"$kpt-set":"source-repo"}
     "_DEPLOYMENT_REPO": "yakima-deployment-repo" # {"$kpt-set":"deployment-repo"}
-    "_ADMIN_CLUSTER_NAME": "krmapihost-probe-1615896126" # {"$kpt-set":"admin-cluster-name"}
+    "_ADMIN_CLUSTER_NAME": "krmapihost-probe-1616510617" # {"$kpt-set":"admin-cluster-name"}
   build:
     timeout: 600s
     step:
     - id: "Clone Deployment Repo"
-      name: gcr.io/google.com/cloudsdktool/cloud-sdk
+      name: gcr.io/cloud-builders/gcloud:latest
       dir: /deployment-workspace
       entrypoint: /bin/sh
       args:
@@ -97,7 +97,7 @@ spec:
     - id: "Push Changes To Deployment Repo"
       waitFor:
       - "Evaluate hydrated changes"
-      name: gcr.io/google.com/cloudsdktool/cloud-sdk
+      name: gcr.io/cloud-builders/gcloud:latest
       dir: /deployment-workspace
       entrypoint: /bin/sh
       args:

@@ -1,0 +1,78 @@
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: service-project-id-container-network-user # {"$kpt-set":"krm-container-network-user-name"}
+  namespace: projects # {"$kpt-set":"projects-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: host-project-id # {"$kpt-set":"host-project-id"}
+    cnrm.cloud.google.com/project-number-ref: service-project-id # {"$kpt-set":"service-project-id"}
+    config.kubernetes.io/function: |
+      container:
+        image: gcr.io/yakima-eap/project-number-ref:latest
+spec:
+  member: "serviceAccount:service-${project-number}@container-engine-robot.iam.gserviceaccount.com"
+  role: roles/compute.networkUser
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: host-project-id # {"$kpt-set":"host-project-id"}
+    namespace: projects # {"$kpt-set":"projects-namespace"}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: service-project-id-cloudservices-network-user # {"$kpt-set":"krm-cloudservices-network-user-name"}
+  namespace: projects # {"$kpt-set":"projects-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: host-project-id # {"$kpt-set":"host-project-id"}
+    cnrm.cloud.google.com/project-number-ref: service-project-id # {"$kpt-set":"service-project-id"}
+    config.kubernetes.io/function: |
+      container:
+        image: gcr.io/yakima-eap/project-number-ref:latest
+spec:
+  member: "serviceAccount:${project-number}@cloudservices.gserviceaccount.com"
+  role: roles/compute.networkUser
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: host-project-id # {"$kpt-set":"host-project-id"}
+    namespace: projects # {"$kpt-set":"projects-namespace"}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: service-project-id-container-cloudservices-user # {"$kpt-set":"krm-container-cloudservices-user-name"}
+  namespace: projects # {"$kpt-set":"projects-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: host-project-id # {"$kpt-set":"host-project-id"}
+    cnrm.cloud.google.com/project-number-ref: service-project-id # {"$kpt-set":"service-project-id"}
+    config.kubernetes.io/function: |
+      container:
+        image: gcr.io/yakima-eap/project-number-ref:latest
+spec:
+  member: "serviceAccount:service-${project-number}@container-engine-robot.iam.gserviceaccount.com"
+  role: roles/container.hostServiceAgentUser
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: host-project-id # {"$kpt-set":"host-project-id"}
+    namespace: projects # {"$kpt-set":"projects-namespace"}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: example-policy
+  namespace: namespace-two
+  annotations:
+    cnrm.cloud.google.com/project-number-ref: project-one
+    config.kubernetes.io/function: |
+      container:
+        image: gcr.io/yakima-eap/project-number-ref:latest
+spec:
+  member: "serviceAccount:service-${project-number}@container-engine-robot.iam.gserviceaccount.com"
+  role: roles/container.hostServiceAgentUser
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    name: project-one
+    namespace: namespace-one

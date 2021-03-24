@@ -41,3 +41,8 @@ openAPI:
         setter:
           name: registry-location
           value: us-central1
+    io.k8s.cli.setters.projects-namespace:
+      x-k8s-cli:
+        setter:
+          name: projects-namespace
+          value: projects

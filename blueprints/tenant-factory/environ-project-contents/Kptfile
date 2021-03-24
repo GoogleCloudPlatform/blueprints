@@ -46,6 +46,11 @@ openAPI:
         setter:
           name: management-namespace
           value: yakima-system
+    io.k8s.cli.setters.projects-namespace:
+      x-k8s-cli:
+        setter:
+          name: projects-namespace
+          value: projects
     io.k8s.cli.setters.environ:
       x-k8s-cli:
         setter:

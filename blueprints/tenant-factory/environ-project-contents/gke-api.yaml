@@ -7,7 +7,7 @@ metadata:
     cnrm.cloud.google.com/project-id: platform-project-id # {"$kpt-set":"platform-project-id"}
   # unique name to avoid overlap with other platform projects
   name: platform-project-id-container # {"$kpt-set":"platform-service-container"}
-  namespace: projects
+  namespace: projects # {"$kpt-set":"projects-namespace"}
 spec:
   resourceID: container.googleapis.com
 ---
@@ -21,6 +21,6 @@ metadata:
     cnrm.cloud.google.com/project-id: network-project-id # {"$kpt-set":"network-project-id"}
   # unique name to avoid overlap with other network projects
   name: network-project-id-container # {"$kpt-set":"network-service-container"}
-  namespace: projects
+  namespace: projects # {"$kpt-set":"projects-namespace"}
 spec:
   resourceID: container.googleapis.com

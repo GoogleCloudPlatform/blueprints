@@ -12,4 +12,4 @@ spec:
     name: platform-project-id # {"$kpt-set":"platform-project-id"}
     # Cross-namespace resourceRef requires KCC v1.34.0+
     # https://github.com/GoogleCloudPlatform/k8s-config-connector/issues/320#issuecomment-755768361
-    namespace: projects
+    namespace: projects # {"$kpt-set":"projects-namespace"}

@@ -4,7 +4,7 @@ kind: IAMPolicyMember
 metadata:
   name: gcp-org-admins-example-dev-div1-envb-owner-permissions # {"$kpt-set":"_subst-2"}
   # Must be in same namespace as the project, or else KCC validation fails
-  namespace: projects
+  namespace: projects # {"$kpt-set":"projects-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: admin-project-id # {"$kpt-set":"admin-project-id"}
 spec:

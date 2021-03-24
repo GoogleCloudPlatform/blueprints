@@ -9,11 +9,11 @@ spec:
   billingAccountId: "AAAAAA-BBBBBB-CCCCCC" # {"$kpt-set":"billing-account-id"}
   adminProjectRef:
     name: admin-project-id # {"$kpt-set":"admin-project-id"}
-    namespace: projects
+    namespace: projects # {"$kpt-set":"projects-namespace"}
   networkProjectRef:
     name: network-project-id # {"$kpt-set":"network-project-id"}
-    namespace: projects
+    namespace: projects # {"$kpt-set":"projects-namespace"}
   platformProjectRef:
     name: platform-project-id # {"$kpt-set":"platform-project-id"}
-    namespace: projects
+    namespace: projects # {"$kpt-set":"projects-namespace"}
   registryLocation: us-central1 # {"$kpt-set":"registry-location"}

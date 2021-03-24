@@ -6,6 +6,6 @@ metadata:
     cnrm.cloud.google.com/deletion-policy: abandon
     cnrm.cloud.google.com/project-id: platform-project-id # {"$kpt-set":"platform-project-id"}
   name: platform-project-id-artifactregistry # {"$kpt-set":"platform-service-artifactregistry"}
-  namespace: projects
+  namespace: projects # {"$kpt-set":"projects-namespace"}
 spec:
   resourceID: artifactregistry.googleapis.com

@@ -24,6 +24,11 @@ openAPI:
         setter:
           name: network-project-id
           value: network-project-id
+    io.k8s.cli.setters.projects-namespace:
+      x-k8s-cli:
+        setter:
+          name: projects-namespace
+          value: projects
     io.k8s.cli.setters.tenant-admin-group:
       x-k8s-cli:
         setter:

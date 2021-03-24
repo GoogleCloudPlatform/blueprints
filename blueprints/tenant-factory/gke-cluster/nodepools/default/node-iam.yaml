@@ -23,7 +23,7 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     name: platform-project-id # {"$kpt-set":"platform-project-id"}
-    namespace: projects
+    namespace: projects # {"$kpt-set":"projects-namespace"}
 ---
 # Allow fluentd to send metrics to StackDriver
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -41,7 +41,7 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     name: platform-project-id # {"$kpt-set":"platform-project-id"}
-    namespace: projects
+    namespace: projects # {"$kpt-set":"projects-namespace"}
 ---
 # Allow kubelet/docker/containerd to read all artifacts/images in the platform-project-id project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -59,4 +59,4 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     name: platform-project-id # {"$kpt-set":"platform-project-id"}
-    namespace: projects
+    namespace: projects # {"$kpt-set":"projects-namespace"}

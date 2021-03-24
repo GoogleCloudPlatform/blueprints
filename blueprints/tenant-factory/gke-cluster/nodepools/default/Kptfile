@@ -26,6 +26,11 @@ openAPI:
         setter:
           name: platform-project-id
           value: platform-project-id
+    io.k8s.cli.setters.projects-namespace:
+      x-k8s-cli:
+        setter:
+          name: projects-namespace
+          value: projects
     io.k8s.cli.setters.max-node-count:
       x-k8s-cli:
         type: integer

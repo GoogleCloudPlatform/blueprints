@@ -13,7 +13,7 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     name: platform-project-id # {"$kpt-set":"platform-project-id"}
-    namespace: projects
+    namespace: projects # {"$kpt-set":"projects-namespace"}
 ---
 # Grant GKE GSA in the platform project permission to use the Shared VPC
 apiVersion: orchestration.cnrm.cloud.google.com/v1alpha1
@@ -39,7 +39,7 @@ spec:
         apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
         kind: Project
         name: network-project-id # {"$kpt-set":"network-project-id"}
-        namespace: projects
+        namespace: projects # {"$kpt-set":"projects-namespace"}
 ---
 # Grant "Google APIs Service Agent" in the platform project permission to use the Shared VPC
 # https://cloud.google.com/iam/docs/service-accounts#google-managed
@@ -66,7 +66,7 @@ spec:
         apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
         kind: Project
         name: network-project-id # {"$kpt-set":"network-project-id"}
-        namespace: projects
+        namespace: projects # {"$kpt-set":"projects-namespace"}
 ---
 # Grant GKE GSA in the platform project permission to act as the "Google APIs Service Agent"
 apiVersion: orchestration.cnrm.cloud.google.com/v1alpha1
@@ -92,4 +92,4 @@ spec:
         apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
         kind: Project
         name: network-project-id # {"$kpt-set":"network-project-id"}
-        namespace: projects
+        namespace: projects # {"$kpt-set":"projects-namespace"}

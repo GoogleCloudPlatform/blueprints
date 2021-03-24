@@ -29,7 +29,7 @@ openAPI:
       x-k8s-cli:
         setter:
           name: admin-cluster-name
-          value: krmapihost-probe-1616510617
+          value: krmapihost-probe-1616587368
           isSet: true
     io.k8s.cli.setters.namespace:
       description: Namespace to store Git Ops pipeline components under

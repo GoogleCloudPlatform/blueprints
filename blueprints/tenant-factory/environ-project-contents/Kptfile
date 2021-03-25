@@ -112,30 +112,6 @@ openAPI:
           values:
           - marker: ${admin-project-id}
             ref: '#/definitions/io.k8s.cli.setters.admin-project-id'
-    io.k8s.cli.substitutions._subst-5:
-      x-k8s-cli:
-        substitution:
-          name: _subst-5
-          pattern: gke-${platform-project-id}-network-user
-          values:
-          - marker: ${platform-project-id}
-            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
-    io.k8s.cli.substitutions._subst-6:
-      x-k8s-cli:
-        substitution:
-          name: _subst-6
-          pattern: gcp-${platform-project-id}-network-user
-          values:
-          - marker: ${platform-project-id}
-            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
-    io.k8s.cli.substitutions._subst-8:
-      x-k8s-cli:
-        substitution:
-          name: _subst-8
-          pattern: gke-${platform-project-id}-service-agent-user
-          values:
-          - marker: ${platform-project-id}
-            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
     io.k8s.cli.substitutions._subst-9:
       x-k8s-cli:
         substitution:
@@ -173,6 +149,40 @@ openAPI:
         substitution:
           name: _subst-18
           pattern: serviceAccount:${platform-project-id}.svc.id.goog[config-management-system/importer]
+          values:
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
+    io.k8s.cli.substitutions.platform-project-ref:
+      x-k8s-cli:
+        substitution:
+          name: platform-project-ref
+          pattern: '{"namespace": "${projects-namespace}", "name": "${platform-project-id}"}'
+          values:
+          - marker: ${projects-namespace}
+            ref: '#/definitions/io.k8s.cli.setters.projects-namespace'
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
+    io.k8s.cli.substitutions.krm-container-network-user-name:
+      x-k8s-cli:
+        substitution:
+          name: krm-container-network-user-name
+          pattern: ${platform-project-id}-container-network-user
+          values:
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
+    io.k8s.cli.substitutions.krm-cloudservices-network-user-name:
+      x-k8s-cli:
+        substitution:
+          name: krm-cloudservices-network-user-name
+          pattern: ${platform-project-id}-cloudservices-network-user
+          values:
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
+    io.k8s.cli.substitutions.krm-container-cloudservices-user-name:
+      x-k8s-cli:
+        substitution:
+          name: krm-container-cloudservices-user-name
+          pattern: ${platform-project-id}-container-cloudservices-user
           values:
           - marker: ${platform-project-id}
             ref: '#/definitions/io.k8s.cli.setters.platform-project-id'

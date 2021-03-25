@@ -21,7 +21,7 @@ spec:
   substitutions:
     "_SOURCE_REPO": "source-repo" # {"$kpt-set":"source-repo"}
     "_DEPLOYMENT_REPO": "deployment-repo" # {"$kpt-set":"deployment-repo"}
-    "_ADMIN_CLUSTER_NAME": "krmapihost-landing-zone-cluster" # {"$kpt-set":"admin-cluster-name"}
+    "_ADMIN_CLUSTER_NAME": "krmapihost-landing-zone-cluster" # {"$kpt-set":"gke-cluster-name"}
   build:
     timeout: 600s
     step:

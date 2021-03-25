@@ -153,7 +153,7 @@ setup_git_ops() {
     kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline project-number "${PROJECT_NUMBER}"
     kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline source-repo "${SOURCE_REPO}"
     kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline deployment-repo "${DEPLOYMENT_REPO}"
-    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline admin-cluster-name "${ADMIN_CLUSTER_NAME_PREFIX}${CLUSTER_NAME}"
+    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline cluster-name "${CLUSTER_NAME}"
 
     echo "Creating GitOps pipeline..."
     kubectl apply --wait -f ${SOURCE_DIR}/csr-git-ops-pipeline/

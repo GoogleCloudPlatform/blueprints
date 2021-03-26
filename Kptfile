@@ -23,14 +23,21 @@ openAPI:
           name: deployment-repo
           value: yakima-deployment-repo
           isSet: true
-    io.k8s.cli.setters.admin-cluster-name:
-      description: Name of the Admin Service Cluster, to use as default cluster-name-selector
-        for ConfigSync
+    io.k8s.cli.setters.cluster-name:
+      description: Name of the admin cluster
       x-k8s-cli:
         setter:
-          name: admin-cluster-name
-          value: krmapihost-probe-1616673751
+          name: cluster-name
+          value: probe-1616760243
           isSet: true
+    io.k8s.cli.substitutions.gke-cluster-name:
+      x-k8s-cli:
+        substitution:
+          name: gke-cluster-name
+          pattern: krmapihost-${cluster-name}
+          values:
+          - marker: ${cluster-name}
+            ref: '#/definitions/io.k8s.cli.setters.cluster-name'
     io.k8s.cli.setters.namespace:
       description: Namespace to store Git Ops pipeline components under
       x-k8s-cli:
@@ -44,6 +51,7 @@ openAPI:
         setter:
           name: project-id
           value: blueprints-eap-testing
+          required: true
           isSet: true
     io.k8s.cli.substitutions.cloudbuild-sa:
       x-k8s-cli:
@@ -60,6 +68,7 @@ openAPI:
         setter:
           name: project-number
           value: "801006214208"
+          required: true
           isSet: true
     io.k8s.cli.substitutions.config-sync-sa-iam:
       x-k8s-cli:

@@ -10,7 +10,7 @@ CMD=kpt-gen-tenant
 
 REPO_ROOT=$(git rev-parse --show-toplevel)
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
-PKGPATH=https://source.cloud.google.com/yakima-eap/blueprints.git
+PKGPATH=https://source.developers.google.com/p/yakima-eap/r/blueprints.git
 GITCOOKIES="${HOME}/.gitcookies"
 
 function regen_creds() {

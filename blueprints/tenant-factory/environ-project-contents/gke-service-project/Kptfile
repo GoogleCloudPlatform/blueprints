@@ -1,0 +1,67 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: gke-service-project
+packageMetadata:
+  shortDescription: Resources required for using GKE in a Shared VPC
+openAPI:
+  definitions:
+    io.k8s.cli.setters.platform-project-id:
+      x-k8s-cli:
+        setter:
+          name: platform-project-id
+          value: platform-project-id
+    io.k8s.cli.setters.network-project-id:
+      x-k8s-cli:
+        setter:
+          name: network-project-id
+          value: network-project-id
+    io.k8s.cli.setters.projects-namespace:
+      x-k8s-cli:
+        setter:
+          name: projects-namespace
+          value: projects
+    io.k8s.cli.substitutions.network-service-container:
+      x-k8s-cli:
+        substitution:
+          name: network-service-container
+          pattern: ${network-project-id}-${platfrom-project-id}-container
+          values:
+          - marker: ${network-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.network-project-id'
+          - marker: ${platfrom-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platfrom-project-id'
+    io.k8s.cli.substitutions.platform-project-ref:
+      x-k8s-cli:
+        substitution:
+          name: platform-project-ref
+          pattern: '{"namespace": "${projects-namespace}", "name": "${platform-project-id}"}'
+          values:
+          - marker: ${projects-namespace}
+            ref: '#/definitions/io.k8s.cli.setters.projects-namespace'
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
+    io.k8s.cli.substitutions.krm-container-network-user-name:
+      x-k8s-cli:
+        substitution:
+          name: krm-container-network-user-name
+          pattern: ${platform-project-id}-container-network-user
+          values:
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
+    io.k8s.cli.substitutions.krm-cloudservices-network-user-name:
+      x-k8s-cli:
+        substitution:
+          name: krm-cloudservices-network-user-name
+          pattern: ${platform-project-id}-cloudservices-network-user
+          values:
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
+    io.k8s.cli.substitutions.krm-container-cloudservices-user-name:
+      x-k8s-cli:
+        substitution:
+          name: krm-container-cloudservices-user-name
+          pattern: ${platform-project-id}-container-cloudservices-user
+          values:
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'

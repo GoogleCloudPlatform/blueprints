@@ -1,0 +1,17 @@
+apiVersion: spanner.cnrm.cloud.google.com/v1beta1
+kind: SpannerInstance
+metadata:
+  name: example
+  namespace: service-project-id # {"$kpt-set":"service-project-id"}
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+spec: {}
+---
+apiVersion: spanner.cnrm.cloud.google.com/v1beta1
+kind: SpannerDatabase
+metadata:
+  name: example
+  namespace: service-project-id # {"$kpt-set":"service-project-id"}
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+spec: {}

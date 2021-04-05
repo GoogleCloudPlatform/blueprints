@@ -1,0 +1,29 @@
+# If builds break, this version may need to be pinned.
+ARG cloud_sdk_version=latest
+
+FROM golang:1.14 as build
+ENV CGO_ENABLED=0
+WORKDIR /go/src/
+# Copy in source and modules
+COPY go.mod .
+COPY go.sum .
+COPY main.go .
+COPY LICENSE .
+
+# Pull libs, copy licenses
+RUN go mod vendor
+COPY licensetool .
+RUN chmod +x ./licensetool
+RUN ./licensetool
+
+# Build function
+RUN go build -v -o /usr/local/bin/generate-services-function ./
+
+FROM alpine:latest
+COPY --from=build /go/src/LICENSE /go/src/LICENSE
+COPY --from=build /go/src/THIRD_PARTY_NOTICES/ THIRD_PARTY_NOTICES/
+COPY --from=build /go/src/MIRRORED_LIBRARY_SOURCE/ MIRRORED_LIBRARY_SOURCE/
+COPY --from=build /usr/local/bin/generate-services-function /usr/local/bin/generate-services-function
+COPY service-map.yaml /etc/generate-services-function/
+ENV GENERATE_SERVICES_MAP=/etc/generate-services-function/service-map.yaml
+CMD ["/usr/local/bin/generate-services-function"]

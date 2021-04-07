@@ -25,12 +25,12 @@ openAPI:
       x-k8s-cli:
         substitution:
           name: network-service-container
-          pattern: ${network-project-id}-${platfrom-project-id}-container
+          pattern: ${network-project-id}-${platform-project-id}-container
           values:
           - marker: ${network-project-id}
             ref: '#/definitions/io.k8s.cli.setters.network-project-id'
-          - marker: ${platfrom-project-id}
-            ref: '#/definitions/io.k8s.cli.setters.platfrom-project-id'
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
     io.k8s.cli.substitutions.platform-project-ref:
       x-k8s-cli:
         substitution:

@@ -21,13 +21,4 @@ spec:
         $subtree: environments
     - finance:
         $subtree: environments
----
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  annotations:
-    config.kubernetes.io/function: |
-      container:
-        image: gcr.io/yakima-eap/folder-ref:latest
-  name: folder-ref-kpt-fn
-  namespace: hierarchy # {"$kpt-set":"namespace"}
+

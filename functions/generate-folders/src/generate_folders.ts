@@ -267,9 +267,17 @@ function generateV1HierarchyTree(node: HierarchyNode, layers: string[], layerInd
  * @param namespace Namespace to generate the resource in.
  */
 function generateManifest(name: string, path: string[], parent: HierarchyNode, namespace?: string): KubernetesObject {
-  const annotationName = parent.kind == "Organization" ? 'cnrm.cloud.google.com/organization-id' : 'cnrm.cloud.google.com/folder-ref';
   // Parent name is the metadata name
   const parentName = path.join('.') || parent.name;
+  // Parent Ref
+  var ref = {}
+  // root node has no parent and both org/folder ref is external
+  if (path.length === 0) {
+    ref = parent.kind == "Organization" ? {organizationRef:{external:parentName}} : {folderRef:{external: parentName}}
+  }
+  else {
+    ref = {folderRef:{name: normalize(parentName)}}
+  }
 
   const config = {
     apiVersion: FolderList.apiVersion,
@@ -278,12 +286,10 @@ function generateManifest(name: string, path: string[], parent: HierarchyNode, n
       // TODO(jcwc): This only works up to 253 char (k8s name limit). Figure out
       //   how to handle the edge cases beyond the character limit.
       name: normalize([...path, name].join('.')),
-      annotations: {
-        [annotationName]: normalize(parentName)
-      },
     } as ObjectMeta,
     spec: {
-      displayName: name
+      displayName: name,
+      ...ref
     }
   };
 

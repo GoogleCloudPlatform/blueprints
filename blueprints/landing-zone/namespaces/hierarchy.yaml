@@ -38,6 +38,20 @@ spec:
     kind: IAMServiceAccount
     name: hierarchy-sa
 ---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: allow-resource-reference-from-hierarchy
+  namespace: hierarchy
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cnrm-viewer-landing-zone
+subjects:
+- kind: ServiceAccount
+  name: cnrm-controller-manager-projects
+  namespace: cnrm-system
+---
 apiVersion: v1
 kind: Namespace
 metadata:

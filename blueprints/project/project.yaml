@@ -3,7 +3,6 @@ kind: Project
 metadata:
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
-    cnrm.cloud.google.com/folder-ref: '{"namespace": "hierarchy", "name": "name.of.folder"}' # {"$kpt-set":"folder-ref"}
     config.kubernetes.io/function: |
       container:
         image: gcr.io/yakima-eap/folder-ref:latest
@@ -11,5 +10,8 @@ metadata:
   namespace: projects # {"$kpt-set":"projects-namespace"}
 spec:
   name: project-id # {"$kpt-set":"project-id"}
+  folderRef:
+    name: name.of.folder # {"$kpt-set":"folder-name"}
+    namespace: hierarchy # {"$kpt-set":"folder-namespace"}
   billingAccountRef:
     external: "AAAAAA-BBBBBB-CCCCCC" # {"$kpt-set":"billing-account-id"}

@@ -161,19 +161,26 @@ function getHierarchyConfig(children: any[], parents: string[], rootRef:string, 
  */
 function makeFolder(name: string, path: string[], rootRef:string, rootType:string): Folder {
   const isRoot = path.length === 0;
-  const annotationName = isRoot && rootType === "Organization" ? 'cnrm.cloud.google.com/organization-id' : 'cnrm.cloud.google.com/folder-ref';
+  const parent = isRoot ? rootRef : normalize(path.join('.'))
+  // Parent Ref
+  var ref = {}
+  // root node has no parent and both org/folder ref is external
+  if (isRoot) {
+    ref = rootType === "Organization" ? {organizationRef:{external:parent}} : {folderRef:{external:parent}}
+  }
+  else {
+    ref = {folderRef:{name:parent}}
+  }
 
   return {
     apiVersion: FolderList.apiVersion,
     kind: "Folder",
     metadata: {
       name: normalize([...path, name].join('.')),
-      annotations: {
-        [annotationName]: isRoot ? rootRef : normalize(path.join('.'))
-      }
     },
     spec: {
-      displayName: name
+      displayName: name,
+      ...ref
     }
   };
 }

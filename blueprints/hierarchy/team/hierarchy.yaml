@@ -1,4 +1,4 @@
-apiVersion: cft.dev/v1alpha1
+apiVersion: cft.dev/v1alpha2
 kind: ResourceHierarchy
 metadata:
   annotations:

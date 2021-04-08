@@ -99,7 +99,6 @@ func TestDNSNetworking(t *testing.T) {
 	networkingTest.Run(t)
 }
 
-
 // Tests vpc-service-controls packages using BlueprintTest helper
 func TestServiceControls(t *testing.T) {
 	p := GlobalTestParameters()
@@ -109,11 +108,13 @@ func TestServiceControls(t *testing.T) {
 	perimeterProjectID := fmt.Sprintf("test-vpcsc-%s", randSuffix)
 	vpcName := fmt.Sprintf("vpc-%s", randSuffix)
 	accessPolicyName := fmt.Sprintf("ap-%s", randSuffix)
+	// pre created folder within test org due to b/179907721
+	folderID := "412703028380"
 
 	networkingTest := helpers.BlueprintTest{
 		Name:            "vpc-service-controls blueprints can create respective  resources via Yakima",
 		TeardownCommand: fmt.Sprintf("../../scripts/reset_lz_blueprint.sh %s %s %s", p.Project, p.Org, p.BillingAccount),
-		SetupCommand:    fmt.Sprintf("../../scripts/setup_servicecontrols.sh %s %s %s %s %s %s %s", p.Org, randSuffix, perimeterProjectID, vpcName, accessPolicyName, p.BillingAccount, p.Project),
+		SetupCommand:    fmt.Sprintf("../../scripts/setup_servicecontrols.sh %s %s %s %s %s %s %s %s", p.Org, randSuffix, perimeterProjectID, vpcName, accessPolicyName, p.BillingAccount, p.Project, folderID),
 		KubernetesResourceList: []helpers.KubernetesResource{
 			helpers.NewKccResource(projectNamespace, "Project", perimeterProjectID),
 			helpers.NewKccResource(networkNamespace, "ComputeNetwork", vpcName),

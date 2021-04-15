@@ -5,23 +5,12 @@ metadata:
   name: pubsub-iam-policy
   namespace: my-namespace # {"$kpt-set":"namespace"}
 spec:
-  member:
-    resourceRef:
+  memberFrom:
+    logSinkRef:
       name: 123456789012-pubsubsink # {"$kpt-set":"log-sink-name"}
   role: roles/pubsub.publisher
   resourceRef:
     apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
     kind: PubSubTopic
     name: pubsub-logexport-dataset # {"$kpt-set":"topic-name"}
----
-# Kpt fn for performing orchestration of LogSink's Unique Writer Identity.
-# This is needed for the IAM Policy Member "resourceRef" field
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  annotations:
-    config.kubernetes.io/function: |
-      container:
-        image: gcr.io/yakima-eap/sink-policy:latest
-  name: log-sink-p4sa-binding-fn
-  namespace: my-namespace # {"$kpt-set":"namespace"}
+

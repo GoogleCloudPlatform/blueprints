@@ -15,7 +15,6 @@ openAPI:
           name: network-name
           value: network-name
     io.k8s.cli.setters.prefix:
-      type: string
       description: Subnetwork/NAT name prefix
       x-k8s-cli:
         setter:

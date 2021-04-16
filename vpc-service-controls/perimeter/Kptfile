@@ -23,7 +23,6 @@ openAPI:
           name: perimeter-name
           value: regionperimeter
     io.k8s.cli.setters.suffix:
-      type: string
       description: perimeter suffix
       x-k8s-cli:
         setter:

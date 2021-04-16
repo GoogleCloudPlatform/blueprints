@@ -28,7 +28,7 @@ openAPI:
       x-k8s-cli:
         setter:
           name: cluster-name
-          value: probe-1618315340
+          value: probe-1618536692
           isSet: true
     io.k8s.cli.substitutions.gke-cluster-name:
       x-k8s-cli:

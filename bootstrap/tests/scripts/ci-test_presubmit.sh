@@ -37,7 +37,6 @@ export ENABLE_KRMAPIHOSTING=false
 
 
 OLD_CLUSTERS=$(gcloud container clusters list --project ${PROJECT_ID} --format="get(name)")
-OLD_FW_RULES=$(gcloud compute firewall-rules list --project="${PROJECT_ID}" --filter="acp-cnrm-fw" --format="get(name)")
 # both sourcerepo and cloudbuild maybe disabled during a successful teardown
 if [ -n "$(gcloud services list --enabled --project="${PROJECT_ID}" --format="get(config.name)" --filter="config.name=sourcerepo.googleapis.com")" ]; then
   OLD_REPOS=$(gcloud source repos list --project="${PROJECT_ID}" --format="get(name)")
@@ -52,11 +51,6 @@ OLD_CONFIG_SYNC_SA=$(gcloud iam service-accounts list --project="${PROJECT_ID}" 
 if [ -n "${OLD_CLUSTERS}" ]; then
   echo "Deleting stale cluster(s): ${OLD_CLUSTERS}"
   gcloud container clusters delete ${OLD_CLUSTERS} --quiet --project ${PROJECT_ID} --region us-central1
-fi
-
-if [ -n "${OLD_FW_RULES}" ]; then
-  echo "Deleting stale firewall rule(s): ${OLD_FW_RULES}"
-  gcloud compute firewall-rules delete ${OLD_FW_RULES} --project="${PROJECT_ID}" --quiet
 fi
 
 if [ -n "${OLD_REPOS-}" ]; then

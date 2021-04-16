@@ -119,19 +119,6 @@ set_sa_permissions() {
         iam.gke.io/gcp-service-account="config-sync-sa@${PROJECT_ID}.iam.gserviceaccount.com"
 }
 
-# create explicit FW rule to allow communication btw hosted control plane and private nodes for webhook
-create_cnrm_fw() {
-    echo "Creating CNRM firewall (ALLOW tcp:9443)..."
-    # find target tags that existing GKE FW rules use
-    gke_target_tag=$(gcloud compute firewall-rules list --filter "name~^gke-${ADMIN_CLUSTER_NAME_PREFIX}${CLUSTER_NAME}" --format "value(targetTags)" --project="${PROJECT_ID}" --limit=1)
-    # create fw rule targeting nodes and allow ingress from MASTER_IPV4_CIDR
-    gcloud compute firewall-rules create "acp-cnrm-fw-${CLUSTER_NAME}" --action ALLOW --direction INGRESS --source-ranges "${MASTER_IPV4_CIDR}" --rules tcp:9443 --target-tags "${gke_target_tag}" --project="${PROJECT_ID}"
-}
-
-delete_cnrm_fw() {
-    echo "Deleting CNRM firewall..."
-    gcloud compute firewall-rules delete "acp-cnrm-fw-${CLUSTER_NAME}" --project="${PROJECT_ID}" --quiet
-}
 
 enable_services() {
     echo "Enabling iam.googleapis.com service..."
@@ -293,7 +280,6 @@ then
     remove_git_ops
     REMOVE_GIT_OPS_END_TIME="$(date -u +%s)"
 
-    delete_cnrm_fw
     delete_cluster
     if [ ${BENCHMARK} = 1 ]
     then
@@ -314,7 +300,6 @@ then
     create_cluster
     CREATE_CLUSTER_END_TIME="$(date -u +%s)"
 
-    create_cnrm_fw
     connect_to_cluster
     wait_for_components
     WAIT_FOR_COMPONENTS_END_TIME="$(date -u +%s)"

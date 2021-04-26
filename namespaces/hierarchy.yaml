@@ -46,7 +46,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: cnrm-viewer-landing-zone
+  name: cnrm-viewer
 subjects:
 - kind: ServiceAccount
   name: cnrm-controller-manager-projects

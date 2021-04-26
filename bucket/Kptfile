@@ -1,0 +1,43 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: bucket
+openAPI:
+  definitions:
+    io.k8s.cli.setters.name:
+      x-k8s-cli:
+        setter:
+          name: name
+          value: bucket
+          required: true
+      description: Bucket instance name
+    io.k8s.cli.setters.storage-class:
+      x-k8s-cli:
+        setter:
+          name: storage-class
+          value: standard
+      description: Bucket storage class
+    io.k8s.cli.substitutions.bucket-name:
+      x-k8s-cli:
+        substitution:
+          name: bucket-name
+          pattern: ${PROJECT_ID}-${NAME}
+          values:
+          - marker: ${PROJECT_ID}
+            ref: '#/definitions/io.k8s.cli.setters.project-id'
+          - marker: ${NAME}
+            ref: '#/definitions/io.k8s.cli.setters.name'
+    io.k8s.cli.setters.project-id:
+      x-k8s-cli:
+        setter:
+          name: project-id
+          value: $DEFAULT_PROJECT
+          required: true
+      description: Project ID for bucket instance
+    io.k8s.cli.setters.namespace: 
+      x-k8s-cli:
+        setter:
+          name: namespace
+          value: config-controller-system
+      description: Namespace name for pipeline resources
+

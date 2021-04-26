@@ -5,9 +5,8 @@ manage this project with Yakima.
 
 Contents:
 
-- `project.yaml` - contains project configuration.
-- `project-management.yaml` - contains configuration needed in order for
-  Yakima to manage resources within that project:
+- `project.yaml` - project config.
+- `project-management.yaml` - config to allow Yakima to manage project resources:
   - Google Service Account to use for editing resources in the project.
   - Policy binding for permissions for this Google Service Account.
   - Namespace within Yakima for resources in this project.
@@ -15,6 +14,9 @@ Contents:
     manespace with the Google Service Account.
   - Binding of the Google Service Account with the Kubernetes Service
     Account used by Config Connector controller.
+- `cnrm-cross-namespace.yaml` - config to allow Config Connector resources in the
+   new Yakima namespace for this project to reference other resources in the
+   networking and projects namespaces.
 
 ## Installation
 

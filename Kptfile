@@ -59,11 +59,6 @@ openAPI:
         setter:
           name: management-namespace
           value: yakima-system
-    io.k8s.cli.setters.cnrm-cluster-role:
-      x-k8s-cli:
-        setter:
-          name: cnrm-cluster-role
-          value: cnrm-viewer-landing-zone
     io.k8s.cli.substitutions.project-namespace:
       x-k8s-cli:
         substitution:

@@ -8,7 +8,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: cnrm-viewer-landing-zone # {"$kpt-set":"cnrm-cluster-role"}
+  name: cnrm-viewer
 subjects:
 - kind: ServiceAccount
   name: cnrm-controller-manager-project-id # {"$kpt-set":"cnrm-k8s-sa"}
@@ -24,7 +24,7 @@ metadata:
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
-  name: cnrm-viewer-landing-zone # {"$kpt-set":"cnrm-cluster-role"}
+  name: cnrm-viewer
 subjects:
 - kind: ServiceAccount
   name: cnrm-controller-manager-project-id # {"$kpt-set":"cnrm-k8s-sa"}

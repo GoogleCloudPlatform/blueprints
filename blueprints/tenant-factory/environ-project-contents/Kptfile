@@ -64,14 +64,6 @@ openAPI:
           values:
           - marker: ${platform-project-id}
             ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
-    io.k8s.cli.substitutions.platform-service-container:
-      x-k8s-cli:
-        substitution:
-          name: platform-service-container
-          pattern: ${platform-project-id}-container
-          values:
-          - marker: ${platform-project-id}
-            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
     io.k8s.cli.substitutions._subst-3:
       x-k8s-cli:
         substitution:

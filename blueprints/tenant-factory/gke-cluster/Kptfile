@@ -72,3 +72,8 @@ openAPI:
         setter:
           name: networking-namespace
           value: networking
+    io.k8s.cli.setters.projects-namespace:
+      x-k8s-cli:
+        setter:
+          name: projects-namespace
+          value: projects

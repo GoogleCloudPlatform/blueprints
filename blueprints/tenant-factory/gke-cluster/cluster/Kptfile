@@ -36,14 +36,6 @@ openAPI:
         setter:
           name: security-group
           value: gke-security-group@example.com
-    io.k8s.cli.substitutions.identity-namespace:
-      x-k8s-cli:
-        substitution:
-          name: identity-namespace
-          pattern: ${platform-project-id}.svc.id.goog
-          values:
-          - marker: ${platform-project-id}
-            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
     io.k8s.cli.setters.subnet-id:
       x-k8s-cli:
         setter:
@@ -60,3 +52,27 @@ openAPI:
         setter:
           name: networking-namespace
           value: networking
+    io.k8s.cli.setters.projects-namespace:
+      x-k8s-cli:
+        setter:
+          name: projects-namespace
+          value: projects
+    io.k8s.cli.substitutions.identity-namespace:
+      x-k8s-cli:
+        substitution:
+          name: identity-namespace
+          pattern: ${platform-project-id}.svc.id.goog
+          values:
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
+    io.k8s.cli.substitutions.platform-service-container:
+      x-k8s-cli:
+        substitution:
+          name: platform-service-container
+          # max k8s resource name length is 253 characters
+          pattern: ${platform-project-id}-${cluster-name}-container
+          values:
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
+          - marker: ${cluster-name}
+            ref: '#/definitions/io.k8s.cli.setters.cluster-name'

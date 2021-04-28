@@ -26,6 +26,11 @@ openAPI:
         setter:
           name: image-repo-admin-group
           value: example-admins@environblueprint.joonix.net
+    io.k8s.cli.setters.projects-namespace:
+      x-k8s-cli:
+        setter:
+          name: projects-namespace
+          value: projects
     io.k8s.cli.substitutions._subst-1:
       x-k8s-cli:
         substitution:
@@ -42,3 +47,14 @@ openAPI:
           values:
           - marker: ${image-repo-admin-group}
             ref: '#/definitions/io.k8s.cli.setters.image-repo-admin-group'
+    io.k8s.cli.substitutions.platform-service-artifactregistry:
+      x-k8s-cli:
+        substitution:
+          name: platform-service-artifactregistry
+          # max k8s resource name length is 253 characters
+          pattern: ${platform-project-id}-${image-repo-name}-artifactregistry
+          values:
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
+          - marker: ${image-repo-name}
+            ref: '#/definitions/io.k8s.cli.setters.image-repo-name'

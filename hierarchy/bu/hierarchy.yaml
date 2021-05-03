@@ -1,0 +1,37 @@
+apiVersion: cft.dev/v1alpha2
+kind: ResourceHierarchy
+metadata:
+  annotations:
+    config.k8s.io/function: |
+      container:
+        image: gcr.io/yakima-eap/generate-folders:latest
+    config.kubernetes.io/local-config: "true"
+  name: root-hierarchy
+  namespace: hierarchy # {"$kpt-set":"namespace"}
+spec:
+  parentRef:
+    external: "123456789012" # {"$kpt-set":"org-id"}
+  subtrees:
+    environments:
+    - dev
+    - prod
+  config:
+    - retail:
+      - shared:
+          $subtree: environments
+      - apps:
+          $subtree: environments
+    - financial:
+      - web:
+          $subtree: environments
+      - core-services:
+          $subtree: environments
+    - risk-management:
+      - core-service:
+          $subtree: environments
+      - data-and-analysis:
+          $subtree: environments
+    - commercial:
+      - ctrl-service:
+          $subtree: environments
+

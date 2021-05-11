@@ -3,6 +3,8 @@
   "version": "0.1.0",
   "scripts": {
     "prepare": "npm run build",
+    "lint": "tslint src/*.ts",
+    "fixlint": "tslint src/*.ts --fix",
     "build": "tsc",
     "watch": "tsc --watch",
     "clean": "rm -Rf node_modules/ dist/",
@@ -18,13 +20,15 @@
     "kpt-functions": "^0.14.0"
   },
   "devDependencies": {
-    "create-kpt-functions": "^0.17.0",
     "@types/jasmine": "^3.3.12",
     "@types/node": "^12.7.2",
+    "create-kpt-functions": "^0.17.0",
     "jasmine": "^3.4.0",
+    "js-yaml": "^4.0.0",
     "tslint": "^5.19.0",
-    "typescript": "^3.5.3",
-    "js-yaml": "^4.0.0"
+    "tslint-config-prettier": "^1.18.0",
+    "tslint-consistent-codestyle": "^1.16.0",
+    "typescript": "^3.5.3"
   },
   "kpt": {
     "docker_repo_base": "gcr.io/yakima-eap"

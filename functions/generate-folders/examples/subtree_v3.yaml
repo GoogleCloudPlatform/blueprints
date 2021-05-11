@@ -1,0 +1,25 @@
+apiVersion: blueprints.cloud.google.com/v1alpha3
+kind: ResourceHierarchy
+metadata:
+  name: test-simple
+spec:
+  parentRef:
+    kind: Organization
+    external: test-organization
+  subtrees:
+    teams:
+      - Team "One"
+      - Team_2
+    services:
+      - core:
+        - apps
+        - networking
+      - extra:
+        - devops
+  config:
+    - Dev:
+        $subtree: teams
+    - Prod:
+        $subtree: teams
+    - services:
+        $subtree: services

@@ -28,7 +28,7 @@ Well-formed YAML samples exist in this repo in the `hierarchy` folder, e.g. `sim
 # Cannot just pass the raw YAML files directly. Need to wrap with "items"
 apiVersion: v1
 items:
-- apiVersion: cft.dev/v1alpha2
+- apiVersion: blueprints.cloud.google.com/v1alpha3
   kind: ResourceHierarchy
   metadata:
     name: test-hierarchy

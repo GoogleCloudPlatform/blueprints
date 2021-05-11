@@ -81,5 +81,3 @@ spec:
               - config
               - parentRef
             # /ResourceHierarchySpec
-
-

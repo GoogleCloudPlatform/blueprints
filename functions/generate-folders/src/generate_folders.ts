@@ -1,5 +1,6 @@
 import {Configs, Result, KubernetesObject, kubernetesObjectResult} from 'kpt-functions';
-import {isResourceHierarchy, ResourceHierarchy} from './gen/dev.cft.v1alpha2';
+import {isResourceHierarchy as isV3ResourceHierarchy, ResourceHierarchy as V3ResourceHierarchy} from './gen/com.google.cloud.blueprints.v1alpha3';
+import {isResourceHierarchy as isV2ResourceHierarchy, ResourceHierarchy as V2ResourceHierarchy} from './gen/dev.cft.v1alpha2';
 import {isResourceHierarchy as isV1ResourceHierarchy, ResourceHierarchy as V1ResourceHierarchy} from './gen/dev.cft.v1alpha1';
 import {FolderList} from './gen/com.google.cloud.cnrm.resourcemanager.v1beta1';
 import {ObjectMeta} from 'kpt-functions/dist/src/gen/io.k8s.apimachinery.pkg.apis.meta.v1';
@@ -20,13 +21,14 @@ interface HierarchyNode {
  */
 export async function generateFolders(configs: Configs) {
   configs.get(isV1ResourceHierarchy).forEach((hierarchy) => {
+    configs.addResults(oldHierarchyWarning(hierarchy));
     const layers: string[] = hierarchy.spec.layers;
 
     // Root node is the organization
     const root: HierarchyNode = {
       children: [],
       kind: "Organization",
-      name: `${hierarchy.spec.organization}` // Annotation expects string type
+      name: `${hierarchy.spec.organization}`, // Annotation expects string type
     };
 
     // Represent results as a binary tree
@@ -40,7 +42,12 @@ export async function generateFolders(configs: Configs) {
       insertConfigs(root, configs);
     }
   });
-  configs.get(isResourceHierarchy).forEach((hierarchy) => {
+  // both v2 and v3 ResourceHierarchy generates the same folder hierarchy except v3 uses native KCC refs
+  [...configs.get(isV3ResourceHierarchy),...configs.get(isV2ResourceHierarchy)].forEach((hierarchy) => {
+    // if v2 add warning to upgrade
+    if (isV2ResourceHierarchy(hierarchy)){
+      configs.addResults(oldHierarchyWarning(hierarchy));
+    }
     if (hierarchy.spec.parentRef === undefined || hierarchy.spec.parentRef.external === undefined) {
       configs.addResults(badParentErrorResult(hierarchy));
       return;
@@ -50,7 +57,7 @@ export async function generateFolders(configs: Configs) {
       return;
     }
     try {
-      generateV2HierarchyTree(hierarchy, configs);
+      generateHierarchyTree(hierarchy, configs);
     } catch(e) {
       if (e instanceof MissingSubteeError) {
         configs.addResults(missingSubtreeErrorResult(e.message, hierarchy));
@@ -59,6 +66,19 @@ export async function generateFolders(configs: Configs) {
       }
     }
   });
+}
+
+/**
+ * Generate a warning for a v1/v2 hierarchy to upgrade to v3
+ * @param hierarchy The old hierarchy
+ */
+ export function oldHierarchyWarning(hierarchy: KubernetesObject): Result {
+  return kubernetesObjectResult(
+    `ResourceHierarchy ${hierarchy.metadata.name} references an older Resource Hierarchy version. Latest is v3.`,
+    hierarchy,
+    undefined,
+    "warn"
+  );
 }
 
 /**
@@ -116,25 +136,25 @@ class MissingSubteeError extends Error {
  * @param hierarchy The ResourceHierarchy to generate configs for
  * @param configs The Config list to insert folders into
  */
-function generateV2HierarchyTree(hierarchy: ResourceHierarchy, configs: Configs): Result | null {
+function generateHierarchyTree(hierarchy: V2ResourceHierarchy|V3ResourceHierarchy, configs: Configs): Result | undefined {
   const root: HierarchyNode = {
     children: [],
     kind: `${hierarchy.spec.parentRef.kind ?? "Organization"}`, // if no kind is specified, default to Organization
-    name: `${hierarchy.spec.parentRef.external}` // Annotation expects string type
+    name: `${hierarchy.spec.parentRef.external}`, // Annotation expects string type
   };
   const namespace = hierarchy.metadata.namespace;
 
-  var subtrees : { [key:string]:HierarchyNode; } = {};
+  const subtrees : { [key:string]:HierarchyNode; } = {};
 
   if (hierarchy.spec.subtrees !== undefined) {
     for (const name in hierarchy.spec.subtrees) {
       const node: HierarchyNode = {
         children: [],
         kind: "Subtree",
-        name: name
+        name,
       };
       const children = hierarchy.spec.subtrees[name];
-      const subtree = generateTree(node, <any[]>children, subtrees);
+      const subtree = generateTree(node, children as any[], subtrees);
       node.children = subtree.children;
       subtrees[name] = node;
     }
@@ -142,15 +162,15 @@ function generateV2HierarchyTree(hierarchy: ResourceHierarchy, configs: Configs)
 
   const tree = generateTree(root, hierarchy.spec.config, subtrees);
 
-  const generateConfigs = (node: HierarchyNode, path: Array<string>) => {
+  const generateConfigs = (node: HierarchyNode, path: string[]) => {
     for (const child of node.children) {
-      configs.insert(generateManifest(child.name, path, node, namespace));
+      configs.insert(generateManifest(child.name, path, node, namespace, isV3ResourceHierarchy(hierarchy)));
       generateConfigs(child, [...path, child.name]);
     }
-  }
+  };
 
   generateConfigs(tree, []);
-  return null;
+  return undefined;
 }
 
 /**
@@ -162,20 +182,20 @@ function generateV2HierarchyTree(hierarchy: ResourceHierarchy, configs: Configs)
  */
 function addChild(parent: HierarchyNode, child: any, subtrees: { [key:string]:HierarchyNode; }) {
   if (child === null) {
-    return
+    return;
   }
   if (typeof child === 'string') {
     parent.children.push({
       name: child,
-      children: []
+      children: [],
     });
     return;
   }
   if (typeof child === 'object') {
     const name = Object.keys(child)[0];
     const node: HierarchyNode = {
-      name: name,
-      children: []
+      name,
+      children: [],
     };
     const children = child[name];
     if (Array.isArray(children)) {
@@ -198,7 +218,7 @@ function addChild(parent: HierarchyNode, child: any, subtrees: { [key:string]:Hi
  * @param children Top-level children to attach on the root
  * @param subtrees A map of subtrees which can be referenced
  */
-function generateTree(root: HierarchyNode, children: Array<any>, subtrees: { [key:string]:HierarchyNode; }): HierarchyNode {
+function generateTree(root: HierarchyNode, children: any[], subtrees: { [key:string]:HierarchyNode; }): HierarchyNode {
   for (const child of children) {
     addChild(root, child, subtrees);
   }
@@ -218,17 +238,17 @@ function generateTree(root: HierarchyNode, children: Array<any>, subtrees: { [ke
  *  generate the unique name of the k8s resource.
  */
 function generateV1HierarchyTree(node: HierarchyNode, layers: string[], layerIndex: number,
-  hierarchy: V1ResourceHierarchy, path: string[]): Result | null {
+  hierarchy: V1ResourceHierarchy, path: string[]): Result | undefined {
 
   if (layerIndex >= layers.length) {
-    return null;
+    return undefined;
   }
 
   const layer = layers[layerIndex];
   const folders = hierarchy.spec.config[layer];
 
   // No layer config entry
-  if (folders == null) {
+  if (folders === undefined) {
     return {
       severity: 'error',
       message: `Layer "${layer}" has no corresponding entry config entry. Either
@@ -242,7 +262,7 @@ function generateV1HierarchyTree(node: HierarchyNode, layers: string[], layerInd
       name: folder,
       children: [],
       parent: node,
-      config: generateManifest(folder, path, node, hierarchy.metadata.namespace)
+      config: generateManifest(folder, path, node, hierarchy.metadata.namespace),
     };
 
     const errorResult = generateV1HierarchyTree(child, layers, layerIndex + 1, hierarchy, [...path, folder]);
@@ -254,7 +274,7 @@ function generateV1HierarchyTree(node: HierarchyNode, layers: string[], layerInd
     node.children.push(child);
   }
 
-  return null;
+  return undefined;
 }
 
 /**
@@ -266,18 +286,28 @@ function generateV1HierarchyTree(node: HierarchyNode, layers: string[], layerInd
  * @param parent The parent node of the current folder.
  * @param namespace Namespace to generate the resource in.
  */
-function generateManifest(name: string, path: string[], parent: HierarchyNode, namespace?: string): KubernetesObject {
+function generateManifest(name: string, path: string[], parent: HierarchyNode, namespace?: string, nativeRef = false): KubernetesObject {
   // Parent name is the metadata name
   const parentName = path.join('.') || parent.name;
-  // Parent Ref
-  var ref = {}
-  // root node has no parent and both org/folder ref is external
-  if (path.length === 0) {
-    ref = parent.kind == "Organization" ? {organizationRef:{external:parentName}} : {folderRef:{external: parentName}}
-  }
-  else {
-    ref = {folderRef:{name: normalize(parentName)}}
-  }
+
+  // hold annotationRef if any
+  let annotationRef = {};
+  // hold nativeRefs if any
+  let ref = {};
+
+  if (nativeRef) {
+    // root node has no parent and both org/folder ref is external
+    if (path.length === 0) {
+      ref = parent.kind === "Organization" ? {organizationRef:{external:parentName}} : {folderRef:{external: parentName}};
+    }
+    else {
+      ref = {folderRef:{name: normalize(parentName)}};
+    }
+  } else {
+    // generate annotation based ref
+    const annotationName = parent.kind === "Organization" ? 'cnrm.cloud.google.com/organization-id' : 'cnrm.cloud.google.com/folder-ref';
+    annotationRef = {annotations:{[annotationName] : normalize(parentName)}};
+}
 
   const config = {
     apiVersion: FolderList.apiVersion,
@@ -286,15 +316,16 @@ function generateManifest(name: string, path: string[], parent: HierarchyNode, n
       // TODO(jcwc): This only works up to 253 char (k8s name limit). Figure out
       //   how to handle the edge cases beyond the character limit.
       name: normalize([...path, name].join('.')),
+      ...annotationRef,
     } as ObjectMeta,
     spec: {
       displayName: name,
-      ...ref
-    }
+      ...ref,
+    },
   };
 
   // Add namespace if provided
-  if (namespace != null) {
+  if (namespace !== undefined) {
     config.metadata.namespace = namespace;
   }
 
@@ -322,9 +353,9 @@ export function normalize(name: string) {
  * @param configs In-memory document store for Kubernetes objects
  */
 function insertConfigs(root: HierarchyNode, configs: Configs): void {
-  if (root == null) return;
+  if (root === undefined) return;
 
-  if (root.config != null) {
+  if (root.config !== undefined) {
     configs.insert(root.config);
   }
 
@@ -346,7 +377,7 @@ Example configuration:
 #         [org: 123456789012]
 #           [dev]    [prod]
 # [retail, finance] [retail, finance]
-apiVersion: cft.dev/v1alpha2
+apiVersion: blueprints.cloud.google.com/v1alpha3
 kind: ResourceHierarchy
 metadata:
   annotations:

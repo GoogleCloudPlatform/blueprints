@@ -1,38 +1,39 @@
 # ConfigSync GCP ServiceAccount (GSA)
+# This GSA can be used to grant ConfigSync additional permissions with IAMPolicyMember
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
-  name: configsync
+  name: configsync-cluster-name # {"$kpt-set":"configsync-gsa-name"}
   namespace: platform-project-id # {"$kpt-set":"platform-project-id"}
 spec:
-  displayName: ConfigSync in platform-project-id # {"$kpt-set":"_subst-3"}
+  displayName: configsync-cluster-name # {"$kpt-set":"configsync-gsa-name"}
 ---
 # Allow ConfigSync Kubernetes ServiceAccount (KSA) to use the ConfigSync GSA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: configsync
+  name: configsync-cluster-name # {"$kpt-set":"configsync-gsa-name"}
   namespace: platform-project-id # {"$kpt-set":"platform-project-id"}
 spec:
-  member: serviceAccount:platform-project-id.svc.id.goog[config-management-system/importer] # {"$kpt-set":"_subst-18"}
+  member: serviceAccount:platform-project-id.svc.id.goog[config-management-system/importer] # {"$kpt-set":"configsync-importer-iam-member"}
   role: roles/iam.workloadIdentityUser
   resourceRef:
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
-    name: configsync
+    name: configsync-cluster-name # {"$kpt-set":"configsync-gsa-name"}
 ---
 # Allow ConfigSync GSA to read from CSR repos in the admin project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: configsync-platform-project-id-source-reader-permissions # {"$kpt-set":"_subst-13"}
+  name: source-reader-configsync-cluster-name-platform-project-id # {"$kpt-set":"krm-source-reader-policy-name"}
   # In yakima-system because only the yakima GSA has permission to edit IAM in the admin project.
   # Owner on the admin project is granted by the Landing zones bootstrap script.
   namespace: yakima-system # {"$kpt-set":"management-namespace"}
 spec:
-  member: "serviceAccount:configsync@platform-project-id.iam.gserviceaccount.com" # {"$kpt-set":"_subst-15"}
+  member: "serviceAccount:configsync-cluster-name@platform-project-id.iam.gserviceaccount.com" # {"$kpt-set":"configsync-gsa-iam-member"}
   role: roles/source.reader
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: projects/admin-project-id # {"$kpt-set":"_subst-4"}
+    external: projects/admin-project-id # {"$kpt-set":"external-admin-project-ref"}

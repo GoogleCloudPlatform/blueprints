@@ -1,0 +1,10 @@
+apiVersion: config.cloud.google.com/v1alpha1
+kind: HubMembership
+metadata:
+  name: example-us-east4 # {"$kpt-set":"cluster-name"}
+  namespace: platform-project-id # {"$kpt-set":"platform-project-id"}
+spec:
+  clusterRef:
+    apiGroup: container.cnrm.cloud.google.com
+    kind: ContainerCluster
+    name: example-us-east4 # {"$kpt-set":"cluster-name"}

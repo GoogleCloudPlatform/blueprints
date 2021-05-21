@@ -1,0 +1,124 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: gke-cluster-config-management
+packageMetadata:
+  shortDescription: Anthos Config Management for a GKE cluster pulling from a CSR repo
+openAPI:
+  definitions:
+    io.k8s.cli.setters.cluster-name:
+      x-k8s-cli:
+        setter:
+          name: cluster-name
+          value: example-us-west4
+    io.k8s.cli.setters.platform-project-id:
+      x-k8s-cli:
+        setter:
+          name: platform-project-id
+          value: platform-project-id
+    io.k8s.cli.setters.configsync-repo-name:
+      x-k8s-cli:
+        setter:
+          name: configsync-repo-name
+          value: deployment-repo
+    io.k8s.cli.setters.configsync-branch:
+      x-k8s-cli:
+        setter:
+          name: configsync-branch
+          value: main
+    io.k8s.cli.setters.configsync-revision:
+      x-k8s-cli:
+        setter:
+          name: configsync-revision
+          value: HEAD
+    io.k8s.cli.setters.configsync-dir:
+      x-k8s-cli:
+        setter:
+          name: configsync-dir
+          value: config
+    io.k8s.cli.setters.management-namespace:
+      x-k8s-cli:
+        setter:
+          name: management-namespace
+          value: yakima-system
+    io.k8s.cli.setters.admin-project-id:
+      x-k8s-cli:
+        setter:
+          name: admin-project-id
+          value: admin-project-id
+    io.k8s.cli.substitutions.configsync-repo-url:
+      x-k8s-cli:
+        substitution:
+          name: platform-service-gkehub
+          pattern: https://source.developers.google.com/p/${admin-project-id}/r/${configsync-repo-name}
+          values:
+          - marker: ${admin-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.admin-project-id'
+          - marker: ${configsync-repo-name}
+            ref: '#/definitions/io.k8s.cli.setters.configsync-repo-name'
+    io.k8s.cli.substitutions.platform-service-anthos:
+      x-k8s-cli:
+        substitution:
+          name: platform-service-anthos
+          # max k8s resource name length is 253 characters
+          pattern: ${platform-project-id}-${cluster-name}-anthos
+          values:
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
+          - marker: ${cluster-name}
+            ref: '#/definitions/io.k8s.cli.setters.cluster-name'
+    io.k8s.cli.substitutions.platform-service-acm:
+      x-k8s-cli:
+        substitution:
+          name: platform-service-acm
+          # max k8s resource name length is 253 characters
+          pattern: ${platform-project-id}-${cluster-name}-acm
+          values:
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
+          - marker: ${cluster-name}
+            ref: '#/definitions/io.k8s.cli.setters.cluster-name'
+    io.k8s.cli.substitutions.configsync-gsa-name:
+      x-k8s-cli:
+        substitution:
+          name: configsync-gsa-name
+          pattern: configsync-${cluster-name}
+          values:
+          - marker: ${cluster-name}
+            ref: '#/definitions/io.k8s.cli.setters.cluster-name'
+    io.k8s.cli.substitutions.configsync-importer-iam-member:
+      x-k8s-cli:
+        substitution:
+          name: configsync-importer-iam-member
+          pattern: serviceAccount:${platform-project-id}.svc.id.goog[config-management-system/importer]
+          values:
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
+    io.k8s.cli.substitutions.configsync-gsa-iam-member:
+      x-k8s-cli:
+        substitution:
+          name: configsync-gsa-iam-member
+          pattern: serviceAccount:${configsync-gsa-name}@${platform-project-id}.iam.gserviceaccount.com
+          values:
+          - marker: ${configsync-gsa-name}
+            ref: '#/definitions/io.k8s.cli.substitutions.configsync-gsa-name'
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
+    io.k8s.cli.substitutions.external-admin-project-ref:
+      x-k8s-cli:
+        substitution:
+          name: external-admin-project-ref
+          pattern: projects/${admin-project-id}
+          values:
+          - marker: ${admin-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.admin-project-id'
+    io.k8s.cli.substitutions.krm-source-reader-policy-name:
+      x-k8s-cli:
+        substitution:
+          name: krm-source-reader-policy-name
+          pattern: source-reader-${configsync-gsa-name}-${platform-project-id}
+          values:
+          - marker: ${configsync-gsa-name}
+            ref: '#/definitions/io.k8s.cli.substitutions.configsync-gsa-name'
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'

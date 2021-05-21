@@ -1,0 +1,25 @@
+# Enable the GKE Hub service in the platform project
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: abandon
+    cnrm.cloud.google.com/project-id: platform-project-id # {"$kpt-set":"platform-project-id"}
+  # unique name to avoid overlap with other platform projects
+  name: platform-project-id-cluster-name-gkehub # {"$kpt-set":"platform-service-gkehub"}
+  namespace: projects # {"$kpt-set":"projects-namespace"}
+spec:
+  resourceID: gkehub.googleapis.com
+---
+# Enable the GKE Connect service in the platform project
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: abandon
+    cnrm.cloud.google.com/project-id: platform-project-id # {"$kpt-set":"platform-project-id"}
+  # unique name to avoid overlap with other platform projects
+  name: platform-project-id-cluster-name-gkeconnect # {"$kpt-set":"platform-service-gkeconnect"}
+  namespace: projects # {"$kpt-set":"projects-namespace"}
+spec:
+  resourceID: gkeconnect.googleapis.com

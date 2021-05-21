@@ -1,0 +1,46 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: gke-cluster-hub
+packageMetadata:
+  shortDescription: Hub Membership for a GKE cluster
+openAPI:
+  definitions:
+    io.k8s.cli.setters.cluster-name:
+      x-k8s-cli:
+        setter:
+          name: cluster-name
+          value: example-us-west4
+    io.k8s.cli.setters.platform-project-id:
+      x-k8s-cli:
+        setter:
+          name: platform-project-id
+          value: platform-project-id
+    io.k8s.cli.setters.projects-namespace:
+      x-k8s-cli:
+        setter:
+          name: projects-namespace
+          value: projects
+    io.k8s.cli.substitutions.platform-service-gkehub:
+      x-k8s-cli:
+        substitution:
+          name: platform-service-gkehub
+          # max k8s resource name length is 253 characters
+          pattern: ${platform-project-id}-${cluster-name}-gkehub
+          values:
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
+          - marker: ${cluster-name}
+            ref: '#/definitions/io.k8s.cli.setters.cluster-name'
+    io.k8s.cli.substitutions.platform-service-gkeconnect:
+      x-k8s-cli:
+        substitution:
+          name: platform-service-gkeconnect
+          # max k8s resource name length is 253 characters
+          pattern: ${platform-project-id}-${cluster-name}-gkeconnect
+          values:
+          - marker: ${platform-project-id}
+            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
+          - marker: ${cluster-name}
+            ref: '#/definitions/io.k8s.cli.setters.cluster-name'
+

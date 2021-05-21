@@ -77,3 +77,13 @@ openAPI:
         setter:
           name: projects-namespace
           value: projects
+    io.k8s.cli.setters.management-namespace:
+      x-k8s-cli:
+        setter:
+          name: management-namespace
+          value: yakima-system
+    io.k8s.cli.setters.admin-project-id:
+      x-k8s-cli:
+        setter:
+          name: admin-project-id
+          value: admin-project-id

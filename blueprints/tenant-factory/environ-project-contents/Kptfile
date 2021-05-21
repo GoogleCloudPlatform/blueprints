@@ -64,22 +64,6 @@ openAPI:
           values:
           - marker: ${platform-project-id}
             ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
-    io.k8s.cli.substitutions._subst-3:
-      x-k8s-cli:
-        substitution:
-          name: _subst-3
-          pattern: ConfigSync in ${platform-project-id}
-          values:
-          - marker: ${platform-project-id}
-            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
-    io.k8s.cli.substitutions._subst-4:
-      x-k8s-cli:
-        substitution:
-          name: _subst-4
-          pattern: projects/${admin-project-id}
-          values:
-          - marker: ${admin-project-id}
-            ref: '#/definitions/io.k8s.cli.setters.admin-project-id'
     io.k8s.cli.substitutions._subst-9:
       x-k8s-cli:
         substitution:
@@ -93,30 +77,6 @@ openAPI:
         substitution:
           name: _subst-12
           pattern: gcp-org-admins-${platform-project-id}-owner-permissions
-          values:
-          - marker: ${platform-project-id}
-            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
-    io.k8s.cli.substitutions._subst-13:
-      x-k8s-cli:
-        substitution:
-          name: _subst-13
-          pattern: configsync-${platform-project-id}-source-reader-permissions
-          values:
-          - marker: ${platform-project-id}
-            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
-    io.k8s.cli.substitutions._subst-15:
-      x-k8s-cli:
-        substitution:
-          name: _subst-15
-          pattern: serviceAccount:configsync@${platform-project-id}.iam.gserviceaccount.com
-          values:
-          - marker: ${platform-project-id}
-            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
-    io.k8s.cli.substitutions._subst-18:
-      x-k8s-cli:
-        substitution:
-          name: _subst-18
-          pattern: serviceAccount:${platform-project-id}.svc.id.goog[config-management-system/importer]
           values:
           - marker: ${platform-project-id}
             ref: '#/definitions/io.k8s.cli.setters.platform-project-id'

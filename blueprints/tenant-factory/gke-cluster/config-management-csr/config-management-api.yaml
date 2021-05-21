@@ -1,0 +1,26 @@
+# Enable the Anthos service in the platform project
+# Anthos is required to use the Cloud Console Anthos section, but not to use Hub or ACM via API/CLI
+# apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+# kind: Service
+# metadata:
+#   annotations:
+#     cnrm.cloud.google.com/deletion-policy: abandon
+#     cnrm.cloud.google.com/project-id: platform-project-id # {"$kpt-set":"platform-project-id"}
+#   # unique name to avoid overlap with other platform projects
+#   name: platform-project-id-cluster-name-anthos # {"$kpt-set":"platform-service-anthos"}
+#   namespace: projects # {"$kpt-set":"projects-namespace"}
+# spec:
+#   resourceID: anthos.googleapis.com
+---
+# Enable the Anthos Config Management service in the platform project
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: abandon
+    cnrm.cloud.google.com/project-id: platform-project-id # {"$kpt-set":"platform-project-id"}
+  # unique name to avoid overlap with other platform projects
+  name: platform-project-id-cluster-name-acm # {"$kpt-set":"platform-service-acm"}
+  namespace: projects # {"$kpt-set":"projects-namespace"}
+spec:
+  resourceID: anthosconfigmanagement.googleapis.com

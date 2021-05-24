@@ -74,7 +74,7 @@ export async function generateFolders(configs: Configs) {
  */
  export function oldHierarchyWarning(hierarchy: KubernetesObject): Result {
   return kubernetesObjectResult(
-    `ResourceHierarchy ${hierarchy.metadata.name} references an older Resource Hierarchy version. Latest is v3.`,
+    `ResourceHierarchy ${hierarchy.metadata.name} references an older Resource Hierarchy GroupVersion. Latest GroupVersion is blueprints.cloud.google.com/v1alpha3.`,
     hierarchy,
     undefined,
     "warn"

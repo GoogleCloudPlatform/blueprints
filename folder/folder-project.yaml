@@ -1,0 +1,30 @@
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Folder
+metadata:
+  annotations:
+  labels:
+    availability: "dev"
+  name: folder-name # {"$ref":"#/definitions/io.k8s.cli.substitutions.folder-name"}
+  namespace: config-controller-system # {"$kpt-set":"namespace"}
+spec:
+  displayName: folder-name # {"$ref":"#/definitions/io.k8s.cli.substitutions.folder-name"}
+  folderRef:
+    # Folder ID (can be in a different organization) where service-[PROJECT_NUMBER]@gcp-sa-[PREVIEW_PRODUCT].iam.gserviceaccount.com
+    # needs to have the IAM role binding of Folder Creator, Folder Editor, Project Creator, Project Deleter
+    external: parent-folder-id # {"$kpt-set":"folder-id"}
+---
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: Project
+metadata:
+  annotations:
+    cnrm.cloud.google.com/auto-create-network: "true"
+  labels:
+    availability: "dev"
+  name: project-id-in-folder # {"$kpt-set":"project-id-in-folder"}
+  namespace: config-controller-system # {"$kpt-set":"namespace"}
+spec:
+  name: project-id-in-folder # {"$kpt-set":"project-id-in-folder"}
+  folderRef:
+    name: folder-name # {"$ref":"#/definitions/io.k8s.cli.substitutions.folder-name"}
+  billingAccountRef:
+    external: "billing-account-id" # {"$kpt-set":"billing-acct-id"}

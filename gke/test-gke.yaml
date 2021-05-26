@@ -1,0 +1,21 @@
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerCluster
+metadata:
+  namespace: config-controller-system # {"$kpt-set":"namespace"}
+  labels:
+    availability: dev
+    target-audience: development
+  name: blueprints-project-gke # {"$ref":"#/definitions/io.k8s.cli.substitutions.gke-name"}
+  annotations:
+    cnrm.cloud.google.com/project-id: blueprints-project # {"$kpt-set":"project-id"}
+spec:
+  description: A GKE cluster confined to one zone configured for development.
+  location: us-central1-f
+  initialNodeCount: 1
+  addonsConfig:
+    gcePersistentDiskCsiDriverConfig:
+      enabled: true
+    horizontalPodAutoscaling:
+      disabled: true
+    httpLoadBalancing:
+      disabled: true

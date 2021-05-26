@@ -1,0 +1,48 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: folder
+openAPI:
+  definitions:
+    io.k8s.cli.setters.name:
+      x-k8s-cli:
+        setter:
+          name: name
+          value: ${FOLDER_NAME}
+          required: true
+      description: folder name
+    io.k8s.cli.substitutions.folder-name:
+      x-k8s-cli:
+        substitution:
+          name: folder-name
+          pattern: ${NAME}
+          values:
+          - marker: ${NAME}
+            ref: '#/definitions/io.k8s.cli.setters.name'
+    io.k8s.cli.setters.project-id-in-folder:
+      x-k8s-cli:
+        setter:
+          name: project-id-in-folder
+          value: ${PROJECT_ID}
+          required: true
+      description: project ID
+    io.k8s.cli.setters.folder-id:
+      x-k8s-cli:
+        setter:
+          name: folder-id
+          value: "${FOLDER_ID}"
+          required: true
+      description: parent folder ID
+    io.k8s.cli.setters.billing-acct-id:
+      x-k8s-cli:
+        setter:
+          name: billing-acct-id
+          value: "${BILLING_ACCOUNT_ID}"
+          required: true
+      description: parent folder ID
+    io.k8s.cli.setters.namespace:
+      x-k8s-cli:
+        setter:
+          name: namespace
+          value: config-controller-system
+      description: Namespace name for pipeline resources

@@ -1,0 +1,17 @@
+# Configure Anthos Config Management on Config Controller
+# Enable and configure Config Sync to watch a CSR repository.
+apiVersion: configmanagement.gke.io/v1
+kind: ConfigManagement
+metadata:
+  name: config-management
+spec:
+  enableMultiRepo: false
+  clusterName: cluster-name # {"$kpt-set":"cluster-name"}
+  git:
+    policyDir: config # {"$kpt-set":"configsync-dir"}
+    gcpServiceAccountEmail: sync-cluster-name@project-id.iam.gserviceaccount.com # {"$kpt-set":"configsync-gsa-email"}
+    secretType: gcpserviceaccount
+    syncBranch: main
+    syncRevision: HEAD
+    syncRepo: https://source.developers.google.com/p/project-id/r/deployment-repo # {"$kpt-set":"configsync-repo-url"}
+  sourceFormat: unstructured

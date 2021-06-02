@@ -8,7 +8,7 @@ metadata:
   name: source-repo-cicd-trigger # {"$kpt-set":"trigger-name"}
   namespace: config-control # {"$kpt-set":"namespace"}
   annotations:
-    cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   description: Cloud Build Trigger for building source (DRY) repository pushes. This
     runs all user defined kpt fns applies a blast radius analysis and pushes to the
@@ -21,7 +21,7 @@ spec:
   substitutions:
     "_SOURCE_REPO": "source-repo" # {"$kpt-set":"source-repo"}
     "_DEPLOYMENT_REPO": "deployment-repo" # {"$kpt-set":"deployment-repo"}
-    "_ADMIN_CLUSTER_NAME": "krmapihost-landing-zone-cluster" # {"$kpt-set":"gke-cluster-name"}
+    "_ADMIN_CLUSTER_NAME": "cluster-name" # {"$kpt-set":"cluster-name"}
   build:
     timeout: 600s
     step:

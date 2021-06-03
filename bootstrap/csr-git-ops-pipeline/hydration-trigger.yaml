@@ -6,7 +6,7 @@ apiVersion: cloudbuild.cnrm.cloud.google.com/v1beta1
 kind: CloudBuildTrigger
 metadata:
   name: source-repo-cicd-trigger # {"$kpt-set":"trigger-name"}
-  namespace: yakima-system # {"$kpt-set":"namespace"}
+  namespace: config-control # {"$kpt-set":"namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
 spec:

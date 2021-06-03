@@ -3,7 +3,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: deployment-repo-cloudbuild-write
-  namespace: yakima-system # {"$kpt-set":"namespace"}
+  namespace: config-control # {"$kpt-set":"namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
 spec:
@@ -19,7 +19,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: source-repo-cloudbuild-read
-  namespace: yakima-system # {"$kpt-set":"namespace"}
+  namespace: config-control # {"$kpt-set":"namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
 spec:
@@ -35,7 +35,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
   name: config-sync-sa
-  namespace: yakima-system # {"$kpt-set":"namespace"}
+  namespace: config-control # {"$kpt-set":"namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
 spec:
@@ -46,7 +46,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: allow-configsync-sa-read-csr
-  namespace: yakima-system # {"$kpt-set":"namespace"}
+  namespace: config-control # {"$kpt-set":"namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
 spec:
@@ -62,7 +62,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: configsync-sa-workload-identity-binding
-  namespace: yakima-system # {"$kpt-set":"namespace"}
+  namespace: config-control # {"$kpt-set":"namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
 spec:

@@ -61,7 +61,7 @@ openAPI:
       x-k8s-cli:
         setter:
           name: management-namespace
-          value: yakima-system
+          value: config-control
     io.k8s.cli.substitutions.hierarchy-sa-ref:
       x-k8s-cli:
         substitution:

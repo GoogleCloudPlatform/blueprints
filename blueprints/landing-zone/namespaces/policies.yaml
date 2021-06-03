@@ -2,7 +2,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
   name: policies-sa
-  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
@@ -12,7 +12,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: policies-sa-orgpolicyadmin-permissions
-  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
@@ -27,7 +27,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: policies-sa-workload-identity-binding
-  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
@@ -52,4 +52,3 @@ metadata:
   namespace: policies
 spec:
   googleServiceAccount: policies-sa@management-project-id.iam.gserviceaccount.com # {"$kpt-set":"policies-sa-email"}
-

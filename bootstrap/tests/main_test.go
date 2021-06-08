@@ -23,7 +23,7 @@ func GlobalTestParameters() helpers.Parameters {
 		SourceRepo:        "yakima-source-repo",
 		DeploymentRepo:    "yakima-deployment-repo",
 		CloudBuildTrigger: "yakima-source-repo-cicd-trigger",
-		Namespace:         "yakima-system",
+		Namespace:         "config-control",
 		Cluster:           fmt.Sprintf("probe-%d", timestamp),
 		Region:            "us-central1",
 		Org:               org,

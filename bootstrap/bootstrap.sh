@@ -23,19 +23,14 @@ enable_krmapi() {
 
 create_cluster() {
     echo "Creating admin cluster..."
-    gcloud alpha admin-service-cluster instances create "${CLUSTER_NAME}" \
+    gcloud alpha anthos config controller create "${CLUSTER_NAME}" \
         --location "${CLUSTER_REGION}" \
-        --bundles "Yakima" \
-        --project "${PROJECT_ID}" \
-        --git-sync-repo "https://source.developers.google.com/p/${PROJECT_ID}/r/${DEPLOYMENT_REPO}" \
-        --git-branch "main" \
-        --git-secret-type "gcenode" \
-        --git-policy-dir "config"
+        --project "${PROJECT_ID}"
 }
 
 delete_cluster() {
     echo "Deleting admin cluster..."
-    gcloud alpha admin-service-cluster instances delete "${CLUSTER_NAME}" \
+    gcloud alpha anthos config controller delete "${CLUSTER_NAME}" \
         --location "${CLUSTER_REGION}" \
         --project "${PROJECT_ID}" \
         --quiet
@@ -80,13 +75,6 @@ wait_for_components() {
     echo "Waiting for Config Connector CRDs..."
     kubectl_wait --for=condition=established crd/configconnectors.core.cnrm.cloud.google.com
 
-    echo "Waiting for Config Sync..."
-    until kubectl describe serviceaccount/importer -n config-management-system 2> /dev/null
-    do
-        echo "Retrying..."
-        sleep 5
-    done
-
     echo "Waiting for Config Connector..."
     until [[ "$(kubectl get configconnector configconnector.core.cnrm.cloud.google.com -o jsonpath='{.status.healthy}')" == "true" ]]
     do
@@ -97,9 +85,23 @@ wait_for_components() {
     done
 }
 
-set_sa_permissions() {
+wait_for_configsync() {
+    if [ ${SKIP_GIT_OPS} = 1 ]
+    then
+        return
+    fi
+
+    echo "Waiting for Config Sync..."
+    until kubectl describe serviceaccount/importer -n config-management-system 2> /dev/null
+    do
+        echo "Retrying..."
+        sleep 5
+    done
+}
+
+set_kcc_sa_permissions() {
     echo "Looking up Config Connector service account..."
-    until SA_EMAIL="$(kubectl get ConfigConnectorContext -n yakima-system -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
+    until SA_EMAIL="$(kubectl get ConfigConnectorContext -n config-control -o jsonpath='{.items[0].spec.googleServiceAccount}' 2> /dev/null)"
     do
         echo "Retrying..."
         sleep 5
@@ -110,15 +112,7 @@ set_sa_permissions() {
         --member "serviceAccount:${SA_EMAIL}" \
         --role "roles/owner" \
         --project "${PROJECT_ID}"
-
-    echo "Configuring Config Connector workload identity..."
-    # Set up a workload identity binding between the Config Sync importer
-    # Kubernetes service account and the GCP service account that will be
-    # created by the csr-git-ops-pipeline blueprint.
-    kubectl annotate serviceaccount/importer -n config-management-system \
-        iam.gke.io/gcp-service-account="config-sync-sa@${PROJECT_ID}.iam.gserviceaccount.com"
 }
-
 
 enable_services() {
     echo "Enabling iam.googleapis.com service..."
@@ -135,7 +129,7 @@ setup_git_ops() {
     fi
 
     echo "Configuring GitOps pipeline..."
-    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline namespace "yakima-system"
+    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline namespace "config-control"
     kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline project-id "${PROJECT_ID}"
     kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline project-number "${PROJECT_NUMBER}"
     kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline source-repo "${SOURCE_REPO}"
@@ -304,11 +298,14 @@ then
     wait_for_components
     WAIT_FOR_COMPONENTS_END_TIME="$(date -u +%s)"
 
-    set_sa_permissions
+    set_kcc_sa_permissions
     enable_services
     ENABLE_SERVICES_END_TIME="$(date -u +%s)"
 
     setup_git_ops
+    SETUP_GIT_OPS_END_TIME="$(date -u +%s)"
+
+    wait_for_configsync
 
     if [ ${BENCHMARK} = 1 ]
     then
@@ -317,7 +314,8 @@ then
       echo "Cluster creation elapsed time: $(($CREATE_CLUSTER_END_TIME-$ENABLEMENT_END_TIME))s"
       echo "Wait for components elapsed time: $(($WAIT_FOR_COMPONENTS_END_TIME-$CREATE_CLUSTER_END_TIME))s"
       echo "Enable services elapsed time: $(($ENABLE_SERVICES_END_TIME-$WAIT_FOR_COMPONENTS_END_TIME))s"
-      echo "Set up git ops elapsed time: $(($END_TIME-$ENABLE_SERVICES_END_TIME))s"
+      echo "Set up git ops elapsed time: $(($SETUP_GIT_OPS_END_TIME-$ENABLE_SERVICES_END_TIME))s"
+      echo "Wait for configsync elapsed time: $(($END_TIME-$SETUP_GIT_OPS_END_TIME))s"
       echo "Total elapsed time: $(($END_TIME-$START_TIME))s"
     fi
     exit 0

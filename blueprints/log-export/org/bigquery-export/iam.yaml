@@ -18,7 +18,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: logging-sa-iam-permissions
-  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  namespace: config-control # {"$kpt-set":"management-namespace"}
 spec:
   member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"logging-sa-ref"}
   role: roles/resourcemanager.projectIamAdmin

@@ -60,5 +60,5 @@ openAPI:
       x-k8s-cli:
         setter:
           name: namespace
-          value: config-controller-system
+          value: config-control
       description: Namespace name for pipeline resources

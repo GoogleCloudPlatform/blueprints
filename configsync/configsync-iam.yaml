@@ -1,0 +1,43 @@
+# Config Sync GCP ServiceAccount (GSA)
+# This GSA can be used to grant Config Sync additional permissions with IAMPolicyMember
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: sync-probe-1623240147 # {"$kpt-set":"configsync-gsa-name"}
+  namespace: config-control # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: blueprints-eap-testing # {"$kpt-set":"project-id"}
+spec:
+  displayName: sync-probe-1623240147 # {"$kpt-set":"configsync-gsa-name"}
+---
+# Allow Config Sync Kubernetes ServiceAccount (KSA) to use the Config Sync GSA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: sync-probe-1623240147 # {"$kpt-set":"configsync-gsa-name"}
+  namespace: config-control # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: blueprints-eap-testing # {"$kpt-set":"project-id"}
+spec:
+  member: serviceAccount:blueprints-eap-testing.svc.id.goog[config-management-system/importer] # {"$kpt-set":"configsync-importer-iam-member"}
+  role: roles/iam.workloadIdentityUser
+  resourceRef:
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+    name: sync-probe-1623240147 # {"$kpt-set":"configsync-gsa-name"}
+---
+# Allow Config Sync GSA to read from CSR repos in the CSR project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: source-reader-sync-probe-1623240147-blueprints-eap-testing # {"$kpt-set":"krm-source-reader-policy-name"}
+  namespace: config-control # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: blueprints-eap-testing # {"$kpt-set":"project-id"}
+spec:
+  member: "serviceAccount:sync-probe-1623240147@blueprints-eap-testing.iam.gserviceaccount.com" # {"$kpt-set":"configsync-gsa-iam-member"}
+  role: roles/source.reader
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: blueprints-eap-testing # {"$kpt-set":"project-id"}

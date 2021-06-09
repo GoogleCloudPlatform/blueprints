@@ -24,26 +24,19 @@ openAPI:
           value: yakima-deployment-repo
           isSet: true
     io.k8s.cli.setters.cluster-name:
-      description: Name of the admin cluster
+      description: Name of the cluster according to Config Sync
       x-k8s-cli:
         setter:
           name: cluster-name
-          value: probe-1622721741
+          value: probe-1623240147
+          required: true
           isSet: true
-    io.k8s.cli.substitutions.gke-cluster-name:
-      x-k8s-cli:
-        substitution:
-          name: gke-cluster-name
-          pattern: krmapihost-${cluster-name}
-          values:
-          - marker: ${cluster-name}
-            ref: '#/definitions/io.k8s.cli.setters.cluster-name'
     io.k8s.cli.setters.namespace:
       description: Namespace to store Git Ops pipeline components under
       x-k8s-cli:
         setter:
           name: namespace
-          value: yakima-system
+          value: config-control
           isSet: true
     io.k8s.cli.setters.project-id:
       description: Project ID to actuate Config Connector resources in
@@ -53,10 +46,10 @@ openAPI:
           value: blueprints-eap-testing
           required: true
           isSet: true
-    io.k8s.cli.substitutions.cloudbuild-sa:
+    io.k8s.cli.substitutions.cloudbuild-gsa-member:
       x-k8s-cli:
         substitution:
-          name: cloudbuild-sa
+          name: cloudbuild-gsa-member
           pattern: serviceAccount:${project-number}@cloudbuild.gserviceaccount.com
           values:
           - marker: ${project-number}
@@ -70,46 +63,6 @@ openAPI:
           value: "801006214208"
           required: true
           isSet: true
-    io.k8s.cli.substitutions.config-sync-sa-iam:
-      x-k8s-cli:
-        substitution:
-          name: config-sync-sa-iam
-          pattern: serviceAccount:config-sync-sa@${project-id}.iam.gserviceaccount.com
-          values:
-          - marker: ${project-id}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
-    io.k8s.cli.substitutions.config-sync-sa-importer:
-      x-k8s-cli:
-        substitution:
-          name: config-sync-sa-importer
-          pattern: config-sync-sa@${project-id}.iam.gserviceaccount.com
-          values:
-          - marker: ${project-id}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
-    io.k8s.cli.substitutions.config-sync-workload-identity:
-      x-k8s-cli:
-        substitution:
-          name: config-sync-workload-identity
-          pattern: serviceAccount:${project-id}.svc.id.goog[config-management-system/importer]
-          values:
-          - marker: ${project-id}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
-    io.k8s.cli.substitutions.config-sync-sa-external:
-      x-k8s-cli:
-        substitution:
-          name: config-sync-sa-external
-          pattern: projects/${project-id}/serviceAccounts/config-sync-sa@${project-id}.iam.gserviceaccount.com
-          values:
-          - marker: ${project-id}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
-    io.k8s.cli.substitutions.project-id-external:
-      x-k8s-cli:
-        substitution:
-          name: project-id-external
-          pattern: projects/${project-id}
-          values:
-          - marker: ${project-id}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
     io.k8s.cli.substitutions.trigger-name:
       x-k8s-cli:
         substitution:

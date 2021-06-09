@@ -6,7 +6,7 @@ apiVersion: cloudbuild.cnrm.cloud.google.com/v1beta1
 kind: CloudBuildTrigger
 metadata:
   name: yakima-source-repo-cicd-trigger # {"$kpt-set":"trigger-name"}
-  namespace: yakima-system # {"$kpt-set":"namespace"}
+  namespace: config-control # {"$kpt-set":"namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: blueprints-eap-testing # {"$kpt-set":"project-id"}
 spec:
@@ -21,7 +21,7 @@ spec:
   substitutions:
     "_SOURCE_REPO": "yakima-source-repo" # {"$kpt-set":"source-repo"}
     "_DEPLOYMENT_REPO": "yakima-deployment-repo" # {"$kpt-set":"deployment-repo"}
-    "_ADMIN_CLUSTER_NAME": "krmapihost-probe-1622721741" # {"$kpt-set":"gke-cluster-name"}
+    "_ADMIN_CLUSTER_NAME": "probe-1623240147" # {"$kpt-set":"cluster-name"}
   build:
     timeout: 600s
     step:

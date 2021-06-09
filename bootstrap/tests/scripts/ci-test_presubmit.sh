@@ -80,7 +80,6 @@ gcloud container clusters describe ${ACP_CLUSTER_NAME} --project ${PROJECT_ID} -
 # get info about deployed bundle components (https://cnrm.git.corp.google.com/platform/+/refs/heads/main/scripts/acp-version.sh)
 echo "ACP: $(kubectl get deployments -n krmapihosting-system -o jsonpath='{..image}{"\n"}' | cut -d':' -f2)"
 echo "ConfigSync: $(kubectl get deployment git-importer -n config-management-system -o jsonpath='{.spec.template.spec.containers[].image}{"\n"}' | cut -d':' -f2)"
-echo "Cork: $(kubectl get deployment orchestrator-controller-manager -n orchestrator-system -o jsonpath='{.spec.template.spec.containers[].image}{"\n"}' | cut -d':' -f2)"
 echo "Gatekeeper: $(kubectl get deployment gatekeeper-controller-manager -n gatekeeper-system -o jsonpath='{.spec.template.spec.containers[].image}{"\n"}' | cut -d':' -f2)"
 echo "KCC: $(kubectl get ns cnrm-system -o jsonpath='{.metadata.annotations.cnrm\.cloud\.google\.com/version}{"\n"}')"
 

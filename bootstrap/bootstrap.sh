@@ -49,12 +49,13 @@ kubectl_wait() {
     local errcode=0
     for i in $(seq 1 ${KUBECTL_WAIT_RETRIES})
     do
-        if stdout=$(kubectl wait "$@" --timeout="${KUBECTL_WAIT_TIMEOUT}" 2>&1)
+        # or condition prevents errexit from early exit due to non-zero error code
+        # and condition captures errcode if zero
+        stdout=$(kubectl wait "$@" --timeout="${KUBECTL_WAIT_TIMEOUT}" 2>&1) && errcode=$? || errcode=$?
+        if [[ -z "${stdout}" ]]
         then
-            errcode=$?
             break
         fi
-        errcode=$?
         sleep 1
         echo "Retrying..."
     done
@@ -129,15 +130,15 @@ setup_git_ops() {
     fi
 
     echo "Configuring GitOps pipeline..."
-    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline namespace "config-control"
-    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline project-id "${PROJECT_ID}"
-    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline project-number "${PROJECT_NUMBER}"
-    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline source-repo "${SOURCE_REPO}"
-    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline deployment-repo "${DEPLOYMENT_REPO}"
-    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline cluster-name "${CLUSTER_NAME}"
+    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline namespace "config-control" -R
+    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline project-id "${PROJECT_ID}" -R
+    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline project-number "${PROJECT_NUMBER}" -R
+    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline source-repo "${SOURCE_REPO}" -R
+    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline deployment-repo "${DEPLOYMENT_REPO}" -R
+    kpt cfg set ${SOURCE_DIR}/csr-git-ops-pipeline cluster-name "${CLUSTER_NAME}" -R
 
     echo "Creating GitOps pipeline..."
-    kubectl apply --wait -f ${SOURCE_DIR}/csr-git-ops-pipeline/
+    kubectl apply --wait -f ${SOURCE_DIR}/csr-git-ops-pipeline/ --recursive
 
     echo "Waiting for source repos..."
     kubectl_wait --for=condition=READY -f ${SOURCE_DIR}/csr-git-ops-pipeline/source-repositories.yaml
@@ -146,7 +147,8 @@ setup_git_ops() {
     kubectl_wait --for=condition=READY -f ${SOURCE_DIR}/csr-git-ops-pipeline/hydration-trigger.yaml
 
     echo "Waiting for IAM..."
-    kubectl_wait --for=condition=READY -f ${SOURCE_DIR}/csr-git-ops-pipeline/iam.yaml
+    kubectl_wait --for=condition=READY -f ${SOURCE_DIR}/csr-git-ops-pipeline/cloudbuild-iam.yaml
+    kubectl_wait --for=condition=READY -f ${SOURCE_DIR}/csr-git-ops-pipeline/configsync/configsync-iam.yaml
 }
 
 remove_git_ops() {

@@ -2,7 +2,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
   name: projects-sa
-  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
@@ -12,7 +12,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: projects-sa-projectcreator-permissions
-  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
@@ -27,7 +27,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: projects-sa-projectmover-permissions
-  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
@@ -42,7 +42,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: projects-sa-projectdeleter-permissions
-  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
@@ -57,7 +57,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: projects-sa-billinguser-permissions
-  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
@@ -72,7 +72,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: projects-sa-serviceusageadmin-permissions
-  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
@@ -87,7 +87,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: projects-sa-workload-identity-binding
-  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:

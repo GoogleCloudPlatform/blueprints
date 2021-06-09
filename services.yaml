@@ -5,6 +5,6 @@ metadata:
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
   name: management-project-id-cloudbilling # {"$kpt-set":"services-cloudbilling"}
-  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  namespace: config-control # {"$kpt-set":"management-namespace"}
 spec:
   resourceID: cloudbilling.googleapis.com

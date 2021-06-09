@@ -17,7 +17,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
   name: logging-sa
-  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
@@ -27,7 +27,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: logging-sa-logadmin-permissions
-  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
@@ -42,7 +42,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: logging-sa-bigqueryadmin-permissions
-  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
@@ -57,7 +57,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: logging-sa-workload-identity-binding
-  namespace: yakima-system # {"$kpt-set":"management-namespace"}
+  namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:

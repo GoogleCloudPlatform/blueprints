@@ -19,7 +19,7 @@ openAPI:
       x-k8s-cli:
         setter:
           name: cluster-name
-          value: probe-1623240147
+          value: probe-1623326544
           isSet: true
     io.k8s.cli.setters.namespace:
       description: Namespace for managing Config Sync IAM resources

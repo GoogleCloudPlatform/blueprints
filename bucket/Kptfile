@@ -6,7 +6,7 @@ pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1
       configMap:
-        name: bucket
+        name: bucket2
         namespace: config-controller-system
         project-id: $DEFAULT_PROJECT
         storage-class: standard

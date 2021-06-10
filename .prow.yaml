@@ -1,11 +1,10 @@
 presubmits:
-  GoogleCloudPlatform/blueprints:
     - name: test
       decorate: true
+      cluster: build-blueprints
       decorate_config:
         timeout: 30m
       spec:
-        serviceAccountName: prowjob-default-sa
         containers:
           - image: gcr.io/k8s-testimages/kubekins-e2e:v20210509-00de27f-1.20
             command:

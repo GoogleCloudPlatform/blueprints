@@ -3,18 +3,18 @@
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
-  name: sync-probe-1623326544 # {"$kpt-set":"configsync-gsa-name"}
+  name: sync-probe-1623412956 # {"$kpt-set":"configsync-gsa-name"}
   namespace: config-control # {"$kpt-set":"namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: blueprints-eap-testing # {"$kpt-set":"project-id"}
 spec:
-  displayName: sync-probe-1623326544 # {"$kpt-set":"configsync-gsa-name"}
+  displayName: sync-probe-1623412956 # {"$kpt-set":"configsync-gsa-name"}
 ---
 # Allow Config Sync Kubernetes ServiceAccount (KSA) to use the Config Sync GSA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: sync-probe-1623326544 # {"$kpt-set":"configsync-gsa-name"}
+  name: sync-probe-1623412956 # {"$kpt-set":"configsync-gsa-name"}
   namespace: config-control # {"$kpt-set":"namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: blueprints-eap-testing # {"$kpt-set":"project-id"}
@@ -24,18 +24,18 @@ spec:
   resourceRef:
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
-    name: sync-probe-1623326544 # {"$kpt-set":"configsync-gsa-name"}
+    name: sync-probe-1623412956 # {"$kpt-set":"configsync-gsa-name"}
 ---
 # Allow Config Sync GSA to read from CSR repos in the CSR project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: source-reader-sync-probe-1623326544-blueprints-eap-testing # {"$kpt-set":"krm-source-reader-policy-name"}
+  name: source-reader-sync-probe-1623412956-blueprints-eap-testing # {"$kpt-set":"krm-source-reader-policy-name"}
   namespace: config-control # {"$kpt-set":"namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: blueprints-eap-testing # {"$kpt-set":"project-id"}
 spec:
-  member: "serviceAccount:sync-probe-1623326544@blueprints-eap-testing.iam.gserviceaccount.com" # {"$kpt-set":"configsync-gsa-iam-member"}
+  member: "serviceAccount:sync-probe-1623412956@blueprints-eap-testing.iam.gserviceaccount.com" # {"$kpt-set":"configsync-gsa-iam-member"}
   role: roles/source.reader
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1

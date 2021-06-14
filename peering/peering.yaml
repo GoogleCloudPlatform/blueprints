@@ -1,0 +1,33 @@
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeNetworkPeering
+metadata:
+  name: local-network-to-peer-network # {"$kpt-set":"local-to-peer"}
+  namespace: namespace # {"$kpt-set":"namespace"}
+spec:
+  exportCustomRoutes: false
+  importCustomRoutes: false
+  importSubnetRoutesWithPublicIp: false
+  exportSubnetRoutesWithPublicIp: true
+  networkRef:
+    name: local-network # {"$kpt-set":"local-network"}
+    namespace: namespace # {"$kpt-set":"namespace"}
+  peerNetworkRef:
+    name: peer-network # {"$kpt-set":"peer-network"}
+    namespace: namespace # {"$kpt-set":"namespace"}
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeNetworkPeering
+metadata:
+  name: peer-network-to-local-network # {"$kpt-set":"peer-to-local"}
+  namespace: namespace # {"$kpt-set":"namespace"}
+spec:
+  exportCustomRoutes: false
+  importCustomRoutes: false
+  importSubnetRoutesWithPublicIp: false
+  exportSubnetRoutesWithPublicIp: true
+  networkRef:
+    name: peer-network # {"$kpt-set":"peer-network"}
+    namespace: namespace # {"$kpt-set":"namespace"}
+  peerNetworkRef:
+    name: local-network # {"$kpt-set":"local-network"}
+    namespace: namespace # {"$kpt-set":"namespace"}

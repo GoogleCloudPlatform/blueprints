@@ -6,10 +6,10 @@ metadata:
   name: config-management
 spec:
   enableMultiRepo: false
-  clusterName: probe-1623672205 # {"$kpt-set":"cluster-name"}
+  clusterName: probe-1623758568 # {"$kpt-set":"cluster-name"}
   git:
     policyDir: config # {"$kpt-set":"configsync-dir"}
-    gcpServiceAccountEmail: sync-probe-1623672205@blueprints-eap-testing.iam.gserviceaccount.com # {"$kpt-set":"configsync-gsa-email"}
+    gcpServiceAccountEmail: sync-probe-1623758568@blueprints-eap-testing.iam.gserviceaccount.com # {"$kpt-set":"configsync-gsa-email"}
     secretType: gcpserviceaccount
     syncBranch: main
     syncRevision: HEAD

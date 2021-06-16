@@ -28,7 +28,7 @@ openAPI:
       x-k8s-cli:
         setter:
           name: cluster-name
-          value: probe-1623758568
+          value: probe-1623844956
           required: true
           isSet: true
     io.k8s.cli.setters.namespace:

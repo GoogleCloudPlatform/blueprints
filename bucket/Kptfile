@@ -7,6 +7,6 @@ pipeline:
     - image: gcr.io/kpt-fn/apply-setters:v0.1
       configMap:
         name: bucket2
-        namespace: config-controller-system
+        namespace: config-control
         project-id: $DEFAULT_PROJECT
         storage-class: standard

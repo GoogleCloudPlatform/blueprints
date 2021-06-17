@@ -7,34 +7,29 @@ packageMetadata:
 openAPI:
   definitions:
     io.k8s.cli.setters.project-id:
-      description: ID of the Project that contains the Config Sync GKE cluster and
-        CSR repo
+      description: ID of the Project that contains the Config Sync GKE cluster and CSR repo
       x-k8s-cli:
         setter:
           name: project-id
-          value: blueprints-eap-testing
-          isSet: true
+          value: project-id
     io.k8s.cli.setters.cluster-name:
       description: Name of the Config Sync GKE cluster
       x-k8s-cli:
         setter:
           name: cluster-name
-          value: probe-1623931380
-          isSet: true
+          value: cluster-name
     io.k8s.cli.setters.namespace:
       description: Namespace for managing Config Sync IAM resources
       x-k8s-cli:
         setter:
           name: namespace
           value: config-control
-          isSet: true
     io.k8s.cli.setters.deployment-repo:
       description: Name of the CSR repo for Config Sync to watch
       x-k8s-cli:
         setter:
           name: deployment-repo
-          value: yakima-deployment-repo
-          isSet: true
+          value: deployment-repo
     io.k8s.cli.setters.configsync-dir:
       description: Git directory for Config Sync to watch
       x-k8s-cli:

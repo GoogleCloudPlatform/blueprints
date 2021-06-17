@@ -1,0 +1,17 @@
+# Configure Anthos Config Management on Config Controller
+# Enable and configure Config Sync to watch a CSR repository.
+apiVersion: configmanagement.gke.io/v1
+kind: ConfigManagement
+metadata:
+  name: config-management
+spec:
+  enableMultiRepo: false
+  clusterName: probe-1623931380 # {"$kpt-set":"cluster-name"}
+  git:
+    policyDir: config # {"$kpt-set":"configsync-dir"}
+    gcpServiceAccountEmail: sync-probe-1623931380@blueprints-eap-testing.iam.gserviceaccount.com # {"$kpt-set":"configsync-gsa-email"}
+    secretType: gcpserviceaccount
+    syncBranch: main
+    syncRevision: HEAD
+    syncRepo: https://source.developers.google.com/p/blueprints-eap-testing/r/yakima-deployment-repo # {"$kpt-set":"configsync-repo-url"}
+  sourceFormat: unstructured

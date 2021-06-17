@@ -1,5 +1,5 @@
 # Firewall blueprint
-This package creates some common firewall rules that are managed with Yakima. The firewall rules created include:
+This package creates some common firewall rules that are managed with Config Controller. The firewall rules created include:
 
 - allow common ports between private IP ranges
 - allow common ports from GCP load balancer ranges
@@ -15,5 +15,3 @@ Contents:
     - allow-iap-rdp.yaml - creates a firewall rule that allow traffic from IAP forwarding ranges for RDP
     - allow-iap-ssh.yaml - creates a firewall rule that allow traffic from IAP forwarding ranges for SSH
     - allow-internal-common.yaml - creates a firewall rule that allows SSH, SSL, HTTP (8080), and ICMP traffic on all RFC1918 ranges
-
-Owner: [akumanov](http://who/akumanov@google.com)

@@ -4,8 +4,3 @@
     configuration.
 *   [shared-vpc](shared-vpc/) package converts a project into a shared VPC
     project.
-
-Owners:
-
--   [akumanov](http://who/akumanov@google.com)
--   [andu](http://who/andu@google.com)

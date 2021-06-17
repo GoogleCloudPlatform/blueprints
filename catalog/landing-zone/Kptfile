@@ -23,7 +23,7 @@ openAPI:
       x-k8s-cli:
         setter:
           name: group-org-admins
-          value: yakima@google.com
+          value: gcp-organization-admins@example.com
       description: Group which will be granted organization admin permissions.
     io.k8s.cli.substitutions.group-org-admins-member:
       x-k8s-cli:
@@ -37,7 +37,7 @@ openAPI:
       x-k8s-cli:
         setter:
           name: group-billing-admins
-          value: yakima@google.com
+          value: gcp-billing-admins@example.com
       description: Group which will be granted billing admin permissions.
     io.k8s.cli.substitutions.group-billing-admins-member:
       x-k8s-cli:
@@ -52,7 +52,7 @@ openAPI:
         setter:
           name: management-project-id
           value: management-project-id
-      description: Yakima host project id.
+      description: Config Controller host project id.
       maxLength: 30
       minLength: 6
       pattern: '^[a-z]([-a-z0-9]*[a-z0-9])?$'

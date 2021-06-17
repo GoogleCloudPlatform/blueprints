@@ -7,7 +7,7 @@ pipeline:
     - image: gcr.io/kpt-fn/apply-setters:v0.1
       configMap:
         name: redis-bucket
-        namespace: config-controller-system
+        namespace: config-control
         network: default
         project-id: $DEFAULT_PROJECT
         region: us-central1

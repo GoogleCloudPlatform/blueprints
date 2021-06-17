@@ -1,0 +1,20 @@
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeFirewall
+metadata:
+  name: network-name-fw-allow-iap-ssh  # {"$kpt-set":"network-fw-allow-iap-ssh"}
+  namespace: firewalls-namespace # {"$kpt-set":"firewalls-namespace"}
+spec:
+  networkRef:
+    name: network-name # {"$kpt-set":"network-name"}
+  enableLogging: false # {"$kpt-set":"enable-logging"}
+  priority: 10000 # {"$kpt-set":"priority"}
+  disabled: false
+  allow:
+  - protocol: tcp
+    ports:
+     - "22"
+  targetTags:
+   - allow-iap-ssh
+  direction: INGRESS
+  sourceRanges:
+   - "35.235.240.0/20"

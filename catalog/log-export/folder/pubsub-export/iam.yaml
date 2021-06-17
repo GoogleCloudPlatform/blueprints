@@ -1,0 +1,16 @@
+# IAM Policy Member
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: pubsub-iam-policy
+  namespace: my-namespace # {"$kpt-set":"namespace"}
+spec:
+  memberFrom:
+    logSinkRef:
+      name: my.folder.k8s.name-pubsubsink # {"$kpt-set":"log-sink-name"}
+  role: roles/pubsub.publisher
+  resourceRef:
+    apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
+    kind: PubSubTopic
+    name: pubsub-logexport-dataset # {"$kpt-set":"topic-name"}
+

@@ -1,0 +1,10 @@
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+kind: Service
+metadata:
+  annotations:
+    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
+  name: management-project-id-cloudbilling # {"$kpt-set":"services-cloudbilling"}
+  namespace: config-control # {"$kpt-set":"management-namespace"}
+spec:
+  resourceID: cloudbilling.googleapis.com

@@ -1,0 +1,16 @@
+# IAM Policy Member
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: storage-project-iam-policy
+  namespace: my-namespace # {"$kpt-set":"namespace"}
+spec:
+  memberFrom:
+    logSinkRef:
+      name: my.folder.k8s.name-storagesink # {"$kpt-set":"log-sink-name"}
+  role: roles/storage.objectCreator
+  resourceRef:
+    apiVersion: storage.cnrm.cloud.google.com/v1beta1
+    kind: StorageBucket
+    name: my-storage-bucket # {"$kpt-set":"storage-bucket-name"}
+

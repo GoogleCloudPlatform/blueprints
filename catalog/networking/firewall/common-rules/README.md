@@ -1,5 +1,5 @@
 # Firewall blueprint
-This package creates some common firewall rules that are managed with Yakima. The firewall rules created include:
+This package creates some common firewall rules that are managed with Config Controller. The firewall rules created include:
 
 - allow common ports between private IP ranges
 - allow common ports from GCP load balancer ranges

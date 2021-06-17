@@ -1,42 +1,4 @@
 # Log export blueprint
 
-## Prerequisites
-- Config Controller cluster w/ Git Ops enabled
+This folder contains 6 different blueprints which allow for exporting audit logs to different destinations.
 
-## What is this?
-This folder contains 6 different blueprints which are different sources and destinations to export audit logs from and to, respectively.
-
-### Log export types
-**Folder:**
-In this directory, we have log exports that source from a Folder resource type in GCP.
-- **BigQuery export:**
-  - Exports to BigQuery
-- **PubSub export:**
-  - Exports to PubSub
-- **Storage export:**
-  - Exports to a storage bucket
-
-**Org:**
-This directory has the same content as the folder directory except the source is from an Organization.
-
-## How to use it
-To run this blueprint, you can run the steps listed [here](../../bootstrap/csr-git-ops-pipeline/#Making-your-first-git-ops-change).
-
-Replace step #3 with the following commands instead:
-```bash
-kpt pkg get https://source.developers.google.com/p/yakima-eap/r/blueprints.git/blueprints/log-export/<source option>/<dest option>@master landing-zone/log-export
-kpt cfg list-setters log-export
-kpt cfg set ...
-```
-
-As part of step #9, you can run the following command to verify the state and existence of the resources
-```
-# For folder w/ bigquery
-kubectl -n ${YOUR_NAMESPACE} get bigquerydataset,logginglogsink -o custom-columns=NAME:.metadata.name,ID:.status.name,STATUS_MESSAGE:.status.conditions[0].message,STATUS:.status.conditions[0].reason
-
-# For org w/ pubsub
-kubectl -n ${YOUR_NAMESPACE} get pubsubtopic,logginglogsink -o custom-columns=NAME:.metadata.name,ID:.status.name,STATUS_MESSAGE:.status.conditions[0].message,STATUS:.status.conditions[0].reason
-
-# For folder w/ storage
-kubectl -n ${YOUR_NAMESPACE} get storagebucket,logginglogsink -o custom-columns=NAME:.metadata.name,ID:.status.name,STATUS_MESSAGE:.status.conditions[0].message,STATUS:.status.conditions[0].reason
-```

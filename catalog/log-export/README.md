@@ -1,9 +1,7 @@
 # Log export blueprint
 
-[TOC]
-
 ## Prerequisites
-- Yakima cluster w/ Git Ops enabled
+- Config Controller cluster w/ Git Ops enabled
 
 ## What is this?
 This folder contains 6 different blueprints which are different sources and destinations to export audit logs from and to, respectively.
@@ -11,10 +9,10 @@ This folder contains 6 different blueprints which are different sources and dest
 ### Log export types
 **Folder:**
 In this directory, we have log exports that source from a Folder resource type in GCP.
-- **Bigquery export:**
-  - Exports to bigquery
-- **Pubsub export:**
-  - Exports to pubsub
+- **BigQuery export:**
+  - Exports to BigQuery
+- **PubSub export:**
+  - Exports to PubSub
 - **Storage export:**
   - Exports to a storage bucket
 
@@ -42,7 +40,3 @@ kubectl -n ${YOUR_NAMESPACE} get pubsubtopic,logginglogsink -o custom-columns=NA
 # For folder w/ storage
 kubectl -n ${YOUR_NAMESPACE} get storagebucket,logginglogsink -o custom-columns=NAME:.metadata.name,ID:.status.name,STATUS_MESSAGE:.status.conditions[0].message,STATUS:.status.conditions[0].reason
 ```
-
-Owners:
-- [morgantep](http://who/morgantep@google.com)
-- [jcwc](http://who/jcwc@google.com)

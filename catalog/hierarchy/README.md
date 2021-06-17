@@ -1,9 +1,7 @@
 # Org hierarchy blueprint
 
-[TOC]
-
 ## Prerequisites
-- Yakima cluster w/ Git Ops enabled
+- Config Controller cluster w/ Git Ops enabled
 
 ## What is this?
 This folder contains 4 different blueprint options for org hierarchy folder structures: simple, team, bu and env-bu.
@@ -29,7 +27,3 @@ As part of step #9, you can run the following command to verify the state and ex
 ```
 kubectl -n ${YOUR_NAMESPACE} get folders -o custom-columns=NAME:.metadata.name,ID:.status.name,STATUS_MESSAGE:.status.conditions[0].message,STATUS:.status.conditions[0].type
 ```
-
-Owners:
-- [jcwc](http://who/jcwc@google.com)
-- [morgantep](http://who/morgantep@google.com)

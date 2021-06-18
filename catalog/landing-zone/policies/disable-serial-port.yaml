@@ -4,8 +4,8 @@ metadata:
   name: disable-serial-port
   namespace: policies
 spec:
-  organizationRef:
-    external: "123456789012" # {"$kpt-set":"org-id"}
-  constraint: "constraints/compute.disableSerialPortAccess"
   booleanPolicy:
     enforced: true
+  constraint: "constraints/compute.disableSerialPortAccess"
+  organizationRef:
+    external: "123456789012" # kpt-set: ${org-id}

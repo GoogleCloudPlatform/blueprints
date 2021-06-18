@@ -4,8 +4,8 @@ metadata:
   name: skip-default-network
   namespace: policies
 spec:
-  organizationRef:
-    external: "123456789012" # {"$kpt-set":"org-id"}
-  constraint: "constraints/compute.skipDefaultNetworkCreation"
   booleanPolicy:
     enforced: true
+  constraint: "constraints/compute.skipDefaultNetworkCreation"
+  organizationRef:
+    external: "123456789012" # kpt-set: ${org-id}

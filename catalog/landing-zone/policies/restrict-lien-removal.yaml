@@ -4,8 +4,8 @@ metadata:
   name: restrict-lien-removal
   namespace: policies
 spec:
-  organizationRef:
-    external: "123456789012" # {"$kpt-set":"org-id"}
-  constraint: "constraints/compute.restrictXpnProjectLienRemoval"
   booleanPolicy:
     enforced: true
+  constraint: "constraints/compute.restrictXpnProjectLienRemoval"
+  organizationRef:
+    external: "123456789012" # kpt-set: ${org-id}

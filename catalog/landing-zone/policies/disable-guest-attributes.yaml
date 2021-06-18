@@ -4,8 +4,8 @@ metadata:
   name: disable-guest-attributes
   namespace: policies
 spec:
-  organizationRef:
-    external: "123456789012" # {"$kpt-set":"org-id"}
-  constraint: "constraints/compute.disableGuestAttributesAccess"
   booleanPolicy:
     enforced: true
+  constraint: "constraints/compute.disableGuestAttributesAccess"
+  organizationRef:
+    external: "123456789012" # kpt-set: ${org-id}

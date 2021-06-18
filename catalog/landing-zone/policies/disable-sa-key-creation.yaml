@@ -4,8 +4,8 @@ metadata:
   name: disable-sa-key-creation
   namespace: policies
 spec:
-  organizationRef:
-    external: "123456789012" # {"$kpt-set":"org-id"}
-  constraint: "constraints/iam.disableServiceAccountKeyCreation"
   booleanPolicy:
     enforced: true
+  constraint: "constraints/iam.disableServiceAccountKeyCreation"
+  organizationRef:
+    external: "123456789012" # kpt-set: ${org-id}

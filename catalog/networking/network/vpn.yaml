@@ -1,99 +1,99 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeTargetVPNGateway
 metadata:
-  name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
-  namespace: networking # {"$kpt-set":"namespace"}
+  name: network-name-vpn-gateway # kpt-set: ${network-name}-vpn-gateway
+  namespace: networking # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   description: "Compute VPN Gateway"
-  region: us-central1 # {"$kpt-set":"region"}
   networkRef:
-    name: network-name # {"$kpt-set":"network-name"}
+    name: network-name # kpt-set: ${network-name}
+  region: us-central1 # kpt-set: ${region}
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeVPNTunnel
 metadata:
-  name: network-name-vpn-tunnel # {"$kpt-set":"vpn-tunnel-name"}
-  namespace: networking # {"$kpt-set":"namespace"}
+  name: network-name-vpn-tunnel # kpt-set: ${network-name}-vpn-tunnel
+  namespace: networking # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
+  localTrafficSelector:
+    - "192.168.0.0/16"
   peerIp: "15.0.0.120"
-  region: us-central1 # {"$kpt-set":"region"}
+  region: us-central1 # kpt-set: ${region}
   sharedSecret:
     valueFrom:
       secretKeyRef:
-        name: vpn-shared-secret # {"$kpt-set":"vpn-secret-name"}
-        key: vpn-shared-secret # {"$kpt-set":"vpn-secret-key"}
+        name: vpn-shared-secret # kpt-set: ${vpn-secret-name}
+        key: vpn-shared-secret # kpt-set: ${vpn-secret-key}
   targetVPNGatewayRef:
-    name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
-  localTrafficSelector:
-  - "192.168.0.0/16"
+    name: network-name-vpn-gateway # kpt-set: ${network-name}-vpn-gateway
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
-  name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}
-  namespace: networking # {"$kpt-set":"namespace"}
+  name: network-name-vpn-address # kpt-set: ${network-name}-vpn-address
+  namespace: networking # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
-  location: us-central1 # {"$kpt-set":"region"}
   description: "Regional address"
+  location: us-central1 # kpt-set: ${region}
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeForwardingRule
 metadata:
-  name: network-name-vpn-esp-fr # {"$kpt-set":"vpn-esp-fr-name"}
-  namespace: networking # {"$kpt-set":"namespace"}
+  name: network-name-vpn-esp-fr # kpt-set: ${network-name}-vpn-esp-fr
+  namespace: networking # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   description: "Regional ESP forwarding rule"
-  target:
-    targetVPNGatewayRef:
-      name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
-  ipProtocol: "ESP"
-  location: us-central1 # {"$kpt-set":"region"}
   ipAddress:
     addressRef:
-      name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}
+      name: network-name-vpn-address # kpt-set: ${network-name}-vpn-address
+  ipProtocol: "ESP"
+  location: us-central1 # kpt-set: ${region}
+  target:
+    targetVPNGatewayRef:
+      name: network-name-vpn-gateway # kpt-set: ${network-name}-vpn-gateway
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeForwardingRule
 metadata:
-  name: acme-vpc-dev-vpn-udp500-fr # {"$kpt-set":"vpn-udp500-fr-name"}
-  namespace: networking # {"$kpt-set":"namespace"}
+  name: acme-vpc-dev-vpn-udp500-fr # kpt-set: ${network-name}-vpn-udp500-fr
+  namespace: networking # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   description: "Regional UDP 500 forwarding rule"
-  target:
-    targetVPNGatewayRef:
-      name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
-  ipProtocol: "UDP"
-  portRange: "500"
-  location: us-central1 # {"$kpt-set":"region"}
   ipAddress:
     addressRef:
-      name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}
+      name: network-name-vpn-address # kpt-set: ${network-name}-vpn-address
+  ipProtocol: "UDP"
+  location: us-central1 # kpt-set: ${region}
+  portRange: "500"
+  target:
+    targetVPNGatewayRef:
+      name: network-name-vpn-gateway # kpt-set: ${network-name}-vpn-gateway
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeForwardingRule
 metadata:
-  name: acme-vpc-dev-vpn-udp4500-fr # {"$kpt-set":"vpn-udp4500-fr-name"}
-  namespace: networking # {"$kpt-set":"namespace"}
+  name: acme-vpc-dev-vpn-udp4500-fr # kpt-set: ${network-name}-vpn-udp4500-fr
+  namespace: networking # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   description: "Regional UDP 4500 forwarding rule"
-  target:
-    targetVPNGatewayRef:
-      name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
-  ipProtocol: "UDP"
-  portRange: "4500"
-  location: us-central1 # {"$kpt-set":"region"}
   ipAddress:
     addressRef:
-      name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}
+      name: network-name-vpn-address # kpt-set: ${network-name}-vpn-address
+  ipProtocol: "UDP"
+  location: us-central1 # kpt-set: ${region}
+  portRange: "4500"
+  target:
+    targetVPNGatewayRef:
+      name: network-name-vpn-gateway # kpt-set: ${network-name}-vpn-gateway

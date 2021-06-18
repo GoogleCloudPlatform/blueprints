@@ -1,7 +1,7 @@
 apiVersion: kpt.dev/v1alpha1
 kind: Kptfile
 metadata:
-  name: csr-git-ops-pipeline
+  name: gitops
 packageMetadata:
   shortDescription: This blueprint generates a GitOps CI/CD pipeline for use with ACM
 openAPI:

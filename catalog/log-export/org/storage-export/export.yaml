@@ -2,12 +2,12 @@
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
+  name: my-project-id-storage # kpt-set: ${project-id}-storage
+  namespace: projects
   annotations:
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
-    cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
-  name: my-project-id-storage # {"$kpt-set":"services-storage"}
-  namespace: projects
+    cnrm.cloud.google.com/project-id: my-project-id # kpt-set: ${project-id}
 spec:
   resourceID: storage-component.googleapis.com
 ---
@@ -15,26 +15,26 @@ spec:
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
-  name: 123456789012-storagesink # {"$kpt-set":"log-sink-name"}
-  namespace: my-namespace # {"$kpt-set":"namespace"}
+  name: 123456789012-storagesink # kpt-set: ${org-id}-storagesink
+  namespace: my-namespace # kpt-set: ${namespace}
 spec:
-  organizationRef:
-    external: "123456789012" # {"$kpt-set":"org-id"}
   destination:
     storageBucketRef:
-      name: my-storage-bucket # {"$kpt-set":"storage-bucket-name"}
+      name: my-storage-bucket # kpt-set: ${storage-bucket-name}
+  filter: "" # kpt-set: ${filter}
   includeChildren: true
-  filter: "" # {"$kpt-set":"filter"}
+  organizationRef:
+    external: "123456789012" # kpt-set: ${org-id}
 ---
 # Storage Dataset
 apiVersion: storage.cnrm.cloud.google.com/v1beta1
 kind: StorageBucket
 metadata:
+  name: my-storage-bucket # kpt-set: ${storage-bucket-name}
+  namespace: my-namespace # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/force-destroy: "true"
-  name: my-storage-bucket # {"$kpt-set":"storage-bucket-name"}
-  namespace: my-namespace # {"$kpt-set":"namespace"}
 spec:
-  storageClass: MULTI_REGIONAL # {"$kpt-set":"storage-class"}
-  location: US # {"$kpt-set":"location"}
-  bucketPolicyOnly: false # {"$kpt-set":"bucket-policy-only"}
+  bucketPolicyOnly: false # kpt-set: ${bucket-policy-only}
+  location: US # kpt-set: ${location}
+  storageClass: MULTI_REGIONAL # kpt-set: ${storage-class}

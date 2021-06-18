@@ -1,11 +1,11 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSharedVPCServiceProject
 metadata:
+  name: project-id-svpc-service # kpt-set: ${project-id}-svpc-service
+  namespace: networking # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: host-project # {"$kpt-set":"host-project-id"}
-  name: project-id-svpc-service # {"$kpt-set":"service-project-name"}
-  namespace: networking # {"$kpt-set":"namespace"}
+    cnrm.cloud.google.com/project-id: host-project # kpt-set: ${host-project-id}
 spec:
   projectRef:
-    name: project-id # {"$kpt-set":"project-id"}
-    namespace: projects # {"$kpt-set":"project-namespace"}
+    name: project-id # kpt-set: ${project-id}
+    namespace: projects # kpt-set: ${namespace}

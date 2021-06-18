@@ -1,14 +1,14 @@
-  apiVersion: compute.cnrm.cloud.google.com/v1beta1
-  kind: ComputeRoute
-  metadata:
-    name: route-example # {"$kpt-set":"route-name"}
-    namespace: networking # {"$kpt-set":"namespace"}
-    annotations:
-      cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
-  spec:
-    destRange: 0.0.0.0/0 # {"$kpt-set":"destination-range"}
-    networkRef:
-      name: network-name # {"$kpt-set":"network-name"}
-      namespace: networking # {"$kpt-set":"namespace"}
-    priority: 1000
-    nextHopGateway: default-internet-gateway
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeRoute
+metadata:
+  name: route-example # kpt-set: ${route-name}
+  namespace: networking # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  priority: 1000
+  destRange: 0.0.0.0/0 # kpt-set: ${destination-range}
+  networkRef:
+    name: network-name # kpt-set: ${network-name}
+    namespace: networking # kpt-set: ${namespace}
+  nextHopGateway: default-internet-gateway

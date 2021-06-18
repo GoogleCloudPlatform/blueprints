@@ -1,0 +1,17 @@
+# Firewall blueprint
+This package creates some common firewall rules that are managed with Config Controller. The firewall rules created include:
+
+- allow common ports between private IP ranges
+- allow common ports from GCP load balancer ranges
+- allow ssh and rdp from GCP IAP ranges
+
+Contents:
+- egress
+    - allow-google-apis.yaml - creates a firewall rule that allows traffic to private.googleapis.com IP range
+    - allow-windows-kms.yaml - creates a firewall rule that allows traffic to kms.windows.googlecloud.com IP range
+    - deny-all.yaml - creates a firewall rule that denys all egress traffic on TCP/UDP. It is recommended that if this rule is enabled, to also enable the "allow-google-apis" rule.
+- ingress
+    - allow-gcp-lb.yaml - creates a firewall rule that allows traffic from GCP load balancer ranges for health check and proxy traffic on ports 80, 443, and 8080
+    - allow-iap-rdp.yaml - creates a firewall rule that allow traffic from IAP forwarding ranges for RDP
+    - allow-iap-ssh.yaml - creates a firewall rule that allow traffic from IAP forwarding ranges for SSH
+    - allow-internal-common.yaml - creates a firewall rule that allows SSH, SSL, HTTP (8080), and ICMP traffic on all RFC1918 ranges

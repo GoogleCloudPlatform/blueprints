@@ -5,7 +5,7 @@ import * as path from 'path';
 import { isResourceHierarchy as isV3ResourceHierarchy } from './gen/com.google.cloud.blueprints.v1alpha3';
 import { isResourceHierarchy as isV2ResourceHierarchy } from './gen/dev.cft.v1alpha2';
 import { isResourceHierarchy as isV1ResourceHierarchy } from './gen/dev.cft.v1alpha1';
-import { generateFolders, missingSubtreeErrorResult, badParentErrorResult, badParentKindErrorResult, oldHierarchyWarning, normalize } from './generate_folders';
+import { generateFolders, missingSubtreeErrorResult, badParentErrorResult, badParentKindErrorResult, oldHierarchyWarning, normalize, Annotations } from './generate_folders';
 import { FolderList, Folder } from './gen/com.google.cloud.cnrm.resourcemanager.v1beta1';
 
 const RUNNER = new TestRunner(generateFolders);
@@ -157,6 +157,40 @@ describe('generateFolders', () => {
       expected: [],
       errors: [badParentKindErrorResult],
     },
+    {
+      file: 'annotations_v1',
+      expected: [
+        ['Dev', ['One', 'Two']],
+      ],
+    },
+    {
+      file: 'annotations_v2',
+      expected: ['Dev', 'Prod', 'Test'],
+      annotations: {
+        'cnrm.cloud.google.com/deletion-policy': 'abandon',
+      },
+    },
+    {
+      file: 'annotations_v3',
+      expected: ['Dev', 'Prod', 'Test'],
+      annotations: {
+        'cnrm.cloud.google.com/deletion-policy': 'abandon',
+      },
+    },
+    {
+      file: 'annotations_v3_none',
+      expected: ['Dev', 'Prod'],
+      annotations: {} as Annotations,
+    },
+    {
+      file: 'annotations_v3_inherit_all',
+      expected: ['Dev', 'Prod'],
+      annotations: {
+        'another-annotation': 'will-be-inherited',
+        'cnrm.cloud.google.com/deletion-policy': 'abandon',
+        'one-more-annotation': 'folders-will-inherit-too',
+      },
+    },
   ];
 
   for (const test of tests) {
@@ -173,10 +207,11 @@ describe('generateFolders', () => {
 
         const parentType = test.parent?.folder ? "Folder" : "Organization";
         const parentRef = test.parent?.folder ? test.parent.folder : "test-organization";
+        const annotations: Annotations = test.annotations || {};
 
         const expectedOutput = new Configs([
           hierarchy,
-          ...getHierarchyConfig(expectedStructure, [], parentRef, parentType, isV3ResourceHierarchy(hierarchy)),
+          ...getHierarchyConfig(expectedStructure, [], parentRef, parentType, annotations, isV3ResourceHierarchy(hierarchy)),
         ], undefined, [...warnings, ...errorResults]);
         await RUNNER.assert(input, expectedOutput);
       });
@@ -189,16 +224,16 @@ describe('generateFolders', () => {
  * @param children array containing a representation of the folder structure
  * @param organization The name of the expected organization
  */
-function getHierarchyConfig(children: any[], parents: string[], rootRef: string, rootType: string, nativeRef = false): KubernetesObject[] {
+function getHierarchyConfig(children: any[], parents: string[], rootRef: string, rootType: string, annotations: Annotations, nativeRef = false): KubernetesObject[] {
   let res: Folder[] = [];
   for (const child of children) {
     if (Array.isArray(child)) {
       const name = child[0];
-      res.push(makeFolder(name, parents, rootRef, rootType, nativeRef));
-      const childTree = getHierarchyConfig(child[1], [...parents, name], rootRef, rootType, nativeRef);
+      res.push(makeFolder(name, parents, rootRef, rootType, annotations, nativeRef));
+      const childTree = getHierarchyConfig(child[1], [...parents, name], rootRef, rootType, annotations, nativeRef);
       res = res.concat(childTree);
     } else if (typeof child === 'string') {
-      res.push(makeFolder(child, parents, rootRef, rootType, nativeRef));
+      res.push(makeFolder(child, parents, rootRef, rootType, annotations, nativeRef));
     }
   }
   return res as KubernetesObject[];
@@ -211,9 +246,9 @@ function getHierarchyConfig(children: any[], parents: string[], rootRef: string,
  * @param path The ancestry path of folders above this folder
  * @param organization The name of the expected organization
  */
-function makeFolder(name: string, path: string[], rootRef: string, rootType: string, nativeRef = false): Folder {
+function makeFolder(name: string, path: string[], rootRef: string, rootType: string, annotations: Annotations, nativeRef = false): Folder {
   const isRoot = path.length === 0;
-  let annotationRef = {};
+  let annotationRef: Annotations = {};
   // Parent Ref
   let ref = {};
   if (nativeRef) {
@@ -227,7 +262,12 @@ function makeFolder(name: string, path: string[], rootRef: string, rootType: str
     }
   } else {
     const annotationName = isRoot && rootType === "Organization" ? 'cnrm.cloud.google.com/organization-id' : 'cnrm.cloud.google.com/folder-ref';
-    annotationRef = { annotations: { [annotationName]: isRoot ? rootRef : normalize(path.join('.')) } };
+    annotationRef = { [annotationName]: isRoot ? rootRef : normalize(path.join('.')) };
+  }
+
+  let combinedAnnotations = {};
+  if (Object.keys(annotations).length > 0 || Object.keys(annotationRef).length > 0) {
+    combinedAnnotations = { annotations: { ...annotations, ...annotationRef } };
   }
 
   return {
@@ -235,7 +275,7 @@ function makeFolder(name: string, path: string[], rootRef: string, rootType: str
     kind: "Folder",
     metadata: {
       name: normalize([...path, name].join('.')),
-      ...annotationRef,
+      ...combinedAnnotations,
     },
     spec: {
       displayName: name,

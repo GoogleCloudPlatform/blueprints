@@ -14,6 +14,10 @@ interface HierarchyNode {
   name: string;
 }
 
+export interface Annotations {
+  [key: string]: string;
+}
+
 /**
  * Entrypoint for kpt function business logic. See `usage` field for more details.
  *
@@ -129,6 +133,19 @@ class MissingSubteeError extends Error {
 }
 
 /**
+ * Creates a copy of the annotations object and removes annotations that generated
+ * resources do not inherit from the ResourceHierarchy resource.
+ * @param annotations The KRM annotations structure.
+ * @returns The copy of annotations with non-inheritable keys removed.
+ */
+function filterNonInheritableAnnotations(annotations: Annotations): Annotations {
+  const copy: Annotations = { ...annotations };
+  delete copy['config.kubernetes.io/local-config'];
+  delete copy['config.k8s.io/function'];
+  return copy;
+}
+
+/**
  * Creates a representation of the resulting folder hierarchy from the
  * ResourceHierarchy object in a tree data structure. Each node contains the
  * corresponding config to generate.
@@ -143,6 +160,7 @@ function generateHierarchyTree(hierarchy: V2ResourceHierarchy | V3ResourceHierar
     name: `${hierarchy.spec.parentRef.external}`, // Annotation expects string type
   };
   const namespace = hierarchy.metadata.namespace;
+  const annotations: Annotations = filterNonInheritableAnnotations(hierarchy.metadata.annotations || {});
 
   const subtrees: { [key: string]: HierarchyNode; } = {};
 
@@ -164,7 +182,7 @@ function generateHierarchyTree(hierarchy: V2ResourceHierarchy | V3ResourceHierar
 
   const generateConfigs = (node: HierarchyNode, path: string[]) => {
     for (const child of node.children) {
-      configs.insert(generateManifest(child.name, path, node, namespace, isV3ResourceHierarchy(hierarchy)));
+      configs.insert(generateManifest(child.name, path, node, annotations, namespace, isV3ResourceHierarchy(hierarchy)));
       generateConfigs(child, [...path, child.name]);
     }
   };
@@ -257,12 +275,15 @@ function generateV1HierarchyTree(node: HierarchyNode, layers: string[], layerInd
     };
   }
 
+  // Do not support annotation inheritance for v1;
+  const annotations: Annotations = {};
+
   for (const folder of folders) {
     const child = {
       name: folder,
       children: [],
       parent: node,
-      config: generateManifest(folder, path, node, hierarchy.metadata.namespace),
+      config: generateManifest(folder, path, node, annotations, hierarchy.metadata.namespace),
     };
 
     const errorResult = generateV1HierarchyTree(child, layers, layerIndex + 1, hierarchy, [...path, folder]);
@@ -286,7 +307,7 @@ function generateV1HierarchyTree(node: HierarchyNode, layers: string[], layerInd
  * @param parent The parent node of the current folder.
  * @param namespace Namespace to generate the resource in.
  */
-function generateManifest(name: string, path: string[], parent: HierarchyNode, namespace?: string, nativeRef = false): KubernetesObject {
+function generateManifest(name: string, path: string[], parent: HierarchyNode, annotations: Annotations, namespace?: string, nativeRef = false): KubernetesObject {
   // Parent name is the metadata name
   const parentName = path.join('.') || parent.name;
 
@@ -306,7 +327,12 @@ function generateManifest(name: string, path: string[], parent: HierarchyNode, n
   } else {
     // generate annotation based ref
     const annotationName = parent.kind === "Organization" ? 'cnrm.cloud.google.com/organization-id' : 'cnrm.cloud.google.com/folder-ref';
-    annotationRef = { annotations: { [annotationName]: normalize(parentName) } };
+    annotationRef = { [annotationName]: normalize(parentName) };
+  }
+
+  let combinedAnnotations = {};
+  if (Object.keys(annotations).length > 0 || Object.keys(annotationRef).length > 0) {
+    combinedAnnotations = { annotations: { ...annotations, ...annotationRef } };
   }
 
   const config = {
@@ -316,7 +342,7 @@ function generateManifest(name: string, path: string[], parent: HierarchyNode, n
       // TODO(jcwc): This only works up to 253 char (k8s name limit). Figure out
       //   how to handle the edge cases beyond the character limit.
       name: normalize([...path, name].join('.')),
-      ...annotationRef,
+      ...combinedAnnotations,
     } as ObjectMeta,
     spec: {
       displayName: name,

@@ -1,0 +1,21 @@
+apiVersion: cft.dev/v1alpha1
+kind: ResourceHierarchy
+metadata:
+  name: test-annotations
+  annotations:
+    config.kubernetes.io/local-config: 'true'
+    cnrm.cloud.google.com/deletion-policy: abandon
+    config.k8s.io/function: |
+      container:
+        image: gcr.io/yakima-eap/generate-folders:latest
+spec:
+  organization: "test-organization"
+  layers:
+    - environments
+    - teams
+  config:
+    environments:
+      - Dev
+    teams:
+      - One
+      - Two

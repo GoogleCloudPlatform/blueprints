@@ -1,4 +1,4 @@
-import { Configs, TestRunner, KubernetesObject, isKubernetesObject } from 'kpt-functions';
+import { Configs, Result, TestRunner, KubernetesObject, isKubernetesObject } from 'kpt-functions';
 import { load } from 'js-yaml';
 import { readFileSync } from 'fs';
 import * as path from 'path';
@@ -38,8 +38,25 @@ describe('normalize', () => {
   }
 });
 
+interface HierarchyNode {
+  length: 2;
+  readonly 0: string;    // Name of the folder
+  readonly 1: Hierarchy; // Nested folders
+}
+interface Hierarchy extends Array<string | HierarchyNode> { }
+
+type ErrorFn = (hierarchy: KubernetesObject) => Result;
+
+interface TestCase {
+  file: string;
+  expected: Hierarchy;
+  parent?: { folder: string };
+  annotations?: Annotations;
+  errors?: ErrorFn[];
+}
+
 describe('generateFolders', () => {
-  const tests = [
+  const tests: TestCase[] = [
     {
       file: 'simple_v1',
       expected: [
@@ -180,7 +197,7 @@ describe('generateFolders', () => {
     {
       file: 'annotations_v3_none',
       expected: ['Dev', 'Prod'],
-      annotations: {} as Annotations,
+      annotations: {},
     },
     {
       file: 'annotations_v3_inherit_all',
@@ -224,7 +241,7 @@ describe('generateFolders', () => {
  * @param children array containing a representation of the folder structure
  * @param organization The name of the expected organization
  */
-function getHierarchyConfig(children: any[], parents: string[], rootRef: string, rootType: string, annotations: Annotations, nativeRef = false): KubernetesObject[] {
+function getHierarchyConfig(children: Hierarchy, parents: string[], rootRef: string, rootType: string, annotations: Annotations, nativeRef = false): KubernetesObject[] {
   let res: Folder[] = [];
   for (const child of children) {
     if (Array.isArray(child)) {

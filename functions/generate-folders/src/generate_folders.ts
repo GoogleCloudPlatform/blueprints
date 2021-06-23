@@ -1,4 +1,4 @@
-import { Configs, Result, KubernetesObject, kubernetesObjectResult } from 'kpt-functions';
+import { Configs, Result, KubernetesObject, kubernetesObjectResult, SOURCE_PATH_ANNOTATION, SOURCE_INDEX_ANNOTATION } from 'kpt-functions';
 import { isResourceHierarchy as isV3ResourceHierarchy, ResourceHierarchy as V3ResourceHierarchy } from './gen/com.google.cloud.blueprints.v1alpha3';
 import { isResourceHierarchy as isV2ResourceHierarchy, ResourceHierarchy as V2ResourceHierarchy } from './gen/dev.cft.v1alpha2';
 import { isResourceHierarchy as isV1ResourceHierarchy, ResourceHierarchy as V1ResourceHierarchy } from './gen/dev.cft.v1alpha1';
@@ -142,6 +142,9 @@ function filterNonInheritableAnnotations(annotations: Annotations): Annotations 
   const copy: Annotations = { ...annotations };
   delete copy['config.kubernetes.io/local-config'];
   delete copy['config.k8s.io/function'];
+  // Do not inherit kpt SDK's internal annotations.
+  delete copy[SOURCE_PATH_ANNOTATION];
+  delete copy[SOURCE_INDEX_ANNOTATION];
   return copy;
 }
 

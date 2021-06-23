@@ -208,6 +208,11 @@ describe('generateFolders', () => {
         'one-more-annotation': 'folders-will-inherit-too',
       },
     },
+    {
+      file: 'annotations_v3_internal',
+      expected: ['Dev', 'Prod'],
+      annotations: {},
+    },
   ];
 
   for (const test of tests) {

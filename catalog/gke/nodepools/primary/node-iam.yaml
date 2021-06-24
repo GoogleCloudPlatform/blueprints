@@ -1,0 +1,75 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Service Account for GKE nodes
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: gke-example-us-east4-primary # {"$kpt-set":"krm-service-account-name"}
+  namespace: config-control # {"$kpt-set":"platform-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: platform-project-id # {"$kpt-set":"platform-project-id"}
+spec:
+  displayName: gke-example-us-east4-primary # {"$kpt-set":"krm-service-account-name"}
+---
+# Allow fluentd to send logs to StackDriver
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: logwriter-gke-example-us-east4-primary # {"$kpt-set":"krm-logwriter-policy-name"}
+  namespace: config-control # {"$kpt-set":"platform-namespace"}
+spec:
+  memberFrom:
+    serviceAccountRef:
+      name: gke-example-us-east4-primary # {"$kpt-set":"krm-service-account-name"}
+      namespace: config-control # {"$kpt-set":"platform-namespace"}
+  role: roles/logging.logWriter
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: platform-project-id # {"$kpt-set":"platform-project-id"}
+---
+# Allow fluentd to send metrics to StackDriver
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: metricwriter-gke-example-us-east4-primary # {"$kpt-set":"krm-metricwriter-policy-name"}
+  namespace: config-control # {"$kpt-set":"platform-namespace"}
+spec:
+  memberFrom:
+    serviceAccountRef:
+      name: gke-example-us-east4-primary # {"$kpt-set":"krm-service-account-name"}
+      namespace: config-control # {"$kpt-set":"platform-namespace"}
+  role: roles/monitoring.metricWriter
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: platform-project-id # {"$kpt-set":"platform-project-id"}
+---
+# Allow kubelet/docker/containerd to read all artifacts/images in the platform-project-id project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: artifactreader-gke-example-us-east4-primary # {"$kpt-set":"krm-artifactreader-policy-name"}
+  namespace: config-control # {"$kpt-set":"platform-namespace"}
+spec:
+  memberFrom:
+    serviceAccountRef:
+      name: gke-example-us-east4-primary # {"$kpt-set":"krm-service-account-name"}
+      namespace: config-control # {"$kpt-set":"platform-namespace"}
+  role: roles/artifactregistry.reader
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: platform-project-id # {"$kpt-set":"platform-project-id"}

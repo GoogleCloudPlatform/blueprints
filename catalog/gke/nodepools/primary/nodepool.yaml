@@ -1,0 +1,58 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerNodePool
+metadata:
+  name: example-us-east4-primary # {"$kpt-set":"krm-nodepool-name"}
+  namespace: config-control # {"$kpt-set":"platform-namespace"}
+  annotations:
+    cnrm.cloud.google.com/project-id: platform-project-id # {"$kpt-set":"platform-project-id"}
+spec:
+  clusterRef:
+    name: example-us-east4 # {"$kpt-set":"cluster-name"}
+  location: us-east4 # {"$kpt-set":"location"}
+  # At least one node is required for cluster system components.
+  # initialNodeCount is per-zone, for regional clusters
+  initialNodeCount: 1
+  autoscaling:
+    # maxNodeCount is per-zone, for regional clusters
+    maxNodeCount: 2 # {"$kpt-set":"max-node-count"}
+    # minNodeCount is per-zone, for regional clusters
+    minNodeCount: 1
+  nodeConfig:
+    # diskSizeGb should include enough space for system components and the
+    # container image cache, in addition to space used by user workloads.
+    diskSizeGb: 100
+    # Default to SSD for higher IOPS / $ vs standard disks.
+    diskType: pd-ssd
+    # Default to e2, the most modern & efficient machine type family.
+    machineType: e2-standard-16
+    # Explicit scopes are required when using a custom serice account.
+    oauthScopes:
+    - storage-ro
+    - https://www.googleapis.com/auth/logging.write
+    - https://www.googleapis.com/auth/monitoring
+    serviceAccountRef:
+      name: gke-example-us-east4-primary # {"$kpt-set":"krm-service-account-name"}
+    labels:
+      gke.io/nodepool: primary # {"$kpt-set":"nodepool-name"}
+  # Default reduced to better fit on e2-standard-16 machines.
+  # 4 pods per vCPU, 8 pods per physical core, ~1 pod per GB of memory. 
+  maxPodsPerNode: 64
+  # Enable auto repairs and upgrades by default.
+  # Disable if you have workloads that cannot tollerate disruption.
+  management:
+    autoRepair: true
+    autoUpgrade: true

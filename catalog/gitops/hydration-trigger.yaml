@@ -43,7 +43,7 @@ spec:
             kpt pkg init "$${SRC_DIR}"
 
             echo "Executing Kpt Functions..."
-            kpt fn render "$${SRC_DIR}" --output="$${DEST_DIR}}"
+            kpt fn render "$${SRC_DIR}" --output="$${DEST_DIR}" --truncate-output=false
         entrypoint: /bin/bash
         id: "Apply Hydration and Validation"
       - name: gcr.io/cloud-builders/gcloud:latest
@@ -71,7 +71,7 @@ spec:
         entrypoint: /bin/sh
         id: "Push Changes To Deployment Repo"
         waitFor:
-          - "Evaluate hydrated changes"
+          - "Apply Hydration and Validation"
     timeout: 600s
   description: Cloud Build Trigger for building source (DRY) repository pushes. This runs all user defined kpt fns applies a blast radius analysis and pushes to the deployment (WET) repository.
   disabled: false

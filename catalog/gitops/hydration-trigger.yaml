@@ -28,7 +28,7 @@ spec:
         entrypoint: /bin/sh
         id: "Clone Deployment Repo"
         timeout: 300s
-      - name: gcr.io/kpt-dev/kpt:latest
+      - name: gcr.io/kpt-dev/kpt:v1.0.0-beta.1
         volumes:
           - name: hydrated-workspace
             path: /hydrated-workspace
@@ -38,49 +38,14 @@ spec:
             set -eo pipefail
             SRC_DIR="."
             DEST_DIR="/hydrated-workspace/config"
-            DEFAULT_CLUSTER_NAME_SELECTOR="${_ADMIN_CLUSTER_NAME}"
-            mkdir -p "$${DEST_DIR}"
-            echo "Default Cluster Name Selector: $${DEFAULT_CLUSTER_NAME_SELECTOR}"
+
+            echo "Initializing kpt"
+            kpt pkg init "$${SRC_DIR}"
+
             echo "Executing Kpt Functions..."
-            kpt fn source "$${SRC_DIR}" \
-            | kpt fn run \
-            | kpt cfg grep "kind=" \
-            | kpt cfg grep "metadata.annotations.config\.kubernetes\.io/local-config=true" --invert-match \
-            | kpt cfg grep "metadata.annotations.configmanagement\.gke\.io/cluster-selector" --invert-match \
-            | kpt cfg grep "metadata.annotations.configsync\.gke\.io/cluster-name-selector" --invert-match \
-            | kpt fn run --image gcr.io/kpt-fn/set-annotation:unstable \
-              -- "configsync.gke.io/cluster-name-selector=$${DEFAULT_CLUSTER_NAME_SELECTOR}" \
-            | kpt fn sink "$${DEST_DIR}"
-            mkdir -p "$${DEST_DIR}/clusterregistry"
-            echo "Merging clusters..."
-            kpt fn source "$${SRC_DIR}" \
-            | kpt cfg grep "kind=Cluster" --annotate=false \
-            | kpt cfg grep "apiVersion=clusterregistry\.k8s\.io/" --annotate=false \
-            > "$${DEST_DIR}/clusterregistry/clusters.yaml"
-            echo "Merging cluster selectors..."
-            kpt fn source "$${SRC_DIR}" \
-            | kpt cfg grep "kind=ClusterSelector" --annotate=false \
-            | kpt cfg grep "apiVersion=configmanagement\.gke\.io/" --annotate=false \
-            > "$${DEST_DIR}/clusterregistry/cluster-selectors.yaml"
+            kpt fn render "$${SRC_DIR}" --output="$${DEST_DIR}}"
         entrypoint: /bin/bash
         id: "Apply Hydration and Validation"
-      - name: gcr.io/yakima-eap/evaluate:latest
-        volumes:
-          - name: hydrated-workspace
-            path: /hydrated-workspace
-          - name: deployment-workspace
-            path: /deployment-workspace
-        args:
-          - '-c'
-          - |
-            set -e
-            printf "\n\nDiffing against deployment repo main branch:\n"
-            evaluate --before="/deployment-workspace/config" --after="/hydrated-workspace/config" --max_additions=1000 --max_modifications=1000 --max_deletions=1000
-        entrypoint: /bin/sh
-        id: "Evaluate hydrated changes"
-        waitFor:
-          - "Apply Hydration and Validation"
-          - "Clone Deployment Repo"
       - name: gcr.io/cloud-builders/gcloud:latest
         volumes:
           - name: hydrated-workspace

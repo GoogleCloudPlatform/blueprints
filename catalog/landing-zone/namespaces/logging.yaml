@@ -8,6 +8,8 @@ metadata:
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnectorContext
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: logging
 spec:
@@ -19,6 +21,7 @@ metadata:
   name: logging-sa
   namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   displayName: logging-sa
@@ -29,6 +32,7 @@ metadata:
   name: logging-sa-logadmin-permissions
   namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"logging-sa-ref"}
@@ -44,6 +48,7 @@ metadata:
   name: logging-sa-bigqueryadmin-permissions
   namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"logging-sa-ref"}
@@ -59,6 +64,7 @@ metadata:
   name: logging-sa-workload-identity-binding
   namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-logging] # {"$kpt-set":"logging-workload-identity-sa"}

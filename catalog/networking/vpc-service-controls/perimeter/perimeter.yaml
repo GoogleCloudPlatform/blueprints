@@ -1,6 +1,8 @@
 apiVersion: accesscontextmanager.cnrm.cloud.google.com/v1beta1
 kind: AccessContextManagerServicePerimeter
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
   name: spcregionperimeter # {"$kpt-set":"service-perimeter-name"}
   namespace: networking # {"$kpt-set":"namespace"}
 spec:

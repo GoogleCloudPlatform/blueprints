@@ -3,6 +3,8 @@ kind: ResourceManagerPolicy
 metadata:
   name: restrict-cloud-sql-public-ip
   namespace: policies
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
 spec:
   organizationRef:
     external: "123456789012" # {"$kpt-set":"org-id"}

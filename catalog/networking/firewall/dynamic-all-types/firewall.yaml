@@ -3,6 +3,8 @@ kind: ComputeFirewall
 metadata:
   name: firewall-name # {"$ref":"#/definitions/io.k8s.cli.setters.firewall-name"}
   namespace: firewalls-namespace # {"$ref":"#/definitions/io.k8s.cli.setters.firewalls-namespace"}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
 spec:
   networkRef:
     name: network-name # {"$ref":"#/definitions/io.k8s.cli.setters.network-name"}

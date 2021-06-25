@@ -4,6 +4,7 @@ metadata:
   name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
   namespace: networking # {"$kpt-set":"namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
     cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   description: "Compute VPN Gateway"
@@ -17,6 +18,7 @@ metadata:
   name: network-name-vpn-tunnel # {"$kpt-set":"vpn-tunnel-name"}
   namespace: networking # {"$kpt-set":"namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
     cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   peerIp: "15.0.0.120"
@@ -37,6 +39,7 @@ metadata:
   name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}
   namespace: networking # {"$kpt-set":"namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
     cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   location: us-central1 # {"$kpt-set":"region"}
@@ -48,6 +51,7 @@ metadata:
   name: network-name-vpn-esp-fr # {"$kpt-set":"vpn-esp-fr-name"}
   namespace: networking # {"$kpt-set":"namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
     cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   description: "Regional ESP forwarding rule"
@@ -66,6 +70,7 @@ metadata:
   name: acme-vpc-dev-vpn-udp500-fr # {"$kpt-set":"vpn-udp500-fr-name"}
   namespace: networking # {"$kpt-set":"namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
     cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   description: "Regional UDP 500 forwarding rule"
@@ -85,6 +90,7 @@ metadata:
   name: acme-vpc-dev-vpn-udp4500-fr # {"$kpt-set":"vpn-udp4500-fr-name"}
   namespace: networking # {"$kpt-set":"namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
     cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   description: "Regional UDP 4500 forwarding rule"

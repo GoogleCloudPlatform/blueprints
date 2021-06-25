@@ -3,6 +3,8 @@ kind: ComputeNetworkPeering
 metadata:
   name: local-network-to-peer-network # {"$kpt-set":"local-to-peer"}
   namespace: namespace # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
 spec:
   exportCustomRoutes: false
   importCustomRoutes: false
@@ -20,6 +22,8 @@ kind: ComputeNetworkPeering
 metadata:
   name: peer-network-to-local-network # {"$kpt-set":"peer-to-local"}
   namespace: namespace # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
 spec:
   exportCustomRoutes: false
   importCustomRoutes: false

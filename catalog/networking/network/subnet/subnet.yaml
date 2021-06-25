@@ -4,6 +4,7 @@ metadata:
   name: network-name-subnetwork # {"$kpt-set":"subnetwork-name"}
   namespace: networking # {"$kpt-set":"namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
     cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   ipCidrRange: 10.2.0.0/16 # {"$kpt-set":"ip-cidr-range"}

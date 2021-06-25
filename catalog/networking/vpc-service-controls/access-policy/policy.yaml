@@ -2,6 +2,7 @@
   kind: AccessContextManagerAccessPolicy
   metadata:
     annotations:
+      cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
       cnrm.cloud.google.com/organization-id: example-org # {"$kpt-set":"org-id"}
     name: org-access-policy # {"$kpt-set":"access-policy-name"}
     namespace: networking # {"$kpt-set":"namespace"}

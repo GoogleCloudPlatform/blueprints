@@ -3,6 +3,8 @@ kind: ComputeFirewall
 metadata:
   name: network-name-fw-deny-all-egress # {"$kpt-set":"network-fw-deny-all-egress"}
   namespace: firewalls-namespace # {"$kpt-set":"firewalls-namespace"}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
 spec:
   networkRef:
     name: network-name # {"$kpt-set":"network-name"}

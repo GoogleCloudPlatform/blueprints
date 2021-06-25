@@ -2,6 +2,7 @@
   kind: AccessContextManagerAccessLevel
   metadata:
     annotations:
+      cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
       cnrm.cloud.google.com/organization-id: example-org  # {"$kpt-set":"org-id"}
     name: alregionperimeter  # {"$kpt-set":"access-level-name"}
     namespace: networking # {"$kpt-set":"namespace"}

@@ -1,43 +1,43 @@
-# Config Sync GCP ServiceAccount (GSA)
 # This GSA can be used to grant Config Sync additional permissions with IAMPolicyMember
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
+apiVersion: iam.cnrm.cloud.google.com/v1beta1 # Config Sync GCP ServiceAccount (GSA)
 kind: IAMServiceAccount
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/csr-gitops/v0.1.0
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
   name: sync-cluster-name # {"$kpt-set":"configsync-gsa-name"}
   namespace: config-control # {"$kpt-set":"namespace"}
-  annotations:
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   displayName: sync-cluster-name # {"$kpt-set":"configsync-gsa-name"}
 ---
-# Allow Config Sync Kubernetes ServiceAccount (KSA) to use the Config Sync GSA
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
+apiVersion: iam.cnrm.cloud.google.com/v1beta1 # Allow Config Sync Kubernetes ServiceAccount (KSA) to use the Config Sync GSA
 kind: IAMPolicyMember
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/csr-gitops/v0.1.0
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
   name: sync-cluster-name # {"$kpt-set":"configsync-gsa-name"}
   namespace: config-control # {"$kpt-set":"namespace"}
-  annotations:
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   member: serviceAccount:project-id.svc.id.goog[config-management-system/importer] # {"$kpt-set":"configsync-importer-iam-member"}
-  role: roles/iam.workloadIdentityUser
   resourceRef:
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
     name: sync-cluster-name # {"$kpt-set":"configsync-gsa-name"}
+  role: roles/iam.workloadIdentityUser
 ---
-# Allow Config Sync GSA to read from CSR repos in the CSR project
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
+apiVersion: iam.cnrm.cloud.google.com/v1beta1 # Allow Config Sync GSA to read from CSR repos in the CSR project
 kind: IAMPolicyMember
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/csr-gitops/v0.1.0
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
   name: source-reader-sync-cluster-name-project-id # {"$kpt-set":"krm-source-reader-policy-name"}
   namespace: config-control # {"$kpt-set":"namespace"}
-  annotations:
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
-  member: "serviceAccount:sync-cluster-name@project-id.iam.gserviceaccount.com" # {"$kpt-set":"configsync-gsa-iam-member"}
-  role: roles/source.reader
+  member: serviceAccount:sync-cluster-name@project-id.iam.gserviceaccount.com # {"$kpt-set":"configsync-gsa-iam-member"}
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
     external: project-id # {"$kpt-set":"project-id"}
+    kind: Project
+  role: roles/source.reader

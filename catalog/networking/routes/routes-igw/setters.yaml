@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  namespace: networking
+  destination-range: 0.0.0.0/0
+  network-name: network-name
+  project-id: project-id
+  route-name: route-example

@@ -1,17 +1,8 @@
-apiVersion: kpt.dev/v1alpha2
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: firewall-common-rules
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1
-      configMap:
-        allow-default-egress: "true"
-        dont-allow-google-apis: "true"
-        dont-allow-windows-kms: "true"
-        enable-logging: "false"
-        firewall-project-id: firewall-project-id
-        firewalls-namespace: firewalls-namespace
-        google-api-cidr: '[199.36.153.8/30]'
-        network-name: network-name
-        priority: "10000"
+      configPath: setters.yaml

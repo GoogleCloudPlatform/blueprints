@@ -1,17 +1,8 @@
-apiVersion: kpt.dev/v1alpha2
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: dns-record-set
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1
-      configMap:
-        domain: example.com.
-        managed-zone-name: foo
-        name: ""
-        namespace: networking
-        project-id: project-id
-        record-set-name: record-set-example
-        records: '[0.0.0.0]'
-        ttl: "300"
-        type: A
+      configPath: setters.yaml

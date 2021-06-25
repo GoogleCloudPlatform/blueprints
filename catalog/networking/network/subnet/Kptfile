@@ -1,15 +1,8 @@
-apiVersion: kpt.dev/v1alpha2
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: subnetwork-package
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1
-      configMap:
-        ip-cidr-range: 10.2.0.0/16
-        namespace: networking
-        network-name: network-name
-        prefix: ""
-        project-id: project-id
-        region: us-central1
-        source-subnetwork-ip-ranges-to-nat: ALL_SUBNETWORKS_ALL_IP_RANGES
+      configPath: setters.yaml

@@ -1,11 +1,8 @@
-apiVersion: kpt.dev/v1alpha2
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: network-peering
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1
-      configMap:
-        local-network: local-network
-        namespace: networking
-        peer-network: peer-network
+      configPath: setters.yaml

@@ -1,14 +1,8 @@
-apiVersion: kpt.dev/v1alpha2
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: dns-forwarding-managed-zone
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1
-      configMap:
-        domain: example.com.
-        forwarding-target-address: 192.168.0.1
-        managed-zone-name: private-managed-zone
-        namespace: networking
-        network-name: example-network
-        project-id: project-id
+      configPath: setters.yaml

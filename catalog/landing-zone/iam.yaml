@@ -1,6 +1,8 @@
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
   name: org-admins-iam
   namespace: config-control # {"$kpt-set":"management-namespace"}
 spec:
@@ -14,6 +16,8 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
   name: billing-admins-iam
   namespace: config-control # {"$kpt-set":"management-namespace"}
 spec:

@@ -4,6 +4,7 @@ metadata:
   name: projects-sa
   namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   displayName: projects-sa
@@ -14,6 +15,7 @@ metadata:
   name: projects-sa-projectcreator-permissions
   namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"projects-sa-ref"}
@@ -29,6 +31,7 @@ metadata:
   name: projects-sa-projectmover-permissions
   namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"projects-sa-ref"}
@@ -44,6 +47,7 @@ metadata:
   name: projects-sa-projectdeleter-permissions
   namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:projects-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"projects-sa-ref"}

@@ -4,6 +4,7 @@ metadata:
   name: policies-sa
   namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   displayName: policies-sa
@@ -14,6 +15,7 @@ metadata:
   name: policies-sa-orgpolicyadmin-permissions
   namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:policies-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"policies-sa-ref"}
@@ -29,6 +31,7 @@ metadata:
   name: policies-sa-workload-identity-binding
   namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-policies] # {"$kpt-set":"policies-workload-identity-sa"}
@@ -48,6 +51,8 @@ metadata:
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnectorContext
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: policies
 spec:

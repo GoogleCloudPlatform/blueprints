@@ -1,19 +1,19 @@
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSManagedZone
 metadata:
-  name: dnsmanagedzone-sample # {"$kpt-set":"managed-zone-name"}
-  namespace: networking # {"$kpt-set":"namespace"}
+  name: dnsmanagedzone-sample # kpt-set: ${managed-zone-name}
+  namespace: networking # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
-  dnsName: "example.com." # {"$kpt-set":"domain"}
-  visibility: private
-  privateVisibilityConfig:
-    networks:
-    - networkRef:
-        name: example-network # {"$kpt-set":"network-name"}
-        namespace: networking # {"$kpt-set":"namespace"}
+  dnsName: "example.com." # kpt-set: ${domain}
   forwardingConfig:
     targetNameServers:
-    - ipv4Address: "192.168.0.1" # {"$kpt-set":"forwarding-target-address"}
+      - ipv4Address: "192.168.0.1" # kpt-set: ${forwarding-target-address}
+  privateVisibilityConfig:
+    networks:
+      - networkRef:
+          name: example-network # kpt-set: ${network-name}
+          namespace: networking # kpt-set: ${namespace}
+  visibility: private

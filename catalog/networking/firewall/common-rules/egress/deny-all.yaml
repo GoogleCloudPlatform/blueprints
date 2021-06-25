@@ -1,19 +1,19 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
-  name: network-name-fw-deny-all-egress # {"$kpt-set":"network-fw-deny-all-egress"}
-  namespace: firewalls-namespace # {"$kpt-set":"firewalls-namespace"}
+  name: network-name-fw-deny-all-egress # kpt-set: ${network-name}-fw-deny-all-egress
+  namespace: firewalls-namespace # kpt-set: ${firewalls-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
 spec:
-  networkRef:
-    name: network-name # {"$kpt-set":"network-name"}
-  enableLogging: false # {"$kpt-set":"enable-logging"}
   priority: 65535
-  disabled: true # {"$kpt-set":"allow-default-egress"}
   deny:
-  - protocol: tcp
-  - protocol: udp
-  direction: EGRESS
+    - protocol: tcp
+    - protocol: udp
   destinationRanges:
-   - "0.0.0.0/0"
+    - "0.0.0.0/0"
+  direction: EGRESS
+  disabled: true # kpt-set: ${allow-default-egress}
+  enableLogging: false # kpt-set: ${enable-logging}
+  networkRef:
+    name: network-name # kpt-set: ${network-name}

@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  billing-account-id: AAAAAA-BBBBBB-CCCCCC
+  folder-name: name.of.folder
+  folder-namespace: hierarchy
+  management-namespace: config-control
+  management-project-id: management-project-id
+  networking-namespace: networking
+  project-id: project-id
+  projects-namespace: projects

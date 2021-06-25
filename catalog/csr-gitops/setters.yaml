@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  namespace: config-control
+  cluster-name: cluster-name
+  deployment-repo: deployment-repo
+  project-id: project-id
+  project-number: "1234567890123"
+  source-repo: source-repo

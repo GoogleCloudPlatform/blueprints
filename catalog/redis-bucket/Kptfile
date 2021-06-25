@@ -1,64 +1,8 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: redis-bucket
-openAPI:
-  definitions:
-    io.k8s.cli.setters.name:
-      x-k8s-cli:
-        setter:
-          name: name
-          value: redis-bucket
-          required: true
-      description: instance name
-    io.k8s.cli.substitutions.networkref:
-      x-k8s-cli:
-        substitution:
-          name: networkref
-          pattern: projects/${PROJECT_ID}/global/networks/${NETWORK}
-          values:
-          - marker: ${PROJECT_ID}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
-          - marker: ${NETWORK}
-            ref: '#/definitions/io.k8s.cli.setters.network'
-    io.k8s.cli.substitutions.redis-bucket-name:
-      x-k8s-cli:
-        substitution:
-          name: services-redis
-          pattern: ${PROJECT_ID}-${NAME}
-          values:
-          - marker: ${PROJECT_ID}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
-          - marker: ${NAME}
-            ref: '#/definitions/io.k8s.cli.setters.name'
-    io.k8s.cli.setters.storage-class:
-      x-k8s-cli:
-        setter:
-          name: storage-class
-          value: standard
-      description: Bucket storage class
-    io.k8s.cli.setters.network:
-      x-k8s-cli:
-        setter:
-          name: network
-          value: default
-      description: instance network
-    io.k8s.cli.setters.region:
-      x-k8s-cli:
-        setter:
-          name: region
-          value: us-central1
-      description: instance region
-    io.k8s.cli.setters.project-id:
-      x-k8s-cli:
-        setter:
-          name: project-id
-          value: $DEFAULT_PROJECT
-          required: true
-      description: Project ID for instance
-    io.k8s.cli.setters.namespace:
-      x-k8s-cli:
-        setter:
-          name: namespace
-          value: config-control
-      description: Namespace name for pipeline resources
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

@@ -1,0 +1,34 @@
+apiVersion: blueprints.cloud.google.com/v1alpha3
+kind: ResourceHierarchy
+metadata:
+  name: root-hierarchy
+  namespace: hierarchy # {"$kpt-set":"namespace"}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:hierarchy:bu/v0.2.0
+    config.kubernetes.io/local-config: "true"
+spec:
+  config:
+    - retail:
+        - shared:
+            $subtree: environments
+        - apps:
+            $subtree: environments
+    - financial:
+        - web:
+            $subtree: environments
+        - core-services:
+            $subtree: environments
+    - risk-management:
+        - core-service:
+            $subtree: environments
+        - data-and-analysis:
+            $subtree: environments
+    - commercial:
+        - ctrl-service:
+            $subtree: environments
+  parentRef:
+    external: "123456789012" # {"$kpt-set":"org-id"}
+  subtrees:
+    environments:
+      - dev
+      - prod

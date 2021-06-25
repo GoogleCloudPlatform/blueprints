@@ -6,8 +6,8 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
 spec:
-  organizationRef:
-    external: "123456789012" # {"$kpt-set":"org-id"}
-  constraint: "constraints/compute.disableGuestAttributesAccess"
   booleanPolicy:
     enforced: true
+  constraint: "constraints/compute.disableGuestAttributesAccess"
+  organizationRef:
+    external: "123456789012" # kpt-set: ${org-id}

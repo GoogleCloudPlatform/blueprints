@@ -1,30 +1,8 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: dns-policy
-openAPI:
-  definitions:
-    io.k8s.cli.setters.namespace:
-      description: Namespace configured for managing resources defined in this package
-      x-k8s-cli:
-        setter:
-          name: namespace
-          value: networking
-    io.k8s.cli.setters.project-id:
-      description: Project ID for dns-policy
-      x-k8s-cli:
-        setter:
-          name: project-id
-          value: project-id
-    io.k8s.cli.setters.dns-policy-name:
-      description: DNS Policy name
-      x-k8s-cli:
-        setter:
-          name: dns-policy-name
-          value: default-dns-policy
-    io.k8s.cli.setters.network-name:
-      description: VPC network to bind to
-      x-k8s-cli:
-        setter:
-          name: network-name
-          value: example-network
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

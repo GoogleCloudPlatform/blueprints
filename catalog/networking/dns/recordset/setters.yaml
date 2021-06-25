@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  name: ""
+  namespace: networking
+  type: A
+  domain: example.com.
+  managed-zone-name: foo
+  project-id: project-id
+  record-set-name: record-set-example
+  records: |
+    - 0.0.0.0
+  ttl: "300"

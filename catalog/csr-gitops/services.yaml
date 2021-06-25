@@ -1,17 +1,17 @@
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
+  name: sourcerepo.googleapis.com
+  namespace: config-control # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/csr-gitops/v0.2.0
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
-  name: sourcerepo.googleapis.com
-  namespace: config-control # {"$kpt-set":"namespace"}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
+  name: cloudbuild.googleapis.com
+  namespace: config-control # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/csr-gitops/v0.2.0
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
-  name: cloudbuild.googleapis.com
-  namespace: config-control # {"$kpt-set":"namespace"}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}

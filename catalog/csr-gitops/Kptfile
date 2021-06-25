@@ -1,66 +1,10 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: csr-git-ops-pipeline
-packageMetadata:
-  shortDescription: This blueprint generates a GitOps CI/CD pipeline for use with ACM
-openAPI:
-  definitions:
-    io.k8s.cli.setters.source-repo:
-      description: Name of the source repository where your DRY configuration will
-        live
-      x-k8s-cli:
-        setter:
-          name: source-repo
-          value: source-repo
-    io.k8s.cli.setters.deployment-repo:
-      description: Name of the deployment repository where your hydrated (WET) configuration
-        will live
-      x-k8s-cli:
-        setter:
-          name: deployment-repo
-          value: deployment-repo
-    io.k8s.cli.setters.cluster-name:
-      description: Name of the cluster according to Config Sync
-      x-k8s-cli:
-        setter:
-          name: cluster-name
-          value: cluster-name
-          required: true
-    io.k8s.cli.setters.namespace:
-      description: Namespace to store Git Ops pipeline components under
-      x-k8s-cli:
-        setter:
-          name: namespace
-          value: config-control
-    io.k8s.cli.setters.project-id:
-      description: Project ID to actuate Config Connector resources in
-      x-k8s-cli:
-        setter:
-          name: project-id
-          value: project-id
-          required: true
-    io.k8s.cli.substitutions.cloudbuild-gsa-member:
-      x-k8s-cli:
-        substitution:
-          name: cloudbuild-gsa-member
-          pattern: serviceAccount:${project-number}@cloudbuild.gserviceaccount.com
-          values:
-          - marker: ${project-number}
-            ref: '#/definitions/io.k8s.cli.setters.project-number'
-    io.k8s.cli.setters.project-number:
-      description: Project number of the respective project ID. This can be found
-        in the Google Cloud Console dashboard page for your project
-      x-k8s-cli:
-        setter:
-          name: project-number
-          value: "1234567890123"
-          required: true
-    io.k8s.cli.substitutions.trigger-name:
-      x-k8s-cli:
-        substitution:
-          name: trigger-name
-          pattern: ${source-repo}-cicd-trigger
-          values:
-          - marker: ${source-repo}
-            ref: '#/definitions/io.k8s.cli.setters.source-repo'
+info:
+  description: This blueprint generates a GitOps CI/CD pipeline for use with ACM
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

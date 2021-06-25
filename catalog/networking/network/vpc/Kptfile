@@ -1,40 +1,8 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: vpc-package
-openAPI:
-  definitions:
-    io.k8s.cli.setters.network-name:
-      maxLength: 48
-      minLength: 1
-      pattern: '^[a-z]([-a-z0-9]*[a-z0-9])?$'
-      type: string
-      description: Network name
-      x-k8s-cli:
-        setter:
-          name: network-name
-          value: network-name
-    io.k8s.cli.setters.namespace:
-      description: Namespace configured for managing resources defined in this package
-      x-k8s-cli:
-        setter:
-          name: namespace
-          value: networking
-    io.k8s.cli.setters.project-id:
-      maxLength: 30
-      minLength: 6
-      pattern: '^[a-z]([-a-z0-9]*[a-z0-9])?$'
-      type: string
-      description: Project to host network resources.
-      x-k8s-cli:
-        setter:
-          name: project-id
-          value: project-id
-    io.k8s.cli.substitutions.services-compute:
-      x-k8s-cli:
-        substitution:
-          name: services-compute
-          pattern: ${project-id}-compute
-          values:
-          - marker: ${project-id}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

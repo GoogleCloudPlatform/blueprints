@@ -1,92 +1,10 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: configsync-csr
-packageMetadata:
-  shortDescription: Configure Config Sync to use Cloud Source Repository (CSR)
-openAPI:
-  definitions:
-    io.k8s.cli.setters.project-id:
-      description: ID of the Project that contains the Config Sync GKE cluster and CSR repo
-      x-k8s-cli:
-        setter:
-          name: project-id
-          value: project-id
-    io.k8s.cli.setters.cluster-name:
-      description: Name of the Config Sync GKE cluster
-      x-k8s-cli:
-        setter:
-          name: cluster-name
-          value: cluster-name
-    io.k8s.cli.setters.namespace:
-      description: Namespace for managing Config Sync IAM resources
-      x-k8s-cli:
-        setter:
-          name: namespace
-          value: config-control
-    io.k8s.cli.setters.deployment-repo:
-      description: Name of the CSR repo for Config Sync to watch
-      x-k8s-cli:
-        setter:
-          name: deployment-repo
-          value: deployment-repo
-    io.k8s.cli.setters.configsync-dir:
-      description: Git directory for Config Sync to watch
-      x-k8s-cli:
-        setter:
-          name: configsync-dir
-          value: config
-    io.k8s.cli.substitutions.configsync-gsa-iam-member:
-      x-k8s-cli:
-        substitution:
-          name: configsync-gsa-iam-member
-          pattern: serviceAccount:${configsync-gsa-email}
-          values:
-          - marker: ${configsync-gsa-email}
-            ref: '#/definitions/io.k8s.cli.substitutions.configsync-gsa-email'
-    io.k8s.cli.substitutions.configsync-gsa-name:
-      x-k8s-cli:
-        substitution:
-          name: configsync-gsa-name
-          pattern: sync-${cluster-name}
-          values:
-          - marker: ${cluster-name}
-            ref: '#/definitions/io.k8s.cli.setters.cluster-name'
-    io.k8s.cli.substitutions.configsync-gsa-email:
-      x-k8s-cli:
-        substitution:
-          name: configsync-gsa-email
-          pattern: ${configsync-gsa-name}@${project-id}.iam.gserviceaccount.com
-          values:
-          - marker: ${project-id}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
-          - marker: ${configsync-gsa-name}
-            ref: '#/definitions/io.k8s.cli.substitutions.configsync-gsa-name'
-    io.k8s.cli.substitutions.configsync-importer-iam-member:
-      x-k8s-cli:
-        substitution:
-          name: configsync-importer-iam-member
-          pattern: serviceAccount:${project-id}.svc.id.goog[config-management-system/importer]
-          values:
-          - marker: ${project-id}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
-    io.k8s.cli.substitutions.configsync-repo-url:
-      x-k8s-cli:
-        substitution:
-          name: configsync-repo-url
-          pattern: https://source.developers.google.com/p/${project-id}/r/${deployment-repo}
-          values:
-          - marker: ${project-id}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
-          - marker: ${deployment-repo}
-            ref: '#/definitions/io.k8s.cli.setters.deployment-repo'
-    io.k8s.cli.substitutions.krm-source-reader-policy-name:
-      x-k8s-cli:
-        substitution:
-          name: krm-source-reader-policy-name
-          pattern: source-reader-${configsync-gsa-name}-${project-id}
-          values:
-          - marker: ${configsync-gsa-name}
-            ref: '#/definitions/io.k8s.cli.substitutions.configsync-gsa-name'
-          - marker: ${project-id}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
+info:
+  description: Configure Config Sync to use Cloud Source Repository (CSR)
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

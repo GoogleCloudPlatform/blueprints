@@ -1,24 +1,24 @@
 apiVersion: accesscontextmanager.cnrm.cloud.google.com/v1beta1
 kind: AccessContextManagerServicePerimeter
 metadata:
+  name: spcregionperimeter # kpt-set: sp${perimeter-name}${suffix}
+  namespace: networking # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
-  name: spcregionperimeter # {"$kpt-set":"service-perimeter-name"}
-  namespace: networking # {"$kpt-set":"namespace"}
 spec:
   status:
-    accessLevels:
-    - name: alregionperimeter # {"$kpt-set":"access-level-name"}
     resources:
-    - projectRef:
-        name: example-project # {"$kpt-set":"project-id"}
-        namespace: projects # {"$kpt-set":"project-namespace"}
-    restrictedServices: # {"$kpt-set":"restricted-services"}
-    - "storage.googleapis.com"
-    - "bigquery.googleapis.com"
-  title: spregionperimeter Service Perimeter # {"$kpt-set":"service-perimeter-title"}
+      - projectRef:
+          name: example-project # kpt-set: ${project-id}
+          namespace: projects # kpt-set: ${project-namespace}
+    accessLevels:
+      - name: alregionperimeter # kpt-set: al${perimeter-name}${suffix}
+    restrictedServices: # kpt-set: ${restricted-services}
+      - "storage.googleapis.com"
+      - "bigquery.googleapis.com"
   accessPolicyRef:
-    name: org-access-policy  # {"$kpt-set":"access-policy-name"}
-    namespace: networking # {"$kpt-set":"namespace"}
+    name: org-access-policy # kpt-set: ${access-policy-name}
+    namespace: networking # kpt-set: ${namespace}
   description: Service Perimeter managed by Config Connector
   perimeterType: PERIMETER_TYPE_REGULAR
+  title: spregionperimeter Service Perimeter # kpt-set: ${perimeter-name} ${suffix} Service Perimeter

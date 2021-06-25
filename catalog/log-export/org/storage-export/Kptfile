@@ -1,79 +1,10 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: storage-export
-packageMetadata:
-  shortDescription: Creates a log export on a organization that sinks to Cloud Storage
-openAPI:
-  definitions:
-    io.k8s.cli.setters.namespace:
-      description: your KCC-enabled Kubernetes namespace to store your resources in
-      x-k8s-cli:
-        setter:
-          name: namespace
-          value: my-namespace
-    io.k8s.cli.substitutions.log-sink-name:
-      x-k8s-cli:
-        substitution:
-          name: log-sink-name
-          pattern: ${org-id}-storagesink
-          values:
-          - marker: ${org-id}
-            ref: '#/definitions/io.k8s.cli.setters.org-id'
-    io.k8s.cli.setters.filter:
-      description: The filter to apply when exporting logs. Only log entries that
-        match the filter are exported. Default is '' which exports all logs.
-      x-k8s-cli:
-        setter:
-          name: filter
-          value: ""
-    io.k8s.cli.setters.storage-bucket-name:
-      description: The name of the storage bucket to be created and used for log entries
-        matching the filter.
-      x-k8s-cli:
-        setter:
-          name: storage-bucket-name
-          value: my-storage-bucket
-    io.k8s.cli.setters.bucket-policy-only:
-      description: Enables Bucket Policy Only access to a bucket.
-      type: boolean
-      x-k8s-cli:
-        setter:
-          name: bucket-policy-only
-          value: "false"
-    io.k8s.cli.setters.location:
-      description: The location of the storage bucket.
-      x-k8s-cli:
-        setter:
-          name: location
-          value: US
-    io.k8s.cli.setters.storage-class:
-      description: The storage class of the storage bucket.
-      x-k8s-cli:
-        setter:
-          name: storage-class
-          value: MULTI_REGIONAL
-    io.k8s.cli.setters.org-id:
-      description: ID of the organization to sink logs from.
-      x-k8s-cli:
-        setter:
-          name: org-id
-          value: "123456789012"
-    io.k8s.cli.setters.project-id:
-      maxLength: 30
-      minLength: 6
-      pattern: '^[a-z]([-a-z0-9]*[a-z0-9])?$'
-      type: string
-      description: The project ID of the destination of your log exports
-      x-k8s-cli:
-        setter:
-          name: project-id
-          value: my-project-id
-    io.k8s.cli.substitutions.services-storage:
-      x-k8s-cli:
-        substitution:
-          name: services-storage
-          pattern: ${project-id}-storage
-          values:
-          - marker: ${project-id}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
+info:
+  description: Creates a log export on a organization that sinks to Cloud Storage
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

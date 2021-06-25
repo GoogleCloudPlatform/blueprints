@@ -1,12 +1,12 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
 metadata:
-  name: network-name # {"$kpt-set":"network-name"}
-  namespace: networking # {"$kpt-set":"namespace"}
+  name: network-name # kpt-set: ${network-name}
+  namespace: networking # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
-  routingMode: GLOBAL
   autoCreateSubnetworks: false
   deleteDefaultRoutesOnCreate: false
+  routingMode: GLOBAL

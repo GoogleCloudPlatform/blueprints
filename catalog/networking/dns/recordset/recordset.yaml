@@ -1,17 +1,17 @@
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSRecordSet
 metadata:
-  name: dnsrecordset-sample-a # {"$kpt-set":"record-set-name"}
-  namespace: networking # {"$kpt-set":"namespace"}
+  name: dnsrecordset-sample-a # kpt-set: ${record-set-name}
+  namespace: networking # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
-  name: "www.example.com." # {"$kpt-set":"rr-domain"}
-  type: "A" # {"$kpt-set":"type"}
-  ttl: 300 # {"$kpt-set":"ttl"}
+  name: "www.example.com." # kpt-set: ${name}${domain}
+  type: "A" # kpt-set: ${type}
   managedZoneRef:
-    name: dnsrecordset-dep-a # {"$kpt-set":"managed-zone-name"}
-    namespace: networking # {"$kpt-set":"namespace"}
-  rrdatas: # {"$kpt-set":"records"}
-  - "0.0.0.0"
+    name: dnsrecordset-dep-a # kpt-set: ${managed-zone-name}
+    namespace: networking # kpt-set: ${namespace}
+  rrdatas: # kpt-set: ${records}
+    - "0.0.0.0"
+  ttl: 300 # kpt-set: ${ttl}

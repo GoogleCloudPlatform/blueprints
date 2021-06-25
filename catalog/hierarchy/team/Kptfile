@@ -1,21 +1,12 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: team-hierarchy
-packageMetadata:
-  shortDescription: Resource hierarchy blueprint for GCP
-openAPI:
-  definitions:
-    io.k8s.cli.setters.org-id:
-      type: string
-      description: Organization ID of where your folder hierarchy should be generated
-      x-k8s-cli:
-        setter:
-          name: org-id
-          value: "123456789012"
-    io.k8s.cli.setters.namespace:
-      description: Namespace to apply your k8s resources to. Cannot be cluster-scoped
-      x-k8s-cli:
-        setter:
-          name: namespace
-          value: hierarchy
+info:
+  description: Resource hierarchy blueprint for GCP
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml
+    - image: gcr.io/yakima-eap/generate-folders:latest
+      configPath: root-hierarchy.yaml

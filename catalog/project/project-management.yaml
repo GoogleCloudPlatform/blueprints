@@ -2,61 +2,61 @@
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
-  name: kcc-project-id # {"$kpt-set":"project-id-sa"}
-  namespace: config-control # {"$kpt-set":"management-namespace"}
+  name: kcc-project-id # kpt-set: kcc-${project-id}
+  namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:project/v0.2.0
-    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
-  displayName: kcc-project-id # {"$kpt-set":"project-id-sa"}
+  displayName: kcc-project-id # kpt-set: kcc-${project-id}
 ---
 # Grant KCC owner of this project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: kcc-project-id-owners-permissions # {"$kpt-set":"project-id-sa-owners-permissions"}
-  namespace: projects # {"$kpt-set":"projects-namespace"}
+  name: kcc-project-id-owners-permissions # kpt-set: kcc-${project-id}-owners-permissions
+  namespace: projects # kpt-set: ${projects-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:project/v0.2.0
-    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
-  member: "serviceAccount:kcc-project-id@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"project-id-sa-ref"}
-  role: roles/owner
+  member: "serviceAccount:kcc-project-id@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:kcc-${project-id}@${management-project-id}.iam.gserviceaccount.com
   resourceRef:
+    name: project-id # kpt-set: ${project-id}
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    name: project-id # {"$kpt-set":"project-id"}
+  role: roles/owner
 ---
 # Allow KCC's Kubernetes Service Account to use the GCP ServiceAccount
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: project-id-sa-workload-identity-binding # {"$kpt-set":"workload-identity-binding"}
-  namespace: config-control # {"$kpt-set":"management-namespace"}
+  name: project-id-sa-workload-identity-binding # kpt-set: ${project-id}-sa-workload-identity-binding
+  namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:project/v0.2.0
-    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
-  member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-project-id] # {"$kpt-set":"workload-identity-sa"}
-  role: roles/iam.workloadIdentityUser
+  member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-project-id] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-${project-id}]
   resourceRef:
+    name: kcc-project-id # kpt-set: kcc-${project-id}
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
-    name: kcc-project-id # {"$kpt-set":"project-id-sa"}
+  role: roles/iam.workloadIdentityUser
 ---
 # Create namespace in the ACP cluster to manage KCC resources in this project
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: project-id # {"$kpt-set":"project-namespace"}
+  name: project-id # kpt-set: ${project-id}
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 ---
 # Enable KCC for this namespace
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnectorContext
 metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
-  namespace: project-id # {"$kpt-set":"project-namespace"}
+  namespace: project-id # kpt-set: ${project-id}
 spec:
-  googleServiceAccount: kcc-project-id@management-project-id.iam.gserviceaccount.com # {"$kpt-set":"project-id-sa-email"}
+  googleServiceAccount: kcc-project-id@management-project-id.iam.gserviceaccount.com # kpt-set: kcc-${project-id}@${management-project-id}.iam.gserviceaccount.com

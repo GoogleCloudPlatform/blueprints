@@ -1,98 +1,10 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: bigquery-export
-packageMetadata:
-  shortDescription: Creates a log export on a folder that sinks to BigQuery
-openAPI:
-  definitions:
-    io.k8s.cli.setters.namespace:
-      description: your KCC-enabled Kubernetes namespace to store your resources in
-      x-k8s-cli:
-        setter:
-          name: namespace
-          value: my-namespace
-    io.k8s.cli.setters.project-id:
-      maxLength: 30
-      minLength: 6
-      pattern: '^[a-z]([-a-z0-9]*[a-z0-9])?$'
-      type: string
-      description: The project ID of the destination of your log exports
-      x-k8s-cli:
-        setter:
-          name: project-id
-          value: my-project-id
-    io.k8s.cli.substitutions.iam-policy-project-subst:
-      x-k8s-cli:
-        substitution:
-          name: iam-policy-project-subst
-          pattern: projects/${project-id}
-          values:
-          - marker: ${project-id}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
-    io.k8s.cli.setters.dataset-name:
-      description: Friendly name of your BigQuery dataset
-      x-k8s-cli:
-        setter:
-          name: dataset-name
-          value: audit-logs
-    io.k8s.cli.setters.dataset-description:
-      description: Description for your BigQuery dataset
-      x-k8s-cli:
-        setter:
-          name: dataset-description
-          value: BigQuery audit logs for folder
-    io.k8s.cli.setters.dataset-location:
-      description: 'Location for your BigQuery dataset: https://cloud.google.com/bigquery/docs/dataset-locations'
-      x-k8s-cli:
-        setter:
-          name: dataset-location
-          value: US
-    io.k8s.cli.setters.delete-contents-on-destroy:
-      type: boolean
-      description: Whether to delete the contents of the BigQuery dataset if the resource
-        gets deleted via KCC
-      x-k8s-cli:
-        setter:
-          name: delete-contents-on-destroy
-          value: "false"
-    io.k8s.cli.setters.default-table-expiration-ms:
-      minimum: 3600000
-      type: integer
-      format: int64
-      description: The default lifetime of all tables in the dataset, in milliseconds.
-        The minimum value is 3600000 milliseconds (one hour)
-      x-k8s-cli:
-        setter:
-          name: default-table-expiration-ms
-          value: "3600000"
-    io.k8s.cli.setters.folder-k8s-name:
-      description: The name of folder to apply log exports on. This is the metadata.name
-        in kubernetes
-      x-k8s-cli:
-        setter:
-          name: folder-k8s-name
-          value: my.folder.k8s.name
-    io.k8s.cli.setters.filter:
-      description: The filter to apply when exporting logs. Only log entries that
-        match the filter are exported. Default is '' which exports all logs.
-      x-k8s-cli:
-        setter:
-          name: filter
-          value: ""
-    io.k8s.cli.substitutions.log-sink-name:
-      x-k8s-cli:
-        substitution:
-          name: log-sink-name
-          pattern: ${folder-k8s-name}-bqsink
-          values:
-          - marker: ${folder-k8s-name}
-            ref: '#/definitions/io.k8s.cli.setters.folder-k8s-name'
-    io.k8s.cli.substitutions.services-bigquery:
-      x-k8s-cli:
-        substitution:
-          name: services-bigquery
-          pattern: ${project-id}-bigquery
-          values:
-          - marker: ${project-id}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
+info:
+  description: Creates a log export on a folder that sinks to BigQuery
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

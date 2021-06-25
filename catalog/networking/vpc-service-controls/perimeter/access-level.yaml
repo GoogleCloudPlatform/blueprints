@@ -1,18 +1,18 @@
-  apiVersion: accesscontextmanager.cnrm.cloud.google.com/v1beta1
-  kind: AccessContextManagerAccessLevel
-  metadata:
-    annotations:
-      cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
-      cnrm.cloud.google.com/organization-id: example-org  # {"$kpt-set":"org-id"}
-    name: alregionperimeter  # {"$kpt-set":"access-level-name"}
-    namespace: networking # {"$kpt-set":"namespace"}
-  spec:
-    accessPolicyRef:
-      name: org-access-policy  # {"$kpt-set":"access-policy-name"}
-      namespace: networking # {"$kpt-set":"namespace"}
-    title: alregionperimeter Access Level # {"$kpt-set":"access-level-title"}
-    basic:
-      combiningFunction: AND
-      conditions:
-        - regions:
-            - US
+apiVersion: accesscontextmanager.cnrm.cloud.google.com/v1beta1
+kind: AccessContextManagerAccessLevel
+metadata:
+  name: alregionperimeter # kpt-set: al${perimeter-name}${suffix}
+  namespace: networking # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
+    cnrm.cloud.google.com/organization-id: example-org # kpt-set: ${org-id}
+spec:
+  accessPolicyRef:
+    name: org-access-policy # kpt-set: ${access-policy-name}
+    namespace: networking # kpt-set: ${namespace}
+  basic:
+    combiningFunction: AND
+    conditions:
+      - regions:
+          - US
+  title: alregionperimeter Access Level # kpt-set: ${perimeter-name} ${suffix} Access Level

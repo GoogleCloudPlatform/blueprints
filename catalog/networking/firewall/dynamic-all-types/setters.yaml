@@ -1,0 +1,27 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  priority: "1000"
+  protocol: icmp
+  destination-ranges: |
+    - 10.0.0.0/8
+  disabled: "true"
+  enable-logging: "false"
+  firewall-name: firewall-name
+  firewall-project-id: firewall-project-id
+  firewalls-namespace: firewalls-namespace
+  network-name: network-name
+  port-list: ""
+  source-ranges: |
+    - null
+  source-service-accounts: |
+    - example@developer.gserviceaccount.com
+  source-tags: |
+    - null
+  target-service-accounts: |
+    - example@developer.gserviceaccount.com
+  target-tags: |
+    - frontend
+    - backend

@@ -1,44 +1,8 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: spanner
-openAPI:
-  definitions:
-    io.k8s.cli.setters.namespace:
-      description: Namespace
-      x-k8s-cli:
-        setter:
-          name: namespace
-          value: my-namespace
-          required: true
-          isSet: true
-    io.k8s.cli.setters.instance-name:
-      description: Spanner Database Instance Name
-      x-k8s-cli:
-        setter:
-          name: instance-name
-          value: spanner-sample-instance
-          required: true
-          isSet: true
-    io.k8s.cli.setters.database-name:
-      description: Spanner Database Name
-      x-k8s-cli:
-        setter:
-          name: database-name
-          value: spanner-sample-database
-          required: true
-          isSet: true
-    io.k8s.cli.setters.num-nodes:
-      description: Number of Nodes allocated to spanner instance
-      x-k8s-cli:
-        setter:
-          name: num-nodes
-          value: "1"
-          required: true
-    io.k8s.cli.setters.config-region:
-      description: Spanner Instance Config Region
-      x-k8s-cli:
-        setter:
-          name: config-region
-          value: regional-us-central1
-          required: true
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

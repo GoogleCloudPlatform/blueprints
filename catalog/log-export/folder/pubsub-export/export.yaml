@@ -3,6 +3,7 @@ apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.2.0
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
     cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
@@ -15,6 +16,8 @@ spec:
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.2.0
   name: my.folder.k8s.name-pubsubsink # {"$kpt-set":"log-sink-name"}
   namespace: my-namespace # {"$kpt-set":"namespace"}
 spec:
@@ -30,6 +33,8 @@ spec:
 apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
 kind: PubSubTopic
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.2.0
   name: pubsub-logexport-dataset # {"$kpt-set":"topic-name"}
   namespace: my-namespace # {"$kpt-set":"namespace"}
 

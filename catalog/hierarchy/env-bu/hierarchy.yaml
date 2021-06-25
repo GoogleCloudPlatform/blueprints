@@ -2,6 +2,7 @@ apiVersion: blueprints.cloud.google.com/v1alpha3
 kind: ResourceHierarchy
 metadata:
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:hierarchy:env-bu/v0.2.0
     config.k8s.io/function: |
       container:
         image: gcr.io/yakima-eap/generate-folders:latest

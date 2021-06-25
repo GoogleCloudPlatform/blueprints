@@ -4,9 +4,9 @@ metadata:
   name: disable-vm-external-ip
   namespace: policies
 spec:
-  organizationRef:
-    external: "123456789012" # {"$kpt-set":"org-id"}
   constraint: "constraints/compute.vmExternalIpAccess"
   listPolicy:
     deny:
       all: true
+  organizationRef:
+    external: "123456789012" # kpt-set: ${org-id}

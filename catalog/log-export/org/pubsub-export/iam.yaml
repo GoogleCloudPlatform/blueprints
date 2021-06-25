@@ -3,14 +3,13 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: pubsub-iam-policy
-  namespace: my-namespace # {"$kpt-set":"namespace"}
+  namespace: my-namespace # kpt-set: ${namespace}
 spec:
   memberFrom:
     logSinkRef:
-      name: 123456789012-pubsubsink # {"$kpt-set":"log-sink-name"}
-  role: roles/pubsub.publisher
+      name: 123456789012-pubsubsink # kpt-set: ${org-id}-pubsubsink
   resourceRef:
+    name: pubsub-logexport-dataset # kpt-set: ${topic-name}
     apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
     kind: PubSubTopic
-    name: pubsub-logexport-dataset # {"$kpt-set":"topic-name"}
-
+  role: roles/pubsub.publisher

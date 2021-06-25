@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters-config
+data:
+  # This should be the name of your Config Controller instance
+  cluster-name: cluster-name
+  # This should be the project where you deployed Config Controller
+  project-id: project-id
+  project-number: "1234567890123"
+  # You can leave these defaults
+  namespace: config-control
+  deployment-repo: deployment-repo
+  source-repo: source-repo

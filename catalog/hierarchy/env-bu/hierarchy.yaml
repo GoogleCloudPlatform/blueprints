@@ -1,26 +1,23 @@
 apiVersion: blueprints.cloud.google.com/v1alpha3
 kind: ResourceHierarchy
 metadata:
-  annotations:
-    config.k8s.io/function: |
-      container:
-        image: gcr.io/yakima-eap/generate-folders:latest
-    config.kubernetes.io/local-config: "true"
   name: root-hierarchy
-  namespace: hierarchy # {"$kpt-set":"namespace"}
+  namespace: hierarchy # kpt-set: ${namespace}
+  annotations:
+    config.kubernetes.io/local-config: "true"
 spec:
-  parentRef:
-    external: "123456789012" # {"$kpt-set":"org-id"}
-  subtrees:
-    environment:
-      - retail:
-        - apps
-        - data_and_analysis
-      - finance:
-        - commercial
-        - retail
   config:
     - dev:
         $subtree: environment
     - prod:
         $subtree: environment
+  parentRef:
+    external: "123456789012" # kpt-set: ${org-id}
+  subtrees:
+    environment:
+      - retail:
+          - apps
+          - data_and_analysis
+      - finance:
+          - commercial
+          - retail

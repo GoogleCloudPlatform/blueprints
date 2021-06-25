@@ -4,8 +4,8 @@ metadata:
   name: disable-nested-virtualization
   namespace: policies
 spec:
-  organizationRef:
-    external: "123456789012" # {"$kpt-set":"org-id"}
-  constraint: "constraints/compute.disableNestedVirtualization"
   booleanPolicy:
     enforced: true
+  constraint: "constraints/compute.disableNestedVirtualization"
+  organizationRef:
+    external: "123456789012" # kpt-set: ${org-id}

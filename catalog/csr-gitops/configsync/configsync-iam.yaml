@@ -1,5 +1,6 @@
+# Config Sync GCP ServiceAccount (GSA)
 # This GSA can be used to grant Config Sync additional permissions with IAMPolicyMember
-apiVersion: iam.cnrm.cloud.google.com/v1beta1 # Config Sync GCP ServiceAccount (GSA)
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
   annotations:
@@ -10,7 +11,8 @@ metadata:
 spec:
   displayName: sync-cluster-name # {"$kpt-set":"configsync-gsa-name"}
 ---
-apiVersion: iam.cnrm.cloud.google.com/v1beta1 # Allow Config Sync Kubernetes ServiceAccount (KSA) to use the Config Sync GSA
+# Allow Config Sync Kubernetes ServiceAccount (KSA) to use the Config Sync GSA
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   annotations:
@@ -26,7 +28,8 @@ spec:
     name: sync-cluster-name # {"$kpt-set":"configsync-gsa-name"}
   role: roles/iam.workloadIdentityUser
 ---
-apiVersion: iam.cnrm.cloud.google.com/v1beta1 # Allow Config Sync GSA to read from CSR repos in the CSR project
+# Allow Config Sync GSA to read from CSR repos in the CSR project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   annotations:

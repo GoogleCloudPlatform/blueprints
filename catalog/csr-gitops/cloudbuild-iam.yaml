@@ -2,7 +2,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1 # Provides write access to deploym
 kind: IAMPolicyMember
 metadata:
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/csr-gitops/v0.1.1
+    cnrm.cloud.google.com/blueprint: cnrm/csr-gitops/v0.2.0
     cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
   name: deployment-repo-cloudbuild-write
   namespace: config-control # {"$kpt-set":"namespace"}
@@ -18,7 +18,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1 # Provides read access to source r
 kind: IAMPolicyMember
 metadata:
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/csr-gitops/v0.1.1
+    cnrm.cloud.google.com/blueprint: cnrm/csr-gitops/v0.2.0
     cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
   name: source-repo-cloudbuild-read
   namespace: config-control # {"$kpt-set":"namespace"}

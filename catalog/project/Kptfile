@@ -1,16 +1,8 @@
-apiVersion: kpt.dev/v1alpha2
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: project-package
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1
-      configMap:
-        billing-account-id: AAAAAA-BBBBBB-CCCCCC
-        folder-name: name.of.folder
-        folder-namespace: hierarchy
-        management-namespace: config-control
-        management-project-id: management-project-id
-        networking-namespace: networking
-        project-id: project-id
-        projects-namespace: projects
+      configPath: setters.yaml

@@ -9,7 +9,7 @@ data:
   # The project where Config Controller is deployed
   management-project-id: management-project-id
   # Groups to use for org-level roles
-  group-billing-admins: gcp-billing-admins@example.com
   group-org-admins: gcp-organization-admins@example.com
+  group-billing-admins: gcp-billing-admins@example.com
   # This default is safe to keep
   management-namespace: config-control

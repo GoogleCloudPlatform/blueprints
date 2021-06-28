@@ -1,4 +1,4 @@
-apiVersion: kpt.dev/v1alpha2
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: bigquery-export
@@ -7,15 +7,4 @@ info:
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1
-      configMap:
-        dataset-description: BigQuery audit logs for organization
-        dataset-location: US
-        dataset-name: audit-logs
-        default-table-expiration-ms: "3600000"
-        delete-contents-on-destroy: "false"
-        filter: ""
-        management-namespace: config-control
-        management-project-id: management-project-id
-        namespace: logging
-        org-id: "123456789012"
-        project-id: my-project-id
+      configPath: setters.yaml

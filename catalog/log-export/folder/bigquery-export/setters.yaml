@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  namespace: my-namespace
+  dataset-description: BigQuery audit logs for folder
+  dataset-location: US
+  dataset-name: audit-logs
+  default-table-expiration-ms: "3600000"
+  delete-contents-on-destroy: "false"
+  filter: ""
+  folder-k8s-name: my.folder.k8s.name
+  project-id: my-project-id

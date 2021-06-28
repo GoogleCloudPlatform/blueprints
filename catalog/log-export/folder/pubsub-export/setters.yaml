@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  namespace: my-namespace
+  filter: ""
+  folder-k8s-name: my.folder.k8s.name
+  project-id: my-project-id
+  topic-name: pubsub-logexport-dataset

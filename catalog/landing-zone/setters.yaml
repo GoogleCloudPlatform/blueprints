@@ -3,13 +3,13 @@ kind: ConfigMap
 metadata:
   name: setters
 data:
-  # Organization ID and billing account
-  org-id: "123456789012"
   billing-account-id: AAAAAA-BBBBBB-CCCCCC
-  # The project where Config Controller is deployed
-  management-project-id: management-project-id
+  group-billing-admins: gcp-billing-admins@example.com
   # Groups to use for org-level roles
   group-org-admins: gcp-organization-admins@example.com
-  group-billing-admins: gcp-billing-admins@example.com
   # This default is safe to keep
   management-namespace: config-control
+  # The project where Config Controller is deployed
+  management-project-id: management-project-id
+  # Organization ID and billing account
+  org-id: "123456789012"

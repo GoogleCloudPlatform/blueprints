@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  namespace: my-namespace
+  config-region: regional-us-central1
+  database-name: spanner-sample-database
+  instance-name: spanner-sample-instance
+  num-nodes: "1"

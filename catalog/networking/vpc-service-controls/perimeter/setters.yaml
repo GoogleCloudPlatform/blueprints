@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  namespace: networking
+  access-policy-name: org-access-policy
+  org-id: example-org
+  perimeter-name: regionperimeter
+  project-id: vpcsc-project-id
+  project-namespace: projects
+  restricted-services: |
+    - storage.googleapis.com
+    - bigquery.googleapis.com
+  suffix: ""

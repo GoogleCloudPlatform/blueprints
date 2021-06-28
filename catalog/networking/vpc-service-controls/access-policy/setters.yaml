@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  namespace: networking
+  access-policy-name: org-access-policy
+  org-id: example-org

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  namespace: networking
+  prefix: ""
+  ip-cidr-range: 10.2.0.0/16
+  network-name: network-name
+  project-id: project-id
+  region: us-central1
+  source-subnetwork-ip-ranges-to-nat: ALL_SUBNETWORKS_ALL_IP_RANGES

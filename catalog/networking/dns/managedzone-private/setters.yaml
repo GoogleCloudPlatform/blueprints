@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  namespace: networking
+  domain: example.com.
+  managed-zone-name: private-managed-zone
+  network-name: example-network
+  project-id: project-id

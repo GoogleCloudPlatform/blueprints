@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  priority: "10000"
+  allow-default-egress: "true"
+  dont-allow-google-apis: "true"
+  dont-allow-windows-kms: "true"
+  enable-logging: "false"
+  firewall-project-id: firewall-project-id
+  firewalls-namespace: firewalls-namespace
+  google-api-cidr: |
+    - 199.36.153.8/30
+  network-name: network-name

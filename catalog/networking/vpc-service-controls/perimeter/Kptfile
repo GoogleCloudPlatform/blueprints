@@ -1,16 +1,8 @@
-apiVersion: kpt.dev/v1alpha2
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: service-controls-perimeter
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1
-      configMap:
-        access-policy-name: org-access-policy
-        namespace: networking
-        org-id: example-org
-        perimeter-name: regionperimeter
-        project-id: vpcsc-project-id
-        project-namespace: projects
-        restricted-services: '[storage.googleapis.com, bigquery.googleapis.com]'
-        suffix: ""
+      configPath: setters.yaml

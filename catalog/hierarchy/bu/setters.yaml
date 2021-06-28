@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: setters
 data:
-  org-id: "123456789012"
   namespace: hierarchy
+  org-id: "123456789012"

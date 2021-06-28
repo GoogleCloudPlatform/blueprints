@@ -1,14 +1,8 @@
-apiVersion: kpt.dev/v1alpha2
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: redis-bucket
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1
-      configMap:
-        name: redis-bucket
-        namespace: config-control
-        network: default
-        project-id: $DEFAULT_PROJECT
-        region: us-central1
-        storage-class: standard
+      configPath: setters.yaml

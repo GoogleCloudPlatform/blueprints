@@ -4,8 +4,7 @@ metadata:
   name: setters
 data:
   folder-name: name.of.folder
-  project-id: project-id
-
   # These defaults can be kept
   folder-namespace: hierarchy
   networking-namespace: networking
+  project-id: project-id

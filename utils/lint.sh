@@ -53,7 +53,7 @@ check_yaml_fmt(){
     diff -qr catalog "$catalogTmpDir" && diffExitCode=$? || diffExitCode=$?
     if [[ $diffExitCode -ne 0 ]]; then
         echo "Unformatted yaml files found in catalog. Please run make docker_fix_lint and review changes."
-        exit $errcode
+        exit $diffExitCode
     else
         echo "All yaml files in catalog are formatted."
     fi

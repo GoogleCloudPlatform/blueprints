@@ -1,3 +1,17 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
@@ -19,11 +33,11 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # {"$kpt-set":"hierarchy-sa-ref"}
-  role: roles/resourcemanager.folderAdmin
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
     external: "123456789012" # {"$kpt-set":"org-id"}
+  role: roles/resourcemanager.folderAdmin
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -35,11 +49,11 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-hierarchy] # {"$kpt-set":"hierarchy-workload-identity-sa"}
-  role: roles/iam.workloadIdentityUser
   resourceRef:
+    name: hierarchy-sa
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
-    name: hierarchy-sa
+  role: roles/iam.workloadIdentityUser
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -47,13 +61,13 @@ metadata:
   name: allow-resource-reference-from-hierarchy
   namespace: hierarchy
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
   name: cnrm-viewer
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
 subjects:
-- kind: ServiceAccount
-  name: cnrm-controller-manager-projects
+- name: cnrm-controller-manager-projects
   namespace: cnrm-system
+  kind: ServiceAccount
 ---
 apiVersion: v1
 kind: Namespace
@@ -65,9 +79,9 @@ metadata:
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnectorContext
 metadata:
-  annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: hierarchy
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
 spec:
   googleServiceAccount: hierarchy-sa@management-project-id.iam.gserviceaccount.com # {"$kpt-set":"hierarchy-sa-email"}

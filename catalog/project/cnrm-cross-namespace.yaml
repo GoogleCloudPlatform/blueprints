@@ -1,3 +1,17 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 # Give CNRM for this project's namespace permission to read CNRM resources in the networking namespace.
 # This allows GKE and GCE instances to reference the shared network in the networking namespace.
 apiVersion: rbac.authorization.k8s.io/v1
@@ -6,13 +20,13 @@ metadata:
   name: cnrm-network-viewer-project-id # {"$kpt-set":"cnrm-network-binding"}
   namespace: networking # {"$kpt-set":"networking-namespace"}
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
   name: cnrm-viewer
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
 subjects:
-- kind: ServiceAccount
-  name: cnrm-controller-manager-project-id # {"$kpt-set":"cnrm-k8s-sa"}
+- name: cnrm-controller-manager-project-id # {"$kpt-set":"cnrm-k8s-sa"}
   namespace: cnrm-system
+  kind: ServiceAccount
 ---
 # Give CNRM for this project's namespace permission to read CNRM resources in the projects namespace.
 # This allows IAMMemberPolicy in this project's namespace to reference the project in the projects namespace.
@@ -22,10 +36,10 @@ metadata:
   name: cnrm-project-viewer-project-id # {"$kpt-set":"cnrm-project-binding"}
   namespace: projects # {"$kpt-set":"projects-namespace"}
 roleRef:
-  apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
   name: cnrm-viewer
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
 subjects:
-- kind: ServiceAccount
-  name: cnrm-controller-manager-project-id # {"$kpt-set":"cnrm-k8s-sa"}
+- name: cnrm-controller-manager-project-id # {"$kpt-set":"cnrm-k8s-sa"}
   namespace: cnrm-system
+  kind: ServiceAccount

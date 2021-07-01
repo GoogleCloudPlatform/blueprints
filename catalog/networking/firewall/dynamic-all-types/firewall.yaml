@@ -1,3 +1,17 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 apiVersion: computefirewalls.compute.cnrm.cloud.google.com
 kind: ComputeFirewall
 metadata:
@@ -6,38 +20,39 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
 spec:
-  networkRef:
-    name: network-name # {"$ref":"#/definitions/io.k8s.cli.setters.network-name"}
-  enableLogging: enable-logging # {"$ref":"#/definitions/io.k8s.cli.setters.enable-logging"}
   priority: priority # {"$ref":"#/definitions/io.k8s.cli.setters.priority"}
-  disabled: disabled # {"$ref":"#/definitions/io.k8s.cli.setters.disabled"}
   ##### SPECIFY IF ALLOW OR DENY RULE #####
   ### UNCOMMENT ONLY ONE "allow:" OR "deny:"
   ### UNCOMMENT PORT SECTION IF SPECIFYING PORT NUMBERS, LEAVE COMMENTED OUT FOR ALL PORTS
   allow:
   # deny:
-  - protocol: protocol  # {"$ref":"#/definitions/io.k8s.cli.setters.protocol"}
+  - protocol: protocol # {"$ref":"#/definitions/io.k8s.cli.setters.protocol"}
     # ports: # {"$ref":"#/definitions/io.k8s.cli.setters.port-list"}
     #  - port-list
+  ##### APPLY FW RULE TO INGRESS TRAFFIC, SPECIFY FILTERS #####
+  ### IF USING INGRESS, EGRESS SECTION BELOW HAS TO BE COMMENTED OUT
+  ### UP TO TWO FILTERS ARE ALLOWED. IF USING SA, CANNOT COMBINE WITH TAGS
+  direction: INGRESS
+  disabled: disabled # {"$ref":"#/definitions/io.k8s.cli.setters.disabled"}
+  enableLogging: enable-logging # {"$ref":"#/definitions/io.k8s.cli.setters.enable-logging"}
+  networkRef:
+    name: network-name # {"$ref":"#/definitions/io.k8s.cli.setters.network-name"}
+  sourceRanges: # {"$ref":"#/definitions/io.k8s.cli.setters.source-ranges"}
+  - source-ranges
+  # sourceServiceAccounts: source-service-accounts # {"$ref":"#/definitions/io.k8s.cli.setters.source-service-accounts"}
+  #  - source-service-accounts
+  sourceTags: # {"$ref":"#/definitions/io.k8s.cli.setters.source-tags"}
+  - source-tags
+  ##### APPLY FW RULE TO EGRESS TRAFFIC, SPECIFY FILTERS #####
+  ### IF USING EGRESS, INGRESS SECTION ABOVE HAS TO BE COMMENTED OUT
+  # direction: EGRESS
+  # destinationRanges: # {"$ref":"#/definitions/io.k8s.cli.setters.destination-ranges"}
+  #  - destination-ranges
+
   ##### SPECIFY TARGETS FOR FIREWALL RULE #####
   ### LEAVE COMMENTED OUT TO TARGET ALL INSTANCES, UNCOMMENT FOR SA OR TAG TARGETS
   ### IF USING SA, CANNOT UNCOMMENT ANY LINES WITH TAGS IN THIS FILE & VICE-VERSA (IF USING TAGS, CANNOT USE SA)
   # targetServiceAccounts: # {"$ref":"#/definitions/io.k8s.cli.setters.target-service-accounts"}
   #  - target-service-accounts
   targetTags: # {"$ref":"#/definitions/io.k8s.cli.setters.target-tags"}
-   - target-tags
-  ##### APPLY FW RULE TO INGRESS TRAFFIC, SPECIFY FILTERS #####
-  ### IF USING INGRESS, EGRESS SECTION BELOW HAS TO BE COMMENTED OUT
-  ### UP TO TWO FILTERS ARE ALLOWED. IF USING SA, CANNOT COMBINE WITH TAGS
-  direction: INGRESS
-  sourceRanges: # {"$ref":"#/definitions/io.k8s.cli.setters.source-ranges"}
-   - source-ranges
-  # sourceServiceAccounts: source-service-accounts # {"$ref":"#/definitions/io.k8s.cli.setters.source-service-accounts"}
-  #  - source-service-accounts
-  sourceTags: # {"$ref":"#/definitions/io.k8s.cli.setters.source-tags"}
-   - source-tags
-  ##### APPLY FW RULE TO EGRESS TRAFFIC, SPECIFY FILTERS #####
-  ### IF USING EGRESS, INGRESS SECTION ABOVE HAS TO BE COMMENTED OUT
-  # direction: EGRESS
-  # destinationRanges: # {"$ref":"#/definitions/io.k8s.cli.setters.destination-ranges"}
-  #  - destination-ranges
+  - target-tags

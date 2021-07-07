@@ -1,0 +1,86 @@
+apiVersion: kpt.dev/v1alpha1
+kind: Kptfile
+metadata:
+  name: gke-cluster-nodepool
+packageMetadata:
+  shortDescription: GKE node pool with dedicated service account
+openAPI:
+  definitions:
+    io.k8s.cli.setters.nodepool-name:
+      x-k8s-cli:
+        setter:
+          name: nodepool-name
+          value: primary
+    io.k8s.cli.setters.cluster-name:
+      x-k8s-cli:
+        setter:
+          name: cluster-name
+          value: example-us-east4
+    io.k8s.cli.setters.location:
+      x-k8s-cli:
+        setter:
+          name: location
+          value: us-east4
+    io.k8s.cli.setters.platform-project-id:
+      x-k8s-cli:
+        setter:
+          name: platform-project-id
+          value: platform-project-id
+    io.k8s.cli.setters.platform-namespace:
+      x-k8s-cli:
+        setter:
+          name: platform-namespace
+          value: config-control
+    io.k8s.cli.setters.projects-namespace:
+      x-k8s-cli:
+        setter:
+          name: projects-namespace
+          value: projects
+    io.k8s.cli.setters.max-node-count:
+      x-k8s-cli:
+        type: integer
+        setter:
+          name: max-node-count
+          value: '2'
+    io.k8s.cli.substitutions.krm-nodepool-name:
+      x-k8s-cli:
+        substitution:
+          name: krm-nodepool-name
+          pattern: ${cluster-name}-${nodepool-name}
+          values:
+          - marker: ${nodepool-name}
+            ref: '#/definitions/io.k8s.cli.setters.nodepool-name'
+          - marker: ${cluster-name}
+            ref: '#/definitions/io.k8s.cli.setters.cluster-name'
+    io.k8s.cli.substitutions.krm-service-account-name:
+      x-k8s-cli:
+        substitution:
+          name: service-account
+          pattern: gke-${krm-nodepool-name}
+          values:
+          - marker: ${krm-nodepool-name}
+            ref: '#/definitions/io.k8s.cli.substitutions.krm-nodepool-name'
+    io.k8s.cli.substitutions.krm-logwriter-policy-name:
+      x-k8s-cli:
+        substitution:
+          name: krm-logwriter-policy-name
+          pattern: logwriter-${krm-service-account-name}
+          values:
+          - marker: ${krm-service-account-name}
+            ref: '#/definitions/io.k8s.cli.substitutions.krm-service-account-name'
+    io.k8s.cli.substitutions.krm-metricwriter-policy-name:
+      x-k8s-cli:
+        substitution:
+          name: krm-metricwriter-policy-name
+          pattern: metricwriter-${krm-service-account-name}
+          values:
+          - marker: ${krm-service-account-name}
+            ref: '#/definitions/io.k8s.cli.substitutions.krm-service-account-name'
+    io.k8s.cli.substitutions.krm-artifactreader-policy-name:
+      x-k8s-cli:
+        substitution:
+          name: krm-artifactreader-policy-name
+          pattern: artifactreader-${krm-service-account-name}
+          values:
+          - marker: ${krm-service-account-name}
+            ref: '#/definitions/io.k8s.cli.substitutions.krm-service-account-name'

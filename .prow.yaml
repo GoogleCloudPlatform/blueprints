@@ -15,6 +15,7 @@
 presubmits:
   - name: lint
     always_run: true
+    skip_report: true
     decorate: true
     cluster: build-blueprints
     decorate_config:

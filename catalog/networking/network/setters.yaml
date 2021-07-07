@@ -9,3 +9,4 @@ data:
   region: us-central1
   vpn-secret-key: vpn-shared-secret
   vpn-secret-name: vpn-shared-secret
+  prefix: ""

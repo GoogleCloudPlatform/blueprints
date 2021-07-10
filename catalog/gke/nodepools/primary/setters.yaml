@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  cluster-name: example-us-east4 # kpt-set: ${cluster-name}
+  location: us-east4 # kpt-set: ${location}
+  max-node-count: "2" # kpt-set: ${max-node-count}
+  nodepool-name: primary # kpt-set: ${nodepool-name}
+  platform-namespace: config-control # kpt-set: ${platform-namespace}
+  platform-project-id: platform-project-id # kpt-set: ${platform-project-id}
+  projects-namespace: projects # kpt-set: ${projects-namespace}

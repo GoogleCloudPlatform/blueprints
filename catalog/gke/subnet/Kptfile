@@ -1,73 +1,10 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: gke-cluster-subnet
-packageMetadata:
-  shortDescription: GCP subnet for a GKE cluster
-openAPI:
-  definitions:
-    io.k8s.cli.setters.location:
-      x-k8s-cli:
-        setter:
-          name: location
-          value: us-east4
-    io.k8s.cli.setters.network-name:
-      x-k8s-cli:
-        setter:
-          name: network-name
-          value: default
-    io.k8s.cli.setters.cluster-name:
-      x-k8s-cli:
-        setter:
-          name: cluster-name
-          value: example-us-west4
-    io.k8s.cli.setters.platform-project-id:
-      x-k8s-cli:
-        setter:
-          name: platform-project-id
-          value: platform-project-id
-    io.k8s.cli.setters.node-ip-range:
-      x-k8s-cli:
-        setter:
-          name: node-ip-range
-          value: 10.3.4.0/22
-    io.k8s.cli.setters.service-ip-range:
-      x-k8s-cli:
-        setter:
-          name: service-ip-range
-          value: 172.18.0.0/16
-    io.k8s.cli.setters.pod-ip-range:
-      x-k8s-cli:
-        setter:
-          name: pod-ip-range
-          value: 172.17.0.0/16
-    io.k8s.cli.setters.network-project-id:
-      x-k8s-cli:
-        setter:
-          name: network-project-id
-          value: network-project-id
-    io.k8s.cli.setters.networking-namespace:
-      x-k8s-cli:
-        setter:
-          name: networking-namespace
-          value: networking
-    io.k8s.cli.substitutions.subnet-name:
-      x-k8s-cli:
-        substitution:
-          name: subnet-name
-          pattern: ${platform-project-id}-${cluster-name}
-          values:
-          - marker: ${platform-project-id}
-            ref: '#/definitions/io.k8s.cli.setters.platform-project-id'
-          - marker: ${cluster-name}
-            ref: '#/definitions/io.k8s.cli.setters.cluster-name'
-    io.k8s.cli.substitutions.network-selflink:
-      x-k8s-cli:
-        substitution:
-          name: network-selflink
-          pattern: projects/${network-project-id}/global/networks/${network-name}
-          values:
-          - marker: ${network-project-id}
-            ref: '#/definitions/io.k8s.cli.setters.network-project-id'
-          - marker: ${network-name}
-            ref: '#/definitions/io.k8s.cli.setters.network-name'
+info:
+  description: GCP subnet for a GKE cluster
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

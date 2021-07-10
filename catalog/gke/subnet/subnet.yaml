@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 # A subnet designed for use by a single GKE cluster.
 # Default capacity:
 # ~1k nodes (/22)
@@ -21,23 +20,23 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
-  name: platform-project-id-example-us-east4 # {"$kpt-set":"subnet-name"}
-  namespace: networking # {"$kpt-set":"networking-namespace"}
+  name: platform-project-id-example-us-east4 # kpt-set: ${platform-project-id}-${cluster-name}
+  namespace: networking # kpt-set: ${networking-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: network-project-id # {"$kpt-set":"network-project-id"}
+    cnrm.cloud.google.com/project-id: network-project-id # kpt-set: ${network-project-id}
 spec:
-  description: platform-project-id-example-us-east4 # {"$kpt-set":"subnet-name"}
-  region: us-east4 # {"$kpt-set":"location"}
+  description: platform-project-id-example-us-east4 # kpt-set: ${platform-project-id}-${cluster-name}
+  ipCidrRange: 10.3.4.0/22 # kpt-set: ${node-ip-range}
   networkRef:
-    external: projects/network-project-id/global/networks/default # {"$kpt-set":"network-selflink"}
-  ipCidrRange: 10.3.4.0/22 # {"$kpt-set":"node-ip-range"}
-  secondaryIpRange:
-  - ipCidrRange: 172.17.0.0/16 # {"$kpt-set":"pod-ip-range"}
-    rangeName: pods
-  - ipCidrRange: 172.18.0.0/16 # {"$kpt-set":"service-ip-range"}
-    rangeName: services
+    external: projects/network-project-id/global/networks/default # kpt-set: projects/${network-project-id}/global/networks/${network-name}
   # Enable Private Google Access by default, to allow GKE nodes and workloads to
   # access Google services over Google's global backbone network and without
   # requiring a NAT Gateway.
   # https://cloud.google.com/vpc/docs/configure-private-google-access
   privateIpGoogleAccess: true
+  region: us-east4 # kpt-set: ${location}
+  secondaryIpRange:
+    - ipCidrRange: 172.17.0.0/16 # kpt-set: ${pod-ip-range}
+      rangeName: pods
+    - ipCidrRange: 172.18.0.0/16 # kpt-set: ${service-ip-range}
+      rangeName: services

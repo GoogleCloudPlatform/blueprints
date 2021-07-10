@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  cluster-name: example-us-west4
+  environment: dev
+  location: us-east4
+  master-ip-range: 10.254.0.0/28
+  network-name: default
+  network-project-id: network-project-id
+  networking-namespace: config-control
+  node-ip-range: 10.3.4.0/22
+  platform-namespace: config-control
+  platform-project-id: platform-project-id
+  pod-ip-range: 172.17.0.0/16
+  projects-namespace: projects
+  security-group: gke-security-group@example.com
+  service-ip-range: 172.18.0.0/16

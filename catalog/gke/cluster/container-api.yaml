@@ -11,16 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 # Enable the Container service in the platform project
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
+  # Use a unique name to avoid overlap with other cluster package instances.
+  name: platform-project-id-cluster-name-container # kpt-set: ${platform-project-id}-${cluster-name}-container
+  namespace: projects # kpt-set: ${projects-namespace}
   annotations:
     cnrm.cloud.google.com/deletion-policy: abandon
-    cnrm.cloud.google.com/project-id: platform-project-id # {"$kpt-set":"platform-project-id"}
-  # Use a unique name to avoid overlap with other cluster package instances.
-  name: platform-project-id-cluster-name-container # {"$kpt-set":"platform-service-container"}
-  namespace: projects # {"$kpt-set":"projects-namespace"}
+    cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
 spec:
   resourceID: container.googleapis.com

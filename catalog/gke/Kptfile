@@ -1,78 +1,10 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: gke
-packageMetadata:
-  shortDescription: GKE cluster with dedicated subnet
-openAPI:
-  definitions:
-    io.k8s.cli.setters.projects-namespace:
-      x-k8s-cli:
-        setter:
-          name: projects-namespace
-          value: projects
-    io.k8s.cli.setters.network-project-id:
-      x-k8s-cli:
-        setter:
-          name: network-project-id
-          value: network-project-id
-    io.k8s.cli.setters.networking-namespace:
-      x-k8s-cli:
-        setter:
-          name: networking-namespace
-          value: config-control
-    io.k8s.cli.setters.platform-project-id:
-      x-k8s-cli:
-        setter:
-          name: platform-project-id
-          value: platform-project-id
-    io.k8s.cli.setters.platform-namespace:
-      x-k8s-cli:
-        setter:
-          name: platform-namespace
-          value: config-control
-    io.k8s.cli.setters.cluster-name:
-      x-k8s-cli:
-        setter:
-          name: cluster-name
-          value: example-us-west4
-    io.k8s.cli.setters.environment:
-      x-k8s-cli:
-        setter:
-          name: environment
-          value: dev
-    io.k8s.cli.setters.location:
-      x-k8s-cli:
-        setter:
-          name: location
-          value: us-east4
-    io.k8s.cli.setters.network-name:
-      x-k8s-cli:
-        setter:
-          name: network-name
-          value: default
-    io.k8s.cli.setters.security-group:
-      x-k8s-cli:
-        setter:
-          name: security-group
-          value: gke-security-group@example.com
-    io.k8s.cli.setters.master-ip-range:
-      x-k8s-cli:
-        setter:
-          name: master-ip-range
-          value: 10.254.0.0/28
-    io.k8s.cli.setters.node-ip-range:
-      x-k8s-cli:
-        setter:
-          name: node-ip-range
-          value: 10.3.4.0/22
-    io.k8s.cli.setters.service-ip-range:
-      x-k8s-cli:
-        setter:
-          name: service-ip-range
-          value: 172.18.0.0/16
-    io.k8s.cli.setters.pod-ip-range:
-      x-k8s-cli:
-        setter:
-          name: pod-ip-range
-          value: 172.17.0.0/16
+info:
+  description: GKE cluster with dedicated subnet
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

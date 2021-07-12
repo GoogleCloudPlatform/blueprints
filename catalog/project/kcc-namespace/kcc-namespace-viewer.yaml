@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Give CNRM for this project's namespace permission to read CNRM resources in the networking namespace.
+# Give KCC for this project's namespace permission to read KCC resources in the networking namespace.
 # This allows GKE and GCE instances to reference the shared network in the networking namespace.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
@@ -28,7 +28,7 @@ subjects:
   namespace: cnrm-system
   kind: ServiceAccount
 ---
-# Give CNRM for this project's namespace permission to read CNRM resources in the projects namespace.
+# Give KCC for this project's namespace permission to read KCC resources in the projects namespace.
 # This allows IAMMemberPolicy in this project's namespace to reference the project in the projects namespace.
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding

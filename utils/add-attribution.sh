@@ -16,7 +16,7 @@
 set -o errexit -o nounset -o pipefail
 
 PKG_PATH="${1:-.}"
-BLUEPRINT_NAME="$(grep -m 1 "name:" "${PKG_PATH}/Kptfile" | sed 's/[[:space:]]*name:[[:space:]]*//')"
+BLUEPRINT_NAME="${BLUEPRINT_NAME:-$(grep -m 1 "name:" "${PKG_PATH}/Kptfile" | sed 's/[[:space:]]*name:[[:space:]]*//')}"
 BLUEPRINT_VERSION="${BLUEPRINT_VERSION:-$(cd "${PKG_PATH}" && git describe --abbrev=0)}"
 
 kpt fn source "${PKG_PATH}" |

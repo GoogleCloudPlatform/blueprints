@@ -18,6 +18,8 @@ kind: ConfigConnectorContext
 metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: project-id # {"$kpt-set":"project-namespace"}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.2.0-alpha.1
 spec:
   googleServiceAccount: kcc-project-id@management-project-id.iam.gserviceaccount.com # {"$kpt-set":"project-id-sa-email"}
 ---
@@ -29,6 +31,7 @@ metadata:
   namespace: config-control # {"$kpt-set":"management-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
+    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.2.0-alpha.1
 spec:
   displayName: kcc-project-id # {"$kpt-set":"project-id-sa"}
 ---
@@ -36,14 +39,15 @@ spec:
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
+  annotations:
   name: project-id-sa-workload-identity-binding # {"$kpt-set":"workload-identity-binding"}
   namespace: config-control # {"$kpt-set":"management-namespace"}
-  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.2.0-alpha.1
     cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
 spec:
   member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-project-id] # {"$kpt-set":"workload-identity-sa"}
   resourceRef:
-    name: kcc-project-id # {"$kpt-set":"project-id-sa"}
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
+    name: kcc-project-id # {"$kpt-set":"project-id-sa"}
   role: roles/iam.workloadIdentityUser

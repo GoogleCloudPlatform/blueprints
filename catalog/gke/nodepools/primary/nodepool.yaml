@@ -19,6 +19,7 @@ metadata:
   namespace: config-control # {"$kpt-set":"platform-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: platform-project-id # {"$kpt-set":"platform-project-id"}
+    cnrm.cloud.google.com/blueprint: cnrm/gke:gke-nodepool/v0.2.0-alpha.1
 spec:
   clusterRef:
     name: example-us-east4 # {"$kpt-set":"cluster-name"}

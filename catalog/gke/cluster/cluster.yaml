@@ -23,7 +23,7 @@ metadata:
     # Explcit node pool configuration allows for more isolation and makes it
     # easier to replace node pools to change immutable fields.
     cnrm.cloud.google.com/remove-default-node-pool: "true"
-    cnrm.cloud.google.com/blueprint: cnrm/gke/cluster/v0.2.0-alpha.1
+    cnrm.cloud.google.com/blueprint: cnrm/gke:gke-cluster/v0.2.0-alpha.1
   labels:
     # Label with the environment to allow listing clusters by environment.
     gke.io/environment: dev # {"$kpt-set":"environment"}

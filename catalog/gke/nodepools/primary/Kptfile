@@ -1,7 +1,7 @@
 apiVersion: kpt.dev/v1alpha1
 kind: Kptfile
 metadata:
-  name: gke/nodepool
+  name: gke-nodepool
 packageMetadata:
   shortDescription: GKE node pool with dedicated service account
 openAPI:

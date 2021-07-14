@@ -1,7 +1,7 @@
 apiVersion: kpt.dev/v1alpha1
 kind: Kptfile
 metadata:
-  name: gke/subnet
+  name: gke-subnet
 packageMetadata:
   shortDescription: GCP subnet for a GKE cluster
 openAPI:

@@ -25,6 +25,7 @@ metadata:
   namespace: networking # {"$kpt-set":"networking-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: network-project-id # {"$kpt-set":"network-project-id"}
+    cnrm.cloud.google.com/blueprint: cnrm/gke/subnet/v0.2.0-alpha.1
 spec:
   description: platform-project-id-example-us-east4 # {"$kpt-set":"subnet-name"}
   region: us-east4 # {"$kpt-set":"location"}

@@ -20,6 +20,7 @@ metadata:
   namespace: config-control # {"$kpt-set":"platform-namespace"}
   annotations:
     cnrm.cloud.google.com/project-id: platform-project-id # {"$kpt-set":"platform-project-id"}
+    cnrm.cloud.google.com/blueprint: cnrm/gke/nodepool/v0.2.0-alpha.1
 spec:
   displayName: gke-example-us-east4-primary # {"$kpt-set":"krm-service-account-name"}
 ---
@@ -29,6 +30,8 @@ kind: IAMPolicyMember
 metadata:
   name: logwriter-gke-example-us-east4-primary # {"$kpt-set":"krm-logwriter-policy-name"}
   namespace: config-control # {"$kpt-set":"platform-namespace"}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/gke/nodepool/v0.2.0-alpha.1
 spec:
   memberFrom:
     serviceAccountRef:
@@ -46,6 +49,8 @@ kind: IAMPolicyMember
 metadata:
   name: metricwriter-gke-example-us-east4-primary # {"$kpt-set":"krm-metricwriter-policy-name"}
   namespace: config-control # {"$kpt-set":"platform-namespace"}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/gke/nodepool/v0.2.0-alpha.1
 spec:
   memberFrom:
     serviceAccountRef:
@@ -63,6 +68,8 @@ kind: IAMPolicyMember
 metadata:
   name: artifactreader-gke-example-us-east4-primary # {"$kpt-set":"krm-artifactreader-policy-name"}
   namespace: config-control # {"$kpt-set":"platform-namespace"}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/gke/nodepool/v0.2.0-alpha.1
 spec:
   memberFrom:
     serviceAccountRef:

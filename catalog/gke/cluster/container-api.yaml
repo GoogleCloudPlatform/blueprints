@@ -19,6 +19,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/deletion-policy: abandon
     cnrm.cloud.google.com/project-id: platform-project-id # {"$kpt-set":"platform-project-id"}
+    cnrm.cloud.google.com/blueprint: cnrm/gke/cluster/v0.2.0-alpha.1
   # Use a unique name to avoid overlap with other cluster package instances.
   name: platform-project-id-cluster-name-container # {"$kpt-set":"platform-service-container"}
   namespace: projects # {"$kpt-set":"projects-namespace"}

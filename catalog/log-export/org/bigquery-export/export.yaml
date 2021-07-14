@@ -1,39 +1,23 @@
-# Copyright 2021 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-# API Activation
-apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
+apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1 # API Activation
 kind: Service
 metadata:
-  name: my-project-id-bigquery # {"$kpt-set":"services-bigquery"}
-  namespace: projects
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.2.0
-    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/blueprint: cnrm/bigquery-export/v0.2.0-alpha.1
+    cnrm.cloud.google.com/deletion-policy: abandon
     cnrm.cloud.google.com/disable-dependent-services: "false"
     cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
+  name: my-project-id-bigquery # {"$kpt-set":"services-bigquery"}
+  namespace: projects
 spec:
   resourceID: bigquery.googleapis.com
 ---
-# Org Sink to BQ
-apiVersion: logging.cnrm.cloud.google.com/v1beta1
+apiVersion: logging.cnrm.cloud.google.com/v1beta1 # Org Sink to BQ
 kind: LoggingLogSink
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/bigquery-export/v0.2.0-alpha.1
   name: 123456789012-bqsink # {"$kpt-set":"log-sink-name"}
   namespace: logging # {"$kpt-set":"namespace"}
-  annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.2.0
 spec:
   destination:
     bigQueryDatasetRef:
@@ -43,18 +27,17 @@ spec:
   organizationRef:
     external: "123456789012" # {"$kpt-set":"org-id"}
 ---
-# BQ Dataset
-apiVersion: bigquery.cnrm.cloud.google.com/v1beta1
+apiVersion: bigquery.cnrm.cloud.google.com/v1beta1 # BQ Dataset
 kind: BigQueryDataset
 metadata:
-  name: bqlogexportdataset
-  namespace: logging # {"$kpt-set":"namespace"}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/bigquery-export/v0.2.0-alpha.1
     cnrm.cloud.google.com/delete-contents-on-destroy: "false" # {"$kpt-set":"delete-contents-on-destroy"}
     cnrm.cloud.google.com/project-id: my-project-id # {"$kpt-set":"project-id"}
+  name: bqlogexportdataset
+  namespace: logging # {"$kpt-set":"namespace"}
 spec:
   defaultTableExpirationMs: 3600000 # {"$kpt-set":"default-table-expiration-ms"}
-  description: "BigQuery audit logs for folder" # {"$kpt-set":"dataset-description"}
+  description: BigQuery audit logs for folder # {"$kpt-set":"dataset-description"}
   friendlyName: audit-logs # {"$kpt-set":"dataset-name"}
   location: US # {"$kpt-set":"dataset-location"}

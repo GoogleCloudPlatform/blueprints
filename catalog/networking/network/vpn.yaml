@@ -1,27 +1,13 @@
-# Copyright 2021 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeTargetVPNGateway
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/network-package/v0.2.0-alpha.1
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
   name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
   namespace: networking # {"$kpt-set":"namespace"}
-  annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
-  description: "Compute VPN Gateway"
+  description: Compute VPN Gateway
   networkRef:
     name: network-name # {"$kpt-set":"network-name"}
   region: us-central1 # {"$kpt-set":"region"}
@@ -29,50 +15,50 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeVPNTunnel
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/network-package/v0.2.0-alpha.1
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
   name: network-name-vpn-tunnel # {"$kpt-set":"vpn-tunnel-name"}
   namespace: networking # {"$kpt-set":"namespace"}
-  annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   localTrafficSelector:
-  - "192.168.0.0/16"
-  peerIp: "15.0.0.120"
+  - 192.168.0.0/16
+  peerIp: 15.0.0.120
   region: us-central1 # {"$kpt-set":"region"}
   sharedSecret:
     valueFrom:
       secretKeyRef:
-        name: vpn-shared-secret # {"$kpt-set":"vpn-secret-name"}
         key: vpn-shared-secret # {"$kpt-set":"vpn-secret-key"}
+        name: vpn-shared-secret # {"$kpt-set":"vpn-secret-name"}
   targetVPNGatewayRef:
     name: network-name-vpn-gateway # {"$kpt-set":"vpn-gateway-name"}
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/network-package/v0.2.0-alpha.1
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
   name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}
   namespace: networking # {"$kpt-set":"namespace"}
-  annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
-  description: "Regional address"
+  description: Regional address
   location: us-central1 # {"$kpt-set":"region"}
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeForwardingRule
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/network-package/v0.2.0-alpha.1
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
   name: network-name-vpn-esp-fr # {"$kpt-set":"vpn-esp-fr-name"}
   namespace: networking # {"$kpt-set":"namespace"}
-  annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
-  description: "Regional ESP forwarding rule"
+  description: Regional ESP forwarding rule
   ipAddress:
     addressRef:
       name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}
-  ipProtocol: "ESP"
+  ipProtocol: ESP
   location: us-central1 # {"$kpt-set":"region"}
   target:
     targetVPNGatewayRef:
@@ -81,17 +67,17 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeForwardingRule
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/network-package/v0.2.0-alpha.1
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
   name: acme-vpc-dev-vpn-udp500-fr # {"$kpt-set":"vpn-udp500-fr-name"}
   namespace: networking # {"$kpt-set":"namespace"}
-  annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
-  description: "Regional UDP 500 forwarding rule"
+  description: Regional UDP 500 forwarding rule
   ipAddress:
     addressRef:
       name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}
-  ipProtocol: "UDP"
+  ipProtocol: UDP
   location: us-central1 # {"$kpt-set":"region"}
   portRange: "500"
   target:
@@ -101,17 +87,17 @@ spec:
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeForwardingRule
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/network-package/v0.2.0-alpha.1
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
   name: acme-vpc-dev-vpn-udp4500-fr # {"$kpt-set":"vpn-udp4500-fr-name"}
   namespace: networking # {"$kpt-set":"namespace"}
-  annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
-  description: "Regional UDP 4500 forwarding rule"
+  description: Regional UDP 4500 forwarding rule
   ipAddress:
     addressRef:
       name: network-name-vpn-address # {"$kpt-set":"vpn-address-name"}
-  ipProtocol: "UDP"
+  ipProtocol: UDP
   location: us-central1 # {"$kpt-set":"region"}
   portRange: "4500"
   target:

@@ -1,38 +1,16 @@
-# Copyright 2021 Google LLC
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#      http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
-# Trigger for when changes are pushed into any branch of the yakima source repo.
-# This will run all your kpt functions and apply a blast radius analysis of
-# changes.
-# NOTE: Only changes to the "main" branch will result in actuation of resources.
-apiVersion: cloudbuild.cnrm.cloud.google.com/v1beta1
+apiVersion: cloudbuild.cnrm.cloud.google.com/v1beta1 # Trigger for when changes are pushed into any branch of the yakima source repo.
 kind: CloudBuildTrigger
 metadata:
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/csr-git-ops-pipeline/v0.2.0-alpha.1
+    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
   name: source-repo-cicd-trigger # {"$kpt-set":"trigger-name"}
   namespace: config-control # {"$kpt-set":"namespace"}
-  annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/csr-gitops/v0.1.0
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   build:
     step:
-    - name: gcr.io/cloud-builders/gcloud:latest
-      volumes:
-      - name: deployment-workspace
-        path: /deployment-workspace
-      args:
-      - '-c'
+    - args:
+      - -c
       - |
         set -e
         gcloud source repos clone $_DEPLOYMENT_REPO .
@@ -41,14 +19,14 @@ spec:
         mkdir -p /deployment-workspace/config
       dir: /deployment-workspace
       entrypoint: /bin/sh
-      id: "Clone Deployment Repo"
+      id: Clone Deployment Repo
+      name: gcr.io/cloud-builders/gcloud:latest
       timeout: 300s
-    - name: gcr.io/kpt-dev/kpt:latest
       volumes:
-      - name: hydrated-workspace
-        path: /hydrated-workspace
-      args:
-      - '-c'
+      - name: deployment-workspace
+        path: /deployment-workspace
+    - args:
+      - -c
       - |
         set -eo pipefail
         SRC_DIR="."
@@ -78,32 +56,30 @@ spec:
         | kpt cfg grep "apiVersion=configmanagement\.gke\.io/" --annotate=false \
         > "$${DEST_DIR}/clusterregistry/cluster-selectors.yaml"
       entrypoint: /bin/bash
-      id: "Apply Hydration and Validation"
-    - name: gcr.io/yakima-eap/evaluate:latest
+      id: Apply Hydration and Validation
+      name: gcr.io/kpt-dev/kpt:latest
       volumes:
       - name: hydrated-workspace
         path: /hydrated-workspace
-      - name: deployment-workspace
-        path: /deployment-workspace
-      args:
-      - '-c'
+    - args:
+      - -c
       - |
         set -e
         printf "\n\nDiffing against deployment repo main branch:\n"
         evaluate --before="/deployment-workspace/config" --after="/hydrated-workspace/config" --max_additions=1000 --max_modifications=1000 --max_deletions=1000
       entrypoint: /bin/sh
-      id: "Evaluate hydrated changes"
-      waitFor:
-      - "Apply Hydration and Validation"
-      - "Clone Deployment Repo"
-    - name: gcr.io/cloud-builders/gcloud:latest
+      id: Evaluate hydrated changes
+      name: gcr.io/yakima-eap/evaluate:latest
       volumes:
       - name: hydrated-workspace
         path: /hydrated-workspace
       - name: deployment-workspace
         path: /deployment-workspace
-      args:
-      - '-c'
+      waitFor:
+      - Apply Hydration and Validation
+      - Clone Deployment Repo
+    - args:
+      - -c
       - |
         set -e
         git pull origin $BRANCH_NAME || true # Ignore errors in case branch doesn't exist
@@ -119,19 +95,25 @@ spec:
         printf "\n\nLatest deployment repo commit SHA: $(git rev-parse HEAD)\n"
       dir: /deployment-workspace
       entrypoint: /bin/sh
-      id: "Push Changes To Deployment Repo"
+      id: Push Changes To Deployment Repo
+      name: gcr.io/cloud-builders/gcloud:latest
+      volumes:
+      - name: hydrated-workspace
+        path: /hydrated-workspace
+      - name: deployment-workspace
+        path: /deployment-workspace
       waitFor:
-      - "Evaluate hydrated changes"
+      - Evaluate hydrated changes
     timeout: 600s
   description: Cloud Build Trigger for building source (DRY) repository pushes. This
     runs all user defined kpt fns applies a blast radius analysis and pushes to the
     deployment (WET) repository.
   disabled: false
   substitutions:
-    "_ADMIN_CLUSTER_NAME": "cluster-name" # {"$kpt-set":"cluster-name"}
-    "_DEPLOYMENT_REPO": "deployment-repo" # {"$kpt-set":"deployment-repo"}
-    "_SOURCE_REPO": "source-repo" # {"$kpt-set":"source-repo"}
+    _ADMIN_CLUSTER_NAME: cluster-name # {"$kpt-set":"cluster-name"}
+    _DEPLOYMENT_REPO: deployment-repo # {"$kpt-set":"deployment-repo"}
+    _SOURCE_REPO: source-repo # {"$kpt-set":"source-repo"}
   triggerTemplate:
-    branchName: ".*"
+    branchName: .*
     repoRef:
       name: source-repo # {"$kpt-set":"source-repo"}

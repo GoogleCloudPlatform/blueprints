@@ -21,6 +21,16 @@ cd "${REPO_ROOT}"
 COLOR_RED='\033[0;31m'
 COLOR_NONE='\033[0m'
 
+function kptfile_api_version() {
+    local pkg_path="${1}"
+    grep -m 1 "apiVersion:" "${pkg_path}/Kptfile" | sed 's/[[:space:]]*apiVersion:[[:space:]]*//'
+}
+
+function kptfile_pkg_name() {
+    local pkg_path="${1}"
+    grep -m 1 "name:" "${pkg_path}/Kptfile" | sed 's/[[:space:]]*name:[[:space:]]*//'
+}
+
 function handle_dir() {
     local parent_path="${1}"
     local parent_name="${2:-}"
@@ -29,19 +39,23 @@ function handle_dir() {
         if [[ -d "${child_path}" ]]; then
             # Attribute parents before children so that package names are as specific as possible
             if [[ -f "${child_path}/Kptfile" ]]; then
-                kptfile_version="$(grep -m 1 "apiVersion:" "${child_path}/Kptfile" | sed 's/[[:space:]]*apiVersion:[[:space:]]*//')"
-                child_name="$(grep -m 1 "name:" "${child_path}/Kptfile" | sed 's/[[:space:]]*name:[[:space:]]*//')"
+                kptfile_version="$(kptfile_api_version "${child_path}")"
+                child_name="$(kptfile_pkg_name "${child_path}")"
+
+                # build attribution name by concatonating parent package names with colon delimiters
                 if [[ -n "${parent_name}" ]]; then
                     child_name="${parent_name}:${child_name}"
                 fi
                 
                 if [[ "${kptfile_version}" == "kpt.dev/v1alpha1" ]]; then
+                    # Only supports kpt 0.39 for now.
                     echo -en "Processing:\t"
                     echo -n "${child_path}"
                     echo -en "\t"
                     echo "(name: ${child_name})"
                     BLUEPRINT_NAME="${child_name}" utils/add-attribution.sh "${child_path}"
                 else
+                    # Probably kpt v1 schema
                     echo -en "Skipping:\t"
                     echo -n "${child_path}"
                     echo -en "\t${COLOR_RED}"
@@ -49,13 +63,7 @@ function handle_dir() {
                     echo -e "${COLOR_NONE}"
                 fi
             fi
-            if [[ -n "${child_name}" ]]; then
-                handle_dir "${child_path}" "${child_name}"
-            elif [[ -n "${parent_name}" ]]; then
-                handle_dir "${child_path}" "${parent_name}"
-            else
-                handle_dir "${child_path}"
-            fi
+            handle_dir "${child_path}" "${child_name:-${parent_name:-}}"
         fi
     done
 }

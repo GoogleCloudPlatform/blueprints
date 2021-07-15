@@ -8,4 +8,5 @@ pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1
       configPath: setters.yaml
+  validators:
     - image: gcr.io/config-management-release/policy-controller-validate

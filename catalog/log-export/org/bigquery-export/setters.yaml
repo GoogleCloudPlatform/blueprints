@@ -3,6 +3,10 @@ kind: ConfigMap
 metadata:
   name: setters
 data:
+  # This is required
+  project-id: my-project-id
+
+  # These defaults can be left unchanged
   namespace: logging
   dataset-description: BigQuery audit logs for organization
   dataset-location: US
@@ -10,7 +14,3 @@ data:
   default-table-expiration-ms: "3600000"
   delete-contents-on-destroy: "false"
   filter: ""
-  management-namespace: config-control
-  management-project-id: management-project-id
-  org-id: "123456789012"
-  project-id: my-project-id

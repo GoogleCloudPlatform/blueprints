@@ -3,10 +3,17 @@ kind: ConfigMap
 metadata:
   name: setters
 data:
+  # The name of the cluster to attach this node pool to
   cluster-name: example-us-east4 # kpt-set: ${cluster-name}
+  # The compute location (region or zone)
   location: us-east4 # kpt-set: ${location}
+  # The maximum nodes per zone for this pool
   max-node-count: "2" # kpt-set: ${max-node-count}
+  # The name of this node pool
   nodepool-name: primary # kpt-set: ${nodepool-name}
+  # The namespace in which to manage cluster resources
   platform-namespace: config-control # kpt-set: ${platform-namespace}
+  # The project in which to manage cluster resources
   platform-project-id: platform-project-id # kpt-set: ${platform-project-id}
+  # The namespace in which to manage service enablement resources
   projects-namespace: projects # kpt-set: ${projects-namespace}

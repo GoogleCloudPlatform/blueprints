@@ -12,16 +12,15 @@ A kpt package to configure a GCE subnetwork.
 Setters are inherited by sub-packages.
 
 ```
-$ kpt cfg list-setters .
-./
-          NAME                  VALUE          SET BY   DESCRIPTION   COUNT   REQUIRED   IS SET
-  cluster-name           example-us-west4                             2       No         No
-  location               us-east4                                     1       No         No
-  network-name           default                                      1       No         No
-  network-project-id     network-project-id                           2       No         No
-  networking-namespace   networking                                   1       No         No
-  node-ip-range          10.3.4.0/22                                  1       No         No
-  platform-project-id    platform-project-id                          2       No         No
-  pod-ip-range           172.17.0.0/16                                1       No         No
-  service-ip-range       172.18.0.0/16                                1       No         No
+$ utils/kpt-list-setters.sh catalog/gke/subnet --count
+Setter                Usages
+cluster-name          3
+location              2
+networking-namespace  2
+network-name          2
+network-project-id    3
+node-ip-range         2
+platform-project-id   3
+pod-ip-range          2
+service-ip-range      2
 ```

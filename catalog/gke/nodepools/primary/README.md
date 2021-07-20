@@ -17,14 +17,13 @@ A kpt package to configure a GKE node pool.
 Setters are inherited by sub-packages.
 
 ```
-$ kpt cfg list-setters .
-./
-         NAME                  VALUE          SET BY   DESCRIPTION   COUNT   REQUIRED   IS SET
-  cluster-name          example-us-east4                             11      No         No
-  location              us-east4                                     1       No         No
-  max-node-count        2                                            1       No         No
-  nodepool-name         primary                                      11      No         No
-  platform-namespace    config-control                               8       No         No
-  platform-project-id   platform-project-id                          5       No         No
-  projects-namespace    projects                                     0       No         No
+$ utils/kpt-list-setters.sh catalog/gke/nodepools/primary --count
+Setter               Usages
+cluster-name         12
+location             2
+max-node-count       2
+nodepool-name        12
+platform-namespace   9
+platform-project-id  6
+projects-namespace   1
 ```

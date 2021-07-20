@@ -8,22 +8,12 @@ metadata:
 spec:
   config:
     - retail:
-        - shared:
-            $subtree: environments
         - apps:
             $subtree: environments
-    - financial:
-        - web:
+        - data:
             $subtree: environments
-        - core-services:
-            $subtree: environments
-    - risk-management:
-        - core-service:
-            $subtree: environments
-        - data-and-analysis:
-            $subtree: environments
-    - commercial:
-        - ctrl-service:
+    - finance:
+        - commercial:
             $subtree: environments
   parentRef:
     # This should match your organization ID

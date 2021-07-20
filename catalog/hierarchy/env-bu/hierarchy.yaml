@@ -18,7 +18,6 @@ spec:
     environment:
       - retail:
           - apps
-          - data_and_analysis
+          - data
       - finance:
           - commercial
-          - retail

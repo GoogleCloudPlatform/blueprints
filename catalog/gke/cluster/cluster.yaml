@@ -1,0 +1,98 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: container.cnrm.cloud.google.com/v1beta1
+kind: ContainerCluster
+metadata:
+  name: example-us-east4 # kpt-set: ${cluster-name}
+  namespace: config-control # kpt-set: ${platform-namespace}
+  labels:
+    # Label with the environment to allow listing clusters by environment.
+    gke.io/environment: dev # kpt-set: ${environment}
+  annotations:
+    cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
+    # Remove the default node pool after bootstrapping.
+    # Explcit node pool configuration allows for more isolation and makes it
+    # easier to replace node pools to change immutable fields.
+    cnrm.cloud.google.com/remove-default-node-pool: "true"
+spec:
+  addonsConfig:
+    # Enable NodeLocal DNSCache by default, for increased performance and scaling.
+    # https://cloud.google.com/kubernetes-engine/docs/how-to/nodelocal-dns-cache
+    dnsCacheConfig:
+      enabled: true
+    # Enable Compute Engine persistent disk CSI Driver by default, for access to
+    # volume snapshots and encryption with customer-managed encryption keys.
+    # https://cloud.google.com/kubernetes-engine/docs/how-to/persistent-volumes/gce-pd-csi-driver
+    gcePersistentDiskCsiDriverConfig:
+      enabled: true
+    # Enable Network Policy by default, for increased security.
+    # https://cloud.google.com/kubernetes-engine/docs/how-to/network-policy
+    networkPolicyConfig:
+      disabled: false
+  # Enable Groups for GKE, to allow role binding to Google Groups.
+  authenticatorGroupsConfig:
+    securityGroup: gke-security-group@example.com # kpt-set: ${security-group}
+  # Enable Binary Authorization by default, to allow configuration of constraint
+  # policies and container image attestation.
+  # https://cloud.google.com/binary-authorization/docs/overview
+  enableBinaryAuthorization: true
+  # Enable Shielded GKE Nodes by default, to protect bootstrap credentials.
+  # https://cloud.google.com/kubernetes-engine/docs/how-to/shielded-gke-nodes
+  enableShieldedNodes: true
+  # Must be at least 1 when using remove-default-node-pool.
+  initialNodeCount: 1
+  # Use VPC-native networking by default, with named secondary IP ranges.
+  ipAllocationPolicy:
+    clusterSecondaryRangeName: pods
+    servicesSecondaryRangeName: services
+  location: us-east4 # kpt-set: ${location}
+  # Allow internet access to the GKE control plane by default.
+  # This default is a deliberate compromise for ease of use over security.
+  # For increased security, reduce the CIDR blocks to cover only known clients.
+  masterAuthorizedNetworksConfig:
+    cidrBlocks:
+      - cidrBlock: 0.0.0.0/0
+        displayName: Whole Internet
+  networkRef:
+    external: projects/network-project-id/global/networks/default # kpt-set: projects/${network-project-id}/global/networks/${network-name}
+  privateClusterConfig:
+    # Allow public access to the GKE control plane by default.
+    # This default is a deliberate compromise for ease of use over security.
+    # For increased security, set to true to disable public IP access.
+    enablePrivateEndpoint: false
+    # Default to private nodes (no public IP).
+    enablePrivateNodes: true
+    # Enable global access to the GKE control plane's internal loab balancer.
+    # https://cloud.google.com/load-balancing/docs/internal/setting-up-internal#ilb-global-access
+    masterGlobalAccessConfig:
+      enabled: true
+    masterIpv4CidrBlock: 10.254.0.0/28 # kpt-set: ${master-ip-range}
+  # Default to the REGULAR channel.
+  # Use RAPID for faster access to features and fixes.
+  # Use STABLE for less disruption.
+  # Use UNSPECIFIED to unenroll from automatic updates.
+  releaseChannel:
+    channel: REGULAR
+  # Use a dedicated subnet by default, to increase isolation and allow for
+  # cluster-specific firewalls.
+  subnetworkRef:
+    name: platform-project-id-example-us-east4 # kpt-set: ${platform-project-id}-${cluster-name}
+    namespace: networking # kpt-set: ${networking-namespace}
+  # Enable Vertical Pod Autoscaling by default.
+  # https://cloud.google.com/kubernetes-engine/docs/concepts/verticalpodautoscaler
+  verticalPodAutoscaling:
+    enabled: true
+  # Enable workload identity by default.
+  workloadIdentityConfig:
+    identityNamespace: platform-project-id.svc.id.goog # kpt-set: ${platform-project-id}.svc.id.goog

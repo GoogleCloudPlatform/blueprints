@@ -34,6 +34,9 @@ PKG_PATH="${1:-.}"
 # - data map is at the end of the file
 # - setter names are not wrapped in quotes or brackets
 function list_setters_yaml() {
+    if [[ ! -f "${PKG_PATH}/setters.yaml" ]]; then
+        return
+    fi
     cat "${PKG_PATH}/setters.yaml" \
         | sed -n '/^data:/,$p' \
         | grep -Eho ' +[^#: ]+:' \
@@ -60,12 +63,15 @@ function list_setters() {
 function list_setters_with_count() {
     (
         echo -e "Setter\tUsages"
-        while IFS="" read -r SETTER; do
-            COUNT="$((grep -rho "# kpt-set:.*\${${SETTER}}.*" "${PKG_PATH}" || true) | wc -l)"
-            echo -n "${SETTER}"
-            echo -ne "\t"
-            echo "${COUNT}"
-        done <<< "$(list_setters)"
+        SETTERS="$(list_setters)"
+        if [[ -n "${SETTERS}" ]]; then
+            while IFS="" read -r SETTER; do
+                COUNT="$((grep -rho "# kpt-set:.*\${${SETTER}}.*" "${PKG_PATH}" || true) | wc -l)"
+                echo -n "${SETTER}"
+                echo -ne "\t"
+                echo "${COUNT}"
+            done <<< "${SETTERS}"
+        fi
     ) | column -t 
 }
 

@@ -27,7 +27,21 @@ fi
 
 PKG_PATH="${1:-.}"
 
-function list_setters() {
+# Reads a setters.yaml file and extracts the data keys.
+# Assumptions to simplify yaml parsing:
+# - file named setter.yaml
+# - setter.yaml only contains a ConfigMap
+# - data map is at the end of the file
+# - setter names are not wrapped in quotes or brackets
+function list_setters_yaml() {
+    cat "${PKG_PATH}/setters.yaml" \
+        | sed -n '/^data:/,$p' \
+        | grep -Eho ' +[^#: ]+:' \
+        | sed 's/ *\([^ ]*\):/\1/' \
+        | sort -u
+}
+
+function list_kpt_set() {
     grep -rho '# kpt-set:.*' "${PKG_PATH}" \
         | sort -u \
         | sed 's/# kpt-set:[[:space:]]*\(.*\)/\1/' \
@@ -36,11 +50,18 @@ function list_setters() {
         | sed '/^$/d'
 }
 
+function list_setters() {
+    (
+        list_setters_yaml
+        list_kpt_set
+    ) | sort -u
+}
+
 function list_setters_with_count() {
     (
         echo -e "Setter\tUsages"
         while IFS="" read -r SETTER; do
-            COUNT="$(grep -rho "# kpt-set:.*\${${SETTER}}.*" "${PKG_PATH}" | wc -l)"
+            COUNT="$((grep -rho "# kpt-set:.*\${${SETTER}}.*" "${PKG_PATH}" || true) | wc -l)"
             echo -n "${SETTER}"
             echo -ne "\t"
             echo "${COUNT}"

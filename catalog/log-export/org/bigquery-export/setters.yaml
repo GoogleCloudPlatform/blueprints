@@ -5,7 +5,6 @@ metadata:
 data:
   # This is required
   project-id: my-project-id
-
   # These defaults can be left unchanged
   namespace: logging
   dataset-description: BigQuery audit logs for organization

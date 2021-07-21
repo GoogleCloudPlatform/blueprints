@@ -2,5 +2,5 @@ apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
 metadata:
   name: example
-  namespace: service-project-id # {"$kpt-set":"service-project-id"}
+  namespace: service-project-id # kpt-set: ${service-project-id}
 spec: {}

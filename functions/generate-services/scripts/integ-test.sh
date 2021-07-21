@@ -3,7 +3,7 @@
 kpt version  # sanity test
 
 # Run function with full sample input and specific config inputs
-OUTPUT="$(kpt fn run sample/ --enable-exec --exec-path ./bin/main --dry-run -- namespace=example disable-on-destroy=false)"
+OUTPUT="$(kpt fn eval sample/ --exec ./bin/main --output unwrap -- namespace=example disable-on-destroy=false)"
 
 function fail() {
 	echo "---"
@@ -52,7 +52,6 @@ metadata:
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
     cnrm.cloud.google.com/project-id: ${projectID}
-    config.kubernetes.io/path: '${namespace}/service_${name}.yaml'
 spec:
   resourceID: ${resourceID}
 EOF
@@ -69,7 +68,7 @@ expectService "host-project-id-compute" "example" "host-project-id" "compute.goo
 expectService "projects-cloudresourcemanager" "example" "projects" "cloudresourcemanager.googleapis.com"
 
 # Run function with partial sample input and default config
-OUTPUT="$(kpt fn run sample/cluster.yaml --enable-exec --exec-path ./bin/main --dry-run)"
+OUTPUT="$(cat sample/cluster.yaml | kpt fn eval - --exec ./bin/main --output unwrap)"
 
 function expectServiceDefault() {
 	local name=$1
@@ -85,7 +84,6 @@ metadata:
   namespace: ${namespace}
   annotations:
     cnrm.cloud.google.com/project-id: ${projectID}
-    config.kubernetes.io/path: '${namespace}/service_${name}.yaml'
 spec:
   resourceID: ${resourceID}
 EOF

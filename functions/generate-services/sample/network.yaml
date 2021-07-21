@@ -2,16 +2,16 @@ apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
 metadata:
   name: example
-  namespace: networking # {"$kpt-set":"networking-namespace"}
+  namespace: networking # kpt-set: ${networking-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: host-project-id # {"$kpt-set":"host-project-id"}
+    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
 spec: {}
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
   name: example
-  namespace: networking # {"$kpt-set":"networking-namespace"}
+  namespace: networking # kpt-set: ${networking-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: host-project-id # {"$kpt-set":"host-project-id"}
+    cnrm.cloud.google.com/project-id: host-project-id # kpt-set: ${host-project-id}
 spec: {}

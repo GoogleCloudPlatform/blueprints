@@ -1,19 +1,19 @@
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Project
 metadata:
-  name: host-project-id # {"$kpt-set":"host-project-id"}
-  namespace: projects # {"$kpt-set":"projects-namespace"}
+  name: host-project-id # kpt-set: ${host-project-id}
+  namespace: projects # kpt-set: ${projects-namespace}
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
-    cnrm.cloud.google.com/organization-id: "123456789012" # {"$kpt-set":"org-id"}
+    cnrm.cloud.google.com/organization-id: "123456789012" # kpt-set: ${org-id}
 spec: {}
 ---
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Project
 metadata:
-  name: service-project-id # {"$kpt-set":"service-project-id"}
-  namespace: projects # {"$kpt-set":"projects-namespace"}
+  name: service-project-id # kpt-set: ${service-project-id}
+  namespace: projects # kpt-set: ${projects-namespace}
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
-    cnrm.cloud.google.com/organization-id: "123456789012" # {"$kpt-set":"org-id"}
+    cnrm.cloud.google.com/organization-id: "123456789012" # kpt-set: ${org-id}
 spec: {}

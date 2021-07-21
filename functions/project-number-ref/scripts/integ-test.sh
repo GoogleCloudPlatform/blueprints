@@ -2,7 +2,7 @@
 #  expected to be run from yakima/kpt-folder-parent
 kpt version  # sanity test
 
-OUTPUT="$(kpt fn run sample/ --enable-exec --exec-path ./bin/main --dry-run)"
+OUTPUT="$(kpt fn eval sample/ --exec ./bin/main --output unwrap --include-meta-resources)"
 
 function fail() {
 	echo "---"
@@ -20,13 +20,15 @@ function fail() {
 # Project A
 # Project B
 
-# There should be a total of 16 resources:
+# There should be a total of 18 resources:
 # 2 Project
 # 2 FieldReference
 # 4 FutureObject
 # 4 Role
 # 4 RoleBinding
-RESOURCES_EXPECTED="16"
+# 1 setter.yaml (--include-meta-resources)
+# 1 Kptfile (--include-meta-resources)
+RESOURCES_EXPECTED="18"
 
 if  [[ "$(echo "${OUTPUT}" | grep -cE "^kind: Project$")" != "2" ]]; then
 	fail "kpt tests failed: incorrect number of Projects"

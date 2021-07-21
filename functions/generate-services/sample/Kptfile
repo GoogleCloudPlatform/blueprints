@@ -1,59 +1,12 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: generate-services-sample
-packageMetadata:
-  tags:
-  - kpt.dev/app=generate-services
-  shortDescription: Config Orchestrator Sample - Project Ref
-openAPI:
-  definitions:
-    io.k8s.cli.setters.org-id:
-      x-k8s-cli:
-        setter:
-          name: org-id
-          value: "123456789012"
-    io.k8s.cli.setters.billing-account-id:
-      x-k8s-cli:
-        setter:
-          name: billing-account-id
-          value: AAAAAA-BBBBBB-CCCCCC
-    io.k8s.cli.setters.host-project-id:
-      x-k8s-cli:
-        setter:
-          name: host-project-id
-          value: host-project-id
-    io.k8s.cli.setters.service-project-id:
-      x-k8s-cli:
-        setter:
-          name: service-project-id
-          value: service-project-id
-    io.k8s.cli.setters.projects-namespace:
-      x-k8s-cli:
-        setter:
-          name: projects-namespace
-          value: projects
-    io.k8s.cli.substitutions.krm-container-network-user-name:
-      x-k8s-cli:
-        substitution:
-          name: krm-container-network-user-name
-          pattern: ${service-project-id}-container-network-user
-          values:
-          - marker: ${service-project-id}
-            ref: '#/definitions/io.k8s.cli.setters.service-project-id'
-    io.k8s.cli.substitutions.krm-cloudservices-network-user-name:
-      x-k8s-cli:
-        substitution:
-          name: krm-cloudservices-network-user-name
-          pattern: ${service-project-id}-cloudservices-network-user
-          values:
-          - marker: ${service-project-id}
-            ref: '#/definitions/io.k8s.cli.setters.service-project-id'
-    io.k8s.cli.substitutions.krm-container-cloudservices-user-name:
-      x-k8s-cli:
-        substitution:
-          name: krm-container-cloudservices-user-name
-          pattern: ${service-project-id}-container-cloudservices-user
-          values:
-          - marker: ${service-project-id}
-            ref: '#/definitions/io.k8s.cli.setters.service-project-id'
+info:
+  description: Config Orchestrator Sample - Project Ref
+  keywords:
+    - kpt.dev/app=generate-services
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

@@ -8,25 +8,16 @@ metadata:
 spec:
   config:
     - retail:
-        - shared:
-            $subtree: environments
         - apps:
             $subtree: environments
-    - financial:
-        - web:
+        - data:
             $subtree: environments
-        - core-services:
-            $subtree: environments
-    - risk-management:
-        - core-service:
-            $subtree: environments
-        - data-and-analysis:
-            $subtree: environments
-    - commercial:
-        - ctrl-service:
+    - finance:
+        - commercial:
             $subtree: environments
   parentRef:
-    external: "123456789012" # kpt-set: ${org-id}
+    # This should match your organization ID
+    external: "123456789012"
   subtrees:
     environments:
       - dev

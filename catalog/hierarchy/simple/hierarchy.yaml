@@ -12,4 +12,5 @@ spec:
     - prod
     - qa
   parentRef:
-    external: "123456789012" # kpt-set: ${org-id}
+    # This should match your organization ID
+    external: "123456789012"

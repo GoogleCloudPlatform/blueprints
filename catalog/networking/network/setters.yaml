@@ -3,10 +3,12 @@ kind: ConfigMap
 metadata:
   name: setters
 data:
-  namespace: networking
+  # Required setters
   network-name: network-name
   project-id: project-id
   region: us-central1
+  # Optional setters
+  namespace: networking
   vpn-secret-key: vpn-shared-secret
   vpn-secret-name: vpn-shared-secret
   prefix: ""

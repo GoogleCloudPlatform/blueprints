@@ -27,3 +27,4 @@ data:
   project-id: project-id
   project-number: "1234567890123"
   source-repo: source-repo
+  configsync-dir: config

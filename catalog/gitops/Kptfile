@@ -16,7 +16,7 @@ kind: Kptfile
 metadata:
   name: gitops
 info:
-  description: This blueprint generates a GitOps CI/CD pipeline for use with ACM
+  description: GitOps CI/CD pipeline for use with ACM
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

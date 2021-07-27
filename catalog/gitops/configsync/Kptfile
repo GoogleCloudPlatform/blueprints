@@ -1,7 +1,7 @@
 apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
-  name: configsync-csr
+  name: configsync
 info:
   description: Configure Config Sync to use Cloud Source Repository (CSR)
 pipeline:

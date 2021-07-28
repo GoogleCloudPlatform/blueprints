@@ -17,6 +17,7 @@ set -o errexit -o nounset -o pipefail
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 
+BLUEPRINTS_REPO_URL="https://github.com/GoogleCloudPlatform/blueprints"
 KCC_REF_URL="https://cloud.google.com/config-connector/docs/reference/resource-docs"
 
 PKG_PATH="${1:-.}"
@@ -228,26 +229,22 @@ function print_kcc_resource_kinds() {
 
 function print_subpackage_list() {
     local path="${1}"
-    local parentPath="${2:-}"
+    local full_path="$(cd "${path}" && pwd -P)"
     local repo_root=$(git rev-parse --show-toplevel)
-    local pkg_repo_path="${PWD#"${repo_root}"}"
     local filepath=""
 
-    if ! find "${path}" -mindepth 2 -type f -name "Kptfile" | read; then
+    local subpkg_kptfiles="$(find "${full_path}" -mindepth 2 -type f -name "Kptfile")"
+    if [[ -z "${subpkg_kptfiles}" ]]; then
         echo "This package has no sub-packages."
         return
     fi
 
     (
         set -o errexit -o nounset -o pipefail
-        while IFS='' read -r -d $'\0' filepath; do
-            filepath=${filepath#"./"}
-            if [[ -f "${filepath}/Kptfile" ]]; then
-                echo "- [${filepath}](${pkg_repo_path}/${filepath}/)"
-            else
-                print_subpackage_list "${filepath}"
-            fi
-        done < <(find "${path}" -mindepth 1 -maxdepth 1 -type d -print0)
+        while IFS='' read -r filepath; do
+            filepath="${filepath%"/Kptfile"}"
+            echo "- [${filepath#"${full_path}/"}](/${filepath#"${repo_root}/"})"
+        done <<< "${subpkg_kptfiles}"
     ) | sort
 }
 
@@ -322,6 +319,61 @@ function print_resource_link_list() {
     ) | sort
 }
 
+function print_usage() {
+    local path="${1}"
+    local full_path="$(cd "${path}" && pwd -P)"
+    local repo_root=$(git rev-parse --show-toplevel)
+    local relative_pkg_path="${full_path#"${repo_root}/"}"
+    local config_paths="$(print_kpt_fn_config_paths "${path}")"
+
+    echo "1.  Clone the package:"
+    echo '    ```'
+    echo "    kpt pkg get ${BLUEPRINTS_REPO_URL}.git/${relative_pkg_path}@\${VERSION}"
+    echo '    ```'
+    echo '    Replace `${VERSION}` with the desired repo branch or tag'
+    echo '    (for example, `main`).'
+    echo
+
+    echo "1.  Move into the local package:"
+    echo '    ```'
+    echo "    cd \"./$(basename ${relative_pkg_path})/\""
+    echo '    ```'
+    echo
+
+    if [[ -n "${config_paths}" ]]; then
+        echo "1.  Edit the function config file(s):"
+        echo "${config_paths}" | prepend_lines "    - "
+        echo
+    fi
+
+    if [[ -f "${path}/Kptfile" ]]; then
+        echo "1.  Execute the function pipeline"
+        echo '    ```'
+        echo "    kpt fn render"
+        echo '    ```'
+        echo
+    fi
+
+    echo "1.  Initialize the resource inventory"
+    echo '    ```'
+    echo "    kpt live init --namespace "\${NAMESPACE}\"""
+    echo '    ```'
+    echo '    Replace `${NAMESPACE}` with the namespace in which to manage'
+    echo '    the inventory ResourceGroup (for example, `config-control`).'
+    echo
+
+    echo "1.  Apply the package resources to your cluster"
+    echo '    ```'
+    echo "    kpt live apply"
+    echo '    ```'
+    echo
+
+    echo "1.  Wait for the resources to be ready"
+    echo '    ```'
+    echo "    kpt live status --output table --poll-until current"
+    echo '    ```'
+}
+
 echo "# $(pkg_name "${PKG_PATH}") package"
 echo
 echo "$(pkg_description "${PKG_PATH}")"
@@ -341,4 +393,8 @@ echo
 echo "## Resource References"
 echo
 print_resource_link_list "${PKG_PATH}"
+echo
+echo "## Usage"
+echo
+print_usage "${PKG_PATH}"
 echo

@@ -3,7 +3,10 @@ kind: Kptfile
 metadata:
   name: landing-zone
 info:
-  description: Foundational landing zone blueprint for GCP
+  description: |
+    Foundational landing zone blueprint for GCP.
+
+    This blueprint configures organization level IAM permissions.
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

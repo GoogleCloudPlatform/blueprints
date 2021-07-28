@@ -1,7 +1,7 @@
 apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
-  name: gke-cluster-nodepool
+  name: gke-nodepool
   annotations:
     blueprints.cloud.google.com/title: GKE Node Pool blueprint
 info:

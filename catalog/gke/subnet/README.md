@@ -1,4 +1,4 @@
-# GKE Cluster Node Pool blueprint
+# GKE Subnet blueprint
 
 A GCP subnet for a GKE cluster with private nodes
 

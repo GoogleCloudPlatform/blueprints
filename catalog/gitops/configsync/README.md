@@ -1,6 +1,7 @@
 # configsync-csr package
 
-Configure Config Sync to use Cloud Source Repository (CSR)
+A GitOps Continuous Deployment pipeline using Anthos Config Management (ACM)
+and Cloud Source Repository (CSR).
 
 ## Setters
 

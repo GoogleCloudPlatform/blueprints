@@ -14,9 +14,11 @@
 apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
-  name: gitops
+  name: gitops-csr
 info:
-  description: This blueprint generates a GitOps CI/CD pipeline for use with ACM
+  description: |
+    A GitOps Continuous Deployment pipeline using Anthos Config Management (ACM),
+    Cloud Source Repository (CSR), and Cloud Build.
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

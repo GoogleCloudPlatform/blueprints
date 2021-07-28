@@ -3,7 +3,9 @@ kind: Kptfile
 metadata:
   name: configsync-csr
 info:
-  description: Configure Config Sync to use Cloud Source Repository (CSR)
+  description: |
+    A GitOps Continuous Deployment pipeline using Anthos Config Management (ACM)
+    and Cloud Source Repository (CSR).
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

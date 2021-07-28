@@ -1,6 +1,8 @@
-# Redis Bucket blueprint
+# Google Cloud Storage and Memorystore for Redis blueprint
 
-Redis instance and storage bucket
+Google Cloud Storage (GCS) bucket and Memorystore for Redis instance.
+
+This blueprint demonstrates multiple unrelated resources sharing a package.
 
 ## Setters
 

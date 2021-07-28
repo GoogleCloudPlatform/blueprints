@@ -1,28 +1,18 @@
-# Network blueprint
+# network-package package
 
-This package creates a network with VPN and NAT configuration.
+A private network with VPN and Cloud NAT.
 
-Contents:
+**Requires a pre-existing secret!**
 
--   network.yaml - contains network configuration.
--   nat.yaml - contains cloud NAT configuraiton.
--   vpn.yaml - contains cloud VPN configuration.
-
-## Applying the blueprint
-
-NOTE: Replace all environment variables in the example below with the
-appropriate values.
-
-Before applying this blueprint you need to create a Kubernetes secret object
-with the VPN key.
-
-This could be done either via a command line:
+Via kubectl:
 
 ```shell
-kubectl create secret generic vpn-shared-secret --from-literal=vpn-shared-secret=${VPN_SECRET_VALUE} -n ${NETWORK_NAMESPACE}
+kubectl create secret generic vpn-shared-secret \
+    --from-literal "vpn-shared-secret=${VPN_SECRET_VALUE}" \
+    -n ${NETWORK_NAMESPACE}
 ```
 
-Or declaratively:
+Or Config Connector:
 
 ```yaml
 apiVersion: v1
@@ -34,4 +24,49 @@ stringData:
   vpn-shared-secret: ${VPN_SECRET_VALUE}
 ```
 
-`${NETWORK_NAMESPACE}` is the same namespace as the network itself.
+Replace the following:
+-   `${NETWORK_NAMESPACE}`: the same namespace as the Network resource.
+-   `${VPN_SECRET_VALUE}`: the
+    [shared secret](https://cloud.google.com/network-connectivity/docs/vpn/how-to/generating-pre-shared-key)
+    to use when authenticating with the VPN.
+
+## Setters
+
+```
+Setter                              Usages
+ip-cidr-range                       1
+namespace                           10
+network-name                        21
+prefix                              4
+project-id                          12
+region                              9
+source-subnetwork-ip-ranges-to-nat  1
+vpn-secret-key                      1
+vpn-secret-name                     1
+```
+
+## Sub-packages
+
+- [catalog/networking/network/subnet](/catalog/networking/network/subnet/)
+- [catalog/networking/network/vpc](/catalog/networking/network/vpc/)
+
+## Resources
+
+```
+File      APIVersion                             Kind                     Name                         Namespace
+vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeAddress           network-name-vpn-address     networking
+vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeForwardingRule    acme-vpc-dev-vpn-udp4500-fr  networking
+vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeForwardingRule    acme-vpc-dev-vpn-udp500-fr   networking
+vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeForwardingRule    network-name-vpn-esp-fr      networking
+vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeTargetVPNGateway  network-name-vpn-gateway     networking
+vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeVPNTunnel         network-name-vpn-tunnel      networking
+```
+
+## Resource References
+
+- [ComputeAddress](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computeaddress)
+- [ComputeForwardingRule](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computeforwardingrule)
+- [ComputeTargetVPNGateway](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computetargetvpngateway)
+- [ComputeVPNTunnel](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computevpntunnel)
+- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
+

@@ -1,4 +1,17 @@
 #!/usr/bin/env bash
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 set -o errexit -o nounset -o pipefail
 
@@ -61,18 +74,20 @@ function list_setters() {
 }
 
 function list_setters_with_count() {
+    local setters="$(list_setters)"
+    local setter=""
+    local count=0
     (
         echo -e "Setter\tUsages"
-        SETTERS="$(list_setters)"
-        if [[ -n "${SETTERS}" ]]; then
-            while IFS="" read -r SETTER; do
-                COUNT="$((grep -rho "# kpt-set:.*\${${SETTER}}.*" "${PKG_PATH}" || true) | wc -l)"
-                echo -n "${SETTER}"
+        if [[ -n "${setters}" ]]; then
+            while IFS="" read -r setter; do
+                count="$( (grep -rho "# kpt-set:.*\${${setter}}.*" "${PKG_PATH}" || true) | wc -l)"
+                echo -n "${setter}"
                 echo -ne "\t"
-                echo "${COUNT}"
-            done <<< "${SETTERS}"
+                echo "${count}"
+            done <<< "${setters}"
         fi
-    ) | column -t 
+    ) | column -t | sed 's/[[:space:]]*$//g'
 }
 
 if [[ "${COUNT_ENABLED}" == "true" ]]; then

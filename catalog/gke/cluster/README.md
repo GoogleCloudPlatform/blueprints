@@ -1,23 +1,14 @@
-# GKE Cluster Package
+# gke-cluster package
 
-A kpt package to configure a GKE cluster.
-
-## Resources
-
-- [cluster.yaml](/catalog/gke/cluster/cluster.yaml)
-  - [ContainerCluster](https://cloud.google.com/config-connector/docs/reference/resource-docs/container/containercluster) to configure a GKE cluster.
-- [container-api.yaml](/catalog/gke/cluster/container-api.yaml)
-  - [Service](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service) to enable the container.googleapis.com API.
+GKE cluster with public masters and private nodes
 
 ## Setters
 
-Setters are inherited by sub-packages.
-
 ```
-$ utils/kpt-list-setters.sh catalog/gke/cluster --count
 Setter                Usages
 cluster-name          4
 environment           2
+kpt-set               0
 location              2
 master-ip-range       2
 networking-namespace  2
@@ -28,3 +19,22 @@ platform-project-id   6
 projects-namespace    2
 security-group        2
 ```
+
+## Sub-packages
+
+This package has no sub-packages.
+
+## Resources
+
+```
+File                APIVersion                                  Kind              Name                                        Namespace
+cluster.yaml        container.cnrm.cloud.google.com/v1beta1     ContainerCluster  example-us-east4                            config-control
+container-api.yaml  serviceusage.cnrm.cloud.google.com/v1beta1  Service           platform-project-id-cluster-name-container  projects
+```
+
+## Resource References
+
+- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
+- [ContainerCluster](https://cloud.google.com/config-connector/docs/reference/resource-docs/container/containercluster)
+- [Service](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service)
+

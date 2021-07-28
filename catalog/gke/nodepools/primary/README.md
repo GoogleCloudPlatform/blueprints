@@ -1,25 +1,13 @@
-# GKE Node Pool Package
+# gke-cluster-nodepool package
 
-A kpt package to configure a GKE node pool.
-
-## Resources
-
-- [node-iam.yaml](/catalog/gke/nodepool/primary/node-iam.yaml)
-  - [IAMServiceAccount](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount) to identify GKE nodes in this pool
-  - [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) to allow fluentd to send logs to StackDriver
-  - [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) to allow fluentd to send metrics to StackDriver
-  - [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember) to allow kubelet and docker or containerd to read container images from Artifact Registry in the platform project.
-- [nodepool.yaml](/catalog/gke/nodepool/primary/nodepool.yaml)
-  - [ContainerNodePool](https://cloud.google.com/config-connector/docs/reference/resource-docs/container/containernodepool) to configure a GKE node pool.
+GKE node pool with dedicated service account
 
 ## Setters
 
-Setters are inherited by sub-packages.
-
 ```
-$ utils/kpt-list-setters.sh catalog/gke/nodepools/primary --count
 Setter               Usages
 cluster-name         12
+kpt-set              0
 location             2
 max-node-count       2
 nodepool-name        12
@@ -27,3 +15,26 @@ platform-namespace   9
 platform-project-id  6
 projects-namespace   1
 ```
+
+## Sub-packages
+
+This package has no sub-packages.
+
+## Resources
+
+```
+File           APIVersion                               Kind               Name                                         Namespace
+node-iam.yaml  iam.cnrm.cloud.google.com/v1beta1        IAMPolicyMember    artifactreader-gke-example-us-east4-primary  config-control
+node-iam.yaml  iam.cnrm.cloud.google.com/v1beta1        IAMPolicyMember    logwriter-gke-example-us-east4-primary       config-control
+node-iam.yaml  iam.cnrm.cloud.google.com/v1beta1        IAMPolicyMember    metricwriter-gke-example-us-east4-primary    config-control
+node-iam.yaml  iam.cnrm.cloud.google.com/v1beta1        IAMServiceAccount  gke-example-us-east4-primary                 config-control
+nodepool.yaml  container.cnrm.cloud.google.com/v1beta1  ContainerNodePool  example-us-east4-primary                     config-control
+```
+
+## Resource References
+
+- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
+- [ContainerNodePool](https://cloud.google.com/config-connector/docs/reference/resource-docs/container/containernodepool)
+- [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember)
+- [IAMServiceAccount](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount)
+

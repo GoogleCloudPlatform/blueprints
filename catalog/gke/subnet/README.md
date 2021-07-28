@@ -1,20 +1,13 @@
-# GKE Subnet Package
+# gke-cluster-subnet package
 
-A kpt package to configure a GCE subnetwork.
-
-## Resources
-
-- [subnet.yaml](/catalog/gke/subnet/subnet.yaml)
-  - [ComputeSubnetwork](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computesubnetwork) to configure a GCE subnetwork
+GCP subnet for a GKE cluster
 
 ## Setters
 
-Setters are inherited by sub-packages.
-
 ```
-$ utils/kpt-list-setters.sh catalog/gke/subnet --count
 Setter                Usages
 cluster-name          3
+kpt-set               0
 location              2
 networking-namespace  2
 network-name          2
@@ -24,3 +17,20 @@ platform-project-id   3
 pod-ip-range          2
 service-ip-range      2
 ```
+
+## Sub-packages
+
+This package has no sub-packages.
+
+## Resources
+
+```
+File         APIVersion                             Kind               Name                                  Namespace
+subnet.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeSubnetwork  platform-project-id-example-us-east4  networking
+```
+
+## Resource References
+
+- [ComputeSubnetwork](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computesubnetwork)
+- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
+

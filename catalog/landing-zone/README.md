@@ -1,3 +1,89 @@
-# Landing Zone
+# landing-zone package
 
-This blueprint configures organization level IAM permissions.
+Foundational landing zone blueprint for GCP
+
+## Setters
+
+```
+Setter                 Usages
+billing-account-id     0
+group-billing-admins   1
+group-org-admins       1
+management-namespace   27
+management-project-id  50
+org-id                 30
+```
+
+## Sub-packages
+
+This package has no sub-packages.
+
+## Resources
+
+```
+File                                             APIVersion                                     Kind                    Name                                               Namespace
+iam.yaml                                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         billing-admins-iam                                 config-control
+iam.yaml                                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         org-admins-iam                                     config-control
+namespaces/hierarchy.yaml                        core.cnrm.cloud.google.com/v1beta1             ConfigConnectorContext  configconnectorcontext.core.cnrm.cloud.google.com  hierarchy
+namespaces/hierarchy.yaml                        iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         hierarchy-sa-folderadmin-permissions               config-control
+namespaces/hierarchy.yaml                        iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         hierarchy-sa-workload-identity-binding             config-control
+namespaces/hierarchy.yaml                        iam.cnrm.cloud.google.com/v1beta1              IAMServiceAccount       hierarchy-sa                                       config-control
+namespaces/hierarchy.yaml                        rbac.authorization.k8s.io/v1                   RoleBinding             allow-resource-reference-from-hierarchy            hierarchy
+namespaces/hierarchy.yaml                        v1                                             Namespace               hierarchy
+namespaces/logging.yaml                          core.cnrm.cloud.google.com/v1beta1             ConfigConnectorContext  configconnectorcontext.core.cnrm.cloud.google.com  logging
+namespaces/logging.yaml                          iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         logging-sa-bigqueryadmin-permissions               config-control
+namespaces/logging.yaml                          iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         logging-sa-logadmin-permissions                    config-control
+namespaces/logging.yaml                          iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         logging-sa-workload-identity-binding               config-control
+namespaces/logging.yaml                          iam.cnrm.cloud.google.com/v1beta1              IAMServiceAccount       logging-sa                                         config-control
+namespaces/logging.yaml                          rbac.authorization.k8s.io/v1                   RoleBinding             allow-resource-reference-from-logging              projects
+namespaces/logging.yaml                          v1                                             Namespace               logging
+namespaces/networking.yaml                       core.cnrm.cloud.google.com/v1beta1             ConfigConnectorContext  configconnectorcontext.core.cnrm.cloud.google.com  networking
+namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         networking-sa-dns-permissions                      config-control
+namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         networking-sa-networkadmin-permissions             config-control
+namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         networking-sa-security-permissions                 config-control
+namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         networking-sa-service-control-permissions          config-control
+namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         networking-sa-workload-identity-binding            config-control
+namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         networking-sa-xpnadmin-permissions                 config-control
+namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMServiceAccount       networking-sa                                      config-control
+namespaces/networking.yaml                       rbac.authorization.k8s.io/v1                   RoleBinding             allow-resource-reference-from-networking           projects
+namespaces/networking.yaml                       v1                                             Namespace               networking
+namespaces/policies.yaml                         core.cnrm.cloud.google.com/v1beta1             ConfigConnectorContext  configconnectorcontext.core.cnrm.cloud.google.com  policies
+namespaces/policies.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         policies-sa-orgpolicyadmin-permissions             config-control
+namespaces/policies.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         policies-sa-workload-identity-binding              config-control
+namespaces/policies.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMServiceAccount       policies-sa                                        config-control
+namespaces/policies.yaml                         v1                                             Namespace               policies
+namespaces/projects.yaml                         core.cnrm.cloud.google.com/v1beta1             ConfigConnectorContext  configconnectorcontext.core.cnrm.cloud.google.com  projects
+namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         projects-sa-billinguser-permissions                config-control
+namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         projects-sa-projectcreator-permissions             config-control
+namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         projects-sa-projectdeleter-permissions             config-control
+namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         projects-sa-projectmover-permissions               config-control
+namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         projects-sa-serviceusageadmin-permissions          config-control
+namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         projects-sa-workload-identity-binding              config-control
+namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMServiceAccount       projects-sa                                        config-control
+namespaces/projects.yaml                         v1                                             Namespace               projects
+policies/deletion-policy-required-template.yaml  templates.gatekeeper.sh/v1beta1                ConstraintTemplate      gcprequiredeletionpolicy
+policies/disable-guest-attributes.yaml           resourcemanager.cnrm.cloud.google.com/v1beta1  ResourceManagerPolicy   disable-guest-attributes                           policies
+policies/disable-nested-virtualization.yaml      resourcemanager.cnrm.cloud.google.com/v1beta1  ResourceManagerPolicy   disable-nested-virtualization                      policies
+policies/disable-sa-key-creation.yaml            resourcemanager.cnrm.cloud.google.com/v1beta1  ResourceManagerPolicy   disable-sa-key-creation                            policies
+policies/disable-serial-port.yaml                resourcemanager.cnrm.cloud.google.com/v1beta1  ResourceManagerPolicy   disable-serial-port                                policies
+policies/disable-vm-external-ip.yaml             resourcemanager.cnrm.cloud.google.com/v1beta1  ResourceManagerPolicy   disable-vm-external-ip                             policies
+policies/enforce-uniform-bucket-lvl-access.yaml  resourcemanager.cnrm.cloud.google.com/v1beta1  ResourceManagerPolicy   enforce-uniform-bucket-lvl-access                  policies
+policies/folder-naming-constraint-template.yaml  templates.gatekeeper.sh/v1beta1                ConstraintTemplate      gcpenforcenamingv2
+policies/restrict-cloud-sql-public-ip.yaml       resourcemanager.cnrm.cloud.google.com/v1beta1  ResourceManagerPolicy   restrict-cloud-sql-public-ip                       policies
+policies/restrict-lien-removal.yaml              resourcemanager.cnrm.cloud.google.com/v1beta1  ResourceManagerPolicy   restrict-lien-removal                              policies
+policies/skip-default-network.yaml               resourcemanager.cnrm.cloud.google.com/v1beta1  ResourceManagerPolicy   skip-default-network                               policies
+services.yaml                                    serviceusage.cnrm.cloud.google.com/v1beta1     Service                 management-project-id-cloudbilling                 config-control
+```
+
+## Resource References
+
+- [ConfigConnectorContext](https://cloud.google.com/config-connector/docs/how-to/advanced-install#addon-configuring)
+- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
+- ConstraintTemplate
+- [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember)
+- [IAMServiceAccount](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount)
+- [Namespace](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#namespace-v1-core)
+- [ResourceManagerPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/resourcemanager/resourcemanagerpolicy)
+- [RoleBinding](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#rolebinding-v1-rbac-authorization-k8s-io)
+- [Service](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service)
+

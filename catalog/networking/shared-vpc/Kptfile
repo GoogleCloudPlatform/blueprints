@@ -2,6 +2,12 @@ apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: shared-vpc
+info:
+  description: |
+    Configures a project as the Host project for a Shared VPC.
+
+    Creation of a Shared VPC requires **compute.organizations.enableXpnHost**
+    permission on the org. This permission can only be granted by an org admin.
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

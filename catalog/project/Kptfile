@@ -2,6 +2,10 @@ apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: project-package
+info:
+  description: |
+    A project and a project namespace in which to manage project resources with
+    Config Controller.
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

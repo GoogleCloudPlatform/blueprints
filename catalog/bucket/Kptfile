@@ -2,6 +2,8 @@ apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: bucket
+info:
+  description: Google Cloud Storage bucket
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

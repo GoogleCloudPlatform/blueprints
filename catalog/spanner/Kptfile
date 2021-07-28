@@ -2,6 +2,8 @@ apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: spanner
+info:
+  description: Spanner database and instance with deletion policy
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

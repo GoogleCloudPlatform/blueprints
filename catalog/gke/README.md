@@ -1,23 +1,10 @@
-# GKE Package
+# gke package
 
-A kpt package to configure a GKE cluster with a primary node pool and a dedicated subnet.
-
-## Resources
-
-None at top level. See sub-packages.
-
-## Sub-packages
-
-- [cluster](/catalog/gke/cluster/) - a GKE cluster
-- [nodepools/primary](/catalog/gke/nodepools/primary/) - a GKE node pool
-- [subnet](/catalog/gke/subnet/) - a GCE subnet, dedicated for use by this GKE cluster
+GKE cluster with dedicated subnet
 
 ## Setters
 
-Setters are inherited by sub-packages.
-
 ```
-$ kpt-list-setters.sh catalog/gke --count
 Setter                Usages
 cluster-name          19
 environment           2
@@ -36,3 +23,18 @@ projects-namespace    3
 security-group        2
 service-ip-range      2
 ```
+
+## Sub-packages
+
+- [catalog/gke/cluster](/catalog/gke/cluster/)
+- [catalog/gke/nodepools/primary](/catalog/gke/nodepools/primary/)
+- [catalog/gke/subnet](/catalog/gke/subnet/)
+
+## Resources
+
+This package has no immediate resources. See sub-packages.
+
+## Resource References
+
+- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
+

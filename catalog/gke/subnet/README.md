@@ -7,7 +7,6 @@ GCP subnet for a GKE cluster
 ```
 Setter                Usages
 cluster-name          3
-kpt-set               0
 location              2
 networking-namespace  2
 network-name          2

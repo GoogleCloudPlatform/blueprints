@@ -7,7 +7,6 @@ GKE node pool with dedicated service account
 ```
 Setter               Usages
 cluster-name         12
-kpt-set              0
 location             2
 max-node-count       2
 nodepool-name        12

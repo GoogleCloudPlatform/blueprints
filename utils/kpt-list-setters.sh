@@ -15,6 +15,14 @@
 
 set -o errexit -o nounset -o pipefail
 
+if ! hash jq 2>/dev/null; then
+    echo >&2 "Error: jq not found. Please install jq: https://stedolan.github.io/jq/download/"
+fi
+
+if ! hash yq 2>/dev/null; then
+    echo >&2 "Error: yq not found. Please install yq: https://pypi.org/project/yq/"
+fi
+
 COUNT_ENABLED="false"
 ARGS=()
 while [[ $# -gt 0 ]]; do
@@ -40,25 +48,74 @@ fi
 
 PKG_PATH="${1:-.}"
 
-# Reads a setters.yaml file and extracts the data keys.
-# Assumptions to simplify yaml parsing:
-# - file named setter.yaml
-# - setter.yaml only contains a ConfigMap
-# - data map is at the end of the file
-# - setter names are not wrapped in quotes or brackets
-function list_setters_yaml() {
-    if [[ ! -f "${PKG_PATH}/setters.yaml" ]]; then
+function print_apply_setters_configpaths() {
+    local path="${1}"
+    if [[ ! -f "${path}/Kptfile" ]]; then
         return
     fi
-    cat "${PKG_PATH}/setters.yaml" \
-        | sed -n '/^data:/,$p' \
-        | grep -Eho ' +[^#: ]+:' \
-        | sed 's/ *\([^ ]*\):/\1/' \
+
+    local expr
+    expr+='.pipeline[][]'
+    expr+=' | select(.image | test("gcr.io/kpt-fn/apply-setters(:.*)?$"))'
+    expr+=' | select(.configPath != null)'
+    expr+=' | .configPath'
+
+    yq -er "${expr}" "${path}/Kptfile" \
         | sort -u
 }
 
-function list_kpt_set() {
-    grep -rho '# kpt-set:.*' "${PKG_PATH}" \
+function print_apply_setters_configpath_data_fields() {
+    local path="${1}"
+    local config_paths="$(print_apply_setters_configpaths ${path})"
+    if [[ -z "${config_paths}" ]]; then
+        return
+    fi
+
+    (
+        set -o errexit -o nounset -o pipefail
+        while IFS='' read -r config_path; do
+            if [[ -f "${PKG_PATH}/${config_path}" ]]; then
+                if ! yq -er ".data | keys[]" "${PKG_PATH}/${config_path}"; then
+                    echo >&2 "Error: failed to parse apply-setters configPath file: ${PKG_PATH}/${config_path}"
+                    exit 2
+                fi
+            fi
+        done <<< "${config_paths}"
+    ) | sort -u
+}
+
+function print_apply_setters_configmap_fields() {
+    local path="${1}"
+    if [[ ! -f "${path}/Kptfile" ]]; then
+        return
+    fi
+
+    local expr
+    expr+='.pipeline[][]'
+    expr+=' | select(.image | test("gcr.io/kpt-fn/apply-setters(:.*)?$"))'
+    expr+=' | select(.configMap != null)'
+    expr+=' | .configMap'
+
+    local configMaps="$(yq -er "${expr}" "${path}/Kptfile")"
+    if [[ -z "${configMaps}" ]]; then
+        return
+    fi
+
+    echo "${configMaps}" | yq -er "keys[]" | sort -u
+}
+
+function print_apply_setters_fields() {
+    local path="${1}"
+    (
+        set -o errexit -o nounset -o pipefail
+        print_apply_setters_configmap_fields "${path}"
+        print_apply_setters_configpath_data_fields "${path}"
+    ) | sort -u
+}
+
+function print_kpt_set_vars() {
+    local path="${1}"
+    grep -rho '# kpt-set:.*' "${path}" \
         | sort -u \
         | sed 's/# kpt-set:[[:space:]]*\(.*\)/\1/' \
         | sed 's/[^}]*\${\([^}]*\)}[^$]*/\1\n/g' \
@@ -66,32 +123,44 @@ function list_kpt_set() {
         | sed '/^$/d'
 }
 
-function list_setters() {
+function print_setters() {
+    local path="${1}"
     (
-        list_setters_yaml
-        list_kpt_set
+        set -o errexit -o nounset -o pipefail
+        print_kpt_set_vars "${path}"
+        print_apply_setters_fields "${path}"
     ) | sort -u
 }
 
-function list_setters_with_count() {
-    local setters="$(list_setters)"
+function count_setter_usages() {
+    local path="${1}"
+    local setter="${2}"
+    (
+        set -o errexit -o nounset -o pipefail
+        grep -rho "# kpt-set:.*\${${setter}}.*" "${path}" || true
+    ) | wc -l
+}
+
+function print_setters_with_count() {
+    local path="${1}"
+    local setters="$(print_setters "${path}")"
     local setter=""
     local count=0
     (
+        set -o errexit -o nounset -o pipefail
         echo -e "Setter\tUsages"
         if [[ -n "${setters}" ]]; then
             while IFS="" read -r setter; do
-                count="$( (grep -rho "# kpt-set:.*\${${setter}}.*" "${PKG_PATH}" || true) | wc -l)"
                 echo -n "${setter}"
                 echo -ne "\t"
-                echo "${count}"
+                echo "$(count_setter_usages "${path}" "${setter}")"
             done <<< "${setters}"
         fi
     ) | column -t | sed 's/[[:space:]]*$//g'
 }
 
 if [[ "${COUNT_ENABLED}" == "true" ]]; then
-    list_setters_with_count
+    print_setters_with_count "${PKG_PATH}"
 else
-    list_setters
+    print_setters "${PKG_PATH}"
 fi

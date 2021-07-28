@@ -8,7 +8,6 @@ GKE cluster with public masters and private nodes
 Setter                Usages
 cluster-name          4
 environment           2
-kpt-set               0
 location              2
 master-ip-range       2
 networking-namespace  2

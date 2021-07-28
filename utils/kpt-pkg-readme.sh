@@ -42,7 +42,7 @@ function print_setters_table() {
     local path="${1}"
     local table="$("${SCRIPT_DIR}/kpt-list-setters.sh" --count "${path}")"
     if [[ "$(echo "${table}" | wc -l)" == "1" ]]; then
-        echo "This package has no immediate setters. See sub-packages."
+        echo "This package has no top-level setters. See sub-packages."
         return
     fi
     echo '```'
@@ -117,6 +117,7 @@ function print_relative_subpackages() {
     local path="${1}"
     local filepath=""
     (
+        set -o errexit -o nounset -o pipefail
         cd "${path}"
         while IFS='' read -r -d $'\0' filepath; do
             filepath="${filepath#"./"}"
@@ -153,6 +154,7 @@ function print_relative_yaml_files() {
     local path="${1}"
     local filepath=""
     (
+        set -o errexit -o nounset -o pipefail
         cd "${path}"
         while IFS='' read -r -d $'\0' filepath; do
             echo "${filepath#"./"}"
@@ -185,14 +187,16 @@ function print_resource_table() {
 
     local pkg_files="$(print_kpt_pkg_files "${path}")"
     if [[ -z "${pkg_files}" ]]; then
-        echo "This package has no immediate resources. See sub-packages."
+        echo "This package has no top-level resources. See sub-packages."
         return
     fi
 
     echo '```'
     (
+        set -o errexit -o nounset -o pipefail
         echo -e "File\tAPIVersion\tKind\tName\tNamespace"
         (
+            set -o errexit -o nounset -o pipefail
             while IFS='' read -r filepath; do
                 cat "${path}/${filepath}" \
                     | print_resources \
@@ -218,6 +222,7 @@ function print_kcc_resource_kinds() {
     local path="${1}"
     local filepath=""
     (
+        set -o errexit -o nounset -o pipefail
         while IFS='' read -r -d $'\0' filepath; do
             filepath=${filepath#"./"}
             cat "${filepath}" | yq -er '. | .apiVersion + "\t" + .kind'
@@ -247,6 +252,7 @@ function print_subpackage_list() {
     fi
 
     (
+        set -o errexit -o nounset -o pipefail
         while IFS='' read -r -d $'\0' filepath; do
             filepath=${filepath#"./"}
             if [[ -f "${filepath}/Kptfile" ]]; then
@@ -285,6 +291,7 @@ function pkg_description() {
 function print_resource_link_list() {
     local path="${1}"
     (
+        set -o errexit -o nounset -o pipefail
         while IFS='' read -r line; do
             api_version=$(echo "${line}" | cut -d $'\t' -f 1)
             group=$(echo "${api_version}" | cut -d '/' -f 1)

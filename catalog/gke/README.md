@@ -1,6 +1,6 @@
 # gke package
 
-GKE cluster with dedicated subnet
+GKE cluster with a primary node pool and a dedicated subnet
 
 ## Setters
 
@@ -32,7 +32,7 @@ service-ip-range      2
 
 ## Resources
 
-This package has no immediate resources. See sub-packages.
+This package has no top-level resources. See sub-packages.
 
 ## Resource References
 

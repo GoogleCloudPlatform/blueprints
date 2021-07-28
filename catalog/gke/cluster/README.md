@@ -33,7 +33,6 @@ container-api.yaml  serviceusage.cnrm.cloud.google.com/v1beta1  Service         
 
 ## Resource References
 
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 - [ContainerCluster](https://cloud.google.com/config-connector/docs/reference/resource-docs/container/containercluster)
 - [Service](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service)
 

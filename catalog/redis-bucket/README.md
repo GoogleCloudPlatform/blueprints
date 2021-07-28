@@ -29,7 +29,6 @@ redis.yaml   serviceusage.cnrm.cloud.google.com/v1beta1  Service        blueprin
 
 ## Resource References
 
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 - [RedisInstance](https://cloud.google.com/config-connector/docs/reference/resource-docs/redis/redisinstance)
 - [Service](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service)
 - [StorageBucket](https://cloud.google.com/config-connector/docs/reference/resource-docs/storage/storagebucket)

@@ -25,5 +25,4 @@ policy.yaml  accesscontextmanager.cnrm.cloud.google.com/v1beta1  AccessContextMa
 ## Resource References
 
 - [AccessContextManagerAccessPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/accesscontextmanager/accesscontextmanageraccesspolicy)
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 

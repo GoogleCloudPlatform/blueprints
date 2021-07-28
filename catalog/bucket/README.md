@@ -25,6 +25,5 @@ bucket.yaml  storage.cnrm.cloud.google.com/v1beta1  StorageBucket  blueprints-pr
 
 ## Resource References
 
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 - [StorageBucket](https://cloud.google.com/config-connector/docs/reference/resource-docs/storage/storagebucket)
 

@@ -25,5 +25,4 @@ serviceproject.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeSharedVPCServ
 ## Resource References
 
 - [ComputeSharedVPCServiceProject](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computesharedvpcserviceproject)
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 

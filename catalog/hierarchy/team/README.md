@@ -23,7 +23,6 @@ policies/naming-constraint.yaml  constraints.gatekeeper.sh/v1beta1     GCPEnforc
 
 ## Resource References
 
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 - GCPEnforceNamingV2
 - ResourceHierarchy
 

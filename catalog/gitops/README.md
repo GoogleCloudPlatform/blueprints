@@ -35,7 +35,6 @@ source-repositories.yaml  sourcerepo.cnrm.cloud.google.com/v1beta1    SourceRepo
 ## Resource References
 
 - [CloudBuildTrigger](https://cloud.google.com/config-connector/docs/reference/resource-docs/cloudbuild/cloudbuildtrigger)
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 - [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember)
 - [Service](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service)
 - [SourceRepoRepository](https://cloud.google.com/config-connector/docs/reference/resource-docs/sourcerepo/sourcereporepository)

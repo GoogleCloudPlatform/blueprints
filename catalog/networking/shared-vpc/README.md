@@ -27,5 +27,4 @@ sharedVPC.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeSharedVPCHostProje
 ## Resource References
 
 - [ComputeSharedVPCHostProject](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computesharedvpchostproject)
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 

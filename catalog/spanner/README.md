@@ -28,7 +28,6 @@ spanner.yaml                                       spanner.cnrm.cloud.google.com
 
 ## Resource References
 
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 - GCPRequireDeletionPolicy
 - [SpannerDatabase](https://cloud.google.com/config-connector/docs/reference/resource-docs/spanner/spannerdatabase)
 - [SpannerInstance](https://cloud.google.com/config-connector/docs/reference/resource-docs/spanner/spannerinstance)

@@ -63,5 +63,4 @@ ingress/allow-internal-common.yaml  compute.cnrm.cloud.google.com/v1beta1  Compu
 ## Resource References
 
 - [ComputeFirewall](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computefirewall)
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 

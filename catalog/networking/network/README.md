@@ -68,5 +68,4 @@ vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeVPNTunnel         networ
 - [ComputeForwardingRule](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computeforwardingrule)
 - [ComputeTargetVPNGateway](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computetargetvpngateway)
 - [ComputeVPNTunnel](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computevpntunnel)
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 

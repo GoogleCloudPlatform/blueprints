@@ -27,5 +27,4 @@ route.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeRoute  route-example  
 ## Resource References
 
 - [ComputeRoute](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computeroute)
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 

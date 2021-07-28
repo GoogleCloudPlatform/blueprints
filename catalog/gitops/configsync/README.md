@@ -30,7 +30,6 @@ configsync-iam.yaml     iam.cnrm.cloud.google.com/v1beta1  IAMServiceAccount  sy
 ## Resource References
 
 - [ConfigManagement](https://cloud.google.com/anthos-config-management/docs/configmanagement-fields)
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 - [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember)
 - [IAMServiceAccount](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount)
 

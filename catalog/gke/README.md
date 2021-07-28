@@ -36,5 +36,5 @@ This package has no top-level resources. See sub-packages.
 
 ## Resource References
 
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
+This package has no top-level resources. See sub-packages.
 

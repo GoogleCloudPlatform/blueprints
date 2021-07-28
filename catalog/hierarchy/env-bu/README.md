@@ -25,7 +25,6 @@ shared-folders.yaml              resourcemanager.cnrm.cloud.google.com/v1beta1  
 
 ## Resource References
 
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 - [Folder](https://cloud.google.com/config-connector/docs/reference/resource-docs/resourcemanager/folder)
 - GCPEnforceNamingV2
 - ResourceHierarchy

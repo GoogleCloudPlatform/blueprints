@@ -32,7 +32,6 @@ iam.yaml     iam.cnrm.cloud.google.com/v1beta1           IAMPolicyMember  storag
 
 ## Resource References
 
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 - [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember)
 - [LoggingLogSink](https://cloud.google.com/config-connector/docs/reference/resource-docs/logging/logginglogsink)
 - [Service](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service)

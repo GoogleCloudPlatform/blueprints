@@ -31,5 +31,4 @@ subnet.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeSubnetwork  platform-
 ## Resource References
 
 - [ComputeSubnetwork](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computesubnetwork)
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 

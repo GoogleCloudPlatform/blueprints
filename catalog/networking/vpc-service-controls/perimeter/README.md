@@ -32,5 +32,4 @@ perimeter.yaml     accesscontextmanager.cnrm.cloud.google.com/v1beta1  AccessCon
 
 - [AccessContextManagerAccessLevel](https://cloud.google.com/config-connector/docs/reference/resource-docs/accesscontextmanager/accesscontextmanageraccesslevel)
 - [AccessContextManagerServicePerimeter](https://cloud.google.com/config-connector/docs/reference/resource-docs/accesscontextmanager/accesscontextmanagerserviceperimeter)
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 

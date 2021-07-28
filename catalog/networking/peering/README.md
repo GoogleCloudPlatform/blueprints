@@ -26,5 +26,4 @@ peering.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeNetworkPeering  peer
 ## Resource References
 
 - [ComputeNetworkPeering](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computenetworkpeering)
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
 

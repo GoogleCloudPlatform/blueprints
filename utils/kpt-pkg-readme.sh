@@ -166,11 +166,11 @@ function print_relative_yaml_files() {
 # Include:
 # - *.yaml
 # - *.yml
-# - TODO: .json (converted to yaml)
+# - TODO: *.json
 # Exclude:
 # - Kptfiles
 # - Function ConfigPaths
-# - TODO: Invisible files (starting with a period)
+# - Invisible files (starting with a period)
 # - TODO: Files listed in .krmignore
 function print_kpt_pkg_files() {
     local path="${1}"
@@ -207,35 +207,22 @@ function print_resource_table() {
     echo '```'
 }
 
-function print_resource_links() {
-    local expr
-    expr+='.'
-    expr+=' | .apiVersion + "\t"'
-    expr+=' + .kind + "\t"'
-    expr+=' + .metadata.name + "\t"'
-    expr+=' + .metadata.namespace'
-
-    yq -er "${expr}"
-}
-
 function print_kcc_resource_kinds() {
     local path="${1}"
     local filepath=""
+
+    local pkg_files="$(print_kpt_pkg_files "${path}")"
+    if [[ -z "${pkg_files}" ]]; then
+        # no files, print nothing
+        return
+    fi
+
     (
         set -o errexit -o nounset -o pipefail
-        while IFS='' read -r -d $'\0' filepath; do
+        while IFS='' read -r filepath; do
             filepath=${filepath#"./"}
-            cat "${filepath}" | yq -er '. | .apiVersion + "\t" + .kind'
-        done < <(find "${path}" -maxdepth 1 -name "*.yaml" -print0)
-
-        while IFS='' read -r -d $'\0' filepath; do
-            filepath=${filepath#"./"}
-            if [[ -f "${filepath}/Kptfile" ]]; then
-                # skip sub-package directory
-                continue
-            fi
-            print_kcc_resource_kinds "${filepath}"
-        done < <(find "${path}" -mindepth 1 -maxdepth 1 -type d -print0)
+            cat "${path}/${filepath}" | yq -er '. | .apiVersion + "\t" + .kind'
+        done <<< "${pkg_files}"
     ) | sort -u
 }
 
@@ -290,6 +277,13 @@ function pkg_description() {
 
 function print_resource_link_list() {
     local path="${1}"
+
+    local resource_kinds="$(print_kcc_resource_kinds "${path}")"
+    if [[ -z "${resource_kinds}" ]]; then
+        echo "This package has no top-level resources. See sub-packages."
+        return
+    fi
+
     (
         set -o errexit -o nounset -o pipefail
         while IFS='' read -r line; do
@@ -324,7 +318,7 @@ function print_resource_link_list() {
                 # Other resource type
                 echo "- ${kind}"
             fi
-        done <<< "$(print_kcc_resource_kinds "${path}")"
+        done <<< "${resource_kinds}"
     ) | sort
 }
 

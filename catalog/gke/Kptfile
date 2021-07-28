@@ -3,7 +3,11 @@ kind: Kptfile
 metadata:
   name: gke
 info:
-  description: A GKE cluster with a primary node pool and a dedicated subnet
+  description: |
+    A GKE cluster with a primary node pool and a dedicated subnet.
+
+    For a full tutorial, see
+    [Managing GKE clusters with ConfigController](https://cloud.google.com/anthos-config-management/docs/tutorials/gke-cluster-blueprint).
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

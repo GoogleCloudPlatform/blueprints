@@ -1,4 +1,4 @@
-# bigquery-export package
+# BigQuery Export blueprint
 
 A log export on a organization that sinks to BigQuery
 

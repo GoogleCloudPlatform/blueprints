@@ -1,4 +1,4 @@
-# pubsub-export package
+# PubSub Export blueprint
 
 A log export on a organization that sinks to PubSub
 

@@ -1,4 +1,4 @@
-# redis-bucket package
+# Redis Bucket blueprint
 
 Redis instance and storage bucket
 

@@ -1,4 +1,4 @@
-# landing-zone package
+# Landing Zone blueprint
 
 Foundational landing zone blueprint for GCP.
 

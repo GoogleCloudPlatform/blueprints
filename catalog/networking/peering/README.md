@@ -1,4 +1,4 @@
-# network-peering package
+# Network Peering blueprint
 
 A peering between two private networks
 

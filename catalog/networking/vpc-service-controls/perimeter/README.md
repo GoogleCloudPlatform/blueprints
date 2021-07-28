@@ -1,4 +1,4 @@
-# service-controls-perimeter package
+# Service Controls Perimeter blueprint
 
 A basic access level restricting access to a specific region using the
 Access Context Manager

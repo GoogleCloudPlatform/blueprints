@@ -1,4 +1,4 @@
-# configsync-csr package
+# CSR ConfigSync blueprint
 
 A GitOps Continuous Deployment pipeline using Anthos Config Management (ACM)
 and Cloud Source Repository (CSR).

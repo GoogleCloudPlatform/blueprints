@@ -1,4 +1,4 @@
-# dns-record-set package
+# Cloud DNS Record Set blueprint
 
 A Cloud DNS record set for a managed zone
 

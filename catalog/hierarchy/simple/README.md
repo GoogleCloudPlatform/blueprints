@@ -1,4 +1,4 @@
-# simple-hierarchy package
+# Simple Hierarchy blueprint
 
 A simple GCP resource hierarchy with top-level folders
 

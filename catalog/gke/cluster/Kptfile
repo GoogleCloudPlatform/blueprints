@@ -2,6 +2,8 @@ apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: gke-cluster
+  annotations:
+    blueprints.cloud.google.com/title: GKE Cluster blueprint
 info:
   description: A GKE cluster with public masters and private nodes
 pipeline:

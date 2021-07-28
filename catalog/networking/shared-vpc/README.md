@@ -1,4 +1,4 @@
-# shared-vpc package
+# Shared VPC Host Project blueprint
 
 Configures a project as the Host project for a Shared VPC.
 

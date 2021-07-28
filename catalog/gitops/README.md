@@ -1,4 +1,4 @@
-# gitops-csr package
+# CSR GitOps Pipeline blueprint
 
 A GitOps Continuous Deployment pipeline using Anthos Config Management (ACM),
 Cloud Source Repository (CSR), and Cloud Build.

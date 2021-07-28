@@ -1,4 +1,4 @@
-# compute-route-igw package
+# Internet Gateway Compute Route blueprint
 
 An egress route to the default internet gateway
 

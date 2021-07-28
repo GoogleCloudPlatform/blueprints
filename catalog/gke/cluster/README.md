@@ -1,4 +1,4 @@
-# gke-cluster package
+# GKE Cluster blueprint
 
 A GKE cluster with public masters and private nodes
 

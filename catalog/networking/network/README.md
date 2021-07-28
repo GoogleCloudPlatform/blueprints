@@ -1,4 +1,4 @@
-# network-package package
+# Network blueprint
 
 A private network with VPN and Cloud NAT.
 

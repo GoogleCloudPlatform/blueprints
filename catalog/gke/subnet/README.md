@@ -1,4 +1,4 @@
-# gke-cluster-subnet package
+# GKE Cluster Node Pool blueprint
 
 A GCP subnet for a GKE cluster with private nodes
 

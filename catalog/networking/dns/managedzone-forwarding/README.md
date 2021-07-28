@@ -1,4 +1,4 @@
-# dns-forwarding-managed-zone package
+# Cloud DNS Managed Zone Forwarding blueprint
 
 A private Cloud DNS managed zone with forwarding config
 

@@ -2,6 +2,8 @@ apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: network-peering
+  annotations:
+    blueprints.cloud.google.com/title: Network Peering blueprint
 info:
   description: A peering between two private networks
 pipeline:

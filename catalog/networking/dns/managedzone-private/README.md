@@ -1,4 +1,4 @@
-# dns-private-managed-zone package
+# Cloud DNS Private Managed Zone blueprint
 
 A private Cloud DNS managed zone
 

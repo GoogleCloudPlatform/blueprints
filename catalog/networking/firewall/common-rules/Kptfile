@@ -2,6 +2,8 @@ apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: firewall-common-rules
+  annotations:
+    blueprints.cloud.google.com/title: Firewall Common Rules blueprint
 info:
   description: |
     Common firewall rules for projects with a private network.

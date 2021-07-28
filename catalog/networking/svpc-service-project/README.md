@@ -1,4 +1,4 @@
-# svpc-service-project package
+# Shared VPC Service Project blueprint
 
 A service project to attach to a Shared VPC
 

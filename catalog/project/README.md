@@ -1,4 +1,4 @@
-# project-package package
+# Project blueprint
 
 A project and a project namespace in which to manage project resources with
 Config Controller.

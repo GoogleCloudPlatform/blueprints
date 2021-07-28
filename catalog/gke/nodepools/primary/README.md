@@ -1,4 +1,4 @@
-# gke-cluster-nodepool package
+# GKE Node Pool blueprint
 
 A GKE node pool with a dedicated service account
 

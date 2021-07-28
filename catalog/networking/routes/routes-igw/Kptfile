@@ -2,6 +2,8 @@ apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: compute-route-igw
+  annotations:
+    blueprints.cloud.google.com/title: Internet Gateway Compute Route blueprint
 info:
   description: An egress route to the default internet gateway
 pipeline:

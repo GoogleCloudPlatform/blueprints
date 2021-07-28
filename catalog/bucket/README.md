@@ -1,4 +1,4 @@
-# bucket package
+# Google Cloud Storage Bucket blueprint
 
 A Google Cloud Storage bucket
 

@@ -1,4 +1,4 @@
-# storage-export package
+# Cloud Storage Export blueprint
 
 A log export on a organization that sinks to Cloud Storage
 

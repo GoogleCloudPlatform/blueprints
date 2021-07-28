@@ -1,4 +1,4 @@
-# spanner package
+# Spanner blueprint
 
 Spanner database and instance with deletion policy
 

@@ -15,6 +15,8 @@ apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: gitops-csr
+  annotations:
+    blueprints.cloud.google.com/title: CSR GitOps Pipeline blueprint
 info:
   description: |
     A GitOps Continuous Deployment pipeline using Anthos Config Management (ACM),

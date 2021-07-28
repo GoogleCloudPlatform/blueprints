@@ -1,4 +1,4 @@
-# service-controls-access-policy package
+# Service Controls Access Policy blueprint
 
 An org-level access policy using the Access Context Manager
 

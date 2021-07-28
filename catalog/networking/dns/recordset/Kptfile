@@ -2,6 +2,8 @@ apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: dns-record-set
+  annotations:
+    blueprints.cloud.google.com/title: Cloud DNS Record Set blueprint
 info:
   description: A Cloud DNS record set for a managed zone
 pipeline:

@@ -1,4 +1,4 @@
-# dns-peered-managed-zone package
+# Cloud DNS Managed Zone Peering blueprint
 
 A private Cloud DNS managed zone with peering config
 

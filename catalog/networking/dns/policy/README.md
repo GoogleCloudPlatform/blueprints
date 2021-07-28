@@ -1,4 +1,4 @@
-# dns-policy package
+# Cloud DNS Policy blueprint
 
 A Cloud DNS policy with logging and forwarding
 

@@ -1,4 +1,4 @@
-# team-hierarchy package
+# Team Hierarchy blueprint
 
 A GCP resource hierarchy organized by teams and environments
 

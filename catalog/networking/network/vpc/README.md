@@ -1,4 +1,4 @@
-# vpc-package package
+# Virtual Private Cloud blueprint
 
 A Virtual Private Cloud (VPC)
 

@@ -1,6 +1,6 @@
-# subnetwork-package package
+# Subnetwork blueprint
 
-A regional sub-network (subnet) with Cloud NAT for public egress
+A regional subnet with Cloud NAT for public egress
 
 ## Setters
 

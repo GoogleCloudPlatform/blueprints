@@ -18,6 +18,7 @@ set -o errexit -o nounset -o pipefail
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd -P)"
 
 BLUEPRINTS_REPO_URL="https://github.com/GoogleCloudPlatform/blueprints"
+BLUEPRINT_TITLE_ANNOTATION="blueprints.cloud.google.com/title"
 KCC_REF_URL="https://cloud.google.com/config-connector/docs/reference/resource-docs"
 
 PKG_PATH="${1:-.}"
@@ -248,13 +249,19 @@ function print_subpackage_list() {
     ) | sort
 }
 
-function pkg_name() {
+function pkg_title() {
     local path="${1}"
     local name=""
     if [[ -f "${path}/Kptfile" ]]; then
+        # package title annotation
+        name="$(yq -er ".metadata.annotations[\"${BLUEPRINT_TITLE_ANNOTATION}\"]" "${path}/Kptfile")"
+    fi
+    if [[ -z "${name}" || "${name}" == "null" ]]; then
+        # package name
         name="$(yq -er '.metadata.name' "${path}/Kptfile")"
     fi
-    if [[ -z "${name}" ]]; then
+    if [[ -z "${name}" || "${name}" == "null" ]]; then
+        # directory name
         name=$(cd ${path} && basename "${PWD}")
     fi
     echo "${name}"
@@ -374,7 +381,7 @@ function print_usage() {
     echo '    ```'
 }
 
-echo "# $(pkg_name "${PKG_PATH}") package"
+echo "# $(pkg_title "${PKG_PATH}")"
 echo
 echo "$(pkg_description "${PKG_PATH}")"
 echo

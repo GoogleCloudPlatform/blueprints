@@ -2,6 +2,9 @@ apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: env-bu-hierarchy
+  annotations:
+    blueprints.cloud.google.com/title: |
+      Environment Business Unit Hierarchy package
 info:
   description: |
     A GCP resource hierarchy organized by environments, business units, and

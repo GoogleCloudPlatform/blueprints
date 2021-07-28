@@ -1,4 +1,4 @@
-# firewall-common-rules package
+# Firewall Common Rules blueprint
 
 Common firewall rules for projects with a private network.
 

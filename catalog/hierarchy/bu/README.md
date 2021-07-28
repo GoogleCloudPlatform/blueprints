@@ -1,4 +1,4 @@
-# bu-hierarchy package
+# Business Unit Hierarchy blueprint
 
 A GCP resource hierarchy organized by business units, teams, and
 environments

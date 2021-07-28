@@ -1,4 +1,4 @@
-# env-bu-hierarchy package
+# Environment Business Unit Hierarchy package
 
 A GCP resource hierarchy organized by environments, business units, and
 teams

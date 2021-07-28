@@ -2,6 +2,8 @@ apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: dns-private-managed-zone
+  annotations:
+    blueprints.cloud.google.com/title: Cloud DNS Private Managed Zone blueprint
 info:
   description: A private Cloud DNS managed zone
 pipeline:

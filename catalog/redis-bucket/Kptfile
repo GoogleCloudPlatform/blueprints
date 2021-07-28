@@ -2,6 +2,8 @@ apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: redis-bucket
+  annotations:
+    blueprints.cloud.google.com/title: Redis Bucket blueprint
 info:
   description: Redis instance and storage bucket
 pipeline:

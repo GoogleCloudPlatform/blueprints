@@ -1,6 +1,6 @@
 # compute-route-igw package
 
-**TODO: add description**
+An egress route to the default internet gateway
 
 ## Setters
 

@@ -1,6 +1,6 @@
 # dns-forwarding-managed-zone package
 
-**TODO: add description**
+A private Cloud DNS managed zone with forwarding config
 
 ## Setters
 

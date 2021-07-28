@@ -3,6 +3,16 @@
 A GitOps Continuous Deployment pipeline using Anthos Config Management (ACM),
 Cloud Source Repository (CSR), and Cloud Build.
 
+After installing this blueprint, you will be able to:
+
+1.  Manage your git repository config with version control
+2.  Manage your infrastructure with version control
+3.  Create merge requests to review changes
+4.  Manage plain KRM or auto-rendered blueprints
+5.  Specify kpt functions to hydrate and validate your config automatically
+6.  Automatically apply your config changes to your Config Controller
+    cluster on merge
+
 ## Setters
 
 ```

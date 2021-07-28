@@ -1,6 +1,6 @@
 # gke-cluster package
 
-GKE cluster with public masters and private nodes
+A GKE cluster with public masters and private nodes
 
 ## Setters
 

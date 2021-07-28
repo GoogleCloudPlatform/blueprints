@@ -1,6 +1,6 @@
 # svpc-service-project package
 
-**TODO: add description**
+A service project to attach to a Shared VPC
 
 ## Setters
 

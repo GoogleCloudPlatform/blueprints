@@ -1,6 +1,6 @@
 # gke-cluster-nodepool package
 
-GKE node pool with dedicated service account
+A GKE node pool with a dedicated service account
 
 ## Setters
 

@@ -1,6 +1,6 @@
 # service-controls-access-policy package
 
-**TODO: add description**
+An org-level access policy using the Access Context Manager
 
 ## Setters
 

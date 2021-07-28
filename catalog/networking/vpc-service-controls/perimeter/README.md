@@ -1,6 +1,7 @@
 # service-controls-perimeter package
 
-**TODO: add description**
+A basic access level restricting access to a specific region using the
+Access Context Manager
 
 ## Setters
 

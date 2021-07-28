@@ -1,6 +1,7 @@
 # bu-hierarchy package
 
-Resource hierarchy blueprint for GCP
+A GCP resource hierarchy organized by business units, teams, and
+environments
 
 ## Setters
 

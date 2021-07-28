@@ -3,7 +3,7 @@ kind: Kptfile
 metadata:
   name: gke-cluster-nodepool
 info:
-  description: GKE node pool with dedicated service account
+  description: A GKE node pool with a dedicated service account
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

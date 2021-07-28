@@ -3,7 +3,7 @@ kind: Kptfile
 metadata:
   name: gke
 info:
-  description: GKE cluster with a primary node pool and a dedicated subnet
+  description: A GKE cluster with a primary node pool and a dedicated subnet
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

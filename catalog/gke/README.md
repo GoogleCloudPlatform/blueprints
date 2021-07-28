@@ -1,6 +1,6 @@
 # gke package
 
-GKE cluster with a primary node pool and a dedicated subnet
+A GKE cluster with a primary node pool and a dedicated subnet
 
 ## Setters
 

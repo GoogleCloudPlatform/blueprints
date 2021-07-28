@@ -1,6 +1,6 @@
 # gke-cluster-subnet package
 
-GCP subnet for a GKE cluster
+A GCP subnet for a GKE cluster with private nodes
 
 ## Setters
 

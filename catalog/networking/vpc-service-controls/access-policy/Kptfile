@@ -2,6 +2,8 @@ apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: service-controls-access-policy
+info:
+  description: An org-level access policy using the Access Context Manager
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

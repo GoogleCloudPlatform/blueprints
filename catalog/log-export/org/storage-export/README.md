@@ -1,6 +1,6 @@
 # storage-export package
 
-Creates a log export on a organization that sinks to Cloud Storage
+A log export on a organization that sinks to Cloud Storage
 
 ## Setters
 

@@ -3,7 +3,7 @@ kind: Kptfile
 metadata:
   name: gke-cluster-subnet
 info:
-  description: GCP subnet for a GKE cluster
+  description: A GCP subnet for a GKE cluster with private nodes
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

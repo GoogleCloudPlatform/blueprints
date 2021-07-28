@@ -3,7 +3,7 @@ kind: Kptfile
 metadata:
   name: simple-hierarchy
 info:
-  description: Resource hierarchy blueprint for GCP
+  description: A simple GCP resource hierarchy with top-level folders
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

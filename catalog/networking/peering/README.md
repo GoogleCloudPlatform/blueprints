@@ -1,6 +1,6 @@
 # network-peering package
 
-**TODO: add description**
+A peering between two private networks
 
 ## Setters
 

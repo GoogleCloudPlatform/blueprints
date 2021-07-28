@@ -1,6 +1,6 @@
 # dns-record-set package
 
-**TODO: add description**
+A Cloud DNS record set for a managed zone
 
 ## Setters
 

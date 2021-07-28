@@ -3,7 +3,7 @@ kind: Kptfile
 metadata:
   name: storage-export
 info:
-  description: Creates a log export on a organization that sinks to Cloud Storage
+  description: A log export on a organization that sinks to Cloud Storage
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

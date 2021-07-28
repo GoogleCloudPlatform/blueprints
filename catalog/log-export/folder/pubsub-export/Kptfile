@@ -3,7 +3,7 @@ kind: Kptfile
 metadata:
   name: pubsub-export
 info:
-  description: Creates a log export on a folder that sinks to PubSub
+  description: A log export on a folder that sinks to PubSub
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

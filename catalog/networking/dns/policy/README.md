@@ -1,6 +1,6 @@
 # dns-policy package
 
-**TODO: add description**
+A Cloud DNS policy with logging and forwarding
 
 ## Setters
 

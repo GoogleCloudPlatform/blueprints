@@ -3,7 +3,7 @@ kind: Kptfile
 metadata:
   name: bigquery-export
 info:
-  description: Creates a log export on a folder that sinks to BigQuery
+  description: A log export on a folder that sinks to BigQuery
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

@@ -3,7 +3,7 @@ kind: Kptfile
 metadata:
   name: team-hierarchy
 info:
-  description: Resource hierarchy blueprint for GCP
+  description: A GCP resource hierarchy organized by teams and environments
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

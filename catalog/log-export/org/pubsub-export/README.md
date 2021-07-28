@@ -1,6 +1,6 @@
 # pubsub-export package
 
-Creates a log export on a organization that sinks to PubSub
+A log export on a organization that sinks to PubSub
 
 ## Setters
 

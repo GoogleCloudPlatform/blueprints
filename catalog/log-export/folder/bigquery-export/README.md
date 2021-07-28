@@ -1,6 +1,6 @@
 # bigquery-export package
 
-Creates a log export on a folder that sinks to BigQuery
+A log export on a folder that sinks to BigQuery
 
 ## Setters
 

@@ -1,6 +1,6 @@
 # simple-hierarchy package
 
-Resource hierarchy blueprint for GCP
+A simple GCP resource hierarchy with top-level folders
 
 ## Setters
 

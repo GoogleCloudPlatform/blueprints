@@ -1,6 +1,6 @@
 # bucket package
 
-Google Cloud Storage bucket
+A Google Cloud Storage bucket
 
 ## Setters
 

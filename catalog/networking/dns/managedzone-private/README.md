@@ -1,6 +1,6 @@
 # dns-private-managed-zone package
 
-**TODO: add description**
+A private Cloud DNS managed zone
 
 ## Setters
 

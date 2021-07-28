@@ -3,7 +3,7 @@ kind: Kptfile
 metadata:
   name: gke-cluster
 info:
-  description: GKE cluster with public masters and private nodes
+  description: A GKE cluster with public masters and private nodes
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

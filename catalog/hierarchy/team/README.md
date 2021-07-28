@@ -1,6 +1,6 @@
 # team-hierarchy package
 
-Resource hierarchy blueprint for GCP
+A GCP resource hierarchy organized by teams and environments
 
 ## Setters
 

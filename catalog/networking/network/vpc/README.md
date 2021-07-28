@@ -1,6 +1,6 @@
 # vpc-package package
 
-**TODO: add description**
+A Virtual Private Cloud (VPC)
 
 ## Setters
 

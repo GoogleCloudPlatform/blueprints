@@ -1,6 +1,6 @@
 # subnetwork-package package
 
-**TODO: add description**
+A regional sub-network (subnet) with Cloud NAT for public egress
 
 ## Setters
 

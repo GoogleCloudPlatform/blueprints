@@ -11,6 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 # Trigger for when changes are pushed into any branch of the yakima source repo.
 # This will run all your kpt functions and apply a blast radius analysis of
 # changes.

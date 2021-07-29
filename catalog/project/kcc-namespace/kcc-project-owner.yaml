@@ -1,0 +1,30 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Grant KCC owner of this project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: kcc-project-id-owners-permissions # {"$kpt-set":"project-id-sa-owners-permissions"}
+  namespace: projects # {"$kpt-set":"projects-namespace"}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.2.0-alpha.1
+    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
+spec:
+  member: serviceAccount:kcc-project-id@management-project-id.iam.gserviceaccount.com # {"$kpt-set":"project-id-sa-ref"}
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: project-id # {"$kpt-set":"project-id"}
+  role: roles/owner

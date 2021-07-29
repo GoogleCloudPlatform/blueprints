@@ -1,19 +1,41 @@
-# Project package
+# Project Package
 
-This package creates a project and all required configuration needed in order to
-manage this project with Config Controller.
+A kpt package to configure a GCP project and a Kubernetes namespace.
 
-Contents:
+The namespace can be used to manage project resources with Config Connector.
 
-- `project.yaml` - project config.
-- `project-management.yaml` - config to allow Config Controller to manage project resources:
-  - Google Service Account to use for editing resources in the project.
-  - Policy binding for permissions for this Google Service Account.
-  - Namespace within Config Controller for resources in this project.
-  - Config Connector context to bind Config Connector controller for this
-    manespace with the Google Service Account.
-  - Binding of the Google Service Account with the Kubernetes Service
-    Account used by Config Connector controller.
-- `cnrm-cross-namespace.yaml` - config to allow Config Connector resources in the
-   new namespace for this project to reference other resources in the
-   networking and projects namespaces.
+## Resources
+
+```
+File          APIVersion                                     Kind     Name        Namespace
+project.yaml  resourcemanager.cnrm.cloud.google.com/v1beta1  Project  project-id  projects
+```
+
+## Resource References
+
+- [Project](https://cloud.google.com/config-connector/docs/reference/resource-docs/resourcemanager/project)
+
+## Sub-packages
+
+- [kcc-namespace](/catalog/project/kcc-namespace)
+
+## Setters
+
+Setters are inherited by sub-packages.
+
+```
+$ kpt cfg list-setters .
+./
+          NAME                    VALUE           SET BY            DESCRIPTION             COUNT   REQUIRED   IS SET
+  billing-account-id      AAAAAA-BBBBBB-CCCCCC             Billing account ID               1       No         No
+  folder-name             name.of.folder                   Kubernetes metadata name of      1       No         No
+                                                           the parent folder resource.
+  folder-namespace        hierarchy                        Kubernetes metadata namespace    1       No         No
+                                                           of the parent folder resource.
+  management-namespace    config-control                                                    0       No         No
+  management-project-id   management-project-id            Config Controller host project   0       No         No
+                                                           id.
+  networking-namespace    networking                       Namespace for networking.        0       No         No
+  project-id              project-id                       Project ID                       2       No         No
+  projects-namespace      projects                         Namespace for projects.          1       No         No
+```

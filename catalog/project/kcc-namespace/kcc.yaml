@@ -11,43 +11,42 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 # Enable KCC for this namespace
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnectorContext
 metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
-  namespace: project-id # {"$kpt-set":"project-namespace"}
+  namespace: project-id # kpt-set: ${project-id}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.2.0-alpha.1
+    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.2.0
 spec:
-  googleServiceAccount: kcc-project-id@management-project-id.iam.gserviceaccount.com # {"$kpt-set":"project-id-sa-email"}
+  googleServiceAccount: kcc-project-id@management-project-id.iam.gserviceaccount.com # kpt-set: kcc-${project-id}@${management-project-id}.iam.gserviceaccount.com
 ---
 # Create GCP ServiceAccount for use by KCC to manage resources in this project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
-  name: kcc-project-id # {"$kpt-set":"project-id-sa"}
-  namespace: config-control # {"$kpt-set":"management-namespace"}
+  name: kcc-project-id # kpt-set: kcc-${project-id}
+  namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
-    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.2.0-alpha.1
+    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.2.0
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
-  displayName: kcc-project-id # {"$kpt-set":"project-id-sa"}
+  displayName: kcc-project-id # kpt-set: kcc-${project-id}
 ---
 # Allow KCC's Kubernetes Service Account to use the GCP ServiceAccount
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: project-id-sa-workload-identity-binding # {"$kpt-set":"workload-identity-binding"}
-  namespace: config-control # {"$kpt-set":"management-namespace"}
+  name: project-id-sa-workload-identity-binding # kpt-set: ${project-id}-sa-workload-identity-binding
+  namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.2.0-alpha.1
-    cnrm.cloud.google.com/project-id: management-project-id # {"$kpt-set":"management-project-id"}
+    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.2.0
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
-  member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-project-id] # {"$kpt-set":"workload-identity-sa"}
+  member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-project-id] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-${project-id}]
   resourceRef:
+    name: kcc-project-id # kpt-set: kcc-${project-id}
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
-    name: kcc-project-id # {"$kpt-set":"project-id-sa"}
   role: roles/iam.workloadIdentityUser

@@ -11,22 +11,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Project
 metadata:
-  name: project-id # {"$kpt-set":"project-id"}
-  namespace: projects # {"$kpt-set":"projects-namespace"}
+  name: project-id # kpt-set: ${project-id}
+  namespace: projects # kpt-set: ${projects-namespace}
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:project/v0.2.0
-    config.kubernetes.io/function: |
-      container:
-        image: gcr.io/yakima-eap/folder-ref:latest
 spec:
-  name: project-id # {"$kpt-set":"project-id"}
+  name: project-id # kpt-set: ${project-id}
   billingAccountRef:
-    external: "AAAAAA-BBBBBB-CCCCCC" # {"$kpt-set":"billing-account-id"}
+    external: "AAAAAA-BBBBBB-CCCCCC" # kpt-set: ${billing-account-id}
   folderRef:
-    name: name.of.folder # {"$kpt-set":"folder-name"}
-    namespace: hierarchy # {"$kpt-set":"folder-namespace"}
+    name: name.of.folder # kpt-set: ${folder-name}
+    namespace: hierarchy # kpt-set: ${folder-namespace}

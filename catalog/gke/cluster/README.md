@@ -14,18 +14,17 @@ A kpt package to configure a GKE cluster.
 Setters are inherited by sub-packages.
 
 ```
-$ kpt cfg list-setters .
-./
-          NAME                       VALUE                SET BY   DESCRIPTION   COUNT   REQUIRED   IS SET
-  cluster-name           example-us-west4                                        3       No         No
-  environment            dev                                                     1       No         No
-  location               us-east4                                                1       No         No
-  master-ip-range        10.254.0.0/28                                           1       No         No
-  network-name           default                                                 1       No         No
-  network-project-id     network-project-id                                      1       No         No
-  networking-namespace   networking                                              1       No         No
-  platform-namespace     config-control                                          1       No         No
-  platform-project-id    platform-project-id                                     5       No         No
-  projects-namespace     projects                                                1       No         No
-  security-group         gke-security-group@example.com                          1       No         No
+$ utils/kpt-list-setters.sh catalog/gke/cluster --count
+Setter                Usages
+cluster-name          4
+environment           2
+location              2
+master-ip-range       2
+networking-namespace  2
+network-name          2
+network-project-id    2
+platform-namespace    2
+platform-project-id   6
+projects-namespace    2
+security-group        2
 ```

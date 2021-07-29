@@ -17,15 +17,15 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: storage-project-iam-policy
-  namespace: my-namespace # {"$kpt-set":"namespace"}
+  namespace: my-namespace # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.2.0
 spec:
   memberFrom:
     logSinkRef:
-      name: my.folder.k8s.name-storagesink # {"$kpt-set":"log-sink-name"}
+      name: my.folder.k8s.name-storagesink # kpt-set: ${folder-k8s-name}-storagesink
   resourceRef:
-    name: my-storage-bucket # {"$kpt-set":"storage-bucket-name"}
+    name: my-storage-bucket # kpt-set: ${storage-bucket-name}
     apiVersion: storage.cnrm.cloud.google.com/v1beta1
     kind: StorageBucket
   role: roles/storage.objectCreator

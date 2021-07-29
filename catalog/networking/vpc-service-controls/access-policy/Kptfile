@@ -1,32 +1,8 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: service-controls-access-policy
-openAPI:
-  definitions:
-    io.k8s.cli.setters.namespace:
-      description: Namespace configured for managing resources defined in this package
-      x-k8s-cli:
-        setter:
-          name: namespace
-          value: networking
-    io.k8s.cli.setters.org-id:
-      description: Org ID for Access Policy
-      x-k8s-cli:
-        setter:
-          name: org-id
-          value: example-org
-    io.k8s.cli.setters.access-policy-name:
-      description: Resource name of the Access Policy
-      x-k8s-cli:
-        setter:
-          name: access-policy-name
-          value: org-access-policy
-    io.k8s.cli.substitutions.access-policy-title:
-      x-k8s-cli:
-        substitution:
-          name: access-policy-title
-          pattern: ${access-policy-name} Policy
-          values:
-          - marker: ${access-policy-name}
-            ref: '#/definitions/io.k8s.cli.setters.access-policy-name'
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

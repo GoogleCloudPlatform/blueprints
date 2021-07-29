@@ -25,4 +25,4 @@ spec:
     deny:
       all: true
   organizationRef:
-    external: "123456789012" # {"$kpt-set":"org-id"}
+    external: "123456789012" # kpt-set: ${org-id}

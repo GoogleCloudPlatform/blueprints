@@ -21,6 +21,6 @@ metadata:
 spec:
   parameters:
     naming_rules:
-    - kind: Folder
-      patterns:
-      - (^(dev|prod)$)|(^(dev|prod)[.][a-z0-9-]+$)|(^(dev|prod)[.][a-z0-9-]+[.][a-z0-9-]+$)|shared
+      - kind: Folder
+        patterns:
+          - (^(dev|prod)$)|(^(dev|prod)[.][a-z0-9-]+$)|(^(dev|prod)[.][a-z0-9-]+[.][a-z0-9-]+$)|shared

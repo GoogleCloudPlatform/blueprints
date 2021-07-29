@@ -1,60 +1,10 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: pubsub-export
-packageMetadata:
-  shortDescription: Creates a log export on a folder that sinks to PubSub
-openAPI:
-  definitions:
-    io.k8s.cli.setters.namespace:
-      description: your KCC-enabled Kubernetes namespace to store your resources in
-      x-k8s-cli:
-        setter:
-          name: namespace
-          value: my-namespace
-    io.k8s.cli.setters.topic-name:
-      description: Name of your PubSub Topic
-      x-k8s-cli:
-        setter:
-          name: topic-name
-          value: pubsub-logexport-dataset
-    io.k8s.cli.setters.folder-k8s-name:
-      description: The name of folder to apply log exports on. This is the metadata.name
-        in kubernetes
-      x-k8s-cli:
-        setter:
-          name: folder-k8s-name
-          value: my.folder.k8s.name
-    io.k8s.cli.setters.filter:
-      description: The filter to apply when exporting logs. Only log entries that
-        match the filter are exported. Default is '' which exports all logs.
-      x-k8s-cli:
-        setter:
-          name: filter
-          value: ""
-    io.k8s.cli.setters.project-id:
-      maxLength: 30
-      minLength: 6
-      pattern: '^[a-z]([-a-z0-9]*[a-z0-9])?$'
-      type: string
-      description: The project ID of the destination of your log exports
-      x-k8s-cli:
-        setter:
-          name: project-id
-          value: my-project-id
-    io.k8s.cli.substitutions.log-sink-name:
-      x-k8s-cli:
-        substitution:
-          name: log-sink-name
-          pattern: ${folder-k8s-name}-pubsubsink
-          values:
-          - marker: ${folder-k8s-name}
-            ref: '#/definitions/io.k8s.cli.setters.folder-k8s-name'
-    io.k8s.cli.substitutions.services-pubsub:
-      x-k8s-cli:
-        substitution:
-          name: services-pubsub
-          pattern: ${project-id}-pubsub
-          values:
-          - marker: ${project-id}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
+info:
+  description: Creates a log export on a folder that sinks to PubSub
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

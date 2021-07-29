@@ -17,21 +17,22 @@ None at top level. See sub-packages.
 Setters are inherited by sub-packages.
 
 ```
-$ kpt cfg list-setters .
-./
-          NAME                       VALUE                SET BY   DESCRIPTION   COUNT   REQUIRED   IS SET
-  cluster-name           example-us-west4                                        0       No         No
-  environment            dev                                                     0       No         No
-  location               us-east4                                                0       No         No
-  master-ip-range        10.254.0.0/28                                           0       No         No
-  network-name           default                                                 0       No         No
-  network-project-id     network-project-id                                      0       No         No
-  networking-namespace   config-control                                          0       No         No
-  node-ip-range          10.3.4.0/22                                             0       No         No
-  platform-namespace     config-control                                          0       No         No
-  platform-project-id    platform-project-id                                     0       No         No
-  pod-ip-range           172.17.0.0/16                                           0       No         No
-  projects-namespace     projects                                                0       No         No
-  security-group         gke-security-group@example.com                          0       No         No
-  service-ip-range       172.18.0.0/16                                           0       No         No
+$ kpt-list-setters.sh catalog/gke --count
+Setter                Usages
+cluster-name          19
+environment           2
+location              6
+master-ip-range       2
+max-node-count        2
+networking-namespace  4
+network-name          4
+network-project-id    5
+node-ip-range         2
+nodepool-name         12
+platform-namespace    11
+platform-project-id   15
+pod-ip-range          2
+projects-namespace    3
+security-group        2
+service-ip-range      2
 ```

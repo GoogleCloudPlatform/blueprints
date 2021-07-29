@@ -1,71 +1,8 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: dns-record-set
-openAPI:
-  definitions:
-    io.k8s.cli.setters.namespace:
-      description: Namespace configured for managing resources defined in this package
-      x-k8s-cli:
-        setter:
-          name: namespace
-          value: networking
-    io.k8s.cli.setters.project-id:
-      description: Project ID for record-set
-      x-k8s-cli:
-        setter:
-          name: project-id
-          value: project-id
-    io.k8s.cli.setters.record-set-name:
-      description: Record Set name
-      x-k8s-cli:
-        setter:
-          name: record-set-name
-          value: record-set-example
-    io.k8s.cli.setters.name:
-      description: The name of this record-set
-      x-k8s-cli:
-        setter:
-          name: name
-          value: ""
-    io.k8s.cli.setters.domain:
-      description: The DNS domain of this record-set
-      x-k8s-cli:
-        setter:
-          name: domain
-          value: example.com.
-    io.k8s.cli.setters.type:
-      description: The DNS record set type
-      x-k8s-cli:
-        setter:
-          name: type
-          value: A
-    io.k8s.cli.setters.ttl:
-      description: The time-to-live of this record set (seconds)
-      x-k8s-cli:
-        setter:
-          name: ttl
-          value: "300"
-    io.k8s.cli.setters.managed-zone-name:
-      description: Managed Zone to bind to
-      x-k8s-cli:
-        setter:
-          name: managed-zone-name
-          value: foo
-    io.k8s.cli.setters.records:
-      type: array
-      x-k8s-cli:
-        setter:
-          name: records
-          listValues:
-          - "0.0.0.0"
-    io.k8s.cli.substitutions.rr-domain:
-      x-k8s-cli:
-        substitution:
-          name: rr-domain
-          pattern: ${name}${domain}
-          values:
-          - marker: ${name}
-            ref: '#/definitions/io.k8s.cli.setters.name'
-          - marker: ${domain}
-            ref: '#/definitions/io.k8s.cli.setters.domain'
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

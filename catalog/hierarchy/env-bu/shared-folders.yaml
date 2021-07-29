@@ -16,7 +16,7 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
   name: dev.shared
-  namespace: hierarchy # {"$kpt-set":"namespace"}
+  namespace: hierarchy # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:hierarchy:env-bu/v0.2.0
 spec:
@@ -28,9 +28,9 @@ apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
 kind: Folder
 metadata:
   name: prod.shared
-  namespace: hierarchy # {"$kpt-set":"namespace"}
+  namespace: hierarchy # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:hierarchy/v0.1.1
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:hierarchy:env-bu/v0.2.0
 spec:
   displayName: shared
   folderRef:

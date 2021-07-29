@@ -21,7 +21,7 @@ metadata:
 spec:
   parameters:
     naming_rules:
-    - kind: Folder
-      patterns:
-      # Matches formats such as "something" or "something.else" or "something.else.prod"
-      - (^[a-z0-9-]+$)|(^[a-z0-9-]+[.][a-z0-9-]+$)|(^[a-z0-9-]+[.][a-z0-9-]+[.](dev|prod|staging|qa)$)
+      - kind: Folder
+        patterns:
+          # Matches formats such as "something" or "something.else" or "something.else.prod"
+          - (^[a-z0-9-]+$)|(^[a-z0-9-]+[.][a-z0-9-]+$)|(^[a-z0-9-]+[.][a-z0-9-]+[.](dev|prod|staging|qa)$)

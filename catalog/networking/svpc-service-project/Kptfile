@@ -1,38 +1,8 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: svpc-service-project
-openAPI:
-  definitions:
-    io.k8s.cli.setters.namespace:
-      description: Namespace configured for managing resources defined in this package
-      x-k8s-cli:
-        setter:
-          name: namespace
-          value: networking
-    io.k8s.cli.setters.project-id:
-      description: Project ID for service project
-      x-k8s-cli:
-        setter:
-          name: project-id
-          value: project-id
-    io.k8s.cli.setters.project-namespace:
-      description: Namespace of service project
-      x-k8s-cli:
-        setter:
-          name: namespace
-          value: projects
-    io.k8s.cli.setters.host-project-id:
-      description: Host Project to attach Service Project to
-      x-k8s-cli:
-        setter:
-          name: host-project-id
-          value: host-project
-    io.k8s.cli.substitutions.service-project-name:
-      x-k8s-cli:
-        substitution:
-          name: service-project-name
-          pattern: ${PROJECT_ID}-svpc-service
-          values:
-          - marker: ${PROJECT_ID}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

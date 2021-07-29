@@ -1,36 +1,8 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: compute-route-igw
-openAPI:
-  definitions:
-    io.k8s.cli.setters.namespace:
-      description: Namespace configured for managing resources defined in this package
-      x-k8s-cli:
-        setter:
-          name: namespace
-          value: networking
-    io.k8s.cli.setters.project-id:
-      description: Project ID for compute-route
-      x-k8s-cli:
-        setter:
-          name: project-id
-          value: project-id
-    io.k8s.cli.setters.network-name:
-      description: VPC network to bind to
-      x-k8s-cli:
-        setter:
-          name: network-name
-          value: network-name
-    io.k8s.cli.setters.route-name:
-      description: Route name
-      x-k8s-cli:
-        setter:
-          name: route-name
-          value: route-example
-    io.k8s.cli.setters.destination-range:
-      description: The destination range of outgoing packets that this route applies to
-      x-k8s-cli:
-        setter:
-          name: destination-range
-          value: 0.0.0.0/0
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

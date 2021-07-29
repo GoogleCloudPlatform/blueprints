@@ -17,15 +17,15 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
   name: pubsub-iam-policy
-  namespace: my-namespace # {"$kpt-set":"namespace"}
+  namespace: my-namespace # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.2.0
 spec:
   memberFrom:
     logSinkRef:
-      name: 123456789012-pubsubsink # {"$kpt-set":"log-sink-name"}
+      name: 123456789012-pubsubsink # kpt-set: ${org-id}-pubsubsink
   resourceRef:
-    name: pubsub-logexport-dataset # {"$kpt-set":"topic-name"}
+    name: pubsub-logexport-dataset # kpt-set: ${topic-name}
     apiVersion: pubsub.cnrm.cloud.google.com/v1beta1
     kind: PubSubTopic
   role: roles/pubsub.publisher

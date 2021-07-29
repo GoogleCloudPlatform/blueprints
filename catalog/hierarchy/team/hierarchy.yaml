@@ -16,23 +16,21 @@ apiVersion: blueprints.cloud.google.com/v1alpha3
 kind: ResourceHierarchy
 metadata:
   name: root-hierarchy
-  namespace: hierarchy # {"$kpt-set":"namespace"}
+  namespace: hierarchy # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:hierarchy:team/v0.2.0
-    config.k8s.io/function: |
-      container:
-        image: gcr.io/yakima-eap/generate-folders:latest
     config.kubernetes.io/local-config: "true"
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:hierarchy:team/v0.2.0
 spec:
   config:
-  - retail:
-      $subtree: environments
-  - finance:
-      $subtree: environments
+    - retail:
+        $subtree: environments
+    - finance:
+        $subtree: environments
   parentRef:
-    external: "123456789012" # {"$kpt-set":"org-id"}
+    # This should match your organization ID
+    external: "123456789012"
   subtrees:
     environments:
-    - dev
-    - prod
-    - qa
+      - dev
+      - prod
+      - qa

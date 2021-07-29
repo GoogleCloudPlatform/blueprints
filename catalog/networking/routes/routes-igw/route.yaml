@@ -11,19 +11,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRoute
 metadata:
-  name: route-example # {"$kpt-set":"route-name"}
-  namespace: networking # {"$kpt-set":"namespace"}
+  name: route-example # kpt-set: ${route-name}
+  namespace: networking # kpt-set: ${namespace}
   annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   priority: 1000
-  destRange: 0.0.0.0/0 # {"$kpt-set":"destination-range"}
+  destRange: 0.0.0.0/0 # kpt-set: ${destination-range}
   networkRef:
-    name: network-name # {"$kpt-set":"network-name"}
-    namespace: networking # {"$kpt-set":"namespace"}
+    name: network-name # kpt-set: ${network-name}
+    namespace: networking # kpt-set: ${namespace}
   nextHopGateway: default-internet-gateway

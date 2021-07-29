@@ -11,19 +11,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: dns.cnrm.cloud.google.com/v1beta1
 kind: DNSPolicy
 metadata:
-  name: default-dns-policy # {"$kpt-set":"dns-policy-name"}
-  namespace: networking # {"$kpt-set":"namespace"}
+  name: default-dns-policy # kpt-set: ${dns-policy-name}
+  namespace: networking # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   enableInboundForwarding: true
   enableLogging: true
   networks:
-  - networkRef:
-      name: example-network # {"$kpt-set":"network-name"}
-      namespace: networking # {"$kpt-set":"namespace"}
+    - networkRef:
+        name: example-network # kpt-set: ${network-name}
+        namespace: networking # kpt-set: ${namespace}

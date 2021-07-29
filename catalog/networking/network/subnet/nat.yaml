@@ -15,28 +15,28 @@
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouterNAT
 metadata:
-  name: network-name-router-nat # {"$kpt-set":"network-nat-name"}
-  namespace: networking # {"$kpt-set":"namespace"}
+  name: network-name-router-nat # kpt-set: ${prefix}${network-name}-router-nat
+  namespace: networking # kpt-set: ${namespace}
   annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   natIpAllocateOption: AUTO_ONLY
-  region: us-central1 # {"$kpt-set":"region"}
+  region: us-central1 # kpt-set: ${region}
   routerRef:
-    name: network-name-router # {"$kpt-set":"network-router-name"}
-  sourceSubnetworkIpRangesToNat: ALL_SUBNETWORKS_ALL_IP_RANGES # {"$kpt-set":"source-subnetwork-ip-ranges-to-nat"}
+    name: network-name-router # kpt-set: ${prefix}${network-name}-router
+  sourceSubnetworkIpRangesToNat: ALL_SUBNETWORKS_ALL_IP_RANGES # kpt-set: ${source-subnetwork-ip-ranges-to-nat}
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeRouter
 metadata:
-  name: network-name-router # {"$kpt-set":"network-router-name"}
-  namespace: networking # {"$kpt-set":"namespace"}
+  name: network-name-router # kpt-set: ${prefix}${network-name}-router
+  namespace: networking # kpt-set: ${namespace}
   annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
-    cnrm.cloud.google.com/project-id: project-id # {"$kpt-set":"project-id"}
 spec:
   description: example router description
   networkRef:
-    name: network-name # {"$kpt-set":"network-name"}
-  region: us-central1 # {"$kpt-set":"region"}
+    name: network-name # kpt-set: ${network-name}
+  region: us-central1 # kpt-set: ${region}

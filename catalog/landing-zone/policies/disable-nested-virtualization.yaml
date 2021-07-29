@@ -24,4 +24,4 @@ spec:
     enforced: true
   constraint: "constraints/compute.disableNestedVirtualization"
   organizationRef:
-    external: "123456789012" # {"$kpt-set":"org-id"}
+    external: "123456789012" # kpt-set: ${org-id}

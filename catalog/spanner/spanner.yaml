@@ -15,24 +15,24 @@
 apiVersion: spanner.cnrm.cloud.google.com/v1beta1
 kind: SpannerDatabase
 metadata:
-  name: spanner-sample-database # {"$kpt-set":"database-name"}
-  namespace: my-namespace # {"$kpt-set":"namespace"}
+  name: spanner-sample-database # kpt-set: ${database-name}
+  namespace: my-namespace # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/deletion-policy: "abandon"
 spec:
   ddl:
-  - "CREATE TABLE t1 (t1 INT64 NOT NULL,) PRIMARY KEY(t1)"
+    - "CREATE TABLE t1 (t1 INT64 NOT NULL,) PRIMARY KEY(t1)"
   instanceRef:
-    name: spanner-sample-instance # {"$kpt-set":"instance-name"}
+    name: spanner-sample-instance # kpt-set: ${instance-name}
 ---
 apiVersion: spanner.cnrm.cloud.google.com/v1beta1
 kind: SpannerInstance
 metadata:
-  name: spanner-sample-instance # {"$kpt-set":"instance-name"}
-  namespace: my-namespace # {"$kpt-set":"namespace"}
+  name: spanner-sample-instance # kpt-set: ${instance-name}
+  namespace: my-namespace # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/deletion-policy: "abandon"
 spec:
-  config: regional-us-central1 # {"$kpt-set":"config-region"}
-  displayName: "spanner-sample-instance" # {"$kpt-set":"instance-name"}
-  numNodes: 1 # {"$kpt-set":"num-nodes"}
+  config: regional-us-central1 # kpt-set: ${config-region}
+  displayName: "spanner-sample-instance" # kpt-set: ${instance-name}
+  numNodes: 1 # kpt-set: ${num-nodes}

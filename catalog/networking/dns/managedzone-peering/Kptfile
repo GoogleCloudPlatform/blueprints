@@ -1,50 +1,8 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: dns-peered-managed-zone
-openAPI:
-  definitions:
-    io.k8s.cli.setters.namespace:
-      description: Namespace configured for managing resources defined in this package
-      x-k8s-cli:
-        setter:
-          name: namespace
-          value: networking
-    io.k8s.cli.setters.project-id:
-      description: Project ID for managed-zone
-      x-k8s-cli:
-        setter:
-          name: project-id
-          value: project-id
-    io.k8s.cli.setters.managed-zone-name:
-      description: Managed Zone name
-      x-k8s-cli:
-        setter:
-          name: managed-zone-name
-          value: private-managed-zone
-    io.k8s.cli.setters.domain:
-      description: The DNS name of this managed zone
-      x-k8s-cli:
-        setter:
-          name: domain
-          value: example.com.
-    io.k8s.cli.setters.network-name:
-      description: VPC network to bind to
-      x-k8s-cli:
-        setter:
-          name: network-name
-          value: example-network
-    io.k8s.cli.setters.peered-network-name:
-      description: VPC network to peer to
-      x-k8s-cli:
-        setter:
-          name: peered-network-name
-          value: example-peered-network
-    io.k8s.cli.substitutions.services-dns:
-      x-k8s-cli:
-        substitution:
-          name: services-dns
-          pattern: ${project-id}-dns
-          values:
-          - marker: ${project-id}
-            ref: '#/definitions/io.k8s.cli.setters.project-id'
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

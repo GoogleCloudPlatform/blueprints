@@ -1,44 +1,8 @@
-apiVersion: kpt.dev/v1alpha1
+apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: network-peering
-openAPI:
-  definitions:
-    io.k8s.cli.setters.namespace:
-      description: Namespace configured for managing resources defined in this package
-      x-k8s-cli:
-        setter:
-          name: namespace
-          value: networking
-    io.k8s.cli.setters.local-network:
-      description: Network to add a peering to.
-      x-k8s-cli:
-        setter:
-          name: local-network
-          value: local-network
-    io.k8s.cli.setters.peer-network:
-      description: Network to peering to.
-      x-k8s-cli:
-        setter:
-          name: peer-network
-          value: peer-network
-    io.k8s.cli.substitutions.local-to-peer:
-      x-k8s-cli:
-        substitution:
-          name: local-to-peer
-          pattern: ${LOCAL_NETWORK}-to-${PEER_NETWORK}
-          values:
-          - marker: ${LOCAL_NETWORK}
-            ref: '#/definitions/io.k8s.cli.setters.local-network'
-          - marker: ${PEER_NETWORK}
-            ref: '#/definitions/io.k8s.cli.setters.peer-network'
-    io.k8s.cli.substitutions.peer-to-local:
-      x-k8s-cli:
-        substitution:
-          name: peer-to-local
-          pattern: ${PEER_NETWORK}-to-${LOCAL_NETWORK}
-          values:
-          - marker: ${LOCAL_NETWORK}
-            ref: '#/definitions/io.k8s.cli.setters.local-network'
-          - marker: ${PEER_NETWORK}
-            ref: '#/definitions/io.k8s.cli.setters.peer-network'
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

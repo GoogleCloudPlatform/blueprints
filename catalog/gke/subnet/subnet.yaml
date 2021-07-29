@@ -23,8 +23,8 @@ metadata:
   name: platform-project-id-example-us-east4 # kpt-set: ${platform-project-id}-${cluster-name}
   namespace: networking # kpt-set: ${networking-namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: network-project-id # kpt-set: ${network-project-id}
     cnrm.cloud.google.com/blueprint: cnrm/gke:gke-subnet/v0.2.0-alpha.1
+    cnrm.cloud.google.com/project-id: network-project-id # kpt-set: ${network-project-id}
 spec:
   description: platform-project-id-example-us-east4 # kpt-set: ${platform-project-id}-${cluster-name}
   ipCidrRange: 10.3.4.0/22 # kpt-set: ${node-ip-range}

@@ -11,17 +11,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 # Enable KCC for this namespace
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnectorContext
 metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
-  namespace: project-id # {"$kpt-set":"project-namespace"}
+  namespace: project-id # kpt-set: ${project-id}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.2.0
 spec:
-  googleServiceAccount: kcc-project-id@management-project-id.iam.gserviceaccount.com # {"$kpt-set":"project-id-sa-email"}
+  googleServiceAccount: kcc-project-id@management-project-id.iam.gserviceaccount.com # kpt-set: kcc-${project-id}@${management-project-id}.iam.gserviceaccount.com
 ---
 # Create GCP ServiceAccount for use by KCC to manage resources in this project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -34,23 +33,6 @@ metadata:
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
   displayName: kcc-project-id # kpt-set: kcc-${project-id}
----
-# Grant KCC owner of this project
-apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
-metadata:
-  name: kcc-project-id-owners-permissions # kpt-set: kcc-${project-id}-owners-permissions
-  namespace: projects # kpt-set: ${projects-namespace}
-  annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.2.0
-    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
-spec:
-  member: "serviceAccount:kcc-project-id@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:kcc-${project-id}@${management-project-id}.iam.gserviceaccount.com
-  resourceRef:
-    name: project-id # kpt-set: ${project-id}
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-  role: roles/owner
 ---
 # Allow KCC's Kubernetes Service Account to use the GCP ServiceAccount
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
@@ -68,11 +50,3 @@ spec:
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
   role: roles/iam.workloadIdentityUser
----
-# Create namespace in the ACP cluster to manage KCC resources in this project
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: project-id # kpt-set: ${project-id}
-  annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}

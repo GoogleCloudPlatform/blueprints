@@ -12,7 +12,7 @@ kubectl create secret generic vpn-shared-secret \
     -n ${NETWORK_NAMESPACE}
 ```
 
-Or Config Connector:
+Or declaratively:
 
 ```yaml
 apiVersion: v1

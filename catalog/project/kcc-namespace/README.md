@@ -1,7 +1,22 @@
-# Project Config Connector Namespace Package
+# Project Namespace Package
 
-A kpt package to configure a Kubernetes namespace for use with Config Connector
-to manage GCP resources in a specific project.
+Kubernetes namespace configured for use with Config Connector to manage GCP
+resources in a specific project.
+
+## Setters
+
+```
+Setter                 Usages
+management-namespace   2
+management-project-id  6
+networking-namespace   1
+project-id             16
+projects-namespace     2
+```
+
+## Sub-packages
+
+This package has no sub-packages.
 
 ## Resources
 
@@ -21,25 +36,45 @@ namespace.yaml             v1                                  Namespace        
 - [ConfigConnectorContext](https://cloud.google.com/config-connector/docs/how-to/advanced-install#addon-configuring)
 - [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember)
 - [IAMServiceAccount](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount)
-- [RoleBinding](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#rolebinding-v1-rbac-authorization-k8s-io)
 - [Namespace](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#namespace-v1-core)
+- [RoleBinding](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#rolebinding-v1-rbac-authorization-k8s-io)
 
-## Sub-packages
+## Usage
 
-None.
+1.  Clone the package:
+    ```
+    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/project/kcc-namespace@${VERSION}
+    ```
+    Replace `${VERSION}` with the desired repo branch or tag
+    (for example, `main`).
 
-## Setters
+1.  Move into the local package:
+    ```
+    cd "./kcc-namespace/"
+    ```
 
-Setters are inherited by sub-packages.
+1.  Edit the function config file(s):
+    - setters.yaml
 
-```
-$ kpt cfg list-setters .
-./
-          NAME                    VALUE           SET BY            DESCRIPTION             COUNT   REQUIRED   IS SET
-  management-namespace    config-control                                                    2       No         No
-  management-project-id   management-project-id            Config Controller host project   6       No         No
-                                                           id.
-  networking-namespace    networking                       Namespace for networking.        1       No         No
-  project-id              project-id                       Project ID                       16      No         No
-  projects-namespace      projects                         Namespace for projects.          2       No         No
-```
+1.  Execute the function pipeline
+    ```
+    kpt fn render
+    ```
+
+1.  Initialize the resource inventory
+    ```
+    kpt live init --namespace ${NAMESPACE}"
+    ```
+    Replace `${NAMESPACE}` with the namespace in which to manage
+    the inventory ResourceGroup (for example, `config-control`).
+
+1.  Apply the package resources to your cluster
+    ```
+    kpt live apply
+    ```
+
+1.  Wait for the resources to be ready
+    ```
+    kpt live status --output table --poll-until current
+    ```
+

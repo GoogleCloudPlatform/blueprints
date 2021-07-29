@@ -1,9 +1,11 @@
 apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
-  name: gke-cluster-subnet
+  name: gke-subnet
+  annotations:
+    blueprints.cloud.google.com/title: GKE Subnet blueprint
 info:
-  description: GCP subnet for a GKE cluster
+  description: A GCP subnet for a GKE cluster with private nodes
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

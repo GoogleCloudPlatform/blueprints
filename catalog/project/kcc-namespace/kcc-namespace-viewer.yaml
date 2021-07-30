@@ -18,6 +18,8 @@ kind: RoleBinding
 metadata:
   name: cnrm-network-viewer-project-id # kpt-set: cnrm-network-viewer-${project-id}
   namespace: networking # kpt-set: ${networking-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/project:kcc-namespace/v0.2.0
 roleRef:
   name: cnrm-viewer
   kind: ClusterRole
@@ -34,6 +36,8 @@ kind: RoleBinding
 metadata:
   name: cnrm-project-viewer-project-id # kpt-set: cnrm-project-viewer-${project-id}
   namespace: projects # kpt-set: ${projects-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/project:kcc-namespace/v0.2.0
 roleRef:
   name: cnrm-viewer
   kind: ClusterRole

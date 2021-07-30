@@ -11,11 +11,12 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: templates.gatekeeper.sh/v1beta1
 kind: ConstraintTemplate
 metadata:
   name: gcprequiredeletionpolicy
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
 spec:
   crd:
     spec:
@@ -23,7 +24,7 @@ spec:
         kind: GCPRequireDeletionPolicy
       validation:
         openAPIV3Schema:
-          properties:
+          properties: null
   targets:
     - rego: |
         package templates.gcp.GCPRequireDeletionPolicyConstraint

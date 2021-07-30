@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 # API Activation
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
@@ -19,8 +18,8 @@ metadata:
   name: my-project-id-storage # kpt-set: ${project-id}-storage
   namespace: projects
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.2.0
-    cnrm.cloud.google.com/deletion-policy: "abandon"
+    cnrm.cloud.google.com/blueprint: cnrm/storage-export/v0.2.0
+    cnrm.cloud.google.com/deletion-policy: abandon
     cnrm.cloud.google.com/disable-dependent-services: "false"
     cnrm.cloud.google.com/project-id: my-project-id # kpt-set: ${project-id}
 spec:
@@ -33,7 +32,7 @@ metadata:
   name: my.folder.k8s.name-storagesink # kpt-set: ${folder-k8s-name}-storagesink
   namespace: my-namespace # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/storage-export/v0.2.0
 spec:
   destination:
     storageBucketRef:
@@ -51,6 +50,7 @@ metadata:
   namespace: my-namespace # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/force-destroy: "true"
+    cnrm.cloud.google.com/blueprint: cnrm/storage-export/v0.2.0
 spec:
   bucketPolicyOnly: false # kpt-set: ${bucket-policy-only}
   location: US # kpt-set: ${location}

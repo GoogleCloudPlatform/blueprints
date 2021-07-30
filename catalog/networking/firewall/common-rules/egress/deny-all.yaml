@@ -11,21 +11,20 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
   name: network-name-fw-deny-all-egress # kpt-set: ${network-name}-fw-deny-all-egress
   namespace: firewalls-namespace # kpt-set: ${firewalls-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/firewall-common-rules/v0.2.0
 spec:
   priority: 65535
   deny:
     - protocol: tcp
     - protocol: udp
   destinationRanges:
-    - "0.0.0.0/0"
+    - 0.0.0.0/0
   direction: EGRESS
   disabled: true # kpt-set: ${allow-default-egress}
   enableLogging: false # kpt-set: ${enable-logging}

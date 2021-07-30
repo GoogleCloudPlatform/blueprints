@@ -18,3 +18,4 @@ metadata:
   name: project-id # kpt-set: ${project-id}
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/blueprint: cnrm/project:kcc-namespace/v0.2.0

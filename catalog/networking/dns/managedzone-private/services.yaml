@@ -11,14 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
   name: project-id-dns # kpt-set: ${project-id}-dns
   namespace: projects
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/dns-private-managed-zone/v0.2.0
     cnrm.cloud.google.com/disable-on-destroy: "false"
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:

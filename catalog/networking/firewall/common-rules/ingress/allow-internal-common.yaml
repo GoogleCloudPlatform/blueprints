@@ -11,14 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
 metadata:
   name: network-name-fw-allow-internal-common # kpt-set: ${network-name}-fw-allow-internal-common
   namespace: firewalls-namespace # kpt-set: ${firewalls-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/firewall-common-rules/v0.2.0
 spec:
   priority: 10000 # kpt-set: ${priority}
   allow:
@@ -34,8 +33,8 @@ spec:
   networkRef:
     name: network-name # kpt-set: ${network-name}
   sourceRanges:
-    - "10.0.0.0/8"
-    - "172.16.0.0/12"
-    - "192.168.0.0/16"
+    - 10.0.0.0/8
+    - 172.16.0.0/12
+    - 192.168.0.0/16
   targetTags:
     - allow-internal-common

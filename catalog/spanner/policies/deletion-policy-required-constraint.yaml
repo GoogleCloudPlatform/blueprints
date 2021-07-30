@@ -11,15 +11,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: GCPRequireDeletionPolicy
 metadata:
   name: enforce-deletion-policy-annotation-spanner-instance
   annotations:
     description: Checks that resource has deletion-policy annotation set.
+    cnrm.cloud.google.com/blueprint: cnrm/spanner/v0.2.0
 spec:
   match:
     kinds:
-      - apiGroups: ["spanner.cnrm.cloud.google.com"]
-        kinds: ["SpannerInstance", "SpannerDatabase"]
+      - apiGroups:
+          - spanner.cnrm.cloud.google.com
+        kinds:
+          - SpannerInstance
+          - SpannerDatabase

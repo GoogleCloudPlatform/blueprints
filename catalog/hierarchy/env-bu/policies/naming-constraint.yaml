@@ -11,13 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: constraints.gatekeeper.sh/v1beta1
 kind: GCPEnforceNamingV2
 metadata:
   name: enforce-folder-names
   annotations:
     description: Checks that folder names follow the required standard.
+    cnrm.cloud.google.com/blueprint: cnrm/env-bu-hierarchy/v0.2.0
 spec:
   parameters:
     naming_rules:

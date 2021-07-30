@@ -17,6 +17,8 @@ apiVersion: configmanagement.gke.io/v1
 kind: ConfigManagement
 metadata:
   name: config-management
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/gitops-csr:configsync-csr/v0.2.0
 spec:
   clusterName: cluster-name # kpt-set: ${cluster-name}
   enableMultiRepo: false

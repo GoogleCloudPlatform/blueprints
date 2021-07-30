@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
@@ -20,6 +19,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
     cnrm.cloud.google.com/project-id: blueprints-project # kpt-set: ${project-id}
+    cnrm.cloud.google.com/blueprint: cnrm/redis-bucket/v0.2.0
 spec:
   resourceID: redis.googleapis.com
 ---
@@ -30,6 +30,7 @@ metadata:
   namespace: config-controller-system # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/project-id: blueprints-project # kpt-set: ${project-id}
+    cnrm.cloud.google.com/blueprint: cnrm/redis-bucket/v0.2.0
 spec:
   authorizedNetworkRef:
     external: projects/blueprints-project/global/networks/default # kpt-set: projects/${project-id}/global/networks/${network}

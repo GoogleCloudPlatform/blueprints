@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 # Trigger for when changes are pushed into any branch of the yakima source repo.
 # This will run all your kpt functions and apply a blast radius analysis of
 # changes.
@@ -22,7 +21,7 @@ metadata:
   name: source-repo-cicd-trigger # kpt-set: ${source-repo}-cicd-trigger
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gitops/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/gitops-csr/v0.2.0
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   build:
@@ -32,7 +31,7 @@ spec:
           - name: deployment-workspace
             path: /deployment-workspace
         args:
-          - '-c'
+          - -c
           - |
             set -e
             gcloud source repos clone $_DEPLOYMENT_REPO .
@@ -41,14 +40,14 @@ spec:
             mkdir -p /deployment-workspace/config
         dir: /deployment-workspace
         entrypoint: /bin/sh
-        id: "Clone Deployment Repo"
+        id: Clone Deployment Repo
         timeout: 300s
       - name: gcr.io/kpt-dev/kpt:v1.0.0-beta.1
         volumes:
           - name: hydrated-workspace
             path: /hydrated-workspace
         args:
-          - '-c'
+          - -c
           - |
             set -eo pipefail
             SRC_DIR="."
@@ -63,7 +62,7 @@ spec:
             echo "Removing local config"
             kpt fn eval "$${DEST_DIR}" -i gcr.io/yakima-eap/remove-annotated-resources:v0.1
         entrypoint: /bin/bash
-        id: "Apply Hydration and Validation"
+        id: Apply Hydration and Validation
       - name: gcr.io/cloud-builders/gcloud:latest
         volumes:
           - name: hydrated-workspace
@@ -71,7 +70,7 @@ spec:
           - name: deployment-workspace
             path: /deployment-workspace
         args:
-          - '-c'
+          - -c
           - |
             set -e
             git pull origin $BRANCH_NAME || true # Ignore errors in case branch doesn't exist
@@ -87,17 +86,17 @@ spec:
             printf "\n\nLatest deployment repo commit SHA: $(git rev-parse HEAD)\n"
         dir: /deployment-workspace
         entrypoint: /bin/sh
-        id: "Push Changes To Deployment Repo"
+        id: Push Changes To Deployment Repo
         waitFor:
-          - "Apply Hydration and Validation"
+          - Apply Hydration and Validation
     timeout: 600s
   description: Cloud Build Trigger for rendering from the soure repo to the deployment repo.
   disabled: false
   substitutions:
-    "_ADMIN_CLUSTER_NAME": "cluster-name" # kpt-set: ${cluster-name}
-    "_DEPLOYMENT_REPO": "deployment-repo" # kpt-set: ${deployment-repo}
-    "_SOURCE_REPO": "source-repo" # kpt-set: ${source-repo}
+    _ADMIN_CLUSTER_NAME: cluster-name # kpt-set: ${cluster-name}
+    _DEPLOYMENT_REPO: deployment-repo # kpt-set: ${deployment-repo}
+    _SOURCE_REPO: source-repo # kpt-set: ${source-repo}
   triggerTemplate:
-    branchName: ".*"
+    branchName: .*
     repoRef:
       name: source-repo # kpt-set: ${source-repo}

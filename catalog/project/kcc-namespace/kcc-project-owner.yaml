@@ -13,7 +13,7 @@
 # limitations under the License.
 # Grant KCC owner of this project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+kind: IAMPartialPolicy
 metadata:
   name: kcc-project-id-owners-permissions # kpt-set: kcc-${project-id}-owners-permissions
   namespace: projects # kpt-set: ${projects-namespace}
@@ -21,9 +21,11 @@ metadata:
     cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.2.0-alpha.1
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
-  member: serviceAccount:kcc-project-id@management-project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:kcc-${project-id}@${management-project-id}.iam.gserviceaccount.com
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: project-id # kpt-set: ${project-id}
-  role: roles/owner
+  bindings:
+    - role: roles/owner
+      members:
+        - member: serviceAccount:kcc-project-id@management-project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:kcc-${project-id}@${management-project-id}.iam.gserviceaccount.com

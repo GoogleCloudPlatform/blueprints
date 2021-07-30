@@ -2,5 +2,7 @@ apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: empty
+  annotations:
+    blueprints.cloud.google.com/title: Empty blueprint
 info:
-  description: An empty blueprint
+  description: An example of an empty blueprint.

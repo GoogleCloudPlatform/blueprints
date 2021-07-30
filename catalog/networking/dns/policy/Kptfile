@@ -2,6 +2,10 @@ apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: dns-policy
+  annotations:
+    blueprints.cloud.google.com/title: Cloud DNS Policy blueprint
+info:
+  description: A Cloud DNS policy with logging and forwarding
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

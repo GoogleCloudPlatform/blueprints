@@ -2,6 +2,12 @@ apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
   name: service-controls-perimeter
+  annotations:
+    blueprints.cloud.google.com/title: Service Controls Perimeter blueprint
+info:
+  description: |
+    A basic access level restricting access to a specific region using the
+    Access Context Manager
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

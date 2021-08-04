@@ -75,7 +75,7 @@ spec:
           - |
             set -e
             git pull origin $BRANCH_NAME || true # Ignore errors in case branch doesn't exist
-            git rm -rf /deployment-workspace/config/*
+            git rm -rf /deployment-workspace/config/* --ignore-unmatch
             cp -r /hydrated-workspace/config /deployment-workspace/
             touch /deployment-workspace/config/.gitkeep
             # Configure Git to create commits with Cloud Build's service account

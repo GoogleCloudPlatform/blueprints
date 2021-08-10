@@ -19,7 +19,7 @@ metadata:
   namespace: networking # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
 spec:
   description: "Compute VPN Gateway"
   networkRef:
@@ -33,7 +33,7 @@ metadata:
   namespace: networking # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
 spec:
   localTrafficSelector:
     - "192.168.0.0/16"
@@ -54,7 +54,7 @@ metadata:
   namespace: networking # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
 spec:
   description: "Regional address"
   location: us-central1 # kpt-set: ${region}
@@ -66,7 +66,7 @@ metadata:
   namespace: networking # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
 spec:
   description: "Regional ESP forwarding rule"
   ipAddress:
@@ -85,7 +85,7 @@ metadata:
   namespace: networking # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
 spec:
   description: "Regional UDP 500 forwarding rule"
   ipAddress:
@@ -105,7 +105,7 @@ metadata:
   namespace: networking # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
 spec:
   description: "Regional UDP 4500 forwarding rule"
   ipAddress:

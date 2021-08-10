@@ -19,7 +19,7 @@ metadata:
   name: platform-project-id-cluster-name-container # kpt-set: ${platform-project-id}-${cluster-name}-container
   namespace: projects # kpt-set: ${projects-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gke:gke-cluster/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/gke:gke-cluster/v0.3.0
     cnrm.cloud.google.com/deletion-policy: abandon
     cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
 spec:

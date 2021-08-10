@@ -18,7 +18,7 @@ metadata:
   name: network-name-fw-allow-windows-kms # kpt-set: ${network-name}-fw-allow-windows-kms
   namespace: firewalls-namespace # kpt-set: ${firewalls-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
 spec:
   priority: 100
   allow:

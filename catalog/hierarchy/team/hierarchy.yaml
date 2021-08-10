@@ -19,7 +19,7 @@ metadata:
   namespace: hierarchy # kpt-set: ${namespace}
   annotations:
     config.kubernetes.io/local-config: "true"
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:hierarchy:team/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:hierarchy:team/v0.3.0
 spec:
   config:
     - retail:

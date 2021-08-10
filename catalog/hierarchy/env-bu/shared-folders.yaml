@@ -18,7 +18,7 @@ metadata:
   name: dev.shared
   namespace: hierarchy # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:hierarchy:env-bu/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:hierarchy:env-bu/v0.3.0
 spec:
   displayName: shared
   folderRef:
@@ -30,7 +30,7 @@ metadata:
   name: prod.shared
   namespace: hierarchy # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:hierarchy:env-bu/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:hierarchy:env-bu/v0.3.0
 spec:
   displayName: shared
   folderRef:

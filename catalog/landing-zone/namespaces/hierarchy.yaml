@@ -17,7 +17,7 @@ metadata:
   name: hierarchy-sa
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.3.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
   displayName: hierarchy-sa
@@ -28,7 +28,7 @@ metadata:
   name: hierarchy-sa-folderadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.3.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
   member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:hierarchy-sa@${management-project-id}.iam.gserviceaccount.com
@@ -44,7 +44,7 @@ metadata:
   name: hierarchy-sa-workload-identity-binding
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.3.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
   member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-hierarchy] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-hierarchy]
@@ -81,6 +81,6 @@ metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: hierarchy
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.3.0
 spec:
   googleServiceAccount: hierarchy-sa@management-project-id.iam.gserviceaccount.com # kpt-set: hierarchy-sa@${management-project-id}.iam.gserviceaccount.com

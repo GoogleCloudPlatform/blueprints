@@ -18,7 +18,7 @@ metadata:
   name: local-network-to-peer-network # kpt-set: ${local-network}-to-${peer-network}
   namespace: namespace # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
 spec:
   exportCustomRoutes: false
   exportSubnetRoutesWithPublicIp: true
@@ -37,7 +37,7 @@ metadata:
   name: peer-network-to-local-network # kpt-set: ${peer-network}-to-${local-network}
   namespace: namespace # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
 spec:
   exportCustomRoutes: false
   exportSubnetRoutesWithPublicIp: true

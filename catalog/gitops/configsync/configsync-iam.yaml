@@ -19,7 +19,7 @@ metadata:
   name: sync-cluster-name # kpt-set: sync-${cluster-name}
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gitops/configsync/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/gitops/configsync/v0.3.0
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   displayName: sync-cluster-name # kpt-set: sync-${cluster-name}
@@ -31,7 +31,7 @@ metadata:
   name: sync-cluster-name # kpt-set: sync-${cluster-name}
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gitops/configsync/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/gitops/configsync/v0.3.0
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   member: serviceAccount:project-id.svc.id.goog[config-management-system/importer] # kpt-set: serviceAccount:${project-id}.svc.id.goog[config-management-system/importer]
@@ -48,7 +48,7 @@ metadata:
   name: source-reader-sync-cluster-name-project-id # kpt-set: source-reader-sync-${cluster-name}-${project-id}
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gitops/configsync/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/gitops/configsync/v0.3.0
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   member: serviceAccount:sync-cluster-name@project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:sync-${cluster-name}@${project-id}.iam.gserviceaccount.com

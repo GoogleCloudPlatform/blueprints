@@ -20,7 +20,7 @@ metadata:
     # Label with the environment to allow listing clusters by environment.
     gke.io/environment: dev # kpt-set: ${environment}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gke:gke-cluster/v0.2.0
+    cnrm.cloud.google.com/blueprint: cnrm/gke:gke-cluster/v0.3.0
     cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
     # Remove the default node pool after bootstrapping.
     # Explcit node pool configuration allows for more isolation and makes it

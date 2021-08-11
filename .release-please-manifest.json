@@ -1,0 +1,13 @@
+{
+  "catalog/bucket": "0.3.0",
+  "catalog/empty": "0.3.0",
+  "catalog/gitops": "0.3.0",
+  "catalog/gke": "0.3.0",
+  "catalog/hierarchy": "0.3.0",
+  "catalog/landing-zone": "0.3.0",
+  "catalog/log-export": "0.3.0",
+  "catalog/networking": "0.3.0",
+  "catalog/project": "0.3.0",
+  "catalog/redis-bucket": "0.3.0",
+  "catalog/spanner": "0.3.0"
+}

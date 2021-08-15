@@ -11,14 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
+
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeNetwork
 metadata:
-  name: default-01 # kpt-set: ${network-name}
+  name: network-name # kpt-set: ${network-name}
   namespace: networking # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
-    cnrm.cloud.google.com/project-id: gscrp-bp-gke-demo-01 # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   autoCreateSubnetworks: false
   deleteDefaultRoutesOnCreate: false

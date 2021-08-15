@@ -35,14 +35,16 @@ Replace the following:
 ```
 Setter                              Usages
 ip-cidr-range                       1
-namespace                           10
-network-name                        21
-prefix                              4
-project-id                          12
-region                              9
+namespace                           8
+network-name                        18
+prefix                              6
+project-id                          10
+region                              6
 source-subnetwork-ip-ranges-to-nat  1
-vpn-secret-key                      1
-vpn-secret-name                     1
+vpn-secret-key                      2
+vpn-secret-name                     2
+vpn-tunnel-peer-ip-01               1
+vpn-tunnel-peer-ip-02               1
 ```
 
 ## Sub-packages
@@ -53,20 +55,17 @@ vpn-secret-name                     1
 ## Resources
 
 ```
-File      APIVersion                             Kind                     Name                         Namespace
-vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeAddress           network-name-vpn-address     networking
-vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeForwardingRule    acme-vpc-dev-vpn-udp4500-fr  networking
-vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeForwardingRule    acme-vpc-dev-vpn-udp500-fr   networking
-vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeForwardingRule    network-name-vpn-esp-fr      networking
-vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeTargetVPNGateway  network-name-vpn-gateway     networking
-vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeVPNTunnel         network-name-vpn-tunnel      networking
+File      APIVersion                             Kind                       Name                          Namespace
+vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeExternalVPNGateway  network-name-ext-vpn-gateway  networking
+vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeVPNGateway          network-name-ha-vpn-gateway   networking
+vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeVPNTunnel           network-name-vpn-tunnel-01    networking
+vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeVPNTunnel           network-name-vpn-tunnel-02    networking
 ```
 
 ## Resource References
 
-- [ComputeAddress](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computeaddress)
-- [ComputeForwardingRule](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computeforwardingrule)
-- [ComputeTargetVPNGateway](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computetargetvpngateway)
+- [ComputeExternalVPNGateway](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computeexternalvpngateway)
+- [ComputeVPNGateway](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computevpngateway)
 - [ComputeVPNTunnel](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computevpntunnel)
 
 ## Usage

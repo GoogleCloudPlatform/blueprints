@@ -18,10 +18,11 @@ metadata:
   name: setters
 data:
   # Required setters
-  network-name: default-01
-  project-id: gscrp-bp-gke-demo-01
+  network-name: network-name
+  project-id: project-id
   region: us-central1
-  vpn-tunnel-peerIp: "15.0.0.120"
+  vpn-tunnel-peer-ip-01: "15.1.0.120"
+  vpn-tunnel-peer-ip-02: "15.1.1.120"
   # Optional setters
   namespace: networking
   vpn-secret-key: vpn-shared-secret

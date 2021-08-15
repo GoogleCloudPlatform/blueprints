@@ -11,109 +11,66 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeTargetVPNGateway
+kind: ComputeVPNGateway
 metadata:
-  name: network-name-vpn-gateway # kpt-set: ${network-name}-vpn-gateway
+  name: default-01-ha-vpn-gateway # kpt-set: ${network-name}-ha-vpn-gateway
   namespace: networking # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: gscrp-bp-gke-demo-01 # kpt-set: ${project-id}
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
 spec:
-  description: "Compute VPN Gateway"
+  description: "Compute HA VPN Gateway"
   networkRef:
-    name: network-name # kpt-set: ${network-name}
+    name: default-01 # kpt-set: ${network-name}
   region: us-central1 # kpt-set: ${region}
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeExternalVPNGateway
+metadata:
+  name: default-01-ext-vpn-gateway # kpt-set: ${network-name}-ext-vpn-gateway
+  namespace: networking # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: gscrp-bp-gke-demo-01 # kpt-set: ${project-id}
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
+spec:
+  redundancyType: "SINGLE_IP_INTERNALLY_REDUNDANT"
+  interface:
+    - id: 0
+      ipAddress: "15.0.0.120" # kpt-set: ${vpn-tunnel-peerIp}
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeVPNTunnel
 metadata:
-  name: network-name-vpn-tunnel # kpt-set: ${network-name}-vpn-tunnel
+  name: default-01-vpn-tunnel # kpt-set: ${network-name}-vpn-tunnel
   namespace: networking # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: gscrp-bp-gke-demo-01 # kpt-set: ${project-id}
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
 spec:
-  localTrafficSelector:
-    - "192.168.0.0/16"
-  peerIp: "15.0.0.120"
+  peerExternalGatewayInterface: 0
+  peerExternalGatewayRef:
+    name: default-01-ext-vpn-gateway # kpt-set: ${network-name}-ext-vpn-gateway
   region: us-central1 # kpt-set: ${region}
+  routerRef:
+    name: default-01-router # kpt-set: ${prefix}${network-name}-router
   sharedSecret:
     valueFrom:
       secretKeyRef:
         name: vpn-shared-secret # kpt-set: ${vpn-secret-name}
         key: vpn-shared-secret # kpt-set: ${vpn-secret-key}
-  targetVPNGatewayRef:
-    name: network-name-vpn-gateway # kpt-set: ${network-name}-vpn-gateway
+  vpnGatewayInterface: 0
+  vpnGatewayRef:
+    name: default-01-ha-vpn-gateway # kpt-set: ${network-name}-ha-vpn-gateway
 ---
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeAddress
 metadata:
-  name: network-name-vpn-address # kpt-set: ${network-name}-vpn-address
+  name: default-01-vpn-address # kpt-set: ${network-name}-vpn-address
   namespace: networking # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: gscrp-bp-gke-demo-01 # kpt-set: ${project-id}
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
 spec:
   description: "Regional address"
   location: us-central1 # kpt-set: ${region}
----
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeForwardingRule
-metadata:
-  name: network-name-vpn-esp-fr # kpt-set: ${network-name}-vpn-esp-fr
-  namespace: networking # kpt-set: ${namespace}
-  annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
-spec:
-  description: "Regional ESP forwarding rule"
-  ipAddress:
-    addressRef:
-      name: network-name-vpn-address # kpt-set: ${network-name}-vpn-address
-  ipProtocol: "ESP"
-  location: us-central1 # kpt-set: ${region}
-  target:
-    targetVPNGatewayRef:
-      name: network-name-vpn-gateway # kpt-set: ${network-name}-vpn-gateway
----
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeForwardingRule
-metadata:
-  name: acme-vpc-dev-vpn-udp500-fr # kpt-set: ${network-name}-vpn-udp500-fr
-  namespace: networking # kpt-set: ${namespace}
-  annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
-spec:
-  description: "Regional UDP 500 forwarding rule"
-  ipAddress:
-    addressRef:
-      name: network-name-vpn-address # kpt-set: ${network-name}-vpn-address
-  ipProtocol: "UDP"
-  location: us-central1 # kpt-set: ${region}
-  portRange: "500"
-  target:
-    targetVPNGatewayRef:
-      name: network-name-vpn-gateway # kpt-set: ${network-name}-vpn-gateway
----
-apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeForwardingRule
-metadata:
-  name: acme-vpc-dev-vpn-udp4500-fr # kpt-set: ${network-name}-vpn-udp4500-fr
-  namespace: networking # kpt-set: ${namespace}
-  annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
-spec:
-  description: "Regional UDP 4500 forwarding rule"
-  ipAddress:
-    addressRef:
-      name: network-name-vpn-address # kpt-set: ${network-name}-vpn-address
-  ipProtocol: "UDP"
-  location: us-central1 # kpt-set: ${region}
-  portRange: "4500"
-  target:
-    targetVPNGatewayRef:
-      name: network-name-vpn-gateway # kpt-set: ${network-name}-vpn-gateway

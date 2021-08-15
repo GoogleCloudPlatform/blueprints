@@ -11,14 +11,13 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeSubnetwork
 metadata:
-  name: network-name-subnetwork # kpt-set: ${prefix}${network-name}-subnetwork
+  name: default-01-subnetwork # kpt-set: ${prefix}${network-name}-subnetwork
   namespace: networking # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: gscrp-bp-gke-demo-01 # kpt-set: ${project-id}
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
 spec:
   description: Subnetwork
@@ -28,6 +27,6 @@ spec:
     aggregationInterval: INTERVAL_10_MIN
     flowSampling: 0.5
   networkRef:
-    name: network-name # kpt-set: ${network-name}
+    name: default-01 # kpt-set: ${network-name}
   privateIpGoogleAccess: false
   region: us-central1 # kpt-set: ${region}

@@ -21,6 +21,8 @@ data:
   network-name: network-name
   project-id: project-id
   region: us-central1
+  vpn-tunnel-peer-ip-01: "15.1.0.120"
+  vpn-tunnel-peer-ip-02: "15.1.1.120"
   # Optional setters
   namespace: networking
   vpn-secret-key: vpn-shared-secret

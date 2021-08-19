@@ -23,7 +23,7 @@ spec:
   displayName: hierarchy-sa
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+kind: IAMPartialPolicy
 metadata:
   name: hierarchy-sa-folderadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
@@ -31,15 +31,17 @@ metadata:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.3.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
-  member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:hierarchy-sa@${management-project-id}.iam.gserviceaccount.com
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
     external: "123456789012" # kpt-set: ${org-id}
-  role: roles/resourcemanager.folderAdmin
+  bindings:
+    - role: roles/resourcemanager.folderAdmin
+      members:
+        - member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:hierarchy-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+kind: IAMPartialPolicy
 metadata:
   name: hierarchy-sa-workload-identity-binding
   namespace: config-control # kpt-set: ${management-namespace}
@@ -47,12 +49,14 @@ metadata:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.3.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
-  member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-hierarchy] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-hierarchy]
   resourceRef:
     name: hierarchy-sa
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
-  role: roles/iam.workloadIdentityUser
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-hierarchy] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-hierarchy]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding

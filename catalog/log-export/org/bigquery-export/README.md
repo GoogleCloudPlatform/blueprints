@@ -31,13 +31,14 @@ export.yaml  bigquery.cnrm.cloud.google.com/v1beta1      BigQueryDataset  bqloge
 export.yaml  logging.cnrm.cloud.google.com/v1beta1       LoggingLogSink   123456789012-bqsink         logging
 export.yaml  serviceusage.cnrm.cloud.google.com/v1beta1  Service          my-project-id-bigquery      projects
 iam.yaml     iam.cnrm.cloud.google.com/v1beta1           IAMPolicyMember  bq-project-iam-policy       logging
-iam.yaml     iam.cnrm.cloud.google.com/v1beta1           IAMPolicyMember  logging-sa-iam-permissions  config-control
+iam.yaml     iam.cnrm.cloud.google.com/v1beta1           IAMPartialPolicy  logging-sa-iam-permissions  config-control
 ```
 
 ## Resource References
 
 - [BigQueryDataset](https://cloud.google.com/config-connector/docs/reference/resource-docs/bigquery/bigquerydataset)
 - [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember)
+- [IAMPartialPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampartialpolicy)
 - [LoggingLogSink](https://cloud.google.com/config-connector/docs/reference/resource-docs/logging/logginglogsink)
 - [Service](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service)
 
@@ -79,4 +80,3 @@ iam.yaml     iam.cnrm.cloud.google.com/v1beta1           IAMPolicyMember  loggin
     ```
     kpt live status --output table --poll-until current
     ```
-

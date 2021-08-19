@@ -12,7 +12,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 # Config Sync GCP ServiceAccount (GSA)
-# This GSA can be used to grant Config Sync additional permissions with IAMPolicyMember
+# This GSA can be used to grant Config Sync additional permissions with IAMPartialPolicy
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
@@ -26,7 +26,7 @@ spec:
 ---
 # Allow Config Sync Kubernetes ServiceAccount (KSA) to use the Config Sync GSA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+kind: IAMPartialPolicy
 metadata:
   name: sync-cluster-name # kpt-set: sync-${cluster-name}
   namespace: config-control # kpt-set: ${namespace}
@@ -34,16 +34,18 @@ metadata:
     cnrm.cloud.google.com/blueprint: cnrm/gitops/configsync/v0.3.0
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
-  member: serviceAccount:project-id.svc.id.goog[config-management-system/importer] # kpt-set: serviceAccount:${project-id}.svc.id.goog[config-management-system/importer]
   resourceRef:
     name: sync-cluster-name # kpt-set: sync-${cluster-name}
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
-  role: roles/iam.workloadIdentityUser
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - member: serviceAccount:project-id.svc.id.goog[config-management-system/importer] # kpt-set: serviceAccount:${project-id}.svc.id.goog[config-management-system/importer]
 ---
 # Allow Config Sync GSA to read from CSR repos in the CSR project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+kind: IAMPartialPolicy
 metadata:
   name: source-reader-sync-cluster-name-project-id # kpt-set: source-reader-sync-${cluster-name}-${project-id}
   namespace: config-control # kpt-set: ${namespace}
@@ -51,9 +53,12 @@ metadata:
     cnrm.cloud.google.com/blueprint: cnrm/gitops/configsync/v0.3.0
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
-  member: serviceAccount:sync-cluster-name@project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:sync-${cluster-name}@${project-id}.iam.gserviceaccount.com
+  member:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: project-id # kpt-set: ${project-id}
-  role: roles/source.reader
+  bindings:
+    - role: roles/source.reader
+      members:
+        - member: serviceAccount:sync-cluster-name@project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:sync-${cluster-name}@${project-id}.iam.gserviceaccount.com

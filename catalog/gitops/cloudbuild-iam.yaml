@@ -13,7 +13,7 @@
 # limitations under the License.
 # Provides write access to deployment repo for cloudbuild trigger
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+kind: IAMPartialPolicy
 metadata:
   name: deployment-repo-cloudbuild-write
   namespace: config-control # kpt-set: ${namespace}
@@ -21,16 +21,18 @@ metadata:
     cnrm.cloud.google.com/blueprint: cnrm/gitops/v0.3.0
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
-  member: serviceAccount:1234567890123@cloudbuild.gserviceaccount.com # kpt-set: serviceAccount:${project-number}@cloudbuild.gserviceaccount.com
   resourceRef:
     name: deployment-repo # kpt-set: ${deployment-repo}
     apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
     kind: SourceRepoRepository
-  role: roles/source.writer
+  bindings:
+    - role: roles/source.writer
+      members:
+        - member: serviceAccount:1234567890123@cloudbuild.gserviceaccount.com # kpt-set: serviceAccount:${project-number}@cloudbuild.gserviceaccount.com
 ---
 # Provides read access to source repo for cloudbuild trigger
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+kind: IAMPartialPolicy
 metadata:
   name: source-repo-cloudbuild-read
   namespace: config-control # kpt-set: ${namespace}
@@ -38,9 +40,11 @@ metadata:
     cnrm.cloud.google.com/blueprint: cnrm/gitops/v0.3.0
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
-  member: serviceAccount:1234567890123@cloudbuild.gserviceaccount.com # kpt-set: serviceAccount:${project-number}@cloudbuild.gserviceaccount.com
   resourceRef:
     name: source-repo # kpt-set: ${source-repo}
     apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
     kind: SourceRepoRepository
-  role: roles/source.reader
+  bindings:
+    - role: roles/source.reader
+      members:
+        - member: serviceAccount:1234567890123@cloudbuild.gserviceaccount.com # kpt-set: serviceAccount:${project-number}@cloudbuild.gserviceaccount.com

@@ -41,7 +41,7 @@ spec:
   displayName: logging-sa
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+kind: IAMPartialPolicy
 metadata:
   name: logging-sa-logadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
@@ -49,15 +49,17 @@ metadata:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.3.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
-  member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
     external: "123456789012" # kpt-set: ${org-id}
-  role: roles/logging.admin
+  bindings:
+    - role: roles/logging.admin
+      members:
+        - member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+kind: IAMPartialPolicy
 metadata:
   name: logging-sa-bigqueryadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
@@ -65,15 +67,17 @@ metadata:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.3.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
-  member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
     external: "123456789012" # kpt-set: ${org-id}
-  role: roles/bigquery.admin
+  bindings:
+    - role: roles/bigquery.admin
+      members:
+        - member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+kind: IAMPartialPolicy
 metadata:
   name: logging-sa-workload-identity-binding
   namespace: config-control # kpt-set: ${management-namespace}
@@ -81,12 +85,14 @@ metadata:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.3.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
-  member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-logging] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-logging]
   resourceRef:
     name: logging-sa
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
-  role: roles/iam.workloadIdentityUser
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-logging] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-logging]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding

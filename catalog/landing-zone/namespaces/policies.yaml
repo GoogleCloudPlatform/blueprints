@@ -24,7 +24,7 @@ spec:
   displayName: policies-sa
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+kind: IAMPartialPolicy
 metadata:
   name: policies-sa-orgpolicyadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
@@ -32,15 +32,17 @@ metadata:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.3.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
-  member: "serviceAccount:policies-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:policies-sa@${management-project-id}.iam.gserviceaccount.com
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
     external: "123456789012" # kpt-set: ${org-id}
-  role: roles/orgpolicy.policyAdmin
+  bindings:
+    - role: roles/orgpolicy.policyAdmin
+      members:
+        - member: "serviceAccount:policies-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:policies-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+kind: IAMPartialPolicy
 metadata:
   name: policies-sa-workload-identity-binding
   namespace: config-control # kpt-set: ${management-namespace}
@@ -48,12 +50,14 @@ metadata:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.3.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
-  member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-policies] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-policies]
   resourceRef:
     name: policies-sa
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
-  role: roles/iam.workloadIdentityUser
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-policies] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-policies]
 ---
 apiVersion: v1
 kind: Namespace

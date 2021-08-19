@@ -31,16 +31,18 @@ spec:
   role: roles/bigquery.dataEditor
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPolicyMember
+kind: IAMPartialPolicy
 metadata:
   name: logging-sa-iam-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.3.0
 spec:
-  member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
     external: projects/my-project-id # kpt-set: projects/${project-id}
-  role: roles/resourcemanager.projectIamAdmin
+  bindings:
+    - role: roles/resourcemanager.projectIamAdmin
+      members:
+        - member: "serviceAccount:logging-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:logging-sa@${management-project-id}.iam.gserviceaccount.com

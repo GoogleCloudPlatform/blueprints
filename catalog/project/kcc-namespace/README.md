@@ -24,9 +24,9 @@ This package has no sub-packages.
 File                       APIVersion                          Kind                    Name                                               Namespace
 kcc-namespace-viewer.yaml  rbac.authorization.k8s.io/v1        RoleBinding             cnrm-network-viewer-project-id                     networking
 kcc-namespace-viewer.yaml  rbac.authorization.k8s.io/v1        RoleBinding             cnrm-project-viewer-project-id                     projects
-kcc-project-owner.yaml     iam.cnrm.cloud.google.com/v1beta1   IAMPolicyMember         kcc-project-id-owners-permissions                  projects
+kcc-project-owner.yaml     iam.cnrm.cloud.google.com/v1beta1   IAMPartialPolicy         kcc-project-id-owners-permissions                  projects
 kcc.yaml                   core.cnrm.cloud.google.com/v1beta1  ConfigConnectorContext  configconnectorcontext.core.cnrm.cloud.google.com  project-id
-kcc.yaml                   iam.cnrm.cloud.google.com/v1beta1   IAMPolicyMember         project-id-sa-workload-identity-binding            config-control
+kcc.yaml                   iam.cnrm.cloud.google.com/v1beta1   IAMPartialPolicy         project-id-sa-workload-identity-binding            config-control
 kcc.yaml                   iam.cnrm.cloud.google.com/v1beta1   IAMServiceAccount       kcc-project-id                                     config-control
 namespace.yaml             v1                                  Namespace               project-id
 ```
@@ -34,7 +34,7 @@ namespace.yaml             v1                                  Namespace        
 ## Resource References
 
 - [ConfigConnectorContext](https://cloud.google.com/config-connector/docs/how-to/advanced-install#addon-configuring)
-- [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember)
+- [IAMPartialPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampartialpolicy)
 - [IAMServiceAccount](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount)
 - [Namespace](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#namespace-v1-core)
 - [RoleBinding](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#rolebinding-v1-rbac-authorization-k8s-io)
@@ -77,4 +77,3 @@ namespace.yaml             v1                                  Namespace        
     ```
     kpt live status --output table --poll-until current
     ```
-

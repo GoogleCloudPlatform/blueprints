@@ -34,8 +34,8 @@ source-repo      5
 
 ```
 File                      APIVersion                                  Kind                  Name                              Namespace
-cloudbuild-iam.yaml       iam.cnrm.cloud.google.com/v1beta1           IAMPolicyMember       deployment-repo-cloudbuild-write  config-control
-cloudbuild-iam.yaml       iam.cnrm.cloud.google.com/v1beta1           IAMPolicyMember       source-repo-cloudbuild-read       config-control
+cloudbuild-iam.yaml       iam.cnrm.cloud.google.com/v1beta1           IAMPartialPolicy       deployment-repo-cloudbuild-write  config-control
+cloudbuild-iam.yaml       iam.cnrm.cloud.google.com/v1beta1           IAMPartialPolicy       source-repo-cloudbuild-read       config-control
 hydration-trigger.yaml    cloudbuild.cnrm.cloud.google.com/v1beta1    CloudBuildTrigger     source-repo-cicd-trigger          config-control
 services.yaml             serviceusage.cnrm.cloud.google.com/v1beta1  Service               cloudbuild.googleapis.com         config-control
 services.yaml             serviceusage.cnrm.cloud.google.com/v1beta1  Service               sourcerepo.googleapis.com         config-control
@@ -46,7 +46,7 @@ source-repositories.yaml  sourcerepo.cnrm.cloud.google.com/v1beta1    SourceRepo
 ## Resource References
 
 - [CloudBuildTrigger](https://cloud.google.com/config-connector/docs/reference/resource-docs/cloudbuild/cloudbuildtrigger)
-- [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember)
+- [IAMPartialPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampartialpolicy)
 - [Service](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service)
 - [SourceRepoRepository](https://cloud.google.com/config-connector/docs/reference/resource-docs/sourcerepo/sourcereporepository)
 
@@ -88,4 +88,3 @@ source-repositories.yaml  sourcerepo.cnrm.cloud.google.com/v1beta1    SourceRepo
     ```
     kpt live status --output table --poll-until current
     ```
-

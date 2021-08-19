@@ -27,43 +27,43 @@ This package has no sub-packages.
 
 ```
 File                                             APIVersion                                     Kind                    Name                                               Namespace
-iam.yaml                                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         billing-admins-iam                                 config-control
-iam.yaml                                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         org-admins-iam                                     config-control
+iam.yaml                                         iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         billing-admins-iam                                 config-control
+iam.yaml                                         iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         org-admins-iam                                     config-control
 namespaces/hierarchy.yaml                        core.cnrm.cloud.google.com/v1beta1             ConfigConnectorContext  configconnectorcontext.core.cnrm.cloud.google.com  hierarchy
-namespaces/hierarchy.yaml                        iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         hierarchy-sa-folderadmin-permissions               config-control
-namespaces/hierarchy.yaml                        iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         hierarchy-sa-workload-identity-binding             config-control
+namespaces/hierarchy.yaml                        iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         hierarchy-sa-folderadmin-permissions               config-control
+namespaces/hierarchy.yaml                        iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         hierarchy-sa-workload-identity-binding             config-control
 namespaces/hierarchy.yaml                        iam.cnrm.cloud.google.com/v1beta1              IAMServiceAccount       hierarchy-sa                                       config-control
 namespaces/hierarchy.yaml                        rbac.authorization.k8s.io/v1                   RoleBinding             allow-resource-reference-from-hierarchy            hierarchy
 namespaces/hierarchy.yaml                        v1                                             Namespace               hierarchy
 namespaces/logging.yaml                          core.cnrm.cloud.google.com/v1beta1             ConfigConnectorContext  configconnectorcontext.core.cnrm.cloud.google.com  logging
-namespaces/logging.yaml                          iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         logging-sa-bigqueryadmin-permissions               config-control
-namespaces/logging.yaml                          iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         logging-sa-logadmin-permissions                    config-control
-namespaces/logging.yaml                          iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         logging-sa-workload-identity-binding               config-control
+namespaces/logging.yaml                          iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         logging-sa-bigqueryadmin-permissions               config-control
+namespaces/logging.yaml                          iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         logging-sa-logadmin-permissions                    config-control
+namespaces/logging.yaml                          iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         logging-sa-workload-identity-binding               config-control
 namespaces/logging.yaml                          iam.cnrm.cloud.google.com/v1beta1              IAMServiceAccount       logging-sa                                         config-control
 namespaces/logging.yaml                          rbac.authorization.k8s.io/v1                   RoleBinding             allow-resource-reference-from-logging              projects
 namespaces/logging.yaml                          v1                                             Namespace               logging
 namespaces/networking.yaml                       core.cnrm.cloud.google.com/v1beta1             ConfigConnectorContext  configconnectorcontext.core.cnrm.cloud.google.com  networking
-namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         networking-sa-dns-permissions                      config-control
-namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         networking-sa-networkadmin-permissions             config-control
-namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         networking-sa-security-permissions                 config-control
-namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         networking-sa-service-control-permissions          config-control
-namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         networking-sa-workload-identity-binding            config-control
-namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         networking-sa-xpnadmin-permissions                 config-control
+namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         networking-sa-dns-permissions                      config-control
+namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         networking-sa-networkadmin-permissions             config-control
+namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         networking-sa-security-permissions                 config-control
+namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         networking-sa-service-control-permissions          config-control
+namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         networking-sa-workload-identity-binding            config-control
+namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         networking-sa-xpnadmin-permissions                 config-control
 namespaces/networking.yaml                       iam.cnrm.cloud.google.com/v1beta1              IAMServiceAccount       networking-sa                                      config-control
 namespaces/networking.yaml                       rbac.authorization.k8s.io/v1                   RoleBinding             allow-resource-reference-from-networking           projects
 namespaces/networking.yaml                       v1                                             Namespace               networking
 namespaces/policies.yaml                         core.cnrm.cloud.google.com/v1beta1             ConfigConnectorContext  configconnectorcontext.core.cnrm.cloud.google.com  policies
-namespaces/policies.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         policies-sa-orgpolicyadmin-permissions             config-control
-namespaces/policies.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         policies-sa-workload-identity-binding              config-control
+namespaces/policies.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         policies-sa-orgpolicyadmin-permissions             config-control
+namespaces/policies.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         policies-sa-workload-identity-binding              config-control
 namespaces/policies.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMServiceAccount       policies-sa                                        config-control
 namespaces/policies.yaml                         v1                                             Namespace               policies
 namespaces/projects.yaml                         core.cnrm.cloud.google.com/v1beta1             ConfigConnectorContext  configconnectorcontext.core.cnrm.cloud.google.com  projects
-namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         projects-sa-billinguser-permissions                config-control
-namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         projects-sa-projectcreator-permissions             config-control
-namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         projects-sa-projectdeleter-permissions             config-control
-namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         projects-sa-projectmover-permissions               config-control
-namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         projects-sa-serviceusageadmin-permissions          config-control
-namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPolicyMember         projects-sa-workload-identity-binding              config-control
+namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         projects-sa-billinguser-permissions                config-control
+namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         projects-sa-projectcreator-permissions             config-control
+namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         projects-sa-projectdeleter-permissions             config-control
+namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         projects-sa-projectmover-permissions               config-control
+namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         projects-sa-serviceusageadmin-permissions          config-control
+namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         projects-sa-workload-identity-binding              config-control
 namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMServiceAccount       projects-sa                                        config-control
 namespaces/projects.yaml                         v1                                             Namespace               projects
 policies/deletion-policy-required-template.yaml  templates.gatekeeper.sh/v1beta1                ConstraintTemplate      gcprequiredeletionpolicy
@@ -84,7 +84,7 @@ services.yaml                                    serviceusage.cnrm.cloud.google.
 
 - [ConfigConnectorContext](https://cloud.google.com/config-connector/docs/how-to/advanced-install#addon-configuring)
 - ConstraintTemplate
-- [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember)
+- [IAMPartialPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampartialpolicy)
 - [IAMServiceAccount](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount)
 - [Namespace](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#namespace-v1-core)
 - [ResourceManagerPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/resourcemanager/resourcemanagerpolicy)
@@ -129,4 +129,3 @@ services.yaml                                    serviceusage.cnrm.cloud.google.
     ```
     kpt live status --output table --poll-until current
     ```
-

@@ -23,7 +23,7 @@ spec:
   displayName: hierarchy-sa
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPartialPolicy
+kind: IAMPolicyMember
 metadata:
   name: hierarchy-sa-folderadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
@@ -35,10 +35,8 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
     external: "123456789012" # kpt-set: ${org-id}
-  bindings:
-    - role: roles/resourcemanager.folderAdmin
-      members:
-        - member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:hierarchy-sa@${management-project-id}.iam.gserviceaccount.com
+  role: roles/resourcemanager.folderAdmin
+  member: "serviceAccount:hierarchy-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:hierarchy-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy

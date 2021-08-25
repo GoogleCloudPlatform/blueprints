@@ -7,6 +7,7 @@ A simple GCP resource hierarchy with top-level folders
 ```
 Setter     Usages
 namespace  1
+org-id     1
 ```
 
 ## Sub-packages

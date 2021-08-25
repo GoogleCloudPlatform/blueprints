@@ -8,6 +8,7 @@ teams
 ```
 Setter     Usages
 namespace  3
+org-id     1
 ```
 
 ## Sub-packages

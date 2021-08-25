@@ -24,7 +24,7 @@ spec:
   displayName: networking-sa
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPartialPolicy
+kind: IAMPolicyMember
 metadata:
   name: networking-sa-networkadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
@@ -36,13 +36,11 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
     external: "123456789012" # kpt-set: ${org-id}
-  bindings:
-    - role: roles/compute.networkAdmin
-      members:
-        - member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
+  role: roles/compute.networkAdmin
+  member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPartialPolicy
+kind: IAMPolicyMember
 metadata:
   name: networking-sa-security-permissions
   namespace: config-control # kpt-set: ${management-namespace}
@@ -54,13 +52,11 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
     external: "123456789012" # kpt-set: ${org-id}
-  bindings:
-    - role: roles/compute.securityAdmin
-      members:
-        - member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
+  role: roles/compute.securityAdmin
+  member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPartialPolicy
+kind: IAMPolicyMember
 metadata:
   name: networking-sa-dns-permissions
   namespace: config-control # kpt-set: ${management-namespace}
@@ -72,13 +68,11 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
     external: "123456789012" # kpt-set: ${org-id}
-  bindings:
-    - role: roles/dns.admin
-      members:
-        - member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
+  role: roles/dns.admin
+  member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPartialPolicy
+kind: IAMPolicyMember
 metadata:
   name: networking-sa-service-control-permissions
   namespace: config-control # kpt-set: ${management-namespace}
@@ -90,13 +84,11 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
     external: "123456789012" # kpt-set: ${org-id}
-  bindings:
-    - role: roles/accesscontextmanager.policyAdmin
-      members:
-        - member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
+  role: roles/accesscontextmanager.policyAdmin
+  member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
-kind: IAMPartialPolicy
+kind: IAMPolicyMember
 metadata:
   name: networking-sa-xpnadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
@@ -108,10 +100,8 @@ spec:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
     external: "123456789012" # kpt-set: ${org-id}
-  bindings:
-    - role: roles/compute.xpnAdmin
-      members:
-        - member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
+  role: roles/compute.xpnAdmin
+  member: "serviceAccount:networking-sa@management-project-id.iam.gserviceaccount.com" # kpt-set: serviceAccount:networking-sa@${management-project-id}.iam.gserviceaccount.com
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy

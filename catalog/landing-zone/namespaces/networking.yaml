@@ -129,7 +129,7 @@ spec:
   bindings:
     - role: roles/iam.workloadIdentityUser
       members:
-        - member:serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-networking] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-networking]
+        - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-networking] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-networking]
 ---
 apiVersion: v1
 kind: Namespace

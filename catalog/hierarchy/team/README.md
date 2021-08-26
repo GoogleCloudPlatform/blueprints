@@ -7,7 +7,6 @@ A GCP resource hierarchy organized by teams and environments
 ```
 Setter     Usages
 namespace  1
-org-id     1
 ```
 
 ## Sub-packages

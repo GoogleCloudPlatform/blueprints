@@ -28,7 +28,7 @@ spec:
         $subtree: environments
   parentRef:
     # This should match your organization ID
-    external: '123456789012' # kpt-set: ${org-id}
+    external: '123456789012'
   subtrees:
     environments:
       - dev

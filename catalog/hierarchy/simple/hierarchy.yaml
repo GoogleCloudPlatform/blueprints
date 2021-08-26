@@ -17,8 +17,8 @@ metadata:
   name: root-hierarchy
   namespace: hierarchy # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:hierarchy:simple/v0.3.0
-    config.kubernetes.io/local-config: "true"
+    cnrm.cloud.google.com/blueprint: 'cnrm/landing-zone:hierarchy:simple/v0.3.0'
+    config.kubernetes.io/local-config: 'true'
 spec:
   config:
     - shared
@@ -27,4 +27,4 @@ spec:
     - qa
   parentRef:
     # This should match your organization ID
-    external: "123456789012"
+    external: '123456789012'

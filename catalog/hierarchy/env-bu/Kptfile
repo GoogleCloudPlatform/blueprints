@@ -13,4 +13,4 @@ pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1
       configPath: setters.yaml
-    - image: gcr.io/yakima-eap/generate-folders:latest
+    - image: gcr.io/kpt-fn/generate-folders:v0.1

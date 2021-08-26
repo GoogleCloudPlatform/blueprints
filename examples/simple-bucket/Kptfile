@@ -1,0 +1,26 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: simple-bucket
+  annotations:
+    blueprints.cloud.google.com/title: Google Cloud Storage Bucket blueprint
+upstream:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/blueprints
+    directory: /catalog/bucket
+    ref: main
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/blueprints
+    directory: /catalog/bucket
+    ref: main
+    commit: 45f571820d091c2046ae6a0541ed89d590014090
+info:
+  description: A Google Cloud Storage bucket
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

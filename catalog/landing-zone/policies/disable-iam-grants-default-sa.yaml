@@ -11,27 +11,17 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-apiVersion: blueprints.cloud.google.com/v1alpha3
-kind: ResourceHierarchy
+
+apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+kind: ResourceManagerPolicy
 metadata:
-  name: root-hierarchy
-  namespace: hierarchy # kpt-set: ${namespace}
+  name: disable-iam-grants-default-sa
+  namespace: policies
   annotations:
-    cnrm.cloud.google.com/blueprint: 'cnrm/landing-zone:hierarchy:env-bu/v0.3.0'
-    config.kubernetes.io/local-config: 'true'
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.3.0
 spec:
-  config:
-    - dev:
-        $subtree: environment
-    - prod:
-        $subtree: environment
-  parentRef:
-    # This should match your organization ID
-    external: '123456789012'
-  subtrees:
-    environment:
-      - retail:
-          - apps
-          - data
-      - finance:
-          - commercial
+  booleanPolicy:
+    enforced: true
+  constraint: "constraints/iam.automaticIamGrantsForDefaultServiceAccounts"
+  organizationRef:
+    external: "123456789012" # kpt-set: ${org-id}

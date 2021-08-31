@@ -16,7 +16,7 @@ group-billing-admins   1
 group-org-admins       1
 management-namespace   27
 management-project-id  50
-org-id                 30
+org-id                 31
 ```
 
 ## Sub-packages
@@ -68,6 +68,7 @@ namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1bet
 namespaces/projects.yaml                         v1                                             Namespace               projects
 policies/deletion-policy-required-template.yaml  templates.gatekeeper.sh/v1beta1                ConstraintTemplate      gcprequiredeletionpolicy
 policies/disable-guest-attributes.yaml           resourcemanager.cnrm.cloud.google.com/v1beta1  ResourceManagerPolicy   disable-guest-attributes                           policies
+policies/disable-iam-grants-default-sa.yaml      resourcemanager.cnrm.cloud.google.com/v1beta1  ResourceManagerPolicy   disable-iam-grants-default-sa                      policies
 policies/disable-nested-virtualization.yaml      resourcemanager.cnrm.cloud.google.com/v1beta1  ResourceManagerPolicy   disable-nested-virtualization                      policies
 policies/disable-sa-key-creation.yaml            resourcemanager.cnrm.cloud.google.com/v1beta1  ResourceManagerPolicy   disable-sa-key-creation                            policies
 policies/disable-serial-port.yaml                resourcemanager.cnrm.cloud.google.com/v1beta1  ResourceManagerPolicy   disable-serial-port                                policies

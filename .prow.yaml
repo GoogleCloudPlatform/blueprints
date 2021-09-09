@@ -25,3 +25,19 @@ presubmits:
         - image: gcr.io/cloud-foundation-cicd/cft/developer-tools-krm:0.15
           command:
             - utils/check_lint.sh
+  - name: test-int
+    always_run: true
+    skip_report: true
+    decorate: true
+    cluster: build-blueprints
+    decorate_config:
+      timeout: 1h
+    spec:
+      serviceAccountName: int-test-sa
+      containers:
+        - image: gcr.io/cloud-foundation-cicd/cft/developer-tools-krm:1.1
+          envFrom:
+            - configMapRef:
+                name: test-constants
+          command:
+            - utils/testutils/create_all.sh

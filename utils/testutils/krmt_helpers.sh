@@ -18,7 +18,7 @@ set -o pipefail
 
 # krmt_run_all runs all tests
 krmt_run_all(){
-    pushd /workspace/test/integration
+    pushd test/integration
     go test ./... -v -timeout 0 -p=1
 }
 
@@ -49,7 +49,7 @@ krmt(){
     fi
 
     # jump to test dir
-    pushd /workspace/test/integration 
+    pushd test/integration 
     # godeps
     go get -t ./...
     # git config

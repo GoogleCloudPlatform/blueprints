@@ -14,4 +14,4 @@
 # limitations under the License.
 
 
-source /workspace/utils/testutils/krmt_helpers.sh && krmt
+source utils/testutils/krmt_helpers.sh && krmt

@@ -39,4 +39,5 @@ presubmits:
           envFrom:
             - configMapRef:
                 name: test-constants
-          command: [ "git", "rev-parse", "HEAD" ]
+          command: ["/bin/sh","-c"]
+          args: ["ls && git rev-parse HEAD"]

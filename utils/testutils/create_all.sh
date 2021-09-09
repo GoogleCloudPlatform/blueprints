@@ -14,7 +14,7 @@
 # limitations under the License.
 
 
-source /workspace/utils/testutils/krmt_helpers.sh
+source utils/testutils/krmt_helpers.sh
 export CREATE_PROJECT_ID=ci-blueprints-${RANDOM}
 echo "Preparing ${CREATE_PROJECT_ID}"
 create_project

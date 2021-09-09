@@ -36,7 +36,7 @@ presubmits:
       serviceAccountName: test-int-sa
       containers:
         - image: gcr.io/cloud-foundation-cicd/cft/developer-tools-krm:1.1
-          args:
-            - gcloud
-            - auth
-            - list
+          envFrom:
+            - configMapRef:
+                name: test-cm
+          command: [ "/bin/sh", "-c", "env" ]

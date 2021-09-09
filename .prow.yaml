@@ -30,6 +30,8 @@ presubmits:
     skip_report: true
     decorate: true
     cluster: build-blueprints
+    labels:
+      preset-dind-enabled: "true"
     decorate_config:
       timeout: 30m
     spec:
@@ -40,4 +42,4 @@ presubmits:
             - configMapRef:
                 name: test-constants
           command: ["/bin/sh","-c"]
-          args: ["ls && git rev-parse HEAD && git log --oneline -5"]
+          args: ["ls && git rev-parse HEAD && git log --oneline -5 && docker ps"]

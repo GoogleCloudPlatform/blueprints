@@ -25,7 +25,7 @@ presubmits:
         - image: gcr.io/cloud-foundation-cicd/cft/developer-tools-krm:0.15
           command:
             - utils/check_lint.sh
-  - name: test-int
+  - name: test-int-2
     always_run: true
     skip_report: true
     decorate: true
@@ -39,4 +39,4 @@ presubmits:
           envFrom:
             - configMapRef:
                 name: test-constants
-          command: [ "/bin/sh", "-c", "env" ]
+          command: [ "git", "rev-parse", "HEAD" ]

@@ -55,6 +55,7 @@ krmt(){
     # git config
     git config --global user.email "blueprints-ci-test@google.com"
     git config --global user.name "BlueprintsTest"
+    popd
 }
 
 # create_project creates a project with a default network.

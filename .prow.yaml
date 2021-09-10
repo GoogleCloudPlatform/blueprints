@@ -45,4 +45,5 @@ presubmits:
           env:
             - name: DOCKER_IN_DOCKER_ENABLED
               value: "true"
+          command: ["/usr/local/bin/entrypoint.sh"]
           args: ["docker", "ps"]

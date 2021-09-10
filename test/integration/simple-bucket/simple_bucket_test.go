@@ -26,7 +26,7 @@ import (
 
 func TestSimpleBucket(t *testing.T) {
 	bucketName := "test-bucket"
-	bucketTest := krmt.NewKRMBlueprintTest(t, krmt.WithSetters(map[string]string{"name": bucketName}))
+	bucketTest := krmt.NewKRMBlueprintTest(t)
 	bucketTest.DefineVerify(
 		func(assert *assert.Assertions) {
 			bucketTest.DefaultVerify(assert)

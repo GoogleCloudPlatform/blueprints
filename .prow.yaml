@@ -30,8 +30,6 @@ presubmits:
     skip_report: true
     decorate: true
     cluster: build-blueprints
-    labels:
-      preset-dind-enabled: "true"
     decorate_config:
       timeout: 30m
     spec:

@@ -45,5 +45,5 @@ presubmits:
           env:
             - name: DOCKER_IN_DOCKER_ENABLED
               value: "true"
-          command: ["/bin/sh","-c"]
+          command: ["/usr/local/bin/entrypoint.sh"]
           args: ["ls && git rev-parse HEAD && git log --oneline -5 && docker ps"]

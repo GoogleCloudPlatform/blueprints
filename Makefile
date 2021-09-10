@@ -14,7 +14,7 @@
 
 
 SHELL := /usr/bin/env bash
-DOCKER_TAG_VERSION_DEVELOPER_TOOLS := 0.15
+DOCKER_TAG_VERSION_DEVELOPER_TOOLS := 1.1.3
 DOCKER_IMAGE_DEVELOPER_TOOLS := cft/developer-tools-krm
 REGISTRY_URL := gcr.io/cloud-foundation-cicd
 
@@ -36,6 +36,50 @@ docker_fix_lint:
 .PHONY: docker_run
 docker_run:
 	docker run --rm -it \
+		-e ORG_ID \
+		-e FOLDER_ID \
+		-e BILLING_ACCOUNT \
+		-e PROJECT_ID \
+		-e CLUSTER_NAME \
 		-v $(CURDIR):/workspace \
+		-v $(CURDIR)/utils/testutils/krmt.sh:/usr/local/bin/krmt \
+		-v /var/run/docker.sock:/var/run/docker.sock \
+		-v ~/.config/gcloud:/root/.config/gcloud \
 		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
 		/bin/bash
+
+.PHONY: docker_test_prepare_project
+docker_test_prepare_project:
+	docker run --rm -it \
+		-e ORG_ID \
+		-e FOLDER_ID \
+		-e BILLING_ACCOUNT \
+		-v $(CURDIR):/workspace \
+		-v ~/.config/gcloud:/root/.config/gcloud \
+		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
+		/bin/bash -c 'source /workspace/utils/testutils/krmt_helpers.sh && create_project'
+
+.PHONY: docker_test_prepare_cc
+docker_test_prepare_cc:
+	docker run --rm -it \
+		-e ORG_ID \
+		-e FOLDER_ID \
+		-e BILLING_ACCOUNT \
+		-e PROJECT_ID \
+		-v $(CURDIR):/workspace \
+		-v ~/.config/gcloud:/root/.config/gcloud \
+		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
+		/bin/bash -c 'source /workspace/utils/testutils/krmt_helpers.sh && create_cc'
+
+.PHONY: docker_test_prepare_all
+docker_test_prepare_all:
+	docker run --rm -it \
+		-e ORG_ID \
+		-e FOLDER_ID \
+		-e BILLING_ACCOUNT \
+		-e PROJECT_ID \
+		-v $(CURDIR):/workspace \
+		-v /var/run/docker.sock:/var/run/docker.sock \
+		-v ~/.config/gcloud:/root/.config/gcloud \
+		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
+		/bin/bash -c '/workspace/utils/testutils/create_all.sh'

@@ -1,0 +1,55 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: simple-network
+  annotations:
+    blueprints.cloud.google.com/title: Network blueprint
+upstream:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/blueprints
+    directory: /catalog/networking/network
+    ref: main
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/blueprints
+    directory: /catalog/networking/network
+    ref: main
+    commit: 14b734876229b1987d1e23f79c1bfde8e0d3b4f1
+info:
+  description: |
+    A private network with VPN and Cloud NAT.
+
+    **Requires a pre-existing secret!**
+
+    Via kubectl:
+
+    ```shell
+    kubectl create secret generic vpn-shared-secret \
+        --from-literal "vpn-shared-secret=${VPN_SECRET_VALUE}" \
+        -n ${NETWORK_NAMESPACE}
+    ```
+
+    Or Config Connector:
+
+    ```yaml
+    apiVersion: v1
+    kind: Secret
+    metadata:
+      name: vpn-shared-secret
+      namespace: ${NETWORK_NAMESPACE}
+    stringData:
+      vpn-shared-secret: ${VPN_SECRET_VALUE}
+    ```
+
+    Replace the following:
+    -   `${NETWORK_NAMESPACE}`: the same namespace as the Network resource.
+    -   `${VPN_SECRET_VALUE}`: the
+        [shared secret](https://cloud.google.com/network-connectivity/docs/vpn/how-to/generating-pre-shared-key)
+        to use when authenticating with the VPN.
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

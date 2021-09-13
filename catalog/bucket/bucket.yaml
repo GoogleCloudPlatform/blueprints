@@ -8,6 +8,7 @@ metadata:
     cnrm.cloud.google.com/force-destroy: "false"
 spec:
   storageClass: standard # {"$kpt-set":"storage-class"}
+  location: us-central1
   uniformBucketLevelAccess: true
   versioning:
     enabled: false

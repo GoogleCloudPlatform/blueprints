@@ -19,7 +19,7 @@ metadata:
   name: storage-project-iam-policy
   namespace: my-namespace # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.3.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
 spec:
   memberFrom:
     logSinkRef:

@@ -18,7 +18,7 @@ metadata:
   name: alregionperimeter # kpt-set: al${perimeter-name}${suffix}
   namespace: networking # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.4.0
     cnrm.cloud.google.com/organization-id: example-org # kpt-set: ${org-id}
 spec:
   accessPolicyRef:

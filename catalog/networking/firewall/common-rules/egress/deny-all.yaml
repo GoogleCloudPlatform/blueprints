@@ -18,7 +18,7 @@ metadata:
   name: network-name-fw-deny-all-egress # kpt-set: ${network-name}-fw-deny-all-egress
   namespace: firewalls-namespace # kpt-set: ${firewalls-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.4.0
 spec:
   priority: 65535
   deny:

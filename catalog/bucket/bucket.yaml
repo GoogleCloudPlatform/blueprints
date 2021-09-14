@@ -20,7 +20,8 @@ metadata:
     cnrm.cloud.google.com/force-destroy: "false"
     cnrm.cloud.google.com/project-id: blueprints-project # kpt-set: ${project-id}
 spec:
-  storageClass: standard # kpt-set: ${storage-class}
+  location: us-central1
+  storageClass: standard # {"$kpt-set":"storage-class"}
   uniformBucketLevelAccess: true
   versioning:
     enabled: false

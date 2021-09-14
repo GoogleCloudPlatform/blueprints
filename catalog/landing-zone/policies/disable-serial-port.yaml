@@ -18,7 +18,7 @@ metadata:
   name: disable-serial-port
   namespace: policies
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.3.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.4.0
 spec:
   booleanPolicy:
     enforced: true

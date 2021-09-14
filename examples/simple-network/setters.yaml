@@ -24,8 +24,8 @@ data:
   vpn-tunnel-peer-ip-01: "15.1.0.120"
   vpn-tunnel-peer-ip-02: "15.1.1.120"
   # Optional setters
-  namespace: networking
-  projects-namespace: projects
+  namespace: config-control
+  projects-namespace: config-control
   vpn-secret-key: vpn-shared-secret
   vpn-secret-name: vpn-shared-secret
   prefix: ""

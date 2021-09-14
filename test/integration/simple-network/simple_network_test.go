@@ -30,8 +30,6 @@ import (
 func TestSimpleNetwork(t *testing.T) {
 	vpnSecret := "vpn-shared-secret"
 	networkingNS := "config-control"
-	projectNS := "config-control"
-	networkName := "simple-network"
 
 	// VPN creation requires a secret to be present in the networking ns
 	k8sOpts := k8s.KubectlOptions{Namespace: networkingNS}
@@ -43,7 +41,7 @@ func TestSimpleNetwork(t *testing.T) {
 		k8s.RunKubectl(t, &k8sOpts, "create", "secret", "generic", vpnSecret, "--from-literal", fmt.Sprintf("%s=%s", vpnSecret, utils.RandStr(5)))
 	}
 	// start test
-	networkTest := krmt.NewKRMBlueprintTest(t, krmt.WithSetters(map[string]string{"namespace": networkingNS, "projects-namespace": projectNS}))
+	networkTest := krmt.NewKRMBlueprintTest(t)
 	// define a custom verify function
 	networkTest.DefineVerify(
 		func(assert *assert.Assertions) {
@@ -54,7 +52,7 @@ func TestSimpleNetwork(t *testing.T) {
 			gcCommonArgs := gcloud.WithCommonArgs([]string{"--region", "us-central1", "--project", projectID, "--format", "json"})
 
 			// VPC
-			vpc := gcloud.Run(t, fmt.Sprintf("compute networks describe %s --project %s", networkName, projectID))
+			vpc := gcloud.Run(t, fmt.Sprintf("compute networks describe simple-network --project %s", projectID))
 			assert.Equal("GLOBAL", vpc.Get("routingConfig.routingMode").String(), "VPC routing mode is global")
 			assert.Equal(1, len(vpc.Get("subnetworks").Array()), "should have only one subnet")
 			subnetSelfLink := vpc.Get("subnetworks").Array()[0].String()

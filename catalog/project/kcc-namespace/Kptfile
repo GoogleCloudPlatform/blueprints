@@ -1,0 +1,14 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: kcc-namespace
+  annotations:
+    blueprints.cloud.google.com/title: Project Namespace Package
+info:
+  description: |
+    Kubernetes namespace configured for use with Config Connector to manage GCP
+    resources in a specific project.
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

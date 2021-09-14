@@ -1,0 +1,54 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# Enable KCC for this namespace
+apiVersion: core.cnrm.cloud.google.com/v1beta1
+kind: ConfigConnectorContext
+metadata:
+  name: configconnectorcontext.core.cnrm.cloud.google.com
+  namespace: project-id # kpt-set: ${project-id}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.3.0
+spec:
+  googleServiceAccount: kcc-project-id@management-project-id.iam.gserviceaccount.com # kpt-set: kcc-${project-id}@${management-project-id}.iam.gserviceaccount.com
+---
+# Create GCP ServiceAccount for use by KCC to manage resources in this project
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: kcc-project-id # kpt-set: kcc-${project-id}
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.3.0
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+spec:
+  displayName: kcc-project-id # kpt-set: kcc-${project-id}
+---
+# Allow KCC's Kubernetes Service Account to use the GCP ServiceAccount
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPartialPolicy
+metadata:
+  name: project-id-sa-workload-identity-binding # kpt-set: ${project-id}-sa-workload-identity-binding
+  namespace: config-control # kpt-set: ${management-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.3.0
+    cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+spec:
+  resourceRef:
+    name: kcc-project-id # kpt-set: kcc-${project-id}
+    apiVersion: iam.cnrm.cloud.google.com/v1beta1
+    kind: IAMServiceAccount
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - member: serviceAccount:management-project-id.svc.id.goog[cnrm-system/cnrm-controller-manager-project-id] # kpt-set: serviceAccount:${management-project-id}.svc.id.goog[cnrm-system/cnrm-controller-manager-${project-id}]

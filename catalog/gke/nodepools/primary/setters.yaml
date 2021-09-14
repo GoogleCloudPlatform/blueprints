@@ -1,0 +1,33 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  # The name of the cluster to attach this node pool to
+  cluster-name: example-us-east4 # kpt-set: ${cluster-name}
+  # The compute location (region or zone)
+  location: us-east4 # kpt-set: ${location}
+  # The maximum nodes per zone for this pool
+  max-node-count: "2" # kpt-set: ${max-node-count}
+  # The name of this node pool
+  nodepool-name: primary # kpt-set: ${nodepool-name}
+  # The namespace in which to manage cluster resources
+  platform-namespace: config-control # kpt-set: ${platform-namespace}
+  # The project in which to manage cluster resources
+  platform-project-id: platform-project-id # kpt-set: ${platform-project-id}
+  # The namespace in which to manage service enablement resources
+  projects-namespace: projects # kpt-set: ${projects-namespace}

@@ -1,0 +1,42 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  # The name of this cluster
+  cluster-name: example-us-west4 # kpt-set: ${cluster-name}
+  # The environment (set as a label on the cluster)
+  environment: dev # kpt-set: ${environment}
+  # The compute location (region or zone)
+  location: us-east4 # kpt-set: ${location}
+  # The private IP range for masters to use when peering to the VPC
+  master-ip-range: 10.254.0.0/28 # kpt-set: ${master-ip-range}
+  # The name of the VPC in which to create this cluster
+  network-name: default # kpt-set: ${network-name}
+  # The project that the VPC is in
+  network-project-id: network-project-id # kpt-set: ${network-project-id}
+  # The namespace in which to reference the subnet resource
+  networking-namespace: networking # kpt-set: ${networking-namespace}
+  # The namespace in which to manage cluster resources
+  platform-namespace: config-control # kpt-set: ${platform-namespace}
+  # The project in which to manage cluster resources
+  platform-project-id: platform-project-id # kpt-set: ${platform-project-id}
+  # The namespace in which to manage service enablement resources
+  projects-namespace: projects # kpt-set: ${projects-namespace}
+  # The group in which to manage the list of groups that can be used for RBAC.
+  # Must be named exactly 'gke-security-groups'.
+  security-group: gke-security-group@example.com # kpt-set: ${security-group}

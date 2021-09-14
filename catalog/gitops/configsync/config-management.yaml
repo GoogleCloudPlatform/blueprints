@@ -1,0 +1,30 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# Configure Anthos Config Management on Config Controller
+# Enable and configure Config Sync to watch a CSR repository.
+apiVersion: configmanagement.gke.io/v1
+kind: ConfigManagement
+metadata:
+  name: config-management
+spec:
+  clusterName: cluster-name # kpt-set: ${cluster-name}
+  enableMultiRepo: false
+  git:
+    gcpServiceAccountEmail: sync-cluster-name@project-id.iam.gserviceaccount.com # kpt-set: sync-${cluster-name}@${project-id}.iam.gserviceaccount.com
+    policyDir: config # kpt-set: ${configsync-dir}
+    secretType: gcpserviceaccount
+    syncBranch: main
+    syncRepo: https://source.developers.google.com/p/project-id/r/deployment-repo # kpt-set: https://source.developers.google.com/p/${project-id}/r/${deployment-repo}
+    syncRevision: HEAD
+  sourceFormat: unstructured

@@ -1,0 +1,103 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+# Trigger for when changes are pushed into any branch of the yakima source repo.
+# This will run all your kpt functions and apply a blast radius analysis of
+# changes.
+# NOTE: Only changes to the "main" branch will result in actuation of resources.
+apiVersion: cloudbuild.cnrm.cloud.google.com/v1beta1
+kind: CloudBuildTrigger
+metadata:
+  name: source-repo-cicd-trigger # kpt-set: ${source-repo}-cicd-trigger
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/gitops/v0.3.0
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  build:
+    step:
+      - name: gcr.io/cloud-builders/gcloud:latest
+        volumes:
+          - name: deployment-workspace
+            path: /deployment-workspace
+        args:
+          - '-c'
+          - |
+            set -e
+            gcloud source repos clone $_DEPLOYMENT_REPO .
+            (git show-branch $BRANCH_NAME &>/dev/null) && (git checkout $BRANCH_NAME) || (git checkout -b $BRANCH_NAME)
+            git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
+            mkdir -p /deployment-workspace/config
+        dir: /deployment-workspace
+        entrypoint: /bin/sh
+        id: "Clone Deployment Repo"
+        timeout: 300s
+      - name: gcr.io/kpt-dev/kpt:v1.0.0-beta.1
+        volumes:
+          - name: hydrated-workspace
+            path: /hydrated-workspace
+        args:
+          - '-c'
+          - |
+            set -eo pipefail
+            SRC_DIR="."
+            DEST_DIR="/hydrated-workspace/config"
+
+            echo "Initializing kpt"
+            kpt pkg init "$${SRC_DIR}"
+
+            echo "Executing Kpt Functions..."
+            kpt fn render "$${SRC_DIR}" --output="$${DEST_DIR}" --truncate-output=false
+
+            echo "Removing local config"
+            kpt fn eval "$${DEST_DIR}" -i gcr.io/yakima-eap/remove-annotated-resources:v0.1
+        entrypoint: /bin/bash
+        id: "Apply Hydration and Validation"
+      - name: gcr.io/cloud-builders/gcloud:latest
+        volumes:
+          - name: hydrated-workspace
+            path: /hydrated-workspace
+          - name: deployment-workspace
+            path: /deployment-workspace
+        args:
+          - '-c'
+          - |
+            set -e
+            git pull origin $BRANCH_NAME || true # Ignore errors in case branch doesn't exist
+            git rm -rf /deployment-workspace/config/* --ignore-unmatch
+            cp -r /hydrated-workspace/config /deployment-workspace/
+            touch /deployment-workspace/config/.gitkeep
+            # Configure Git to create commits with Cloud Build's service account
+            git config user.email $(gcloud auth list --filter=status:ACTIVE --format='value(account)')
+            git add -A
+            git status
+            if git diff --cached --exit-code; then echo "No changes"; true;
+            else git commit -m "Resources from ${COMMIT_SHA}" && git push origin $BRANCH_NAME; fi
+            printf "\n\nLatest deployment repo commit SHA: $(git rev-parse HEAD)\n"
+        dir: /deployment-workspace
+        entrypoint: /bin/sh
+        id: "Push Changes To Deployment Repo"
+        waitFor:
+          - "Apply Hydration and Validation"
+    timeout: 600s
+  description: Cloud Build Trigger for rendering from the soure repo to the deployment repo.
+  disabled: false
+  substitutions:
+    "_ADMIN_CLUSTER_NAME": "cluster-name" # kpt-set: ${cluster-name}
+    "_DEPLOYMENT_REPO": "deployment-repo" # kpt-set: ${deployment-repo}
+    "_SOURCE_REPO": "source-repo" # kpt-set: ${source-repo}
+  triggerTemplate:
+    branchName: ".*"
+    repoRef:
+      name: source-repo # kpt-set: ${source-repo}

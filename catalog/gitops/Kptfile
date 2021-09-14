@@ -1,0 +1,37 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: gitops-csr
+  annotations:
+    blueprints.cloud.google.com/title: CSR GitOps Pipeline blueprint
+info:
+  description: |
+    A GitOps Continuous Deployment pipeline using Anthos Config Management (ACM),
+    Cloud Source Repository (CSR), and Cloud Build.
+
+    After installing this blueprint, you will be able to:
+
+    1.  Manage your git repository config with version control
+    2.  Manage your infrastructure with version control
+    3.  Create merge requests to review changes
+    4.  Manage plain KRM or auto-rendered blueprints
+    5.  Specify kpt functions to hydrate and validate your config automatically
+    6.  Automatically apply your config changes to your Config Controller
+        cluster on merge
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

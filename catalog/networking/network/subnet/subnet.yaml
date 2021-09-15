@@ -19,7 +19,7 @@ metadata:
   namespace: networking # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.4.0
 spec:
   description: Subnetwork
   ipCidrRange: 10.2.0.0/16 # kpt-set: ${ip-cidr-range}

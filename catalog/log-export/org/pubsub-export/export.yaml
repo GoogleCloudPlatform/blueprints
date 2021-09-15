@@ -19,7 +19,7 @@ metadata:
   name: my-project-id-pubsub # kpt-set: ${project-id}-pubsub
   namespace: projects
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.3.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
     cnrm.cloud.google.com/project-id: my-project-id # kpt-set: ${project-id}
@@ -33,7 +33,7 @@ metadata:
   name: 123456789012-pubsubsink # kpt-set: ${org-id}-pubsubsink
   namespace: my-namespace # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.3.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
 spec:
   destination:
     pubSubTopicRef:
@@ -50,6 +50,6 @@ metadata:
   name: pubsub-logexport-dataset # kpt-set: ${topic-name}
   namespace: my-namespace # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.3.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
 
 # TODO(jcwc): Add support for creating subscribers (either a new blueprint or kpt fn)

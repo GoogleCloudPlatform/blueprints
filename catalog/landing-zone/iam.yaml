@@ -18,7 +18,7 @@ metadata:
   name: org-admins-iam
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.3.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.4.0
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -33,7 +33,7 @@ metadata:
   name: billing-admins-iam
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.3.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.4.0
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1

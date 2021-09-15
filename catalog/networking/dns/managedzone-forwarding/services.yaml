@@ -18,7 +18,7 @@ metadata:
   name: project-id-dns # kpt-set: ${project-id}-dns
   namespace: projects
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.3.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.4.0
     cnrm.cloud.google.com/disable-on-destroy: "false"
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:

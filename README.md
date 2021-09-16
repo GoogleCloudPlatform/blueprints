@@ -1,3 +1,3 @@
 # Blueprints
 
-This repository contains sample blueprints for Google Cloud.
+This repository contains sample blueprints for Google Cloud. 

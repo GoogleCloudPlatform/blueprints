@@ -47,7 +47,7 @@ check_yaml_fmt(){
     catalogTmpDir="$tmpDir/catalog"
     # format tmpDir blueprints
     # todo: switch to kpt v1 after v1 branch merged
-    kpt cfg fmt "$catalogTmpDir" -R > /dev/null
+    kpt fn eval "$catalogTmpDir" --image gcr.io/kpt-fn/format:unstable > /dev/null
     local diffExitCode=1
     # check if both formatted and current are same
     diff -qr catalog "$catalogTmpDir" && diffExitCode=$? || diffExitCode=$?
@@ -69,7 +69,7 @@ fix_license(){
 
 fix_yaml_fmt(){
     echo "Fix yaml format"
-    kpt cfg fmt catalog -R
+    kpt fn eval catalog --image gcr.io/kpt-fn/format:unstable
 }
 
 check_lint(){

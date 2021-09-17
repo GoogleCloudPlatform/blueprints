@@ -15,7 +15,6 @@
 presubmits:
   - name: lint
     always_run: true
-    skip_report: true
     decorate: true
     cluster: build-blueprints
     decorate_config:
@@ -27,7 +26,6 @@ presubmits:
             - utils/check_lint.sh
   - name: test-int
     always_run: true
-    skip_report: true
     decorate: true
     labels:
       preset-dind-enabled: "true"

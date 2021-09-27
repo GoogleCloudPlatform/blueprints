@@ -22,6 +22,7 @@ REGISTRY_URL := gcr.io/cloud-foundation-cicd
 docker_check_lint:
 	docker run --rm -it \
 		-v $(CURDIR):/workspace \
+		-v /var/run/docker.sock:/var/run/docker.sock \
 		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
 		./utils/check_lint.sh
 
@@ -30,6 +31,7 @@ docker_check_lint:
 docker_fix_lint:
 	docker run --rm -it \
 		-v $(CURDIR):/workspace \
+		-v /var/run/docker.sock:/var/run/docker.sock \
 		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
 		./utils/fix_lint.sh
 

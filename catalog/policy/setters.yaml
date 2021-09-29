@@ -1,0 +1,11 @@
+# setters.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: setters
+data:
+  # Organization ID
+  org-id: "123456789012"
+  project-id: management-project-id
+  # This default is safe to keep
+  management-namespace: config-control

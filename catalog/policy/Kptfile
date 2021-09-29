@@ -1,0 +1,12 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: policy
+  annotations:
+    blueprints.cloud.google.com/title: Policy blueprint
+info:
+  description: A blueprint to enforce the uniformBucketLevelAccess org policy at the project level
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

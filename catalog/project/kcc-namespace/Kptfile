@@ -15,4 +15,3 @@ pipeline:
   validators:
     - image: gcr.io/kpt-fn/starlark:v0.3
       configPath: validation.yaml
-

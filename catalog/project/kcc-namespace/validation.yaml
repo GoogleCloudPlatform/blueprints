@@ -1,0 +1,49 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+apiVersion: fn.kpt.dev/v1alpha1
+kind: StarlarkRun
+metadata:
+  name: validate-project-ns
+  annotations:
+    config.kubernetes.io/local-config: 'true'
+source: |
+  def get_tenant_ns(resource_list):
+    for resource in resource_list["items"]:
+      if resource["kind"] == "Namespace":
+        return resource["metadata"]["name"]
+    fail("unable to find tenant project namespace")
+
+  def get_projects_ns(resource_list):
+    for resource in resource_list["items"]:
+      # owner IAMPartialPolicy is expected to be in projects ns
+      if resource["kind"] == "IAMPartialPolicy" and resource["metadata"]["name"].endswith("owners-permissions"):
+        return resource["metadata"]["namespace"]
+    fail("unable to find project owner IAMPartialPolicy")
+  
+  def get_mgmt_ns(resource_list):
+    for resource in resource_list["items"]:
+      # IAMServiceAccount is expected to be in management ns
+      if resource["kind"] == "IAMServiceAccount" and resource["metadata"]["name"].startswith("kcc-"):
+        return resource["metadata"]["namespace"]
+    fail("unable to find project KCC SA")
+    
+  tenant_ns = get_tenant_ns(ctx.resource_list)
+  projects_ns = get_projects_ns(ctx.resource_list)
+  mgmt_ns = get_mgmt_ns(ctx.resource_list)
+  
+  if tenant_ns == projects_ns:
+    fail("projects-namespace cannot be the same as tenant project")
+  if tenant_ns == mgmt_ns:
+    fail("management-namespace cannot be the same as tenant project")

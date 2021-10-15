@@ -19,5 +19,5 @@ metadata:
 data:
   name: bucket2
   namespace: config-control
-  project-id: $DEFAULT_PROJECT
+  #project-id: project-id
   storage-class: standard

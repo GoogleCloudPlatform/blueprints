@@ -20,6 +20,6 @@ data:
   name: redis-bucket
   namespace: config-control
   network: default
-  project-id: $DEFAULT_PROJECT
+  #project-id: project-id
   region: us-central1
   storage-class: standard

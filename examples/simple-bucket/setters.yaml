@@ -19,5 +19,5 @@ metadata: # kpt-merge: /setters
 data:
   name: test-bucket
   namespace: config-control
-  #project-id: my-project
+  #project-id: project-id
   storage-class: standard

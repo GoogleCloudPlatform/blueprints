@@ -1,9 +1,0 @@
-apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-kind: Folder
-metadata:
-  name: prodfinance
-  annotations:
-    cnrm.cloud.google.com/folder-ref: prod
-  namespace: hierarchy
-spec:
-  displayName: finance

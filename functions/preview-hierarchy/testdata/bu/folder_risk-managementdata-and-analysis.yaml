@@ -1,9 +1,0 @@
-apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-kind: Folder
-metadata:
-  name: risk-managementdata-and-analysis
-  annotations:
-    cnrm.cloud.google.com/folder-ref: risk-management
-  namespace: hierarchy
-spec:
-  displayName: data-and-analysis

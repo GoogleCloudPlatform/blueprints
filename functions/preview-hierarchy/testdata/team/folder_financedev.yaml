@@ -1,9 +1,0 @@
-apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-kind: Folder
-metadata:
-  name: financedev
-  annotations:
-    cnrm.cloud.google.com/folder-ref: finance
-  namespace: hierarchy
-spec:
-  displayName: dev

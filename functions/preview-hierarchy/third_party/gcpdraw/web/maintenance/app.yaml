@@ -1,7 +1,0 @@
-runtime: go112
-service: default
-handlers:
-  - url: /.*
-    static_files: maintenance.html
-    upload: maintenance.html
-    expiration: 1m

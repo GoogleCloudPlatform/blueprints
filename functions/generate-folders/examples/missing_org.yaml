@@ -1,8 +1,0 @@
-apiVersion: cft.dev/v1alpha2
-kind: ResourceHierarchy
-metadata:
-  name: test-simple
-spec:
-  config:
-    - dev
-    - prod

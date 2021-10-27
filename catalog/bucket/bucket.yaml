@@ -21,7 +21,7 @@ metadata:
     cnrm.cloud.google.com/project-id: blueprints-project # kpt-set: ${project-id}
 spec:
   location: us-central1
-  storageClass: standard # {"$kpt-set":"storage-class"}
+  storageClass: standard # kpt-set: ${storage-class}
   uniformBucketLevelAccess: true
   versioning:
     enabled: false

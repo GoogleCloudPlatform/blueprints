@@ -1,6 +1,6 @@
-# Empty blueprint
+# Kubernetes Namespace blueprint
 
-An example of an empty blueprint.
+A blueprint to create namespaces in Kubernetes clusters.
 
 ## Setters
 
@@ -14,7 +14,7 @@ This package has no sub-packages.
 
 ```
 File       APIVersion  Kind       Name  Namespace
-noop.yaml  v1          ConfigMap  noop  config-control
+setters.yaml  v1          ConfigMap  setters  config-control
 ```
 
 ## Resource References
@@ -25,7 +25,7 @@ noop.yaml  v1          ConfigMap  noop  config-control
 
 1.  Clone the package:
     ```
-    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/empty@${VERSION}
+    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/namespace@${VERSION}
     ```
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).
@@ -56,4 +56,3 @@ noop.yaml  v1          ConfigMap  noop  config-control
     ```
     kpt live status --output table --poll-until current
     ```
-

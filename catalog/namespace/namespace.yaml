@@ -14,7 +14,7 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: example-ns # {"$kpt-set":"namespace-name"}
+  name: example-ns # kpt-set: ${namespace-name}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/namespace/v0.0.1
-    configsync.gke.io/cluster-name-selector: "gke-cluster" # {"$kpt-set":"cluster-name"}
+    configsync.gke.io/cluster-name-selector: "gke-cluster" # kpt-set: ${cluster-name}

@@ -1,0 +1,13 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: namespace
+  annotations:
+    blueprints.cloud.google.com/namespace: Namespace blueprint
+info:
+  description: |
+    A Kubernetes namespace with appropriate defaults
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

@@ -1,0 +1,12 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: gke-cluster
+  annotations:
+    blueprints.cloud.google.com/title: GKE Cluster blueprint
+info:
+  description: A GKE cluster with public masters and private nodes
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

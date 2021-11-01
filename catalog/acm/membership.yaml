@@ -14,7 +14,7 @@
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubMembership
 metadata:
-  name: membership-name # kpt-set: ${membership-name}
+  name: membership-name # kpt-set: acm-mem-${cluster-name}
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}

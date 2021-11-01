@@ -25,12 +25,6 @@ data:
   platform-namespace: platform-namespace # kpt-set: ${platform-namespace}
   # The project in which to manage cluster resources
   platform-project-id: platform-project-id # kpt-set: ${platform-project-id}
-  # The name for the GKE Hub Membership in Anthos
-  membership-name: membership-name # kpt-set: ${membership-name}
-  # The name for the GKE Hub Feature to be enabled for Anthos
-  feature-name: feature-name # kpt-set: ${feature-name}
-  # The name for the GKE Hub Feature Membership configuration for the registered cluster
-  feature-membership-name: feature-membership-name # kpt-set: ${feature-membership-name}
   # The URL for the repo for Config Sync
   syncRepo: https://source.developers.google.com/p/{project_id}/r/{repo} # kpt-set: ${syncRepo}
   # The source format for the repo for Config Sync
@@ -41,17 +35,12 @@ data:
   gcpServiceAccountEmail: sa_name@{project_id}.iam.gserviceaccount.com # kpt-set: ${gcpServiceAccountEmail}
   # The directory in the repository to pull configs from
   policyDir: config/root # kpt-set: ${policyDir}
-  # The wait time in seconds between consecutive syncs
-  syncWaitSecs: "10" # kpt-set: ${syncWaitSecs}
   # The Tag or Hash on the Config Sync repo to checkout
   syncRev: HEAD # kpt-set: ${syncRev}
   # The namespaces to exempt from Policy Controller constraints enforcement
   exemptableNamespaces: test-namespace # kpt-set: ${exemptableNamespaces}
   # The flag to enable the use of referential Constraint Templates
   referentialRulesEnabled: true # kpt-set: ${referentialRulesEnabled}
-  # The flag to enable logging of all denies and dry run failures
-  logDeniesEnabled: true # kpt-set: ${logDeniesEnabled}
   # The flag to install the default template library
   templateLibraryInstalled: true # kpt-set: ${templateLibraryInstalled}
-  # The interval between consecutive Policy Controller audit Scans
-  auditIntervalSeconds: "20" # kpt-set: ${auditIntervalSeconds}
+  

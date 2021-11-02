@@ -1,10 +1,15 @@
-# Kubernetes Namespace blueprint
+# namespace
 
-A blueprint to create namespaces in Kubernetes clusters.
+A Kubernetes namespace with appropriate defaults
 
 ## Setters
 
-This package has no top-level setters. See sub-packages.
+```
+Setter                 Usages
+cluster-name           3
+namespace-admin-group  2
+namespace-name         3
+```
 
 ## Sub-packages
 
@@ -13,13 +18,15 @@ This package has no sub-packages.
 ## Resources
 
 ```
-File       APIVersion  Kind       Name  Namespace
-setters.yaml  v1          ConfigMap  setters  config-control
+File              APIVersion                    Kind         Name              Namespace
+namespace.yaml    v1                            Namespace    example-ns
+rolebinding.yaml  rbac.authorization.k8s.io/v1  RoleBinding  namespace-admins  example-ns
 ```
 
 ## Resource References
 
-- [ConfigMap](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#configmap-v1-core)
+- [Namespace](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#namespace-v1-core)
+- [RoleBinding](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.21/#rolebinding-v1-rbac-authorization-k8s-io)
 
 ## Usage
 
@@ -32,8 +39,11 @@ setters.yaml  v1          ConfigMap  setters  config-control
 
 1.  Move into the local package:
     ```
-    cd "./empty/"
+    cd "./namespace/"
     ```
+
+1.  Edit the function config file(s):
+    - setters.yaml
 
 1.  Execute the function pipeline
     ```
@@ -56,3 +66,4 @@ setters.yaml  v1          ConfigMap  setters  config-control
     ```
     kpt live status --output table --poll-until current
     ```
+

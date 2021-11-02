@@ -22,4 +22,4 @@ data:
   # The name of the cluster
   cluster-name: gke-cluster # kpt-set: ${cluster-name}
   # The namespace in which to manage cluster resources
-  namespace-admin-group: example-admins@example.coml # kpt-set: ${namespace-admin-group}
+  namespace-admin-group: example-admins@example.com # kpt-set: ${namespace-admin-group}

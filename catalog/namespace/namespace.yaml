@@ -13,7 +13,7 @@
 # limitations under the License.
 apiVersion: v1
 kind: Namespace
-metadata:
+metadata: # kpt-merge: /example-ns
   name: example-ns # kpt-set: ${namespace-name}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/namespace/v0.0.1

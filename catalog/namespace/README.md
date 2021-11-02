@@ -1,4 +1,4 @@
-# namespace
+# Namespace
 
 A Kubernetes namespace with appropriate defaults
 
@@ -66,4 +66,3 @@ rolebinding.yaml  rbac.authorization.k8s.io/v1  RoleBinding  namespace-admins  e
     ```
     kpt live status --output table --poll-until current
     ```
-

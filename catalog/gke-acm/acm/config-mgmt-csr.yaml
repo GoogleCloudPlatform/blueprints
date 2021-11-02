@@ -14,12 +14,12 @@
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubFeatureMembership
 metadata:
-  name: feature-membership-name # kpt-set: gke-acm-config-mgmt-csr-${cluster-name}
-  namespace: platform-namespace # kpt-set: ${platform-namespace}
+  name: gke-acm-config-mgmt-csr-example-us-west4 # kpt-set: gke-acm-config-mgmt-csr-${cluster-name}
+  namespace: config-control # kpt-set: ${platform-namespace}
 spec:
   projectRef:
     external: platform-project-id # kpt-set: ${platform-project-id}
-  location: global  
+  location: global
   membershipRef:
     name: membership-name # kpt-set: acm-mem-${cluster-name}
   featureRef:

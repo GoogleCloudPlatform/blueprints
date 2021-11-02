@@ -16,6 +16,8 @@ kind: GKEHubFeature
 metadata:
   name: feature-name # kpt-set: gke-acm-config-mgmt-${cluster-name}
   namespace: platform-namespace # kpt-set: ${platform-namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
 spec:
   projectRef:
     external: platform-project-id # kpt-set: ${platform-project-id}

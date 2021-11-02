@@ -17,6 +17,7 @@ metadata:
   name: membership-name # kpt-set: acm-mem-${cluster-name}
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
     cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
 spec:
   location: global

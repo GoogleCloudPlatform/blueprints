@@ -18,8 +18,12 @@ metadata: # kpt-merge: /setters
   name: setters
 data:
   # The name of this namespace
-  namespace-name: example-ns # kpt-set: ${namespace-name}
+  namespace-name: namespace-name # kpt-set: ${namespace-name}
   # The name of the cluster
-  cluster-name: gke-cluster # kpt-set: ${cluster-name}
+  cluster-name: cluster-name # kpt-set: ${cluster-name}
   # The namespace in which to manage cluster resources
-  namespace-admin-group: example-admins@example.com # kpt-set: ${namespace-admin-group}
+  namespace-admin-group: namespace-name-admin-group@example.com # kpt-set: ${namespace-admin-group}
+  syncRepo: https://source.developers.google.com/p/{project_id}/r/{repo} # kpt-set: ${syncRepo}
+  syncBranch: main # kpt-set: ${syncBranch}
+  policyDir: config/root/namespaces/namespace-name # kpt-set: ${policyDir}
+  gcpServiceAccountEmail: sa-acm-cluster-name@platform-project-id.iam.gserviceaccount.com # kpt-set: ${gcpServiceAccountEmail}

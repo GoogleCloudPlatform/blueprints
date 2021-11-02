@@ -11,9 +11,20 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-apiVersion: v1
-kind: Namespace
+apiVersion: configsync.gke.io/v1beta1
+kind: RepoSync
 metadata:
-  name: namespace-name # kpt-set: ${namespace-name}
+  name: repo-sync
+  namespace: namespace-name # kpt-set: ${namespace-name}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/namespace/v0.0.1
+spec:
+  sourceFormat: unstructured
+  git:
+    syncRepo: https://source.developers.google.com/p/{project_id}/r/{repo} # kpt-set: ${syncRepo}
+    syncBranch: main # kpt-set: ${syncBranch}
+    policyDir: config/root # kpt-set: ${policyDir}
+    syncWaitSecs: "10" # kpt-set: ${syncWaitSecs}
+    syncRev: HEAD # kpt-set: ${syncRev}
+    auth: gcpserviceaccount
+    gcpServiceAccountEmail: sa-acm-cluster-name@platform-project-id.iam.gserviceaccount.com # kpt-set: ${gcpServiceAccountEmail}

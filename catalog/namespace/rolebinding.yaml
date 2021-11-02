@@ -12,15 +12,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Give namespace-admin permission to the example-admins group on the example namespace
+# Give namespace admin permission to the namespace-admin-group on the namespace
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
-metadata:
-  name: namespace-admins
-  namespace: example-ns # kpt-set: ${namespace-name}
+metadata: # kpt-merge: example-ns/namespace-admins
+  name: namespace-name-admin # kpt-set: ${namespace-name}-admin
+  namespace: namespace-name # kpt-set: ${namespace-name}
   annotations:
-  annotations:
-    configsync.gke.io/cluster-name-selector: "gke-cluster" # kpt-set: ${cluster-name}
+    cnrm.cloud.google.com/blueprint: cnrm/namespace/v0.0.1
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -28,4 +27,4 @@ roleRef:
 subjects:
 - apiGroup: rbac.authorization.k8s.io
   kind: Group
-  name: example-admins@example.com # kpt-set: ${namespace-admin-group}
+  name: namespace-admin-group@example.com # kpt-set: ${namespace-admin-group}

@@ -14,33 +14,42 @@
 
 apiVersion: v1
 kind: ConfigMap
-metadata:
+metadata: # kpt-merge: /setters
   name: setters
 data:
   # The name of this cluster
-  cluster-name: cluster-name # kpt-set: ${cluster-name}
-  # The environment (set as a label on the cluster)
-  location: location # kpt-set: ${location}
+  cluster-name: gke-demo # kpt-set: ${cluster-name}
+  # The location for this cluster e.g. us-east4
+  location: us-east4 # kpt-set: ${location}
   # The namespace in which to manage cluster resources
-  platform-namespace: platform-namespace # kpt-set: ${platform-namespace}
+  platform-namespace: config-control # kpt-set: ${platform-namespace}
   # The project in which to manage cluster resources
-  platform-project-id: platform-project-id # kpt-set: ${platform-project-id}
+  platform-project-id: krm-playground-00 # kpt-set: ${platform-project-id}
+  # The name for the GKE Hub Membership in Anthos
+  membership-name: gke-demo-membership # kpt-set: ${membership-name}
+  # The name for the GKE Hub Feature to be enabled for Anthos
+  feature-name: acm # kpt-set: ${feature-name}
+  # The name for the GKE Hub Feature Membership configuration for the registered cluster
+  feature-membership-name: acm-gke-demo-membership # kpt-set: ${feature-membership-name}
   # The URL for the repo for Config Sync
-  syncRepo: https://source.developers.google.com/p/{project_id}/r/{repo} # kpt-set: ${syncRepo}
+  syncRepo: https://source.developers.google.com/p/krm-playground-00/r/gke-bp-deployment # kpt-set: ${syncRepo}
   # The source format for the repo for Config Sync
   sourceFormat: unstructured # kpt-set: ${sourceFormat}
   # The branch to sync resources from for the repo for Config Sync
   syncBranch: main # kpt-set: ${syncBranch}
-  # The GCP service account that with source.reader role to read configs from Cloud Source Repository
-  gcpServiceAccountEmail: sa_name@{project_id}.iam.gserviceaccount.com # kpt-set: ${gcpServiceAccountEmail}
   # The directory in the repository to pull configs from
   policyDir: config/root # kpt-set: ${policyDir}
+  # The wait time in seconds between consecutive syncs
+  syncWaitSecs: "10" # kpt-set: ${syncWaitSecs}
   # The Tag or Hash on the Config Sync repo to checkout
   syncRev: HEAD # kpt-set: ${syncRev}
   # The namespaces to exempt from Policy Controller constraints enforcement
   exemptableNamespaces: test-namespace # kpt-set: ${exemptableNamespaces}
   # The flag to enable the use of referential Constraint Templates
   referentialRulesEnabled: true # kpt-set: ${referentialRulesEnabled}
+  # The flag to enable logging of all denies and dry run failures
+  logDeniesEnabled: true # kpt-set: ${logDeniesEnabled}
   # The flag to install the default template library
   templateLibraryInstalled: true # kpt-set: ${templateLibraryInstalled}
-  
+  # The interval between consecutive Policy Controller audit Scans
+  auditIntervalSeconds: "20" # kpt-set: ${auditIntervalSeconds}

@@ -23,7 +23,7 @@ spec:
   membershipRef:
     name: membership-name # kpt-set: acm-mem-${cluster-name}
   featureRef:
-    name: feature-name # kpt-set: ${feature-name}
+    name: feature-name # kpt-set: gke-acm-config-mgmt-${cluster-name}
   configmanagement:
     version: 1.9.0
     configSync:

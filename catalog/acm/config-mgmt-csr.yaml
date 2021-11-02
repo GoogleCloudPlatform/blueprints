@@ -19,7 +19,7 @@ metadata:
 spec:
   projectRef:
     external: platform-project-id # kpt-set: ${platform-project-id}
-  location: global  
+  location: global
   membershipRef:
     name: membership-name # kpt-set: acm-mem-${cluster-name}
   featureRef:

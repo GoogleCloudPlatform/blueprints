@@ -22,7 +22,7 @@ data:
   # The email group used to manage the admins for this namespace
   namespace-admin-group: namespace-name-admin-group@example.com # kpt-set: ${namespace-admin-group}
   # The source repo to be used to sync ACM for this namespace
-  repo: https://source.developers.google.com/p/{project_id}/r/{repo} # kpt-set: ${namespace-repo}
+  namespace-repo: https://source.developers.google.com/p/{project_id}/r/{repo} # kpt-set: ${namespace-repo}
   # The configuration directory within the source repo to be used to sync ACM for this namespace
   config-dir: config/root/namespaces/namespace-name # kpt-set: ${config-dir}
   # The email of the GCP service account with read access to the source repo for this namespace

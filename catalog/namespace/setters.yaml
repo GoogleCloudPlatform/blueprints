@@ -21,7 +21,8 @@ data:
   namespace-name: namespace-name # kpt-set: ${namespace-name}
   # The namespace in which to manage cluster resources
   namespace-admin-group: namespace-name-admin-group@example.com # kpt-set: ${namespace-admin-group}
-  syncRepo: https://source.developers.google.com/p/{project_id}/r/{repo} # kpt-set: ${syncRepo}
-  syncBranch: main # kpt-set: ${syncBranch}
-  policyDir: config/root/namespaces/namespace-name # kpt-set: ${policyDir}
+  repo: https://source.developers.google.com/p/{project_id}/r/{repo} # kpt-set: ${repo}
+  branch: main # kpt-set: ${branch}
+  revision: HEAD # kpt-set: ${revision}
+  dir: config/root/namespaces/namespace-name # kpt-set: ${dir}
   gcpServiceAccountEmail: sa-acm-cluster-name@platform-project-id.iam.gserviceaccount.com # kpt-set: ${gcpServiceAccountEmail}

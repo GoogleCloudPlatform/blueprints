@@ -21,10 +21,9 @@ metadata:
 spec:
   sourceFormat: unstructured
   git:
-    syncRepo: https://source.developers.google.com/p/{project_id}/r/{repo} # kpt-set: ${syncRepo}
-    syncBranch: main # kpt-set: ${syncBranch}
-    policyDir: config/root # kpt-set: ${policyDir}
-    syncWaitSecs: "10" # kpt-set: ${syncWaitSecs}
-    syncRev: HEAD # kpt-set: ${syncRev}
+    repo: https://source.developers.google.com/p/{project_id}/r/{repo} # kpt-set: ${repo}
+    revision: HEAD # kpt-set: ${revision}
+    branch: main # kpt-set: ${branch}
+    dir: config/root # kpt-set: ${dir}
     auth: gcpserviceaccount
     gcpServiceAccountEmail: sa-acm-cluster-name@platform-project-id.iam.gserviceaccount.com # kpt-set: ${gcpServiceAccountEmail}

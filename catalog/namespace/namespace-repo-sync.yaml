@@ -14,7 +14,7 @@
 apiVersion: configsync.gke.io/v1beta1
 kind: RepoSync
 metadata:
-  name: repo-sync
+  name: repo-sync # kpt-set: ${namespace-name}-repo-sync
   namespace: namespace-name # kpt-set: ${namespace-name}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/namespace/v0.0.1

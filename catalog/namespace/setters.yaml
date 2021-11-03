@@ -14,15 +14,22 @@
 
 apiVersion: v1
 kind: ConfigMap
-metadata: # kpt-merge: /setters
+metadata:
   name: setters
 data:
   # The name of this namespace
   namespace-name: namespace-name # kpt-set: ${namespace-name}
-  # The namespace in which to manage cluster resources
+  # The email group used to manage the admins for this namespace
   namespace-admin-group: namespace-name-admin-group@example.com # kpt-set: ${namespace-admin-group}
-  repo: https://source.developers.google.com/p/{project_id}/r/{repo} # kpt-set: ${repo}
-  branch: main # kpt-set: ${branch}
-  revision: HEAD # kpt-set: ${revision}
-  dir: config/root/namespaces/namespace-name # kpt-set: ${dir}
-  gcpServiceAccountEmail: sa-acm-cluster-name@platform-project-id.iam.gserviceaccount.com # kpt-set: ${gcpServiceAccountEmail}
+  # The source repo to be used to sync ACM for this namespace
+  repo: https://source.developers.google.com/p/{project_id}/r/{repo} # kpt-set: ${namespace-repo}
+  # The configuration directory within the source repo to be used to sync ACM for this namespace
+  config-dir: config/root/namespaces/namespace-name # kpt-set: ${config-dir}
+  # The email of the GCP service account with read access to the source repo for this namespace
+  gcp-service-account-email: sa-acm-cluster-name@platform-project-id.iam.gserviceaccount.com # kpt-set: ${gcp-service-account-email}
+  # The Kubernetes resource reference for the Google Service Account to be used for the namespace source repo
+  ref-sa-namespace-repo: ref-sa-namespace-repo # kpt-set: ${ref-sa-namespace-repo}
+  # The namespace used for organizing Kubernetes resources representing the platform
+  platform-namespace: config-control # kpt-set: ${platform-namespace}
+  # The Project ID where the cluster exists. Used to look up the workload identity pool
+  platform-project-id: platform-project-id # kpt-set: ${platform-project-id}

@@ -11,9 +11,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 # ACM GCP ServiceAccount (GSA)
-
 # This GSA can be used to grant ACM additional permissions with IAMPartialPolicy
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount

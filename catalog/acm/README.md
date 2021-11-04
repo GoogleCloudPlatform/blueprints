@@ -1,6 +1,6 @@
 # ACM blueprint
 
-A blueprint to install Anthos Config Management (ACM) on an existing GKE cluster. The installation is done by enrolling the cluster into GKE Hub Membership and turning on and configuring the ACM feature.
+A blueprint to install Anthos Config Management (ACM) on an existing GKE cluster. The installation is done by enrolling the cluster into GKE Hub Membership, enabling and configuring the ACM feature.
 
 ## Setters
 

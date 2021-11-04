@@ -18,14 +18,16 @@ metadata: # kpt-merge: /setters
   name: setters
 data:
   # The name of this cluster
-  cluster-name: cluster-name # kpt-set: ${cluster-name}
+  cluster-name: cluster-name
   # The location for this cluster e.g. us-east4
-  location: location # kpt-set: ${location}
+  location: us-east4
   # The namespace in which to create Kubernetes CRDs representing cluster resources e.g. config-control
-  platform-namespace: platform-namespace # kpt-set: ${platform-namespace}
+  platform-namespace: config-control
   # The project in which to manage cluster resources
-  platform-project-id: platform-project-id # kpt-set: ${platform-project-id}
+  platform-project-id: platform-project-id
   # The URL for the repo for ACM (Config Sync)
-  sync-repo: https://source.developers.google.com/p/{project_id}/r/{repo} # kpt-set: ${sync-repo}
+  sync-repo: https://source.developers.google.com/p/{project_id}/r/{repo}
   # The directory in the repository to pull configs from e.g. config/root
-  policy-dir: config/root # kpt-set: ${policy-dir}
+  policy-dir: config/root
+  # ACM version to install
+  acm-version: 1.9.0

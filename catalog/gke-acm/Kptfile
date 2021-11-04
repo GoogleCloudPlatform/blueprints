@@ -1,0 +1,30 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: gke-acm
+  annotations:
+    blueprints.cloud.google.com/title: GKE blueprint
+upstream:
+  type: git
+  git:
+    repo: https://github.com/goose-corp/blueprints
+    directory: /catalog/gke
+    ref: gke-bp-m1-acm
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/goose-corp/blueprints
+    directory: /catalog/gke
+    ref: gke-bp-m1-acm
+    commit: ed5f799596778b1d11324659340253d69105f485
+info:
+  description: |
+    A GKE cluster with a primary node pool and a dedicated subnet.
+
+    For a full tutorial, see
+    [Managing GKE clusters with ConfigController](https://cloud.google.com/anthos-config-management/docs/tutorials/gke-cluster-blueprint).
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

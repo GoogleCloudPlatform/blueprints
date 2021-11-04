@@ -19,7 +19,7 @@ metadata:
     blueprints.cloud.google.com/title: ACM blueprint
 info:
   description: |
-    A blueprint to install Anthos Config Management (ACM) on an existing GKE cluster. The installation is done by enrolling the cluster into GKE Hub Membership and turning on and configuring the ACM feature.
+    A blueprint to install Anthos Config Management (ACM) on an existing GKE cluster. The installation is done by enrolling the cluster into GKE Hub Membership, enabling and configuring the ACM feature.
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

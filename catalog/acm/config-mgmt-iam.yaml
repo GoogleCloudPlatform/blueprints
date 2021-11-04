@@ -15,9 +15,9 @@
 # This GSA can be used to grant ACM additional permissions with IAMPartialPolicy
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
-metadata: # kpt-merge: platform-namespace/sa-acm-cluster-name
+metadata:
   name: sa-acm-gke-cluster # kpt-set: sa-acm-${cluster-name}
-  namespace: config-control # kpt-set: ${namespace}
+  namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
     cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
@@ -25,12 +25,12 @@ spec:
   displayName: sa-acm-gke-cluster # kpt-set: sa-acm-${cluster-name}
   description: For use with ACM to provide read access to Cloud Source Repositories
 ---
-# Allow ACM Config Sync Kubernetes ServiceAccount (KSA) to use the ACM GSA
+# Allow ACM Config Sync Kubernetes ServiceAccount (KSA) for root-reconciler to use the ACM GSA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
-metadata: # kpt-merge: platform-namespace/sa-acm-cluster-name
+metadata:
   name: sa-acm-gke-cluster # kpt-set: sa-acm-${cluster-name}
-  namespace: config-control # kpt-set: ${namespace}
+  namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
     cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
@@ -47,9 +47,9 @@ spec:
 # Allow ACM GSA to read from CSR repos in the CSR project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
-metadata: # kpt-merge: platform-namespace/source-reader-sync-cluster-name-platform-project-id
+metadata:
   name: source-reader-sync-cluster-name-platform-project-id # kpt-set: source-reader-sync-${cluster-name}-${platform-project-id}
-  namespace: config-control # kpt-set: ${namespace}
+  namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
     cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}

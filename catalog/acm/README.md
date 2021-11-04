@@ -1,30 +1,17 @@
-# GKE ACM blueprint
+# ACM blueprint
 
-A GKEHub Membership and ACM enrollment blueprint for Config Sync and Policy Controller for a pre-provisioned GKE cluster
+A blueprint to install Anthos Config Management (ACM) on an existing GKE cluster. The installation is done by enrolling the cluster into GKE Hub Membership and turning on and configuring the ACM feature.
 
 ## Setters
 
 ```
-Setter                    Usages
-auditIntervalSeconds      2
-cluster-name              5
-exemptableNamespaces      2
-feature-membership-name   2
-feature-name              3
-gcpServiceAccountEmail    2
-location                  3
-logDeniesEnabled          2
-membership-name           3
-platform-namespace        6
-platform-project-id       10
-policyDir                 2
-referentialRulesEnabled   2
-sourceFormat              2
-syncBranch                2
-syncRepo                  2
-syncRev                   2
-syncWaitSecs              2
-templateLibraryInstalled  2
+Setter               Usages
+cluster-name         17
+location             3
+platform-namespace   9
+platform-project-id  20
+policy-dir           2
+sync-repo            2
 ```
 
 ## Sub-packages
@@ -34,12 +21,15 @@ This package has no sub-packages.
 ## Resources
 
 ```
-File                     APIVersion                                  Kind                     Name                                     Namespace
-acm-membership-api.yaml  serviceusage.cnrm.cloud.google.com/v1beta1  Service                  platform-project-id-cluster-name-acm     platform-namespace
-acm-membership-api.yaml  serviceusage.cnrm.cloud.google.com/v1beta1  Service                  platform-project-id-cluster-name-gkehub  platform-namespace
-config-mgmt-csr.yaml     gkehub.cnrm.cloud.google.com/v1beta1        GKEHubFeatureMembership  feature-membership-name                  platform-namespace
-config-mgmt.yaml         gkehub.cnrm.cloud.google.com/v1beta1        GKEHubFeature            feature-name                             platform-namespace
-membership.yaml          gkehub.cnrm.cloud.google.com/v1beta1        GKEHubMembership         membership-name                          platform-namespace
+File                     APIVersion                                  Kind                     Name                                                 Namespace
+acm-membership-api.yaml  serviceusage.cnrm.cloud.google.com/v1beta1  Service                  platform-project-id-cluster-name-acm                 platform-namespace
+acm-membership-api.yaml  serviceusage.cnrm.cloud.google.com/v1beta1  Service                  platform-project-id-cluster-name-gkehub              platform-namespace
+config-mgmt-csr.yaml     gkehub.cnrm.cloud.google.com/v1beta1        GKEHubFeatureMembership  feature-membership-name                              platform-namespace
+config-mgmt-iam.yaml     iam.cnrm.cloud.google.com/v1beta1           IAMPartialPolicy         sa-acm-gke-cluster                                   platform-namespace
+config-mgmt-iam.yaml     iam.cnrm.cloud.google.com/v1beta1           IAMPartialPolicy         source-reader-sync-cluster-name-platform-project-id  platform-namespace
+config-mgmt-iam.yaml     iam.cnrm.cloud.google.com/v1beta1           IAMServiceAccount        sa-acm-gke-cluster                                   platform-namespace
+feat-config-mgmt.yaml    gkehub.cnrm.cloud.google.com/v1beta1        GKEHubFeature            feature-name                                         platform-namespace
+membership.yaml          gkehub.cnrm.cloud.google.com/v1beta1        GKEHubMembership         membership-name                                      platform-namespace
 ```
 
 ## Resource References
@@ -47,6 +37,8 @@ membership.yaml          gkehub.cnrm.cloud.google.com/v1beta1        GKEHubMembe
 - [GKEHubFeatureMembership](https://cloud.google.com/config-connector/docs/reference/resource-docs/gkehub/gkehubfeaturemembership)
 - [GKEHubFeature](https://cloud.google.com/config-connector/docs/reference/resource-docs/gkehub/gkehubfeature)
 - [GKEHubMembership](https://cloud.google.com/config-connector/docs/reference/resource-docs/gkehub/gkehubmembership)
+- [IAMPartialPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampartialpolicy)
+- [IAMServiceAccount](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount)
 - [Service](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service)
 
 ## Usage

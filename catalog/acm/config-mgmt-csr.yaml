@@ -13,37 +13,38 @@
 # limitations under the License.
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubFeatureMembership
-metadata: # kpt-merge: platform-namespace/feature-membership-name
-  name: feature-membership-name # kpt-set: gke-acm-config-mgmt-csr-${cluster-name}
+metadata:
+  name: feature-membership-name # kpt-set: acm-mem-${cluster-name}
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${platform-project-id}
 spec:
   projectRef:
     external: platform-project-id # kpt-set: ${platform-project-id}
   location: global
   membershipRef:
-    name: membership-name # kpt-set: acm-mem-${cluster-name}
+    name: membership-name # kpt-set: hub-mem-${cluster-name}
   featureRef:
-    name: feature-name # kpt-set: gke-acm-config-mgmt-${cluster-name}
+    name: feature-name # kpt-set: feat-acm-${cluster-name}
   configmanagement:
-    version: 1.9.0
+    version: 1.9.0 #kpt-set: ${acm-version}
     configSync:
-      sourceFormat: unstructured # kpt-set: ${sourceFormat}
+      sourceFormat: unstructured
       git:
-        syncRepo: https://source.developers.google.com/p/{project_id}/r/{repo} # kpt-set: ${syncRepo}
-        syncBranch: main # kpt-set: ${syncBranch}
-        policyDir: config/root # kpt-set: ${policyDir}
-        syncWaitSecs: "10" # kpt-set: ${syncWaitSecs}
-        syncRev: HEAD # kpt-set: ${syncRev}
+        syncRepo: https://source.developers.google.com/p/{project_id}/r/{repo} # kpt-set: ${sync-repo}
+        syncBranch: main
+        policyDir: config/root # kpt-set: ${policy-dir}
+        syncWaitSecs: "10"
+        syncRev: HEAD
         secretType: gcpserviceaccount
         gcpServiceAccountRef:
           external: sa-acm-cluster-name@platform-project-id.iam.gserviceaccount.com # kpt-set: sa-acm-${cluster-name}@${platform-project-id}.iam.gserviceaccount.com
     policyController:
       enabled: true
       exemptableNamespaces:
-        - "test-namespace" # kpt-set: ${exemptableNamespaces}
-      referentialRulesEnabled: true # kpt-set: ${referentialRulesEnabled}
-      logDeniesEnabled: true # kpt-set: ${logDeniesEnabled}
-      templateLibraryInstalled: true # kpt-set: ${templateLibraryInstalled}
-      auditIntervalSeconds: "20" # kpt-set: ${auditIntervalSeconds}
+        - "test-namespace"
+      referentialRulesEnabled: true
+      logDeniesEnabled: true
+      templateLibraryInstalled: true
+      auditIntervalSeconds: "20"

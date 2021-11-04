@@ -14,13 +14,14 @@
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubFeature
 metadata:
-  name: feature-name # kpt-set: gke-acm-config-mgmt-${cluster-name}
+  name: feature-name # kpt-set: feat-acm-${cluster-name}
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
+    cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
 spec:
   projectRef:
     external: platform-project-id # kpt-set: ${platform-project-id}
   location: global
-  # The resourceID must be "configmanagement" if you want to use Anthos config management feature.
+  # The resourceID must be "configmanagement" if you want to use Anthos Config Management feature.
   resourceID: configmanagement

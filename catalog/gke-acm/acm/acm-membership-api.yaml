@@ -14,7 +14,7 @@
 # Enable the Container service in the platform project
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata:
+metadata: # kpt-merge: platform-namespace/platform-project-id-cluster-name-gkehub
   name: platform-project-id-cluster-name-gkehub # kpt-set: ${platform-project-id}-${cluster-name}-gkehub
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
@@ -26,7 +26,7 @@ spec:
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata:
+metadata: # kpt-merge: platform-namespace/platform-project-id-cluster-name-acm
   name: platform-project-id-cluster-name-acm # kpt-set: ${platform-project-id}-${cluster-name}-acm
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:

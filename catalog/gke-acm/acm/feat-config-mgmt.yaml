@@ -12,19 +12,16 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
-kind: GKEHubMembership
-metadata:
-  name: membership-name # kpt-set: hub-mem-${cluster-name}
+kind: GKEHubFeature
+metadata: # kpt-merge: platform-namespace/feature-name
+  name: feature-name # kpt-set: feat-acm-${cluster-name}
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
     cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
 spec:
+  projectRef:
+    external: platform-project-id # kpt-set: ${platform-project-id}
   location: global
-  authority:
-    # Issuer must contain a link to a valid JWT issuer.
-    issuer: https://container.googleapis.com/v1/projects/platform-project-id/locations/location/clusters/cluster-name # kpt-set: https://container.googleapis.com/v1/projects/${platform-project-id}/locations/${location}/clusters/${cluster-name}
-  endpoint:
-    gkeCluster:
-      resourceRef:
-        external: //container.googleapis.com/projects/platform-project-id/locations/location/clusters/cluster-name # kpt-set: //container.googleapis.com/projects/${platform-project-id}/locations/${location}/clusters/${cluster-name}
+  # The resourceID must be "configmanagement" if you want to use Anthos Config Management feature.
+  resourceID: configmanagement

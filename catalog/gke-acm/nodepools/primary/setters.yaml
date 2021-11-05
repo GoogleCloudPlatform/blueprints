@@ -17,17 +17,17 @@ kind: ConfigMap
 metadata: # kpt-merge: /setters
   name: setters
 data:
-  # The name of this cluster
-  cluster-name: cluster-name
-  # The location for this cluster e.g. us-east4
-  location: us-east4
-  # The namespace in which to create Kubernetes CRDs representing cluster resources e.g. config-control
-  platform-namespace: config-control
+  # The name of the cluster to attach this node pool to
+  cluster-name: example-us-east4 # kpt-set: ${cluster-name}
+  # The compute location (region or zone)
+  location: us-east4 # kpt-set: ${location}
+  # The maximum nodes per zone for this pool
+  max-node-count: "2" # kpt-set: ${max-node-count}
+  # The name of this node pool
+  nodepool-name: primary # kpt-set: ${nodepool-name}
+  # The namespace in which to manage cluster resources
+  platform-namespace: config-control # kpt-set: ${platform-namespace}
   # The project in which to manage cluster resources
-  platform-project-id: platform-project-id
-  # The URL for the repo for ACM (Config Sync)
-  sync-repo: https://source.developers.google.com/p/{project_id}/r/{repo}
-  # The directory in the repository to pull configs from e.g. config/root
-  policy-dir: config/root
-  # ACM version to install
-  acm-version: 1.9.0
+  platform-project-id: platform-project-id # kpt-set: ${platform-project-id}
+  # The namespace in which to manage service enablement resources
+  projects-namespace: projects # kpt-set: ${projects-namespace}

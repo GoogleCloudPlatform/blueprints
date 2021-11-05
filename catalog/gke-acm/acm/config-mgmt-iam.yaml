@@ -15,7 +15,7 @@
 # This GSA can be used to grant ACM additional permissions with IAMPartialPolicy
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
-metadata:
+metadata: # kpt-merge: platform-namespace/sa-acm-gke-cluster
   name: sa-acm-gke-cluster # kpt-set: sa-acm-${cluster-name}
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
@@ -28,7 +28,7 @@ spec:
 # Allow ACM Config Sync Kubernetes ServiceAccount (KSA) for root-reconciler to use the ACM GSA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
-metadata:
+metadata: # kpt-merge: platform-namespace/sa-acm-gke-cluster
   name: sa-acm-gke-cluster # kpt-set: sa-acm-${cluster-name}
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
@@ -47,7 +47,7 @@ spec:
 # Allow ACM GSA to read from CSR repos in the CSR project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
-metadata:
+metadata: # kpt-merge: platform-namespace/source-reader-sync-cluster-name-platform-project-id
   name: source-reader-sync-cluster-name-platform-project-id # kpt-set: source-reader-sync-${cluster-name}-${platform-project-id}
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:

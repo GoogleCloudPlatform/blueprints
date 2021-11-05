@@ -13,7 +13,7 @@
 # limitations under the License.
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubMembership
-metadata:
+metadata: # kpt-merge: platform-namespace/membership-name
   name: membership-name # kpt-set: hub-mem-${cluster-name}
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
@@ -27,4 +27,5 @@ spec:
   endpoint:
     gkeCluster:
       resourceRef:
-        external: //container.googleapis.com/projects/platform-project-id/locations/location/clusters/cluster-name # kpt-set: //container.googleapis.com/projects/${platform-project-id}/locations/${location}/clusters/${cluster-name}
+        name: example-us-east4 # kpt-set: ${cluster-name}
+        namespace: config-control # kpt-set: ${platform-namespace}

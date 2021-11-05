@@ -56,8 +56,8 @@ metadata:
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
-    kind: Project
-    external: platform-project-id # kpt-set: ${platform-project-id}
+    kind: SourceRepoRepository
+    external: projects/project-id/repos/name # kpt-set: ${sync-repo-ref}
   bindings:
     - role: roles/source.reader
       members:

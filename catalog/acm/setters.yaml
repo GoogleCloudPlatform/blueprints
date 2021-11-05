@@ -27,6 +27,8 @@ data:
   platform-project-id: platform-project-id
   # The URL for the repo for ACM (Config Sync)
   sync-repo: https://source.developers.google.com/p/{project_id}/r/{repo}
+  # The reference for the repo e.g. projects/${project}}/repos/${name}. Used to grant access to the ACM SA
+  sync-repo-ref: projects/project-id/repos/repo-name
   # The directory in the repository to pull configs from e.g. config/root
   policy-dir: config/root
   # ACM version to install

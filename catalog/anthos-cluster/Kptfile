@@ -1,9 +1,9 @@
 apiVersion: kpt.dev/v1
 kind: Kptfile
 metadata:
-  name: gke-acm
+  name: anthos-cluster
   annotations:
-    blueprints.cloud.google.com/title: GKE blueprint
+    blueprints.cloud.google.com/title: Anthos cluster blueprint
 upstream:
   type: git
   git:
@@ -20,10 +20,7 @@ upstreamLock:
     commit: ed5f799596778b1d11324659340253d69105f485
 info:
   description: |
-    A GKE cluster with a primary node pool and a dedicated subnet.
-
-    For a full tutorial, see
-    [Managing GKE clusters with ConfigController](https://cloud.google.com/anthos-config-management/docs/tutorials/gke-cluster-blueprint).
+    A blueprint to create an Anthos cluster and install Anthos Config Management (ACM) on the cluster. The ACM installation is done by enrolling the cluster into GKE Hub Membership, enabling and configuring the ACM feature.
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

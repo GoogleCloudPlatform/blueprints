@@ -31,3 +31,5 @@ data:
   policy-dir: config/root
   # ACM version to install
   acm-version: 1.9.0
+  # The reference for the repo e.g. projects/${project}}/repos/${name}. Used to grant access to the ACM SA
+  sync-repo-ref: projects/project-id/repos/repo-name

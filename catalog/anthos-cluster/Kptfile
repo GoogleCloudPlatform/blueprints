@@ -20,9 +20,9 @@ metadata:
 upstream:
   type: git
   git:
-    repo: https://github.com/goose-corp/blueprints
+    repo: https://github.com/GoogleCloudPlatform/blueprints
     directory: /catalog/gke
-    ref: gke-bp-m1-acm
+    ref: v0.3.0
   updateStrategy: resource-merge
 upstreamLock:
   type: git

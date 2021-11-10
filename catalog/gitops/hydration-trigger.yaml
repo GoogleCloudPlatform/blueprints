@@ -60,7 +60,7 @@ spec:
             kpt fn render "$${SRC_DIR}" --output="$${DEST_DIR}" --truncate-output=false
 
             echo "Removing local config"
-            kpt fn eval "$${DEST_DIR}" -i gcr.io/yakima-eap/remove-annotated-resources:v0.1
+            kpt fn eval "$${DEST_DIR}" -i gcr.io/kpt-fn/remove-local-config-resources:v0.1
         entrypoint: /bin/bash
         id: "Apply Hydration and Validation"
       - name: gcr.io/cloud-builders/gcloud:latest

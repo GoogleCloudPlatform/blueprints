@@ -46,3 +46,11 @@ data:
   security-group: gke-security-group@example.com
   # The private IP range for services to use, allocated to the dedicated subnet
   service-ip-range: 172.18.0.0/16
+  # ACM version to install
+  acm-version: 1.9.0
+  # The URL for the repo for ACM (Config Sync)
+  sync-repo: https://source.developers.google.com/p/krm-playground-00/r/gke-bp-deployment # kpt-set: ${sync-repo}
+  # The directory in the repository to pull configs from e.g. config/root
+  policy-dir: config/root
+  # The reference for the repo e.g. projects/${project}}/repos/${name}. Used to grant access to the ACM SA
+  sync-repo-ref: projects/project-id/repos/repo-name

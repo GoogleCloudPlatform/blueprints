@@ -19,7 +19,7 @@ presubmits:
     labels:
       preset-dind-enabled: "true"
     cluster: build-blueprints
-    decorate_config:
+    decoration_config:
       timeout: 30m
     spec:
       containers:
@@ -34,7 +34,7 @@ presubmits:
     labels:
       preset-dind-enabled: "true"
     cluster: build-blueprints
-    decorate_config:
+    decoration_config:
       timeout: 1h
     spec:
       serviceAccountName: int-test-sa

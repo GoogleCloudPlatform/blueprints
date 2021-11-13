@@ -20,7 +20,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
     cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
-    cnrm.cloud.google.com/deletion-policy: disable-on-destroy
+    cnrm.cloud.google.com/deletion-policy: abandon
 spec:
   resourceID: gkehub.googleapis.com
 ---
@@ -32,6 +32,6 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
     cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
-    cnrm.cloud.google.com/deletion-policy: disable-on-destroy
+    cnrm.cloud.google.com/deletion-policy: abandon
 spec:
   resourceID: anthosconfigmanagement.googleapis.com

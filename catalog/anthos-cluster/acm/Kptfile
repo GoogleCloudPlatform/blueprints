@@ -17,7 +17,7 @@ upstreamLock:
     repo: https://github.com/GoogleCloudPlatform/blueprints
     directory: /catalog/acm
     ref: main
-    commit: 7887489df5cfbb077611bf6b2b660b56195b8861
+    commit: 5ff793cb7eaa376c5b7e0a464bf1067249204fc2
 info:
   description: |
     A blueprint to install Anthos Config Management (ACM) on an existing GKE cluster. The installation is done by enrolling the cluster into GKE Hub Membership, enabling and configuring the ACM feature.

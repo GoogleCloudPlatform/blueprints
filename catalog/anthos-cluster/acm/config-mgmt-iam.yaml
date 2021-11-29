@@ -55,7 +55,7 @@ metadata: # kpt-merge: platform-namespace/source-reader-sync-cluster-name-platfo
     cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
 spec:
   resourceRef:
-    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
     kind: SourceRepoRepository
     external: projects/project-id/repos/name # kpt-set: ${sync-repo-ref}
   bindings:

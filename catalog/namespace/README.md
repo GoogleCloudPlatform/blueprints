@@ -1,6 +1,6 @@
 # namespace
 
-A Kubernetes namespace with appropriate defaults for use with ACM enrolled clusters. It creates a namespace, assigns admin role for the created namespace, to a given email group, and creates a RepoSync for the created namespace.
+A Kubernetes namespace with appropriate defaults for use with ACM enrolled clusters. It creates a namespace, assigns admin role for the created namespace to a given email group, and creates a RepoSync for the created namespace.
 
 ## Setters
 

@@ -16,7 +16,7 @@ kind: IAMPolicyMember
 metadata:
   name: foundation-devops-folders
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
     blueprints.cloud.google.com/description: This grants permissions to view folders.
   namespace: config-control
 spec:

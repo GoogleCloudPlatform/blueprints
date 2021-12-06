@@ -16,7 +16,7 @@ kind: IAMPolicyMember
 metadata:
   name: network-admins-compute
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
     blueprints.cloud.google.com/description: This grants permissions to create, modify, and delete networking resources, except for firewall rules and SSL certificates.
   namespace: config-control
 spec:
@@ -32,7 +32,7 @@ kind: IAMPolicyMember
 metadata:
   name: network-admins-shared-vpc
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
     blueprints.cloud.google.com/description: This grants permissions to administer Shared VPC host projects.
   namespace: config-control
 spec:
@@ -48,7 +48,7 @@ kind: IAMPolicyMember
 metadata:
   name: network-admins-security
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
     blueprints.cloud.google.com/description: This grants permissions to create, modify, and delete firewall rules and SSL certificates.
   namespace: config-control
 spec:
@@ -64,7 +64,7 @@ kind: IAMPolicyMember
 metadata:
   name: network-admins-folders
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
     blueprints.cloud.google.com/description: This grants permissions to view folders.
   namespace: config-control
 spec:

@@ -6,17 +6,20 @@ A GKE cluster with public masters and private nodes
 
 ```
 Setter                Usages
-cluster-name          4
+cluster-name          3
 environment           2
-location              2
+location              3
 master-ip-range       2
-networking-namespace  2
 network-name          2
-network-project-id    2
+network-project-id    3
+networking-namespace  1
 platform-namespace    2
-project-id   6
+pod-ip-range          1
+project-id            5
 projects-namespace    2
 security-group        2
+service-ip-range      1
+subnet-name           1
 ```
 
 ## Sub-packages
@@ -26,9 +29,9 @@ This package has no sub-packages.
 ## Resources
 
 ```
-File                APIVersion                                  Kind              Name                                        Namespace
-cluster.yaml        container.cnrm.cloud.google.com/v1beta1     ContainerCluster  example-us-east4                            config-control
-container-api.yaml  serviceusage.cnrm.cloud.google.com/v1beta1  Service           platform-project-id-cluster-name-container  projects
+File                APIVersion                                  Kind              Name                               Namespace
+cluster.yaml        container.cnrm.cloud.google.com/v1beta1     ContainerCluster  example-us-east4                   config-control
+container-api.yaml  serviceusage.cnrm.cloud.google.com/v1beta1  Service           project-id-cluster-name-container  projects
 ```
 
 ## Resource References

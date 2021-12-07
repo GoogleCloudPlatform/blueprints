@@ -9,29 +9,29 @@ For a full tutorial, see
 
 ```
 Setter                Usages
-cluster-name          19
+cluster-name          15
 environment           2
-location              6
+location              5
 master-ip-range       2
 max-node-count        2
-networking-namespace  4
-network-name          4
-network-project-id    5
-node-ip-range         2
+network-name          2
+network-project-id    3
+networking-namespace  1
+node-ip-range         0
 nodepool-name         12
 platform-namespace    11
-platform-project-id   15
-pod-ip-range          2
+pod-ip-range          1
+project-id            11
 projects-namespace    3
 security-group        2
-service-ip-range      2
+service-ip-range      1
+subnet-name           2
 ```
 
 ## Sub-packages
 
 - [cluster](/catalog/gke/cluster)
 - [nodepools/primary](/catalog/gke/nodepools/primary)
-- [subnet](/catalog/gke/subnet)
 
 ## Resources
 

@@ -5,14 +5,14 @@ A GKE node pool with a dedicated service account
 ## Setters
 
 ```
-Setter               Usages
-cluster-name         12
-location             2
-max-node-count       2
-nodepool-name        12
-platform-namespace   9
-platform-project-id  6
-projects-namespace   1
+Setter              Usages
+cluster-name        12
+location            2
+max-node-count      2
+nodepool-name       12
+platform-namespace  9
+project-id          6
+projects-namespace  1
 ```
 
 ## Sub-packages

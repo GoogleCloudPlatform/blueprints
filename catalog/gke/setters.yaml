@@ -43,4 +43,4 @@ data:
   services-range-name: services
   # The group in which to manage the list of groups that can be used for RBAC.
   # Must be named exactly 'gke-security-groups'.
-  security-group: gke-security-group@example.com
+  security-group: gke-security-groups@example.com

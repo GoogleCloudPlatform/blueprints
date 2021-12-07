@@ -31,6 +31,8 @@ data:
   network-project-id: network-project-id
   # The namespace in which to manage network resources
   networking-namespace: config-control
+  # The names of the sub network
+  subnet-name: default # kpt-set: ${subnet-name}
   # The private IP range for nodes to use, allocated to the dedicated subnet
   node-ip-range: 10.3.4.0/22
   # The namespace in which to manage cluster resources

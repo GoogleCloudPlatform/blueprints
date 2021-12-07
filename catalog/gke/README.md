@@ -8,24 +8,22 @@ For a full tutorial, see
 ## Setters
 
 ```
-Setter                Usages
-cluster-name          15
-environment           2
-location              5
-master-ip-range       2
-max-node-count        2
-network-name          2
-network-project-id    3
-networking-namespace  1
-node-ip-range         0
-nodepool-name         12
-platform-namespace    11
-pod-ip-range          1
-project-id            11
-projects-namespace    3
-security-group        2
-service-ip-range      1
-subnet-name           2
+Setter               Usages
+cluster-name         14
+environment          1
+location             4
+master-ip-range      1
+max-node-count       2
+network-name         1
+network-project-id   2
+nodepool-name        12
+platform-namespace   10
+pods-range-name      1
+project-id           10
+projects-namespace   2
+security-group       2
+services-range-name  1
+subnet-name          1
 ```
 
 ## Sub-packages

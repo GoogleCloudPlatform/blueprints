@@ -84,7 +84,6 @@ spec:
   loggingConfig:
     enableComponents:
     - WORKLOADS
-      SYSTEM_COMPONENTS
   monitoringConfig:
     enableComponents:
     - SYSTEM_COMPONENTS

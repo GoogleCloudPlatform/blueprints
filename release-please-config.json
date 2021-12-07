@@ -43,6 +43,10 @@
       "catalog/spanner": {
         "package-name": "spanner-blueprint",
         "changelog-path": "CHANGELOG.md"
+      },
+      "catalog/iam-foundation": {
+        "package-name": "iam-foundation-blueprint",
+        "changelog-path": "CHANGELOG.md"
       }
     },
     "bootstrap-sha": "dc9e8fe511c009536064cb2b677e6ceff52f1b1f",

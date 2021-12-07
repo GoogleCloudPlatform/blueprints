@@ -97,7 +97,7 @@ spec:
   # Use a dedicated subnet by default, to increase isolation and allow for
   # cluster-specific firewalls.
   subnetworkRef:
-    name: projects/network-project-id/regions/us-west4/subnetworks/default # kpt-set: projects/${network-project-id}/regions/${location}/subnetworks/${subnet-name}
+    external: projects/network-project-id/regions/us-west4/subnetworks/default # kpt-set: projects/${network-project-id}/regions/${location}/subnetworks/${subnet-name}
   # Enable Vertical Pod Autoscaling by default.
   # https://cloud.google.com/kubernetes-engine/docs/concepts/verticalpodautoscaler
   verticalPodAutoscaling:

@@ -14,7 +14,7 @@ networking-namespace  2
 network-name          2
 network-project-id    2
 platform-namespace    2
-platform-project-id   6
+project-id   6
 projects-namespace    2
 security-group        2
 ```

@@ -36,7 +36,7 @@ data:
   # The namespace in which to manage cluster resources
   platform-namespace: config-control
   # The project in which to manage cluster resources
-  platform-project-id: platform-project-id
+  project-id: project-id
   # The private IP range for pods to use, allocated to the dedicated subnet
   pod-ip-range: 172.17.0.0/16
   # The namespace in which to manage service enablement resources

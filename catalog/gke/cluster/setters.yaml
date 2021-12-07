@@ -34,7 +34,7 @@ data:
   # The namespace in which to manage cluster resources
   platform-namespace: config-control # kpt-set: ${platform-namespace}
   # The project in which to manage cluster resources
-  platform-project-id: platform-project-id # kpt-set: ${platform-project-id}
+  project-id: project-id # kpt-set: ${project-id}
   # The namespace in which to manage service enablement resources
   projects-namespace: projects # kpt-set: ${projects-namespace}
   # The group in which to manage the list of groups that can be used for RBAC.

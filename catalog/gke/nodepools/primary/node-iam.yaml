@@ -19,7 +19,7 @@ metadata:
   namespace: config-control # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/gke:gke-nodepool/v0.3.0
-    cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   displayName: gke-example-us-east4-primary # kpt-set: gke-${cluster-name}-${nodepool-name}
 ---
@@ -39,7 +39,7 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: platform-project-id # kpt-set: ${platform-project-id}
+    external: project-id # kpt-set: ${project-id}
   role: roles/logging.logWriter
 ---
 # Allow fluentd to send metrics to StackDriver
@@ -58,10 +58,10 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: platform-project-id # kpt-set: ${platform-project-id}
+    external: project-id # kpt-set: ${project-id}
   role: roles/monitoring.metricWriter
 ---
-# Allow kubelet/docker/containerd to read all artifacts/images in the platform-project-id project
+# Allow kubelet/docker/containerd to read all artifacts/images in the project-id project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
@@ -77,5 +77,5 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: platform-project-id # kpt-set: ${platform-project-id}
+    external: project-id # kpt-set: ${project-id}
   role: roles/artifactregistry.reader

@@ -81,12 +81,15 @@ spec:
     masterIpv4CidrBlock: 10.254.0.0/28 # kpt-set: ${master-ip-range}
   # Enable dataplane V2
   datapathProvider: ADVANCED_DATAPATH
+  # Enable logging
   loggingConfig:
     enableComponents:
-    - WORKLOADS
+      - "SYSTEM_COMPONENTS"
+      - "WORKLOADS"
+  # Enable monitoring
   monitoringConfig:
     enableComponents:
-    - SYSTEM_COMPONENTS
+      - "SYSTEM_COMPONENTS"
   # Default to the REGULAR channel.
   # Use RAPID for faster access to features and fixes.
   # Use STABLE for less disruption.

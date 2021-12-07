@@ -56,7 +56,9 @@ spec:
   # Use VPC-native networking by default, with named secondary IP ranges.
   ipAllocationPolicy:
     clusterIpv4CidrBlock: pod-ip-range # kpt-set: ${pod-ip-range}
+    clusterSecondaryRangeName: pods
     servicesIpv4CidrBlock: service-ip-range # kpt-set: ${service-ip-range}
+    servicesSecondaryRangeName: services
   location: us-east4 # kpt-set: ${location}
   # Allow internet access to the GKE control plane by default.
   # This default is a deliberate compromise for ease of use over security.

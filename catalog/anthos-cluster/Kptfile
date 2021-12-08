@@ -7,9 +7,9 @@ metadata:
 upstream:
   type: git
   git:
-    repo: https://github.com/GoogleCloudPlatform/blueprints
+    repo: https://github.com:kaariger/blueprints
     directory: /catalog/gke
-    ref: v0.3.0
+    ref: gke-bp-m1
   updateStrategy: resource-merge
 upstreamLock:
   type: git

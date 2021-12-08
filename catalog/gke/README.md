@@ -9,17 +9,16 @@ For a full tutorial, see
 
 ```
 Setter               Usages
-cluster-name         14
-location             3
+cluster-name         13
+location             2
 master-ip-range      1
-max-node-count       2
-network-name         1
-network-project-id   1
-nodepool-name        12
-platform-namespace   10
+max-node-count       1
+network-ref          1
+nodepool-name        11
+platform-namespace   9
 pods-range-name      1
-project-id           10
-projects-namespace   2
+project-id           9
+projects-namespace   1
 security-group       1
 services-range-name  1
 subnet-ref           1

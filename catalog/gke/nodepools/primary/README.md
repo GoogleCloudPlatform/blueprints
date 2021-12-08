@@ -6,13 +6,13 @@ A GKE node pool with a dedicated service account
 
 ```
 Setter              Usages
-cluster-name        12
-location            2
-max-node-count      2
-nodepool-name       12
-platform-namespace  9
-project-id          6
-projects-namespace  1
+cluster-name        11
+location            1
+max-node-count      1
+nodepool-name       11
+platform-namespace  8
+project-id          5
+projects-namespace  0
 ```
 
 ## Sub-packages

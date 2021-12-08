@@ -9,8 +9,7 @@ Setter               Usages
 cluster-name         2
 location             1
 master-ip-range      1
-network-name         1
-network-project-id   1
+network-ref          1
 platform-namespace   1
 pods-range-name      1
 project-id           4

@@ -18,16 +18,16 @@ metadata:
   name: setters
 data:
   # The name of the cluster to attach this node pool to
-  cluster-name: example-us-east4 # kpt-set: ${cluster-name}
-  # The compute location (region or zone)
-  location: us-east4 # kpt-set: ${location}
+  cluster-name: example-us-east4
+  # The compute location (region for a regional cluster or zone for a zonal cluster)
+  location: us-east4
   # The maximum nodes per zone for this pool
-  max-node-count: "2" # kpt-set: ${max-node-count}
+  max-node-count: "2"
   # The name of this node pool
-  nodepool-name: primary # kpt-set: ${nodepool-name}
+  nodepool-name: primary
   # The namespace in which to manage cluster resources
-  platform-namespace: config-control # kpt-set: ${platform-namespace}
+  platform-namespace: config-control
   # The project in which to manage cluster resources
-  platform-project-id: platform-project-id # kpt-set: ${platform-project-id}
+  project-id: project-id
   # The namespace in which to manage service enablement resources
-  projects-namespace: projects # kpt-set: ${projects-namespace}
+  projects-namespace: projects

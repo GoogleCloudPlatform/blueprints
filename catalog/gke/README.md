@@ -1,37 +1,30 @@
 # GKE blueprint
 
-A GKE cluster with a primary node pool and a dedicated subnet.
-
-For a full tutorial, see
-[Managing GKE clusters with ConfigController](https://cloud.google.com/anthos-config-management/docs/tutorials/gke-cluster-blueprint).
+A GKE cluster with a primary node pool. An existing subnet needs to be provided where the cluster should be created.
 
 ## Setters
 
 ```
-Setter                Usages
-cluster-name          19
-environment           2
-location              6
-master-ip-range       2
-max-node-count        2
-networking-namespace  4
-network-name          4
-network-project-id    5
-node-ip-range         2
-nodepool-name         12
-platform-namespace    11
-platform-project-id   15
-pod-ip-range          2
-projects-namespace    3
-security-group        2
-service-ip-range      2
+Setter               Usages
+cluster-name         13
+location             2
+master-ip-range      1
+max-node-count       1
+network-ref          1
+nodepool-name        11
+platform-namespace   9
+pods-range-name      1
+project-id           9
+projects-namespace   1
+security-group       1
+services-range-name  1
+subnet-ref           1
 ```
 
 ## Sub-packages
 
 - [cluster](/catalog/gke/cluster)
 - [nodepools/primary](/catalog/gke/nodepools/primary)
-- [subnet](/catalog/gke/subnet)
 
 ## Resources
 

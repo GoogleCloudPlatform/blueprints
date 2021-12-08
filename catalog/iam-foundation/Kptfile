@@ -11,16 +11,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# Enable the Container service in the platform project
-apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
-kind: Service
+apiVersion: kpt.dev/v1
+kind: Kptfile
 metadata:
-  # Use a unique name to avoid overlap with other cluster package instances.
-  name: project-id-cluster-name-container # kpt-set: ${project-id}-${cluster-name}-container
-  namespace: projects # kpt-set: ${projects-namespace}
+  name: iam-foundation
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gke:gke-cluster/v0.3.0
-    cnrm.cloud.google.com/deletion-policy: abandon
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
-spec:
-  resourceID: container.googleapis.com
+    blueprints.cloud.google.com/title: Organizational Foundational IAM
+info:
+  description: This blueprint sets up recommended IAM roles for an enterprise organization in Google Cloud.
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml
+    - image: gcr.io/kpt-fn/set-namespace:v0.1
+      configMap:
+        namespace: config-control

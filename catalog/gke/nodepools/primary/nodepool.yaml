@@ -18,7 +18,7 @@ metadata:
   namespace: config-control # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/gke:gke-nodepool/v0.3.0
-    cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   autoscaling:
     # maxNodeCount is per-zone, for regional clusters
@@ -49,10 +49,8 @@ spec:
     diskType: pd-ssd
     # Default to e2, the most modern & efficient machine type family.
     machineType: e2-standard-16
-    # Explicit scopes are required when using a custom serice account.
+    # Set the scope to cloud platform and use IAM to manage permissions
     oauthScopes:
-      - storage-ro
-      - https://www.googleapis.com/auth/logging.write
-      - https://www.googleapis.com/auth/monitoring
+      - https://www.googleapis.com/auth/cloud-platform
     serviceAccountRef:
       name: gke-example-us-east4-primary # kpt-set: gke-${cluster-name}-${nodepool-name}

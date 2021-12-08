@@ -1,0 +1,172 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: security-admins-org-policy
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    blueprints.cloud.google.com/description: This grants permission to set organizational policy constraints.
+  namespace: config-control
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # kpt-set: ${org-id}
+  role: roles/orgpolicy.policyAdmin
+  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: security-admins-security-reviewer
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    blueprints.cloud.google.com/description: This grants permissions to view all resources for the organization, and to view the IAM policies that apply to them.
+  namespace: config-control
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # kpt-set: ${org-id}
+  role: roles/iam.securityReviewer
+  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: security-admins-custom-roles
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    blueprints.cloud.google.com/description: This grants permissions to view all custom IAM roles in the organization, and to view the projects that they apply to.
+  namespace: config-control
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # kpt-set: ${org-id}
+  role: roles/iam.roleViewer
+  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: security-admins-scc
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    blueprints.cloud.google.com/description: This grants administrator access to the Security Command Center.
+  namespace: config-control
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # kpt-set: ${org-id}
+  role: roles/securitycenter.admin
+  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: security-admins-folder-iam
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    blueprints.cloud.google.com/description: This grants permissions to set folder-level IAM policies.
+  namespace: config-control
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # kpt-set: ${org-id}
+  role: roles/resourcemanager.folderIamAdmin
+  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: security-admins-private-logs
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    blueprints.cloud.google.com/description: This grants read-only access to Cloud Logging features, including the ability to read private logs.
+  namespace: config-control
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # kpt-set: ${org-id}
+  role: roles/logging.privateLogViewer
+  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: security-admins-log-config
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    blueprints.cloud.google.com/description: This grants permissions to create logs-based metrics and export sinks.
+  namespace: config-control
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # kpt-set: ${org-id}
+  role: roles/logging.configWriter
+  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: security-admins-gke
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    blueprints.cloud.google.com/description: This grants read-only access to Google Kubernetes Engine resources.
+  namespace: config-control
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # kpt-set: ${org-id}
+  role: roles/container.viewer
+  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: security-admins-gce
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    blueprints.cloud.google.com/description: This grants read-only access to Compute Engine resources.
+  namespace: config-control
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # kpt-set: ${org-id}
+  role: roles/compute.viewer
+  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: security-admins-bq
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    blueprints.cloud.google.com/description: This grants read-only access to BigQuery datasets.
+  namespace: config-control
+spec:
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # kpt-set: ${org-id}
+  role: roles/bigquery.dataViewer
+  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}

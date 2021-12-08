@@ -10,20 +10,19 @@ For a full tutorial, see
 ```
 Setter               Usages
 cluster-name         14
-environment          1
-location             4
+location             3
 master-ip-range      1
 max-node-count       2
 network-name         1
-network-project-id   2
+network-project-id   1
 nodepool-name        12
 platform-namespace   10
 pods-range-name      1
 project-id           10
 projects-namespace   2
-security-group       2
+security-group       1
 services-range-name  1
-subnet-name          1
+subnet-ref           1
 ```
 
 ## Sub-packages

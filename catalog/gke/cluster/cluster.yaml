@@ -17,8 +17,6 @@ metadata:
   name: example-us-east4 # kpt-set: ${cluster-name}
   namespace: config-control # kpt-set: ${platform-namespace}
   labels:
-    # Label with the environment to allow listing clusters by environment.
-    gke.io/environment: dev # kpt-set: ${environment}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/gke:gke-cluster/v0.3.0
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
@@ -62,7 +60,7 @@ spec:
       - cidrBlock: 0.0.0.0/0
         displayName: Whole Internet
   networkRef:
-    external: projects/network-project-id/global/networks/default # kpt-set: projects/${network-project-id}/global/networks/${network-name}
+    external: projects/network-project-id/global/networks/default # kpt-set: ${network-ref}
   privateClusterConfig:
     # Allow public access to the GKE control plane by default.
     # This default is a deliberate compromise for ease of use over security.

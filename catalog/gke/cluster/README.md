@@ -7,18 +7,17 @@ A GKE cluster with public masters and private nodes
 ```
 Setter               Usages
 cluster-name         2
-environment          1
-location             2
+location             1
 master-ip-range      1
 network-name         1
-network-project-id   2
+network-project-id   1
 platform-namespace   1
 pods-range-name      1
 project-id           4
 projects-namespace   1
-security-group       2
+security-group       1
 services-range-name  1
-subnet-name          1
+subnet-ref           1
 ```
 
 ## Sub-packages

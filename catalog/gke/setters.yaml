@@ -23,7 +23,9 @@ data:
   location: us-east4
   # The private IP range for masters to use when peering to the VPC
   master-ip-range: 10.254.0.0/28
-  # The reference to the sub network
+  # The reference to the network
+  network-ref: projects/network-project-id/global/networks/default
+  # The reference to the subnet
   subnet-ref: default
   # The namespace in which to manage cluster resources
   platform-namespace: config-control

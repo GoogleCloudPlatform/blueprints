@@ -19,7 +19,7 @@ metadata:
 data:
   # The name of the cluster to attach this node pool to
   cluster-name: example-us-east4 # kpt-set: ${cluster-name}
-  # The compute location (region or zone)
+  # The compute location (region for a regional cluster or zone for a zonal cluster)
   location: us-east4 # kpt-set: ${location}
   # The maximum nodes per zone for this pool
   max-node-count: "2" # kpt-set: ${max-node-count}

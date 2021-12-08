@@ -16,7 +16,6 @@ kind: ContainerCluster
 metadata:
   name: example-us-east4 # kpt-set: ${cluster-name}
   namespace: config-control # kpt-set: ${platform-namespace}
-  labels:
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/gke:gke-cluster/v0.3.0
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}

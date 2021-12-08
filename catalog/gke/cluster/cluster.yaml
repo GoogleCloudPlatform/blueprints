@@ -37,10 +37,6 @@ spec:
     # https://cloud.google.com/kubernetes-engine/docs/how-to/persistent-volumes/gce-pd-csi-driver
     gcePersistentDiskCsiDriverConfig:
       enabled: true
-    # Network Policy does not need to be enabled explicitly when using Dataplane V2, it's always on
-    # https://cloud.google.com/kubernetes-engine/docs/how-to/network-policy
-    networkPolicyConfig:
-      disabled: true
   # Enable Groups for GKE, to allow role binding to Google Groups.
   authenticatorGroupsConfig:
     securityGroup: gke-security-group@example.com # kpt-set: ${security-group}
@@ -100,7 +96,7 @@ spec:
   # Use a dedicated subnet by default, to increase isolation and allow for
   # cluster-specific firewalls.
   subnetworkRef:
-    external: projects/network-project-id/regions/us-west4/subnetworks/default # kpt-set: projects/${network-project-id}/regions/${location}/subnetworks/${subnet-name}
+    external: projects/network-project-id/regions/us-west4/subnetworks/default # kpt-set: ${subnet-ref}
   # Enable Vertical Pod Autoscaling by default.
   # https://cloud.google.com/kubernetes-engine/docs/concepts/verticalpodautoscaler
   verticalPodAutoscaling:

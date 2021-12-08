@@ -18,25 +18,23 @@ metadata: # kpt-merge: /setters
   name: setters
 data:
   # The name of this cluster
-  cluster-name: example-us-west4 # kpt-set: ${cluster-name}
+  cluster-name: example-us-west4
   # The environment (set as a label on the cluster)
-  environment: dev # kpt-set: ${environment}
+  environment: dev
   # The compute location (region or zone)
-  location: us-east4 # kpt-set: ${location}
+  location: us-east4
   # The private IP range for masters to use when peering to the VPC
-  master-ip-range: 10.254.0.0/28 # kpt-set: ${master-ip-range}
+  master-ip-range: 10.254.0.0/28
   # The name of the VPC in which to create this cluster
-  network-name: default # kpt-set: ${network-name}
+  network-name: default
   # The project that the VPC is in
-  network-project-id: network-project-id # kpt-set: ${network-project-id}
-  # The namespace in which to reference the subnet resource
-  networking-namespace: networking # kpt-set: ${networking-namespace}
+  network-project-id: network-project-id
   # The namespace in which to manage cluster resources
-  platform-namespace: config-control # kpt-set: ${platform-namespace}
-  # The project in which to manage cluster resources
-  platform-project-id: platform-project-id # kpt-set: ${platform-project-id}
+  platform-namespace: config-control
   # The namespace in which to manage service enablement resources
-  projects-namespace: projects # kpt-set: ${projects-namespace}
+  projects-namespace: projects
   # The group in which to manage the list of groups that can be used for RBAC.
   # Must be named exactly 'gke-security-groups'.
   security-group: gke-security-group@example.com # kpt-set: ${security-group}
+  # The project in which to manage cluster resources
+  project-id: project-id

@@ -29,23 +29,13 @@ data:
   network-name: default
   # The project that the VPC is in
   network-project-id: network-project-id
-  # The namespace in which to manage network resources
-  networking-namespace: config-control
-  # The private IP range for nodes to use, allocated to the dedicated subnet
-  node-ip-range: 10.3.4.0/22
   # The namespace in which to manage cluster resources
   platform-namespace: config-control
-  # The project in which to manage cluster resources
-  platform-project-id: platform-project-id
-  # The private IP range for pods to use, allocated to the dedicated subnet
-  pod-ip-range: 172.17.0.0/16
   # The namespace in which to manage service enablement resources
   projects-namespace: projects
   # The group in which to manage the list of groups that can be used for RBAC.
   # Must be named exactly 'gke-security-groups'.
-  security-group: gke-security-group@example.com
-  # The private IP range for services to use, allocated to the dedicated subnet
-  service-ip-range: 172.18.0.0/16
+  security-group: gke-security-groups@example.com
   # ACM version to install
   acm-version: 1.9.0
   # The URL for the repo for ACM (Config Sync)
@@ -54,3 +44,11 @@ data:
   policy-dir: config/root
   # The reference for the repo e.g. projects/${project}}/repos/${name}. Used to grant access to the ACM SA
   sync-repo-ref: projects/project-id/repos/repo-name
+  # The private IP range name for pods to use, this range must already exist
+  pods-range-name: pods
+  # The project in which to manage cluster resources
+  project-id: project-id
+  # The private IP range name for services to use, this range must already exist
+  services-range-name: services
+  # The names of the sub network
+  subnet-name: default

@@ -27,7 +27,7 @@ data:
   nodepool-name: primary # kpt-set: ${nodepool-name}
   # The namespace in which to manage cluster resources
   platform-namespace: config-control # kpt-set: ${platform-namespace}
-  # The project in which to manage cluster resources
-  platform-project-id: platform-project-id # kpt-set: ${platform-project-id}
   # The namespace in which to manage service enablement resources
   projects-namespace: projects # kpt-set: ${projects-namespace}
+  # The project in which to manage cluster resources
+  project-id: project-id # kpt-set: ${project-id}

@@ -19,12 +19,12 @@ metadata:
 data:
   # The name of this cluster
   cluster-name: example-us-west4
-  # The compute location (region or zone)
+  # The compute location (region for a regional cluster or zone for a zonal cluster)
   location: us-east4
   # The private IP range for masters to use when peering to the VPC
   master-ip-range: 10.254.0.0/28
   # The name of the VPC in which to create this cluster
-  network-name: default
+  network-ref: projects/network-project-id/global/networks/default
   # The namespace in which to manage cluster resources
   platform-namespace: config-control
   # The project in which to manage cluster resources

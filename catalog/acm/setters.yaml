@@ -24,7 +24,7 @@ data:
   # The namespace in which to create Kubernetes CRDs representing cluster resources e.g. config-control
   platform-namespace: config-control
   # The project in which to manage cluster resources
-  platform-project-id: platform-project-id
+  project-id: project-id
   # The URL for the repo for ACM (Config Sync)
   sync-repo: https://source.developers.google.com/p/{project_id}/r/{repo}
   # The reference for the repo e.g. projects/${project}}/repos/${name}. Used to grant access to the ACM SA

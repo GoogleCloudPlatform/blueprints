@@ -25,6 +25,8 @@ data:
   master-ip-range: 10.254.0.0/28
   # The name of the VPC in which to create this cluster
   network-ref: projects/network-project-id/global/networks/default
+  # The reference to the subnet
+  subnet-ref: projects/network-project-id/regions/region/subnetworks/default
   # The namespace in which to manage cluster resources
   platform-namespace: config-control
   # The project in which to manage cluster resources

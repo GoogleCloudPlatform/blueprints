@@ -26,7 +26,7 @@ data:
   # The reference to the network
   network-ref: projects/network-project-id/global/networks/default
   # The reference to the subnet
-  subnet-ref: default
+  subnet-ref: projects/network-project-id/regions/region/subnetworks/default
   # The namespace in which to manage cluster resources
   platform-namespace: config-control
   # The project in which to manage cluster resources

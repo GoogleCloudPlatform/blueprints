@@ -7,7 +7,7 @@ metadata:
 upstream:
   type: git
   git:
-    repo: https://github.com:kaariger/blueprints
+    repo: https://github.com/kaariger/blueprints
     directory: /catalog/gke
     ref: gke-bp-m1
   updateStrategy: resource-merge

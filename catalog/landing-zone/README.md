@@ -58,6 +58,7 @@ namespaces/policies.yaml                         iam.cnrm.cloud.google.com/v1bet
 namespaces/policies.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMServiceAccount       policies-sa                                        config-control
 namespaces/policies.yaml                         v1                                             Namespace               policies
 namespaces/projects.yaml                         core.cnrm.cloud.google.com/v1beta1             ConfigConnectorContext  configconnectorcontext.core.cnrm.cloud.google.com  projects
+namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         projects-sa-projectiamadmin-permissions            config-control
 namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         projects-sa-billinguser-permissions                config-control
 namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         projects-sa-projectcreator-permissions             config-control
 namespaces/projects.yaml                         iam.cnrm.cloud.google.com/v1beta1              IAMPartialPolicy         projects-sa-projectdeleter-permissions             config-control
@@ -79,6 +80,8 @@ policies/restrict-cloud-sql-public-ip.yaml       resourcemanager.cnrm.cloud.goog
 policies/restrict-lien-removal.yaml              resourcemanager.cnrm.cloud.google.com/v1beta1  ResourceManagerPolicy   restrict-lien-removal                              policies
 policies/skip-default-network.yaml               resourcemanager.cnrm.cloud.google.com/v1beta1  ResourceManagerPolicy   skip-default-network                               policies
 services.yaml                                    serviceusage.cnrm.cloud.google.com/v1beta1     Service                 management-project-id-cloudbilling                 config-control
+services.yaml                                    serviceusage.cnrm.cloud.google.com/v1beta1     Service                 management-project-id-resourcemanager              config-control
+services.yaml                                    serviceusage.cnrm.cloud.google.com/v1beta1     Service                 management-project-id-serviceusage                 config-control
 ```
 
 ## Resource References

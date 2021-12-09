@@ -17,7 +17,7 @@ metadata:
   name: management-project-id-cloudbilling # kpt-set: ${management-project-id}-cloudbilling
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.4.0
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
@@ -29,7 +29,7 @@ metadata:
   name: management-project-id-resourcemanager # kpt-set: ${management-project-id}-resourcemanager
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.4.0
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
@@ -41,7 +41,7 @@ metadata:
   name: management-project-id-serviceusage # kpt-set: ${management-project-id}-serviceusage
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.4.0
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:

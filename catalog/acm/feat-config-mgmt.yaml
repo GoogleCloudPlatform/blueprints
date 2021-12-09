@@ -18,10 +18,10 @@ metadata:
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
-    cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   projectRef:
-    external: platform-project-id # kpt-set: ${platform-project-id}
+    external: project-id # kpt-set: ${project-id}
   location: global
   # The resourceID must be "configmanagement" if you want to use Anthos Config Management feature.
   resourceID: configmanagement

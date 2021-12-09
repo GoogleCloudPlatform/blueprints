@@ -3,3 +3,4 @@
 credentials.json
 *.credentials.json
 **/.build/*
+utils/util-env/*

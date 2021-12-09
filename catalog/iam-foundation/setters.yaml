@@ -11,23 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: setters
+  name: iam-setters
+  annotations:
+    config.kubernetes.io/local-config: "true"
 data:
-  # The name of the cluster to attach this node pool to
-  cluster-name: example-us-east4
-  # The compute location (region for a regional cluster or zone for a zonal cluster)
-  location: us-east4
-  # The maximum nodes per zone for this pool
-  max-node-count: "2"
-  # The name of this node pool
-  nodepool-name: primary
-  # The namespace in which to manage cluster resources
-  platform-namespace: config-control
-  # The project in which to manage cluster resources
-  project-id: project-id
-  # The namespace in which to manage service enablement resources
-  projects-namespace: projects
+  org-id: 123456789012
+  group-org-admins: gcp-organization-admins@example.com
+  group-security-admins: gcp-security-admins@example.com
+  group-network-admins: gcp-network-admins@example.com
+  group-devops: gcp-devops@example.com

@@ -16,12 +16,9 @@ kind: ContainerCluster
 metadata:
   name: example-us-east4 # kpt-set: ${cluster-name}
   namespace: config-control # kpt-set: ${platform-namespace}
-  labels:
-    # Label with the environment to allow listing clusters by environment.
-    gke.io/environment: dev # kpt-set: ${environment}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/gke:gke-cluster/v0.3.0
-    cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     # Remove the default node pool after bootstrapping.
     # Explcit node pool configuration allows for more isolation and makes it
     # easier to replace node pools to change immutable fields.
@@ -37,10 +34,6 @@ spec:
     # https://cloud.google.com/kubernetes-engine/docs/how-to/persistent-volumes/gce-pd-csi-driver
     gcePersistentDiskCsiDriverConfig:
       enabled: true
-    # Enable Network Policy by default, for increased security.
-    # https://cloud.google.com/kubernetes-engine/docs/how-to/network-policy
-    networkPolicyConfig:
-      disabled: false
   # Enable Groups for GKE, to allow role binding to Google Groups.
   authenticatorGroupsConfig:
     securityGroup: gke-security-group@example.com # kpt-set: ${security-group}
@@ -55,8 +48,8 @@ spec:
   initialNodeCount: 1
   # Use VPC-native networking by default, with named secondary IP ranges.
   ipAllocationPolicy:
-    clusterSecondaryRangeName: pods
-    servicesSecondaryRangeName: services
+    clusterSecondaryRangeName: pods # kpt-set: ${pods-range-name}
+    servicesSecondaryRangeName: services # kpt-set: ${services-range-name}
   location: us-east4 # kpt-set: ${location}
   # Allow internet access to the GKE control plane by default.
   # This default is a deliberate compromise for ease of use over security.
@@ -66,7 +59,7 @@ spec:
       - cidrBlock: 0.0.0.0/0
         displayName: Whole Internet
   networkRef:
-    external: projects/network-project-id/global/networks/default # kpt-set: projects/${network-project-id}/global/networks/${network-name}
+    external: projects/network-project-id/global/networks/default # kpt-set: ${network-ref}
   privateClusterConfig:
     # Allow public access to the GKE control plane by default.
     # This default is a deliberate compromise for ease of use over security.
@@ -79,6 +72,18 @@ spec:
     masterGlobalAccessConfig:
       enabled: true
     masterIpv4CidrBlock: 10.254.0.0/28 # kpt-set: ${master-ip-range}
+  # Enable dataplane V2
+  # https://cloud.google.com/kubernetes-engine/docs/concepts/dataplane-v2
+  datapathProvider: ADVANCED_DATAPATH
+  # Enable logging
+  loggingConfig:
+    enableComponents:
+      - "SYSTEM_COMPONENTS"
+      - "WORKLOADS"
+  # Enable monitoring
+  monitoringConfig:
+    enableComponents:
+      - "SYSTEM_COMPONENTS"
   # Default to the REGULAR channel.
   # Use RAPID for faster access to features and fixes.
   # Use STABLE for less disruption.
@@ -88,12 +93,11 @@ spec:
   # Use a dedicated subnet by default, to increase isolation and allow for
   # cluster-specific firewalls.
   subnetworkRef:
-    name: platform-project-id-example-us-east4 # kpt-set: ${platform-project-id}-${cluster-name}
-    namespace: networking # kpt-set: ${networking-namespace}
+    external: projects/network-project-id/regions/us-west4/subnetworks/default # kpt-set: ${subnet-ref}
   # Enable Vertical Pod Autoscaling by default.
   # https://cloud.google.com/kubernetes-engine/docs/concepts/verticalpodautoscaler
   verticalPodAutoscaling:
     enabled: true
   # Enable workload identity by default.
   workloadIdentityConfig:
-    identityNamespace: platform-project-id.svc.id.goog # kpt-set: ${platform-project-id}.svc.id.goog
+    identityNamespace: project-id.svc.id.goog # kpt-set: ${project-id}.svc.id.goog

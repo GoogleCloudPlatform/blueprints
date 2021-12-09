@@ -11,16 +11,18 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# Enable the Container service in the platform project
-apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
-kind: Service
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
 metadata:
-  # Use a unique name to avoid overlap with other cluster package instances.
-  name: project-id-cluster-name-container # kpt-set: ${project-id}-${cluster-name}-container
-  namespace: projects # kpt-set: ${projects-namespace}
+  name: foundation-devops-folders
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gke:gke-cluster/v0.3.0
-    cnrm.cloud.google.com/deletion-policy: abandon
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    blueprints.cloud.google.com/description: This grants permissions to view folders.
+  namespace: config-control
 spec:
-  resourceID: container.googleapis.com
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Organization
+    external: "123456789012" # kpt-set: ${org-id}
+  role: roles/resourcemanager.folderViewer
+  member: group:gcp-devops@example.com # kpt-set: group:${group-devops}

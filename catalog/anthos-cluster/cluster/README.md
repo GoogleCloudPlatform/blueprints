@@ -40,7 +40,7 @@ container-api.yaml  serviceusage.cnrm.cloud.google.com/v1beta1  Service         
 
 1.  Clone the package:
     ```
-    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/gke/cluster@${VERSION}
+    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/anthos-cluster/cluster@${VERSION}
     ```
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).

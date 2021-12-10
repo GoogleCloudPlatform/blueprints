@@ -27,6 +27,4 @@ spec:
   endpoint:
     gkeCluster:
       resourceRef:
-        name: example-us-east4 # kpt-set: ${cluster-name}
-        namespace: config-control # kpt-set: ${platform-namespace}
         external: //container.googleapis.com/projects/project-id/locations/location/clusters/cluster-name # kpt-set: //container.googleapis.com/projects/${project-id}/locations/${location}/clusters/${cluster-name}

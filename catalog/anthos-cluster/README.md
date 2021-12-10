@@ -1,4 +1,4 @@
-# GKE blueprint
+# Anthos cluster blueprint
 
 A GKE cluster with a primary node pool. An existing subnet needs to be provided where the cluster should be created.
 
@@ -6,25 +6,30 @@ A GKE cluster with a primary node pool. An existing subnet needs to be provided 
 
 ```
 Setter               Usages
-cluster-name         13
-location             2
+acm-version          0
+cluster-name         29
+location             4
 master-ip-range      1
 max-node-count       1
 network-ref          1
 nodepool-name        11
-platform-namespace   9
+platform-namespace   17
 pods-range-name      1
-project-id           9
+policy-dir           1
+project-id           27
 projects-namespace   1
 security-group       1
 services-range-name  1
 subnet-ref           1
+sync-repo            1
+sync-repo-ref        1
 ```
 
 ## Sub-packages
 
-- [cluster](/catalog/gke/cluster)
-- [nodepools/primary](/catalog/gke/nodepools/primary)
+- [acm](/catalog/anthos-cluster/acm)
+- [cluster](/catalog/anthos-cluster/cluster)
+- [nodepools/primary](/catalog/anthos-cluster/nodepools/primary)
 
 ## Resources
 
@@ -38,14 +43,14 @@ This package has no top-level resources. See sub-packages.
 
 1.  Clone the package:
     ```
-    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/gke@${VERSION}
+    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/anthos-cluster@${VERSION}
     ```
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).
 
 1.  Move into the local package:
     ```
-    cd "./gke/"
+    cd "./anthos-cluster/"
     ```
 
 1.  Edit the function config file(s):

@@ -18,14 +18,15 @@ metadata: # kpt-merge: platform-namespace/membership-name
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
-    cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   location: global
   authority:
     # Issuer must contain a link to a valid JWT issuer.
-    issuer: https://container.googleapis.com/v1/projects/platform-project-id/locations/location/clusters/cluster-name # kpt-set: https://container.googleapis.com/v1/projects/${platform-project-id}/locations/${location}/clusters/${cluster-name}
+    issuer: https://container.googleapis.com/v1/projects/project-id/locations/location/clusters/cluster-name # kpt-set: https://container.googleapis.com/v1/projects/${project-id}/locations/${location}/clusters/${cluster-name}
   endpoint:
     gkeCluster:
       resourceRef:
         name: example-us-east4 # kpt-set: ${cluster-name}
         namespace: config-control # kpt-set: ${platform-namespace}
+        external: //container.googleapis.com/projects/project-id/locations/location/clusters/cluster-name # kpt-set: //container.googleapis.com/projects/${project-id}/locations/${location}/clusters/${cluster-name}

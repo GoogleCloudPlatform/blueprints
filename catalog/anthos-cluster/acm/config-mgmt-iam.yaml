@@ -20,7 +20,7 @@ metadata: # kpt-merge: platform-namespace/sa-acm-gke-cluster
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
-    cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   displayName: sa-acm-gke-cluster # kpt-set: sa-acm-${cluster-name}
   description: For use with ACM to provide read access to Cloud Source Repositories
@@ -33,7 +33,7 @@ metadata: # kpt-merge: platform-namespace/sa-acm-gke-cluster
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
-    cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceRef:
     name: sa-acm-gke-cluster # kpt-set: sa-acm-${cluster-name}
@@ -42,17 +42,17 @@ spec:
   bindings:
     - role: roles/iam.workloadIdentityUser
       members:
-        - member: serviceAccount:platform-project-id.svc.id.goog[config-management-system/root-reconciler] # kpt-set: serviceAccount:${platform-project-id}.svc.id.goog[config-management-system/root-reconciler]
+        - member: serviceAccount:project-id.svc.id.goog[config-management-system/root-reconciler] # kpt-set: serviceAccount:${project-id}.svc.id.goog[config-management-system/root-reconciler]
 ---
 # Allow ACM GSA to read from CSR repos in the CSR project
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
-metadata: # kpt-merge: platform-namespace/source-reader-sync-cluster-name-platform-project-id
-  name: source-reader-sync-cluster-name-platform-project-id # kpt-set: source-reader-sync-${cluster-name}-${platform-project-id}
+metadata: # kpt-merge: platform-namespace/source-reader-sync-cluster-name-project-id
+  name: source-reader-sync-cluster-name-project-id # kpt-set: source-reader-sync-${cluster-name}-${project-id}
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
-    cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceRef:
     apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
@@ -61,4 +61,4 @@ spec:
   bindings:
     - role: roles/source.reader
       members:
-        - member: serviceAccount:sync-gke-cluster@platform-project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:sa-acm-${cluster-name}@${platform-project-id}.iam.gserviceaccount.com
+        - member: serviceAccount:sync-gke-cluster@project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:sa-acm-${cluster-name}@${project-id}.iam.gserviceaccount.com

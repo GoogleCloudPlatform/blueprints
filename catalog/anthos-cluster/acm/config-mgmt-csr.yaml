@@ -18,10 +18,10 @@ metadata: # kpt-merge: platform-namespace/feature-membership-name
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${platform-project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   projectRef:
-    external: platform-project-id # kpt-set: ${platform-project-id}
+    external: project-id # kpt-set: ${project-id}
   location: global
   membershipRef:
     name: membership-name # kpt-set: hub-membership-${cluster-name}
@@ -37,7 +37,7 @@ spec:
         policyDir: config/root # kpt-set: ${policy-dir}
         secretType: gcpserviceaccount
         gcpServiceAccountRef:
-          external: sa-acm-cluster-name@platform-project-id.iam.gserviceaccount.com # kpt-set: sa-acm-${cluster-name}@${platform-project-id}.iam.gserviceaccount.com
+          external: sa-acm-cluster-name@project-id.iam.gserviceaccount.com # kpt-set: sa-acm-${cluster-name}@${project-id}.iam.gserviceaccount.com
     policyController:
       enabled: true
       referentialRulesEnabled: true

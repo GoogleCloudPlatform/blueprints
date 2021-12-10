@@ -14,13 +14,13 @@ upstream:
 upstreamLock:
   type: git
   git:
-    repo: https://github.com/kaariger/blueprints
+    repo: https://github.com/GoogleCloudPlatform/blueprints
     directory: /catalog/gke
-    ref: gke-bp-m1
-    commit: b648821c9739ae07bd5386d8f24e39601146f44e
+    ref: main
+    commit: f0d690ae0003f73aef68f885c0df5d2215e6beea
 info:
   description: |
-    A blueprint to create an Anthos cluster and install Anthos Config Management (ACM) on the cluster. The ACM installation is done by enrolling the cluster into GKE Hub Membership, enabling and configuring the ACM feature.
+    A GKE cluster with a primary node pool. An existing subnet needs to be provided where the cluster should be created.
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1

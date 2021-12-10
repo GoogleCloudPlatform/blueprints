@@ -1,6 +1,6 @@
 # Anthos cluster blueprint
 
-A GKE cluster with a primary node pool. An existing subnet needs to be provided where the cluster should be created.
+A blueprint to create an Anthos cluster and install Anthos Config Management (ACM) on the cluster. The ACM installation is done by enrolling the cluster into GKE Hub Membership, enabling and configuring the ACM feature. An existing subnet needs to be provided where the cluster should be created.
 
 ## Setters
 

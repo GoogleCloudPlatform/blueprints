@@ -23,5 +23,5 @@ info:
     A GKE cluster with a primary node pool. An existing subnet needs to be provided where the cluster should be created.
 pipeline:
   mutators:
-    - image: gcr.io/kpt-fn/apply-setters:v0.1
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
       configPath: setters.yaml

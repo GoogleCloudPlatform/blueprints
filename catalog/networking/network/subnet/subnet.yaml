@@ -25,7 +25,7 @@ spec:
   logConfig:
     metadata: INCLUDE_ALL_METADATA
     aggregationInterval: INTERVAL_10_MIN
-    flowSampling: 0.5
+    flowSampling: 0.1
   networkRef:
     name: network-name # kpt-set: ${network-name}
   privateIpGoogleAccess: false

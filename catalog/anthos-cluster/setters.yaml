@@ -14,7 +14,7 @@
 
 apiVersion: v1
 kind: ConfigMap
-metadata: # kpt-merge: /setters
+metadata:
   name: setters
 data:
   # The name of this cluster

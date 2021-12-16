@@ -40,7 +40,7 @@ nodepool.yaml  container.cnrm.cloud.google.com/v1beta1  ContainerNodePool  examp
 
 1.  Clone the package:
     ```
-    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/anthos-cluster/nodepools/primary@${VERSION}
+    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/gke/nodepools/primary@${VERSION}
     ```
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).

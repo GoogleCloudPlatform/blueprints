@@ -72,6 +72,18 @@ spec:
     masterGlobalAccessConfig:
       enabled: true
     masterIpv4CidrBlock: 10.254.0.0/28 # kpt-set: ${master-ip-range}
+  # Enable dataplane V2
+  # https://cloud.google.com/kubernetes-engine/docs/concepts/dataplane-v2
+  datapathProvider: ADVANCED_DATAPATH
+  # Enable logging
+  loggingConfig:
+    enableComponents:
+      - "SYSTEM_COMPONENTS"
+      - "WORKLOADS"
+  # Enable monitoring
+  monitoringConfig:
+    enableComponents:
+      - "SYSTEM_COMPONENTS"
   # Default to the REGULAR channel.
   # Use RAPID for faster access to features and fixes.
   # Use STABLE for less disruption.
@@ -89,15 +101,3 @@ spec:
   # Enable workload identity by default.
   workloadIdentityConfig:
     identityNamespace: project-id.svc.id.goog # kpt-set: ${project-id}.svc.id.goog
-  # Enable dataplane V2
-  # https://cloud.google.com/kubernetes-engine/docs/concepts/dataplane-v2
-  datapathProvider: ADVANCED_DATAPATH
-  # Enable logging
-  loggingConfig:
-    enableComponents:
-      - "SYSTEM_COMPONENTS"
-      - "WORKLOADS"
-  # Enable monitoring
-  monitoringConfig:
-    enableComponents:
-      - "SYSTEM_COMPONENTS"

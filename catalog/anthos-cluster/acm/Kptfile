@@ -1,0 +1,27 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: acm
+  annotations:
+    blueprints.cloud.google.com/title: ACM blueprint
+upstream:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/blueprints
+    directory: /catalog/acm
+    ref: main
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/blueprints
+    directory: /catalog/acm
+    ref: main
+    commit: f0d690ae0003f73aef68f885c0df5d2215e6beea
+info:
+  description: |
+    A blueprint to install Anthos Config Management (ACM) on an existing GKE cluster. The installation is done by enrolling the cluster into GKE Hub Membership, enabling and configuring the ACM feature.
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

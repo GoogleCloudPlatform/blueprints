@@ -18,18 +18,21 @@ metadata: # kpt-merge: /setters
   name: setters
 data:
   # The name of this cluster
-  cluster-name: cluster-name
-  # The location for this cluster e.g. us-east4
+  cluster-name: example-us-west4
+  # The compute location (region for a regional cluster or zone for a zonal cluster)
   location: us-east4
-  # The namespace in which to create Kubernetes CRDs representing cluster resources e.g. config-control
+  # The private IP range for masters to use when peering to the VPC
+  master-ip-range: 10.254.0.0/28
+  # The name of the VPC in which to create this cluster
+  network-ref: projects/network-project-id/global/networks/default
+  # The reference to the subnet
+  subnet-ref: projects/network-project-id/regions/region/subnetworks/default
+  # The namespace in which to manage cluster resources
   platform-namespace: config-control
   # The project in which to manage cluster resources
   project-id: project-id
-  # The URL for the repo e.g. https://source.developers.google.com/p/${project-id}/r/${repo-name} for ACM (Config Sync)
-  sync-repo: https://source.developers.google.com/p/project_id/r/repo
-  # The reference for the repo e.g. projects/${project}/repos/${name}. Used to grant access to the ACM Service Account
-  sync-repo-ref: projects/project-id/repos/repo-name
-  # The directory in the repository to pull configs from e.g. config/root
-  policy-dir: config/root
-  # ACM version to install
-  acm-version: 1.9.0
+  # The namespace in which to manage service enablement resources
+  projects-namespace: projects
+  # The group in which to manage the list of groups that can be used for RBAC.
+  # Must be named exactly 'gke-security-groups'.
+  security-group: gke-security-groups@example.com

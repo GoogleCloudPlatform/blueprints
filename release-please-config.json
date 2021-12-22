@@ -47,6 +47,14 @@
       "catalog/iam-foundation": {
         "package-name": "iam-foundation-blueprint",
         "changelog-path": "CHANGELOG.md"
+      },
+      "catalog/acm": {
+        "package-name": "acm-blueprint",
+        "changelog-path": "CHANGELOG.md"
+      },
+      "catalog/anthos-cluster": {
+        "package-name": "anthos-cluster-blueprint",
+        "changelog-path": "CHANGELOG.md"
       }
     },
     "bootstrap-sha": "dc9e8fe511c009536064cb2b677e6ceff52f1b1f",

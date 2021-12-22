@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.4.1](https://www.github.com/GoogleCloudPlatform/blueprints/compare/gitops-blueprint-v0.4.0...gitops-blueprint-v0.4.1) (2021-12-22)
+
+
+### Bug Fixes
+
+* updates function name foe remove-annotated-resources ([#85](https://www.github.com/GoogleCloudPlatform/blueprints/issues/85)) ([1632e00](https://www.github.com/GoogleCloudPlatform/blueprints/commit/1632e00af3fe858c5e3b3f9e75c16e6327449155))
+
 ## [0.4.0](https://www.github.com/GoogleCloudPlatform/blueprints/compare/gitops-blueprint-v0.3.0...gitops-blueprint-v0.4.0) (2021-09-14)
 
 

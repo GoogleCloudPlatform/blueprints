@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.4.2](https://www.github.com/GoogleCloudPlatform/blueprints/compare/bucket-blueprint-v0.4.1...bucket-blueprint-v0.4.2) (2021-12-22)
+
+
+### Bug Fixes
+
+* Remove pre-v1 setter from bucket blueprint ([#81](https://www.github.com/GoogleCloudPlatform/blueprints/issues/81)) ([d32d5de](https://www.github.com/GoogleCloudPlatform/blueprints/commit/d32d5ded0a2c5521d8c1bd42447fed5c11c2ba55))
+
 ### [0.4.1](https://www.github.com/GoogleCloudPlatform/blueprints/compare/bucket-blueprint-v0.4.0...bucket-blueprint-v0.4.1) (2021-10-15)
 
 

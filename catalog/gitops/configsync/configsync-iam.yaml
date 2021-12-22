@@ -19,7 +19,7 @@ metadata:
   name: sync-cluster-name # kpt-set: sync-${cluster-name}
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gitops/configsync/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/gitops/configsync/v0.4.1
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   displayName: sync-cluster-name # kpt-set: sync-${cluster-name}
@@ -31,7 +31,7 @@ metadata:
   name: sync-cluster-name # kpt-set: sync-${cluster-name}
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gitops/configsync/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/gitops/configsync/v0.4.1
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceRef:
@@ -50,7 +50,7 @@ metadata:
   name: source-reader-sync-cluster-name-project-id # kpt-set: source-reader-sync-${cluster-name}-${project-id}
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gitops/configsync/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/gitops/configsync/v0.4.1
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceRef:

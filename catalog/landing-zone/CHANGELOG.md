@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://www.github.com/GoogleCloudPlatform/blueprints/compare/landing-zone-blueprint-v0.4.0...landing-zone-blueprint-v0.5.0) (2021-12-22)
+
+
+### Features
+
+* Implement landing-zone-lite and fix some issues in the existing LZ blueprints ([#93](https://www.github.com/GoogleCloudPlatform/blueprints/issues/93)) ([bdd20a5](https://www.github.com/GoogleCloudPlatform/blueprints/commit/bdd20a5f8a5ae54099a254835b8fce15946bf8e9))
+
 ## [0.4.0](https://www.github.com/GoogleCloudPlatform/blueprints/compare/landing-zone-blueprint-v0.3.0...landing-zone-blueprint-v0.4.0) (2021-09-14)
 
 

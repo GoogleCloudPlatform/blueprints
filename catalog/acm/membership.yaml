@@ -14,8 +14,8 @@
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubMembership
 metadata:
-  name: membership-name # kpt-set: hub-membership-${cluster-name}
-  namespace: platform-namespace # kpt-set: ${platform-namespace}
+  name: hub-membership-cluster-name # kpt-set: hub-membership-${cluster-name}
+  namespace: config-control # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
@@ -23,8 +23,8 @@ spec:
   location: global
   authority:
     # Issuer must contain a link to a valid JWT issuer.
-    issuer: https://container.googleapis.com/v1/projects/project-id/locations/location/clusters/cluster-name # kpt-set: https://container.googleapis.com/v1/projects/${project-id}/locations/${location}/clusters/${cluster-name}
+    issuer: https://container.googleapis.com/v1/projects/project-id/locations/us-east4/clusters/cluster-name # kpt-set: https://container.googleapis.com/v1/projects/${project-id}/locations/${location}/clusters/${cluster-name}
   endpoint:
     gkeCluster:
       resourceRef:
-        external: //container.googleapis.com/projects/project-id/locations/location/clusters/cluster-name # kpt-set: //container.googleapis.com/projects/${project-id}/locations/${location}/clusters/${cluster-name}
+        external: //container.googleapis.com/projects/project-id/locations/us-east4/clusters/cluster-name # kpt-set: //container.googleapis.com/projects/${project-id}/locations/${location}/clusters/${cluster-name}

@@ -2,6 +2,9 @@
 
 ## [0.1.0](https://www.github.com/GoogleCloudPlatform/blueprints/compare/acm-blueprint-v0.0.1...acm-blueprint-v0.1.0) (2021-12-23)
 
+### Features
+
+* Initial version of ACM blueprint ([#83](https://www.github.com/GoogleCloudPlatform/blueprints/issues/83))
 
 ### Bug Fixes
 

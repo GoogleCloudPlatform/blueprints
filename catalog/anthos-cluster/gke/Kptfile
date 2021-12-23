@@ -17,7 +17,7 @@ upstreamLock:
     repo: https://github.com/GoogleCloudPlatform/blueprints
     directory: /catalog/gke
     ref: main
-    commit: bdd20a5f8a5ae54099a254835b8fce15946bf8e9
+    commit: dd26c984df3c1a68786cb89d8f0a9be741346050
 info:
   description: |
     A GKE cluster with a primary node pool. An existing subnet needs to be provided where the cluster should be created.

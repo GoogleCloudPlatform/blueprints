@@ -18,7 +18,7 @@ metadata: # kpt-merge: platform-namespace/platform-project-id-cluster-name-gkehu
   name: platform-project-id-cluster-name-gkehub # kpt-set: ${platform-project-id}-${cluster-name}-gkehub
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.0
     cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
     cnrm.cloud.google.com/deletion-policy: abandon
 spec:
@@ -30,7 +30,7 @@ metadata: # kpt-merge: platform-namespace/platform-project-id-cluster-name-acm
   name: platform-project-id-cluster-name-acm # kpt-set: ${platform-project-id}-${cluster-name}-acm
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.0
     cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
     cnrm.cloud.google.com/deletion-policy: abandon
 spec:

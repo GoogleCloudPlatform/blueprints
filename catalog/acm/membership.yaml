@@ -17,7 +17,7 @@ metadata:
   name: hub-membership-cluster-name # kpt-set: hub-membership-${cluster-name}
   namespace: config-control # kpt-set: ${platform-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.0
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   location: global

@@ -14,8 +14,8 @@
 apiVersion: gkehub.cnrm.cloud.google.com/v1beta1
 kind: GKEHubFeature
 metadata:
-  name: feature-name # kpt-set: feat-acm-${cluster-name}
-  namespace: platform-namespace # kpt-set: ${platform-namespace}
+  name: feat-acm-cluster-name # kpt-set: feat-acm-${cluster-name}
+  namespace: config-control # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}

@@ -15,8 +15,8 @@
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
-  name: platform-project-id-cluster-name-gkehub # kpt-set: ${platform-project-id}-${cluster-name}-gkehub
-  namespace: platform-namespace # kpt-set: ${platform-namespace}
+  name: platform-project-id-cluster-cluster-name-gkehub # kpt-set: ${platform-project-id}-${cluster-name}-gkehub
+  namespace: config-control # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
     cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
@@ -27,8 +27,8 @@ spec:
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
-  name: platform-project-id-cluster-name-acm # kpt-set: ${platform-project-id}-${cluster-name}-acm
-  namespace: platform-namespace # kpt-set: ${platform-namespace}
+  name: platform-project-id-cluster-cluster-name-acm # kpt-set: ${platform-project-id}-${cluster-name}-acm
+  namespace: config-control # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
     cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}

@@ -17,7 +17,7 @@ metadata:
   name: projects-sa
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.1.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
   displayName: projects-sa
@@ -28,7 +28,7 @@ metadata:
   name: projects-sa-projectiamadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.1.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
   resourceRef:
@@ -44,7 +44,7 @@ metadata:
   name: projects-sa-projectcreator-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.1.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
   resourceRef:
@@ -60,7 +60,7 @@ metadata:
   name: projects-sa-projectmover-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.1.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
   resourceRef:
@@ -76,7 +76,7 @@ metadata:
   name: projects-sa-projectdeleter-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.1.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
   resourceRef:
@@ -92,7 +92,7 @@ metadata:
   name: projects-sa-billinguser-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.1.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
   resourceRef:
@@ -108,7 +108,7 @@ metadata:
   name: projects-sa-serviceusageadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.1.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
   resourceRef:
@@ -124,7 +124,7 @@ metadata:
   name: projects-sa-workload-identity-binding
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.1.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
   resourceRef:

@@ -37,5 +37,5 @@ info:
         to use when authenticating with the VPN.
 pipeline:
   mutators:
-    - image: gcr.io/kpt-fn/apply-setters:v0.1
-      configPath: setters.yaml
+  - image: gcr.io/kpt-fn/apply-setters:v0.1
+    configPath: setters.yaml

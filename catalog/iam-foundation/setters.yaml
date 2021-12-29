@@ -18,7 +18,7 @@ metadata:
   annotations:
     config.kubernetes.io/local-config: "true"
 data:
-  org-id: 123456789012
+  org-id: "123456789012"
   group-org-admins: gcp-organization-admins@example.com
   group-security-admins: gcp-security-admins@example.com
   group-network-admins: gcp-network-admins@example.com

@@ -18,10 +18,7 @@ set -o errexit -o nounset -o pipefail
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
 cd "${REPO_ROOT}"
 
-PKG_PATH="${1:-.}"
-if [[ -z "${PKG_PATH}" ]]; then
-    PKG_PATH="catalog"
-fi
+PKG_PATH="${1:-catalog}"
 
 function fix_readmes() {
     local parent="${1}"
@@ -34,7 +31,9 @@ function fix_readmes() {
         if [[ -f "${child}/Kptfile" ]]; then
             # kpt package
             echo "Generating ${child}/README.md"
-            utils/kpt-pkg-readme.sh "${child}" > "${child}/README.md"
+            pushd ${child}
+             kpt fn eval -i gcr.io/kpt-fn-contrib/generate-kpt-pkg-docs:unstable --image-pull-policy never --include-meta-resources --mount type=bind,src="$(pwd)",dst=/tmp,rw=true -- readme-path=/tmp/README.md repo-path="https://github.com/GoogleCloudPlatform/blueprints.git/${parent}/"
+            popd
         fi
         fix_readmes "${child}"
     done < <(find "${parent}" -mindepth 1 -maxdepth 1 -type d -print0)

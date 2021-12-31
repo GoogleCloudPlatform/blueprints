@@ -1,5 +1,9 @@
+<!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 # CSR GitOps Pipeline blueprint
 
+
+<!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
+<!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
 A GitOps Continuous Deployment pipeline using Anthos Config Management (ACM),
 Cloud Source Repository (CSR), and Cloud Build.
 
@@ -15,33 +19,31 @@ After installing this blueprint, you will be able to:
 
 ## Setters
 
-```
-Setter           Usages
-cluster-name     9
-configsync-dir   1
-deployment-repo  4
-namespace        10
-project-id       16
-project-number   2
-source-repo      5
-```
+|      Name       |      Value      | Type | Count |
+|-----------------|-----------------|------|-------|
+| cluster-name    | cluster-name    | str  |     9 |
+| configsync-dir  | config          | str  |     1 |
+| deployment-repo | deployment-repo | str  |     4 |
+| namespace       | config-control  | str  |    10 |
+| project-id      | project-id      | str  |    16 |
+| project-number  |   1234567890123 | str  |     2 |
+| source-repo     | source-repo     | str  |     5 |
 
 ## Sub-packages
 
-- [configsync](/catalog/gitops/configsync)
+- [configsync-csr](configsync)
 
 ## Resources
 
-```
-File                      APIVersion                                  Kind                  Name                              Namespace
-cloudbuild-iam.yaml       iam.cnrm.cloud.google.com/v1beta1           IAMPartialPolicy       deployment-repo-cloudbuild-write  config-control
-cloudbuild-iam.yaml       iam.cnrm.cloud.google.com/v1beta1           IAMPartialPolicy       source-repo-cloudbuild-read       config-control
-hydration-trigger.yaml    cloudbuild.cnrm.cloud.google.com/v1beta1    CloudBuildTrigger     source-repo-cicd-trigger          config-control
-services.yaml             serviceusage.cnrm.cloud.google.com/v1beta1  Service               cloudbuild.googleapis.com         config-control
-services.yaml             serviceusage.cnrm.cloud.google.com/v1beta1  Service               sourcerepo.googleapis.com         config-control
-source-repositories.yaml  sourcerepo.cnrm.cloud.google.com/v1beta1    SourceRepoRepository  deployment-repo                   config-control
-source-repositories.yaml  sourcerepo.cnrm.cloud.google.com/v1beta1    SourceRepoRepository  source-repo                       config-control
-```
+|           File           |                 APIVersion                 |         Kind         |               Name               |   Namespace    |
+|--------------------------|--------------------------------------------|----------------------|----------------------------------|----------------|
+| cloudbuild-iam.yaml      | iam.cnrm.cloud.google.com/v1beta1          | IAMPartialPolicy     | deployment-repo-cloudbuild-write | config-control |
+| cloudbuild-iam.yaml      | iam.cnrm.cloud.google.com/v1beta1          | IAMPartialPolicy     | source-repo-cloudbuild-read      | config-control |
+| hydration-trigger.yaml   | cloudbuild.cnrm.cloud.google.com/v1beta1   | CloudBuildTrigger    | source-repo-cicd-trigger         | config-control |
+| services.yaml            | serviceusage.cnrm.cloud.google.com/v1beta1 | Service              | sourcerepo.googleapis.com        | config-control |
+| services.yaml            | serviceusage.cnrm.cloud.google.com/v1beta1 | Service              | cloudbuild.googleapis.com        | config-control |
+| source-repositories.yaml | sourcerepo.cnrm.cloud.google.com/v1beta1   | SourceRepoRepository | source-repo                      | config-control |
+| source-repositories.yaml | sourcerepo.cnrm.cloud.google.com/v1beta1   | SourceRepoRepository | deployment-repo                  | config-control |
 
 ## Resource References
 
@@ -53,38 +55,40 @@ source-repositories.yaml  sourcerepo.cnrm.cloud.google.com/v1beta1    SourceRepo
 ## Usage
 
 1.  Clone the package:
-    ```
-    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/gitops@${VERSION}
+    ```shell
+    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/gitops-csr@${VERSION}
     ```
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).
 
 1.  Move into the local package:
-    ```
-    cd "./gitops/"
+    ```shell
+    cd "./gitops-csr/"
     ```
 
 1.  Edit the function config file(s):
     - setters.yaml
 
 1.  Execute the function pipeline
-    ```
+    ```shell
     kpt fn render
     ```
 
 1.  Initialize the resource inventory
-    ```
+    ```shell
     kpt live init --namespace ${NAMESPACE}"
     ```
     Replace `${NAMESPACE}` with the namespace in which to manage
     the inventory ResourceGroup (for example, `config-control`).
 
 1.  Apply the package resources to your cluster
-    ```
+    ```shell
     kpt live apply
     ```
 
 1.  Wait for the resources to be ready
-    ```
+    ```shell
     kpt live status --output table --poll-until current
     ```
+
+<!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->

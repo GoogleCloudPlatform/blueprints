@@ -1,5 +1,9 @@
+<!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 # Network blueprint
 
+
+<!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
+<!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
 A private network with VPN and Cloud NAT.
 
 **Requires a pre-existing secret!**
@@ -12,7 +16,7 @@ kubectl create secret generic vpn-shared-secret \
     -n ${NETWORK_NAMESPACE}
 ```
 
-Or declaratively:
+Or Config Connector:
 
 ```yaml
 apiVersion: v1
@@ -32,35 +36,33 @@ Replace the following:
 
 ## Setters
 
-```
-Setter                              Usages
-ip-cidr-range                       1
-namespace                           8
-network-name                        18
-prefix                              6
-project-id                          10
-region                              6
-source-subnetwork-ip-ranges-to-nat  1
-vpn-secret-key                      2
-vpn-secret-name                     2
-vpn-tunnel-peer-ip-01               1
-vpn-tunnel-peer-ip-02               1
-```
+|                Name                |             Value             | Type | Count |
+|------------------------------------|-------------------------------|------|-------|
+| ip-cidr-range                      | 10.2.0.0/16                   | str  |     1 |
+| namespace                          | networking                    | str  |     8 |
+| network-name                       | network-name                  | str  |    12 |
+| prefix                             |                               | str  |     0 |
+| project-id                         | project-id                    | str  |    10 |
+| region                             | us-central1                   | str  |     6 |
+| source-subnetwork-ip-ranges-to-nat | ALL_SUBNETWORKS_ALL_IP_RANGES | str  |     1 |
+| vpn-secret-key                     | vpn-shared-secret             | str  |     2 |
+| vpn-secret-name                    | vpn-shared-secret             | str  |     2 |
+| vpn-tunnel-peer-ip-01              | 15.1.0.120                    | str  |     1 |
+| vpn-tunnel-peer-ip-02              | 15.1.1.120                    | str  |     1 |
 
 ## Sub-packages
 
-- [subnet](/catalog/networking/network/subnet)
-- [vpc](/catalog/networking/network/vpc)
+- [subnetwork](subnet)
+- [vpc](vpc)
 
 ## Resources
 
-```
-File      APIVersion                             Kind                       Name                          Namespace
-vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeExternalVPNGateway  network-name-ext-vpn-gateway  networking
-vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeVPNGateway          network-name-ha-vpn-gateway   networking
-vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeVPNTunnel           network-name-vpn-tunnel-01    networking
-vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeVPNTunnel           network-name-vpn-tunnel-02    networking
-```
+|   File   |              APIVersion               |           Kind            |             Name             | Namespace  |
+|----------|---------------------------------------|---------------------------|------------------------------|------------|
+| vpn.yaml | compute.cnrm.cloud.google.com/v1beta1 | ComputeVPNGateway         | network-name-ha-vpn-gateway  | networking |
+| vpn.yaml | compute.cnrm.cloud.google.com/v1beta1 | ComputeExternalVPNGateway | network-name-ext-vpn-gateway | networking |
+| vpn.yaml | compute.cnrm.cloud.google.com/v1beta1 | ComputeVPNTunnel          | network-name-vpn-tunnel-01   | networking |
+| vpn.yaml | compute.cnrm.cloud.google.com/v1beta1 | ComputeVPNTunnel          | network-name-vpn-tunnel-02   | networking |
 
 ## Resource References
 
@@ -71,14 +73,14 @@ vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeVPNTunnel           netw
 ## Usage
 
 1.  Clone the package:
-    ```
+    ```shell
     kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/networking/network@${VERSION}
     ```
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).
 
 1.  Move into the local package:
-    ```
+    ```shell
     cd "./network/"
     ```
 
@@ -86,24 +88,25 @@ vpn.yaml  compute.cnrm.cloud.google.com/v1beta1  ComputeVPNTunnel           netw
     - setters.yaml
 
 1.  Execute the function pipeline
-    ```
+    ```shell
     kpt fn render
     ```
 
 1.  Initialize the resource inventory
-    ```
+    ```shell
     kpt live init --namespace ${NAMESPACE}"
     ```
     Replace `${NAMESPACE}` with the namespace in which to manage
     the inventory ResourceGroup (for example, `config-control`).
 
 1.  Apply the package resources to your cluster
-    ```
+    ```shell
     kpt live apply
     ```
 
 1.  Wait for the resources to be ready
-    ```
+    ```shell
     kpt live status --output table --poll-until current
     ```
 
+<!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->

@@ -1,17 +1,20 @@
+<!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 # PubSub Export blueprint
 
+
+<!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
+<!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
 A log export on a organization that sinks to PubSub
 
 ## Setters
 
-```
-Setter      Usages
-filter      1
-namespace   3
-org-id      3
-project-id  2
-topic-name  3
-```
+|    Name    |          Value           | Type | Count |
+|------------|--------------------------|------|-------|
+| filter     |                          | str  |     0 |
+| namespace  | my-namespace             | str  |     3 |
+| org-id     |             123456789012 | str  |     3 |
+| project-id | my-project-id            | str  |     2 |
+| topic-name | pubsub-logexport-dataset | str  |     3 |
 
 ## Sub-packages
 
@@ -19,13 +22,12 @@ This package has no sub-packages.
 
 ## Resources
 
-```
-File         APIVersion                                  Kind             Name                      Namespace
-export.yaml  logging.cnrm.cloud.google.com/v1beta1       LoggingLogSink   123456789012-pubsubsink   my-namespace
-export.yaml  pubsub.cnrm.cloud.google.com/v1beta1        PubSubTopic      pubsub-logexport-dataset  my-namespace
-export.yaml  serviceusage.cnrm.cloud.google.com/v1beta1  Service          my-project-id-pubsub      projects
-iam.yaml     iam.cnrm.cloud.google.com/v1beta1           IAMPolicyMember  pubsub-iam-policy         my-namespace
-```
+|    File     |                 APIVersion                 |      Kind       |           Name           |  Namespace   |
+|-------------|--------------------------------------------|-----------------|--------------------------|--------------|
+| export.yaml | serviceusage.cnrm.cloud.google.com/v1beta1 | Service         | my-project-id-pubsub     | projects     |
+| export.yaml | logging.cnrm.cloud.google.com/v1beta1      | LoggingLogSink  | 123456789012-pubsubsink  | my-namespace |
+| export.yaml | pubsub.cnrm.cloud.google.com/v1beta1       | PubSubTopic     | pubsub-logexport-dataset | my-namespace |
+| iam.yaml    | iam.cnrm.cloud.google.com/v1beta1          | IAMPolicyMember | pubsub-iam-policy        | my-namespace |
 
 ## Resource References
 
@@ -37,14 +39,14 @@ iam.yaml     iam.cnrm.cloud.google.com/v1beta1           IAMPolicyMember  pubsub
 ## Usage
 
 1.  Clone the package:
-    ```
+    ```shell
     kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/log-export/org/pubsub-export@${VERSION}
     ```
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).
 
 1.  Move into the local package:
-    ```
+    ```shell
     cd "./pubsub-export/"
     ```
 
@@ -52,24 +54,25 @@ iam.yaml     iam.cnrm.cloud.google.com/v1beta1           IAMPolicyMember  pubsub
     - setters.yaml
 
 1.  Execute the function pipeline
-    ```
+    ```shell
     kpt fn render
     ```
 
 1.  Initialize the resource inventory
-    ```
+    ```shell
     kpt live init --namespace ${NAMESPACE}"
     ```
     Replace `${NAMESPACE}` with the namespace in which to manage
     the inventory ResourceGroup (for example, `config-control`).
 
 1.  Apply the package resources to your cluster
-    ```
+    ```shell
     kpt live apply
     ```
 
 1.  Wait for the resources to be ready
-    ```
+    ```shell
     kpt live status --output table --poll-until current
     ```
 
+<!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->

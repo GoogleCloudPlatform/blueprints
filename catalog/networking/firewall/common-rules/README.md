@@ -62,14 +62,14 @@ This package has no top-level resources. See sub-packages.
 
 1.  Clone the package:
     ```shell
-    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/networking/firewall/firewall-common-rules@${VERSION}
+    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/networking/firewall/common-rules@${VERSION}
     ```
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).
 
 1.  Move into the local package:
     ```shell
-    cd "./firewall-common-rules/"
+    cd "./common-rules/"
     ```
 
 1.  Edit the function config file(s):

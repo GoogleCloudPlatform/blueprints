@@ -34,14 +34,14 @@ This package has no sub-packages.
 
 1.  Clone the package:
     ```shell
-    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/networking/routes/compute-route-igw@${VERSION}
+    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/networking/routes/routes-igw@${VERSION}
     ```
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).
 
 1.  Move into the local package:
     ```shell
-    cd "./compute-route-igw/"
+    cd "./routes-igw/"
     ```
 
 1.  Edit the function config file(s):

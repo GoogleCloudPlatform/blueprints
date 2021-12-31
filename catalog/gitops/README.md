@@ -56,14 +56,14 @@ After installing this blueprint, you will be able to:
 
 1.  Clone the package:
     ```shell
-    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/gitops-csr@${VERSION}
+    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/gitops@${VERSION}
     ```
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).
 
 1.  Move into the local package:
     ```shell
-    cd "./gitops-csr/"
+    cd "./gitops/"
     ```
 
 1.  Edit the function config file(s):

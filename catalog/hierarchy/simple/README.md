@@ -30,14 +30,14 @@ This package has no sub-packages.
 
 1.  Clone the package:
     ```shell
-    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/hierarchy/simple-hierarchy@${VERSION}
+    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/hierarchy/simple@${VERSION}
     ```
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).
 
 1.  Move into the local package:
     ```shell
-    cd "./simple-hierarchy/"
+    cd "./simple/"
     ```
 
 1.  Edit the function config file(s):

@@ -37,14 +37,14 @@ This package has no sub-packages.
 
 1.  Clone the package:
     ```shell
-    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/networking/dns/dns-forwarding-managed-zone@${VERSION}
+    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/networking/dns/managedzone-forwarding@${VERSION}
     ```
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).
 
 1.  Move into the local package:
     ```shell
-    cd "./dns-forwarding-managed-zone/"
+    cd "./managedzone-forwarding/"
     ```
 
 1.  Edit the function config file(s):

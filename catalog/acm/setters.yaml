@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: v1
 kind: ConfigMap
 metadata: # kpt-merge: /setters
@@ -27,7 +26,7 @@ data:
   project-id: project-id
   # The URL for the repo e.g. https://source.developers.google.com/p/${project-id}/r/${repo-name} for ACM (Config Sync)
   sync-repo: https://source.developers.google.com/p/project_id/r/repo
-  # The reference for the repo e.g. projects/${project}}/repos/${name}. Used to grant access to the ACM Service Account
+  # The reference for the repo e.g. projects/${project}/repos/${name}. Used to grant access to the ACM Service Account
   sync-repo-ref: projects/project-id/repos/repo-name
   # The directory in the repository to pull configs from e.g. config/root
   policy-dir: config/root

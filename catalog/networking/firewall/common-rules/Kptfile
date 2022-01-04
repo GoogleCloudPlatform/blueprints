@@ -35,5 +35,5 @@ info:
             SSL, HTTP (8080), and ICMP traffic on all RFC1918 ranges
 pipeline:
   mutators:
-    - image: gcr.io/kpt-fn/apply-setters:v0.1
-      configPath: setters.yaml
+  - image: gcr.io/kpt-fn/apply-setters:v0.1
+    configPath: setters.yaml

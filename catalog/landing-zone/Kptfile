@@ -14,7 +14,8 @@ info:
     [Deploy a landing zone blueprint](https://cloud.google.com/anthos-config-management/docs/tutorials/landing-zone).
 pipeline:
   mutators:
-    - image: gcr.io/kpt-fn/apply-setters:v0.1
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
       configPath: setters.yaml
+    - image: gcr.io/kpt-fn/enable-gcp-services:v0.1
   validators:
     - image: gcr.io/config-management-release/policy-controller-validate

@@ -52,11 +52,19 @@ This package has no sub-packages.
 
 ## Resources
 
-This package has no top-level resources. See sub-packages.
+|                File                |              APIVersion               |      Kind       |                 Name                  |      Namespace      |
+|------------------------------------|---------------------------------------|-----------------|---------------------------------------|---------------------|
+| egress/allow-google-apis.yaml      | compute.cnrm.cloud.google.com/v1beta1 | ComputeFirewall | network-name-fw-allow-google-apis     | firewalls-namespace |
+| egress/allow-windows-kms.yaml      | compute.cnrm.cloud.google.com/v1beta1 | ComputeFirewall | network-name-fw-allow-windows-kms     | firewalls-namespace |
+| egress/deny-all.yaml               | compute.cnrm.cloud.google.com/v1beta1 | ComputeFirewall | network-name-fw-deny-all-egress       | firewalls-namespace |
+| ingress/allow-gcp-lb.yaml          | compute.cnrm.cloud.google.com/v1beta1 | ComputeFirewall | network-name-fw-allow-gcp-lb          | firewalls-namespace |
+| ingress/allow-iap-rdp.yaml         | compute.cnrm.cloud.google.com/v1beta1 | ComputeFirewall | network-name-fw-allow-iap-rdp         | firewalls-namespace |
+| ingress/allow-iap-ssh.yaml         | compute.cnrm.cloud.google.com/v1beta1 | ComputeFirewall | network-name-fw-allow-iap-ssh         | firewalls-namespace |
+| ingress/allow-internal-common.yaml | compute.cnrm.cloud.google.com/v1beta1 | ComputeFirewall | network-name-fw-allow-internal-common | firewalls-namespace |
 
 ## Resource References
 
-This package has no top-level resources. See sub-packages.
+- [ComputeFirewall](https://cloud.google.com/config-connector/docs/reference/resource-docs/compute/computefirewall)
 
 ## Usage
 

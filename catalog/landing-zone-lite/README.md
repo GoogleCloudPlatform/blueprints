@@ -29,16 +29,37 @@ This package has no sub-packages.
 
 ## Resources
 
-|     File      |              APIVersion              |       Kind        |         Name          |   Namespace    |
-|---------------|--------------------------------------|-------------------|-----------------------|----------------|
-| iam.yaml      | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember   | org-admins-iam        | config-control |
-| iam.yaml      | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember   | billing-admins-iam    | config-control |
-| services.yaml | blueprints.cloud.google.com/v1alpha1 | ProjectServiceSet | management-project-id | config-control |
+|           File            |              APIVersion              |          Kind          |                       Name                        |   Namespace    |
+|---------------------------|--------------------------------------|------------------------|---------------------------------------------------|----------------|
+| iam.yaml                  | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | org-admins-iam                                    | config-control |
+| iam.yaml                  | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | billing-admins-iam                                | config-control |
+| namespaces/hierarchy.yaml | iam.cnrm.cloud.google.com/v1beta1    | IAMServiceAccount      | hierarchy-sa                                      | config-control |
+| namespaces/hierarchy.yaml | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | hierarchy-sa-folderadmin-permissions              | config-control |
+| namespaces/hierarchy.yaml | iam.cnrm.cloud.google.com/v1beta1    | IAMPartialPolicy       | hierarchy-sa-workload-identity-binding            | config-control |
+| namespaces/hierarchy.yaml | rbac.authorization.k8s.io/v1         | RoleBinding            | allow-resource-reference-from-hierarchy           | hierarchy      |
+| namespaces/hierarchy.yaml | v1                                   | Namespace              | hierarchy                                         |                |
+| namespaces/hierarchy.yaml | core.cnrm.cloud.google.com/v1beta1   | ConfigConnectorContext | configconnectorcontext.core.cnrm.cloud.google.com | hierarchy      |
+| namespaces/projects.yaml  | iam.cnrm.cloud.google.com/v1beta1    | IAMServiceAccount      | projects-sa                                       | config-control |
+| namespaces/projects.yaml  | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | projects-sa-projectiamadmin-permissions           | config-control |
+| namespaces/projects.yaml  | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | projects-sa-projectcreator-permissions            | config-control |
+| namespaces/projects.yaml  | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | projects-sa-projectmover-permissions              | config-control |
+| namespaces/projects.yaml  | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | projects-sa-projectdeleter-permissions            | config-control |
+| namespaces/projects.yaml  | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | projects-sa-billinguser-permissions               | config-control |
+| namespaces/projects.yaml  | iam.cnrm.cloud.google.com/v1beta1    | IAMPolicyMember        | projects-sa-serviceusageadmin-permissions         | config-control |
+| namespaces/projects.yaml  | iam.cnrm.cloud.google.com/v1beta1    | IAMPartialPolicy       | projects-sa-workload-identity-binding             | config-control |
+| namespaces/projects.yaml  | v1                                   | Namespace              | projects                                          |                |
+| namespaces/projects.yaml  | core.cnrm.cloud.google.com/v1beta1   | ConfigConnectorContext | configconnectorcontext.core.cnrm.cloud.google.com | projects       |
+| services.yaml             | blueprints.cloud.google.com/v1alpha1 | ProjectServiceSet      | management-project-id                             | config-control |
 
 ## Resource References
 
 - ProjectServiceSet
+- [ConfigConnectorContext](https://cloud.google.com/config-connector/docs/how-to/advanced-install#addon-configuring)
+- [IAMPartialPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampartialpolicy)
 - [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember)
+- [IAMServiceAccount](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount)
+- [Namespace](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#namespace-v1-core)
+- [RoleBinding](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#rolebinding-v1-rbac-authorization-k8s-io)
 
 ## Usage
 

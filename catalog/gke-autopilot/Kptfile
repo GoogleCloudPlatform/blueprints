@@ -4,6 +4,20 @@ metadata:
   name: gke-autopilot
   annotations:
     blueprints.cloud.google.com/title: GKE Autopilot blueprint
+upstream:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/blueprints
+    directory: /catalog/gke
+    ref: gke-blueprint-v0.4.0
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/blueprints
+    directory: /catalog/gke
+    ref: gke-blueprint-v0.4.0
+    commit: 7ee2731e78f49b723568ef4d596e09817bc85206
 info:
   description: |
     A blueprint to create a GKE Autopilot cluster. An existing subnet needs to be provided where the cluster should be created.

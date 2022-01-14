@@ -12,7 +12,7 @@ resources in a specific project.
 |         Name          |         Value         | Type | Count |
 |-----------------------|-----------------------|------|-------|
 | management-namespace  | config-control        | str  |     2 |
-| management-project-id | management-project-id | str  |     6 |
+| management-project-id | management-project-id | str  |     5 |
 | networking-namespace  | networking            | str  |     1 |
 | project-id            | project-id            | str  |    16 |
 | projects-namespace    | projects              | str  |     2 |

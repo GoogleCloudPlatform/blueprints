@@ -15,7 +15,7 @@ Config Connector.
 | folder-name           | name.of.folder        | str  |     1 |
 | folder-namespace      | hierarchy             | str  |     1 |
 | management-namespace  | config-control        | str  |     2 |
-| management-project-id | management-project-id | str  |     6 |
+| management-project-id | management-project-id | str  |     5 |
 | networking-namespace  | networking            | str  |     1 |
 | project-id            | project-id            | str  |    18 |
 | projects-namespace    | projects              | str  |     3 |

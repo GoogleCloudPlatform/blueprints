@@ -33,7 +33,7 @@ function fix_readmes() {
             echo "Generating ${child}/README.md"
             pushd ${child}
              pkgName=$(basename $child)
-             kpt fn eval -i gcr.io/kpt-fn-contrib/generate-kpt-pkg-docs:unstable --image-pull-policy never --include-meta-resources --mount type=bind,src="$(pwd)",dst=/tmp,rw=true -- readme-path=/tmp/README.md repo-path="https://github.com/GoogleCloudPlatform/blueprints.git/${parent}/" pkg-name="${pkgName}"
+             kpt fn eval -i gcr.io/kpt-fn-contrib/generate-kpt-pkg-docs@sha256:046b57ae98fc7c0ae35713fcf50d8d0c2c34fcd1d576dec516ac075cc9f8d519 --include-meta-resources --mount type=bind,src="$(pwd)",dst=/tmp,rw=true -- readme-path=/tmp/README.md repo-path="https://github.com/GoogleCloudPlatform/blueprints.git/${parent}/" pkg-name="${pkgName}"
             popd
         fi
         fix_readmes "${child}"

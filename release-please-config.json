@@ -16,6 +16,10 @@
         "package-name": "gke-blueprint",
         "changelog-path": "CHANGELOG.md"
       },
+      "catalog/gke-autopilot": {
+        "package-name": "gke-autopilot-blueprint",
+        "changelog-path": "CHANGELOG.md"
+      },
       "catalog/hierarchy": {
         "package-name": "hierarchy-blueprint",
         "changelog-path": "CHANGELOG.md"

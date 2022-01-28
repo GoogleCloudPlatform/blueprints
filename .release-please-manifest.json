@@ -5,7 +5,7 @@
   "catalog/empty": "0.3.0",
   "catalog/gitops": "0.4.1",
   "catalog/gke": "0.4.0",
-  "catalog/gke-autopilot": "0.1.0",
+  "catalog/gke-autopilot": "0.0.1",
   "catalog/hierarchy": "0.3.0",
   "catalog/iam-foundation": "0.1.0",
   "catalog/landing-zone": "0.5.0",

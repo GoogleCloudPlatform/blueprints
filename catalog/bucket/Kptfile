@@ -11,9 +11,9 @@ pipeline:
     - image: gcr.io/kpt-fn/set-namespace:v0.2
       configMap:
         namespace: ${NS:=config-control}
-    - image: gcr.io/kpt-fn/set-annotations:v0.1.4
+    - image: https://gcr.io/kpt-fn/set-project-id:v0.2
       configMap:
-        cnrm.cloud.google.com/project-id: ${PROJECT_ID:=blueprints-project}
+        project-id: ${PROJECT_ID:=blueprints-project}
     - image: gcr.io/kpt-fn/search-replace:unstable
       configMap:
         by-path: spec.storageClass

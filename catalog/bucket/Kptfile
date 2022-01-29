@@ -8,5 +8,19 @@ info:
   description: A Google Cloud Storage bucket
 pipeline:
   mutators:
-    - image: gcr.io/kpt-fn/apply-setters:v0.1
-      configPath: setters.yaml
+    - image: gcr.io/kpt-fn/set-namespace:v0.2
+      configMap:
+        namespace: ${NS:=config-control}
+    - image: gcr.io/kpt-fn/set-annotations:v0.1.4
+      configMap:
+        cnrm.cloud.google.com/project-id: ${PROJECT_ID:=blueprints-project}
+    - image: gcr.io/kpt-fn/search-replace:unstable
+      configMap:
+        by-path: spec.storageClass
+        by-value: standard
+        put-value: ${STORAGE_CLASS:=standard}
+    - image: gcr.io/kpt-fn/search-replace:unstable
+      configMap:
+        by-path: metadata.name
+        by-value: blueprints-project-bucket2
+        put-value: ${PROJECT_ID:=blueprints-project}:${NAME:=bucket2}

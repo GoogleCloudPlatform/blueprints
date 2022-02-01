@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ReplacementFunctionConfig
+metadata:
+  name: replacement
+replacements:
+- source:
+  kind: ConfigMap
+  name: repplacement-data
+  fieldPath: spec.storageClass
+  targets:
+  - select:
+      group: storage.cnrm.cloud.google.com
+      version: v1beta1
+      kind: StorageBucket
+      name: # How to do this. name will be updated by default. 
+    fieldPaths:
+    - spec.storageClass

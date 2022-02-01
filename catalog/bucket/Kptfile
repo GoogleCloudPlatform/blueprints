@@ -10,21 +10,20 @@ pipeline:
   mutators:
     - image: gcr.io/kpt-fn/set-namespace:v0.2
       configPath: gcloudconfig.yaml
-
-    # Needed.
+ 
+    # Needed. builtin?
     # name = <gcloudconfig .data.name>-<randint{6} avoid duplication in the same GVKN>
-    - image: set-name 
+    - image: set-name
       configPath: gcloudconfig.yaml
     
-    # Needed.
+    # Needed. builtin?
     # A filter pipe with two transformers in a single KRM function 
     #   Transformer 1. `set-annotation` for cnrm.cloud.google.com/project-id
     #   Transformer 2. find and replace based on the projectID enumerate field spec.
-    - image: gcr.io/kpt-fn/set-project-id:v0.2
+    - image: set-project-id
       configPath: gcloudconfig.yaml
 
-    - image: gcr.io/kpt-fn/search-replace:unstable
-      configMap:
-        by-path: spec.storageClass
-        by-value: standard
-        put-value: standard # Configurable
+    # Needed. builtin?
+    # A kustomize replacement transformer + extended CRD support. 
+    - image: replacement
+      configPath: replacementconfig.yaml

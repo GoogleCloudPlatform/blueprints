@@ -20,8 +20,8 @@ metadata:
   name: 
   annotations:
     cnrm.cloud.google.com/force-destroy: "false"
-    cnrm.cloud.google.com/project-id: # kpt create if not present
-  namespace: # kpt create if not present
+    cnrm.cloud.google.com/project-id: # `kpt fn render` creates if not present
+  namespace: # `kpt fn render` creates if not present
 spec:
   location: us-central1
   # storageClass used to be a setter and requires comment

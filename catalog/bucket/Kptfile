@@ -19,6 +19,6 @@ pipeline:
       configPath: gcloudconfig.yaml
 
     # Needed. builtin?
-    # A kustomize replacement transformer.
+    # A replacement transformer supporting substitution via regex find and replace.
     - image: replacement
       configPath: replacementconfig.yaml

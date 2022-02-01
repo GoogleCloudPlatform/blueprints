@@ -17,7 +17,6 @@ metadata:
   name: setters
 data:
   name: redis-bucket
-  namespace: config-control
   network: default
   #project-id: project-id
   region: us-central1

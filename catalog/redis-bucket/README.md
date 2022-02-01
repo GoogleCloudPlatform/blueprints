@@ -13,8 +13,7 @@ This blueprint demonstrates multiple unrelated resources sharing a package.
 
 |     Name      |          Value           | Type | Count |
 |---------------|--------------------------|------|-------|
-| name          | redis-bucket             | str  |     4 |
-| namespace     | config-control           | str  |     3 |
+| name          | bucket                   | str  |     4 |
 | network       | default                  | str  |     1 |
 | project-id    | blueprints-project-redis | str  |     8 |
 | region        | us-central1              | str  |     1 |
@@ -26,11 +25,11 @@ This package has no sub-packages.
 
 ## Resources
 
-|    File     |                 APIVersion                 |     Kind      |              Name               |        Namespace         |
-|-------------|--------------------------------------------|---------------|---------------------------------|--------------------------|
-| bucket.yaml | storage.cnrm.cloud.google.com/v1beta1      | StorageBucket | blueprints-project-redis-bucket | config-control           |
-| redis.yaml  | serviceusage.cnrm.cloud.google.com/v1beta1 | Service       | blueprints-project-redis-bucket | config-control           |
-| redis.yaml  | redis.cnrm.cloud.google.com/v1beta1        | RedisInstance | blueprints-project-redis-bucket | config-controller-system |
+|    File     |                 APIVersion                 |     Kind      |              Name               |   Namespace    |
+|-------------|--------------------------------------------|---------------|---------------------------------|----------------|
+| bucket.yaml | storage.cnrm.cloud.google.com/v1beta1      | StorageBucket | blueprints-project-redis-bucket | config-control |
+| redis.yaml  | serviceusage.cnrm.cloud.google.com/v1beta1 | Service       | blueprints-project-redis-bucket | config-control |
+| redis.yaml  | redis.cnrm.cloud.google.com/v1beta1        | RedisInstance | blueprints-project-redis-bucket | config-control |
 
 ## Resource References
 

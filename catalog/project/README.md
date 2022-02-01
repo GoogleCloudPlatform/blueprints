@@ -4,14 +4,14 @@
 
 <!-- END OF PRE-COMMIT-BLUEPRINT DOCS HOOK:TITLE -->
 <!-- BEGINNING OF PRE-COMMIT-BLUEPRINT DOCS HOOK:BODY -->
-A project and a project namespace in which to manage project resources with
+A project and a project in which to manage project resources with
 Config Connector.
 
 ## Setters
 
 |         Name          |         Value         | Type | Count |
 |-----------------------|-----------------------|------|-------|
-| billing-account-id    | AAAAAA-BBBBBB-CCCCCC  | str  |     1 |
+| billing-account    | AAAAAA-BBBBBB-CCCCCC  | str  |     1 |
 | folder-name           | name.of.folder        | str  |     1 |
 | folder-namespace      | hierarchy             | str  |     1 |
 | management-namespace  | config-control        | str  |     2 |

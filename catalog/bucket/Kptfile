@@ -10,11 +10,6 @@ pipeline:
   mutators:
     - image: gcr.io/kpt-fn/set-namespace:v0.2
       configPath: gcloudconfig.yaml
- 
-    # Needed. builtin?
-    # name = <gcloudconfig .data.name>-<randint{6} avoid duplication in the same GVKN>
-    - image: set-name
-      configPath: gcloudconfig.yaml
     
     # Needed. builtin?
     # A filter pipe with two transformers in a single KRM function 
@@ -24,6 +19,6 @@ pipeline:
       configPath: gcloudconfig.yaml
 
     # Needed. builtin?
-    # A kustomize replacement transformer + extended CRD support. 
+    # A kustomize replacement transformer.
     - image: replacement
       configPath: replacementconfig.yaml

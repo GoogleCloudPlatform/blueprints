@@ -1,0 +1,21 @@
+apiVersion: v1
+kind: ReplacementFunctionConfig
+metadata:
+  name: replacement
+replacements:
+- source:
+  kind: ConfigMap
+  name: repplacement-data
+  fieldPath: spec.storageClass
+  targets:
+  - select:
+      group: storage.cnrm.cloud.google.com
+      version: v1beta1
+      kind: StorageBucket
+      # ??? `name` is assigned in local `kpt pkg get`.
+      # proposal 1: replacement function accepts wildcard names matching
+      #  `^<PKG>-\d{6}$` which is the default name pattern. 
+      # proposal 2: add support for `select.nameRegex`; nameRegex and name are mutual exclusive 
+      name:   
+    fieldPaths:
+    - spec.storageClass

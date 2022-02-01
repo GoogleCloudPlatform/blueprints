@@ -8,5 +8,17 @@ info:
   description: A Google Cloud Storage bucket
 pipeline:
   mutators:
-    - image: gcr.io/kpt-fn/apply-setters:v0.1
-      configPath: setters.yaml
+    - image: gcr.io/kpt-fn/set-namespace:v0.2
+      configPath: gcloudconfig.yaml
+    
+    # Needed. builtin?
+    # A filter pipe with two transformers in a single KRM function 
+    #   Transformer 1. `set-annotation` for cnrm.cloud.google.com/project-id
+    #   Transformer 2. find and replace based on the projectID enumerate field spec.
+    - image: set-project-id
+      configPath: gcloudconfig.yaml
+
+    # Needed. builtin?
+    # A replacement transformer supporting substitution via regex find and replace.
+    - image: replacement
+      configPath: replacementconfig.yaml

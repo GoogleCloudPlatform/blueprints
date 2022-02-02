@@ -21,6 +21,7 @@ REGISTRY_URL := gcr.io/cloud-foundation-cicd
 .PHONY: docker_check_lint
 docker_check_lint:
 	docker run --rm -it \
+		-e DOCKER_HOST_PATH=$(CURDIR) \
 		-v $(CURDIR):/workspace \
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \

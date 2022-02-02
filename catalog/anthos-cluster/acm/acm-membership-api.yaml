@@ -11,27 +11,27 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-# Enable the Container service in the platform project
+# Enable the Container service in the project
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata: # kpt-merge: platform-namespace/platform-project-id-cluster-name-gkehub
-  name: platform-project-id-cluster-name-gkehub # kpt-set: ${platform-project-id}-${cluster-name}-gkehub
+metadata: # kpt-merge: platform-namespace/project-id-cluster-name-gkehub
+  name: project-id-cluster-name-gkehub # kpt-set: ${project-id}-${cluster-name}-gkehub
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.0
-    cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     cnrm.cloud.google.com/deletion-policy: abandon
 spec:
   resourceID: gkehub.googleapis.com
 ---
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
-metadata: # kpt-merge: platform-namespace/platform-project-id-cluster-name-acm
-  name: platform-project-id-cluster-name-acm # kpt-set: ${platform-project-id}-${cluster-name}-acm
+metadata: # kpt-merge: platform-namespace/project-id-cluster-name-acm
+  name: project-id-cluster-name-acm # kpt-set: ${project-id}-${cluster-name}-acm
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.0
-    cnrm.cloud.google.com/project-id: platform-project-id # kpt-set: ${platform-project-id}
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     cnrm.cloud.google.com/deletion-policy: abandon
 spec:
   resourceID: anthosconfigmanagement.googleapis.com

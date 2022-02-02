@@ -18,8 +18,7 @@
       },
       "catalog/gke-autopilot": {
         "package-name": "gke-autopilot-blueprint",
-        "changelog-path": "CHANGELOG.md",
-        "release-as": "0.1.0"
+        "changelog-path": "CHANGELOG.md"
       },
       "catalog/hierarchy": {
         "package-name": "hierarchy-blueprint",

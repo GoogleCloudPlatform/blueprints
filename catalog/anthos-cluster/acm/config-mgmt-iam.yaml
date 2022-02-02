@@ -19,7 +19,7 @@ metadata: # kpt-merge: platform-namespace/sa-acm-gke-cluster
   name: sa-acm-gke-cluster # kpt-set: sa-acm-${cluster-name}
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.0
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.1
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   displayName: sa-acm-gke-cluster # kpt-set: sa-acm-${cluster-name}
@@ -32,7 +32,7 @@ metadata: # kpt-merge: platform-namespace/sa-acm-gke-cluster
   name: sa-acm-gke-cluster # kpt-set: sa-acm-${cluster-name}
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.0
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.1
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceRef:
@@ -51,7 +51,7 @@ metadata: # kpt-merge: platform-namespace/source-reader-sync-cluster-name-projec
   name: source-reader-sync-cluster-name-project-id # kpt-set: source-reader-sync-${cluster-name}-${project-id}
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.0
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.1
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceRef:

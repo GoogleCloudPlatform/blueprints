@@ -18,10 +18,9 @@ A blueprint to create an Anthos cluster and install Anthos Config Management (AC
 | network-ref         | projects/network-project-id/global/networks/default            | str  |     1 |
 | nodepool-name       | primary                                                        | str  |    11 |
 | platform-namespace  | config-control                                                 | str  |    19 |
-| platform-project-id | platform-project-id-cluster                                    | str  |     4 |
 | pods-range-name     | pods                                                           | str  |     1 |
 | policy-dir          | config/root                                                    | str  |     1 |
-| project-id          | project-id                                                     | str  |    26 |
+| project-id          | project-id                                                     | str  |    30 |
 | projects-namespace  | projects                                                       | str  |     1 |
 | security-group      | gke-security-groups@example.com                                | str  |     1 |
 | services-range-name | services                                                       | str  |     1 |

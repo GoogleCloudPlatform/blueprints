@@ -17,5 +17,4 @@ metadata:
   name: setters
 data:
   name: bucket2
-  #project-id: project-id
   storage-class: standard

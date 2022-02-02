@@ -14,14 +14,13 @@
 apiVersion: storage.cnrm.cloud.google.com/v1beta1
 kind: StorageBucket
 metadata:
-  name: blueprints-project-bucket # kpt-set: ${project-id}-${name}
-  namespace: config-control
+  name: PLEASE_UPDATE
   annotations:
     cnrm.cloud.google.com/force-destroy: "false"
-    cnrm.cloud.google.com/project-id: blueprints-project # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: PLEASE_UPDATE
 spec:
-  location: us-central1
-  storageClass: standard # kpt-set: ${storage-class}
+  location: PLEASE_UPDATE
+  storageClass: standard
   uniformBucketLevelAccess: true
   versioning:
     enabled: false

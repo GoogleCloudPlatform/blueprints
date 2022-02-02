@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.4.3](https://github.com/GoogleCloudPlatform/blueprints/compare/bucket-blueprint-v0.4.2...bucket-blueprint-v0.4.3) (2022-02-02)
+
+
+### Bug Fixes
+
+* remove namespace setters from bucket and redis blueprints ([#141](https://github.com/GoogleCloudPlatform/blueprints/issues/141)) ([c04e5d6](https://github.com/GoogleCloudPlatform/blueprints/commit/c04e5d64ee124d6161733364afac4b06e90c772e))
+
 ### [0.4.2](https://www.github.com/GoogleCloudPlatform/blueprints/compare/bucket-blueprint-v0.4.1...bucket-blueprint-v0.4.2) (2021-12-22)
 
 

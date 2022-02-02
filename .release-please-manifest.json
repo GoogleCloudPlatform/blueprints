@@ -1,1 +1,18 @@
-{"catalog/acm":"0.1.0","catalog/anthos-cluster":"0.1.0","catalog/bucket":"0.4.2","catalog/empty":"0.3.0","catalog/gitops":"0.4.1","catalog/gke":"0.4.0","catalog/hierarchy":"0.3.0","catalog/iam-foundation":"0.1.0","catalog/landing-zone":"0.5.0","catalog/landing-zone-lite":"0.1.0","catalog/log-export":"0.4.0","catalog/networking":"0.4.0","catalog/project":"0.4.1","catalog/redis-bucket":"0.3.1","catalog/spanner":"0.3.0"}
+{
+  "catalog/acm": "0.1.1",
+  "catalog/anthos-cluster": "0.1.1",
+  "catalog/bucket": "0.4.3",
+  "catalog/empty": "0.3.0",
+  "catalog/gitops": "0.4.2",
+  "catalog/gke": "0.4.0",
+  "catalog/gke-autopilot": "0.1.0",
+  "catalog/hierarchy": "0.3.0",
+  "catalog/iam-foundation": "0.1.0",
+  "catalog/landing-zone": "0.5.0",
+  "catalog/landing-zone-lite": "0.1.0",
+  "catalog/log-export": "0.4.0",
+  "catalog/networking": "0.4.0",
+  "catalog/project": "0.4.2",
+  "catalog/redis-bucket": "0.3.2",
+  "catalog/spanner": "0.3.0"
+}

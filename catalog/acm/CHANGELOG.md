@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.1](https://github.com/GoogleCloudPlatform/blueprints/compare/acm-blueprint-v0.1.0...acm-blueprint-v0.1.1) (2022-02-02)
+
+
+### Bug Fixes
+
+* remove leftover references to platform-project-id ([#148](https://github.com/GoogleCloudPlatform/blueprints/issues/148)) ([f9fa019](https://github.com/GoogleCloudPlatform/blueprints/commit/f9fa019d3fdfa639e39b8738c00a75c454b27224))
+
 ## [0.1.0](https://www.github.com/GoogleCloudPlatform/blueprints/compare/acm-blueprint-v0.0.1...acm-blueprint-v0.1.0) (2021-12-23)
 
 ### Features

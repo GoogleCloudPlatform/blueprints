@@ -18,7 +18,7 @@ metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: project-id # kpt-set: ${project-id}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.4.1
+    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.4.2
 spec:
   googleServiceAccount: kcc-project-id@management-project-id.iam.gserviceaccount.com # kpt-set: kcc-${project-id}@${management-project-id}.iam.gserviceaccount.com
 ---
@@ -29,7 +29,7 @@ metadata:
   name: kcc-project-id # kpt-set: kcc-${project-id}
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.4.1
+    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.4.2
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
 spec:
   displayName: kcc-project-id # kpt-set: kcc-${project-id}
@@ -41,7 +41,7 @@ metadata:
   name: project-id-sa-workload-identity-binding # kpt-set: ${project-id}-sa-workload-identity-binding
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.4.1
+    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.4.2
 spec:
   resourceRef:
     name: kcc-project-id # kpt-set: kcc-${project-id}

@@ -45,7 +45,7 @@ docker_run:
 		-e BILLING_ACCOUNT \
 		-e PROJECT_ID \
 		-e CLUSTER_NAME \
-        -e DOCKER_HOST_PATH=$(CURDIR) \
+		-e DOCKER_HOST_PATH=$(CURDIR) \
 		-v $(CURDIR):/workspace \
 		-v $(CURDIR)/utils/testutils/krmt.sh:/usr/local/bin/krmt \
 		-v /var/run/docker.sock:/var/run/docker.sock \

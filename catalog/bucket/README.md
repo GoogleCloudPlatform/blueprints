@@ -10,7 +10,7 @@ A Google Cloud Storage bucket
 
 |     Name      |       Value        | Type | Count |
 |---------------|--------------------|------|-------|
-| name          | bucket             | str  |     1 |
+| name          | bucket2            | str  |     1 |
 | project-id    | blueprints-project | str  |     2 |
 | storage-class | standard           | str  |     1 |
 

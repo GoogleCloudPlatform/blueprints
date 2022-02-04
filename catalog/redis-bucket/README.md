@@ -13,7 +13,7 @@ This blueprint demonstrates multiple unrelated resources sharing a package.
 
 |     Name      |          Value           | Type | Count |
 |---------------|--------------------------|------|-------|
-| name          | bucket                   | str  |     4 |
+| name          | redis-bucket             | str  |     4 |
 | network       | default                  | str  |     1 |
 | project-id    | blueprints-project-redis | str  |     8 |
 | region        | us-central1              | str  |     1 |

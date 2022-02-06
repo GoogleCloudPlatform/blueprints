@@ -29,7 +29,7 @@ metadata:
     cnrm.cloud.google.com/project-id: sample-project-id
 spec:
   authorizedNetworkRef:
-    external: projects/PLEASE_CHANGE/global/networks/default 
+    external: projects/sample-project-id/global/networks/default
   displayName: redis-bucket
   memorySizeGb: 3
   region: us-central1

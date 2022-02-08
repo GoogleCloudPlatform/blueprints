@@ -25,4 +25,4 @@ spec:
     kind: Organization
     external: sample-org-id
   role: roles/resourcemanager.organizationAdmin
-  member: group:gcp-organization-admins@sample-domain.com
+  member: group:gcp-organization-admins@example.com

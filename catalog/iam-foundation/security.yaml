@@ -25,7 +25,7 @@ spec:
     kind: Organization
     external: sample-org-id
   role: roles/orgpolicy.policyAdmin
-  member: group:gcp-security-admins@sample-domain.com 
+  member: group:gcp-security-admins@example.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -41,7 +41,7 @@ spec:
     kind: Organization
     external: sample-org-id
   role: roles/iam.securityReviewer
-  member: group:gcp-security-admins@sample-domain.com 
+  member: group:gcp-security-admins@example.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -57,7 +57,7 @@ spec:
     kind: Organization
     external: sample-org-id
   role: roles/iam.roleViewer
-  member: group:gcp-security-admins@sample-domain.com 
+  member: group:gcp-security-admins@example.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -73,7 +73,7 @@ spec:
     kind: Organization
     external: sample-org-id
   role: roles/securitycenter.admin
-  member: group:gcp-security-admins@sample-domain.com 
+  member: group:gcp-security-admins@example.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -89,7 +89,7 @@ spec:
     kind: Organization
     external: sample-org-id
   role: roles/resourcemanager.folderIamAdmin
-  member: group:gcp-security-admins@sample-domain.com 
+  member: group:gcp-security-admins@example.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -105,7 +105,7 @@ spec:
     kind: Organization
     external: sample-org-id
   role: roles/logging.privateLogViewer
-  member: group:gcp-security-admins@sample-domain.com 
+  member: group:gcp-security-admins@example.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -121,7 +121,7 @@ spec:
     kind: Organization
     external: sample-org-id
   role: roles/logging.configWriter
-  member: group:gcp-security-admins@sample-domain.com 
+  member: group:gcp-security-admins@example.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -137,7 +137,7 @@ spec:
     kind: Organization
     external: sample-org-id
   role: roles/container.viewer
-  member: group:gcp-security-admins@sample-domain.com 
+  member: group:gcp-security-admins@example.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -153,7 +153,7 @@ spec:
     kind: Organization
     external: sample-org-id
   role: roles/compute.viewer
-  member: group:gcp-security-admins@sample-domain.com 
+  member: group:gcp-security-admins@example.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -169,4 +169,4 @@ spec:
     kind: Organization
     external: sample-org-id
   role: roles/bigquery.dataViewer
-  member: group:gcp-security-admins@sample-domain.com 
+  member: group:gcp-security-admins@example.com 

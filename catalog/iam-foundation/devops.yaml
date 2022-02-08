@@ -25,4 +25,4 @@ spec:
     kind: Organization
     external: sample-org-id
   role: roles/resourcemanager.folderViewer
-  member: group:gcp-devops@sample-domain.com
+  member: group:gcp-devops@example.com

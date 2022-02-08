@@ -23,9 +23,9 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "123456789012" # kpt-set: ${org-id}
+    external: sample-org-id
   role: roles/orgpolicy.policyAdmin
-  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+  member: group:gcp-security-admins@sample-domain.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -39,9 +39,9 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "123456789012" # kpt-set: ${org-id}
+    external: sample-org-id
   role: roles/iam.securityReviewer
-  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+  member: group:gcp-security-admins@sample-domain.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -55,9 +55,9 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "123456789012" # kpt-set: ${org-id}
+    external: sample-org-id
   role: roles/iam.roleViewer
-  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+  member: group:gcp-security-admins@sample-domain.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -71,9 +71,9 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "123456789012" # kpt-set: ${org-id}
+    external: sample-org-id
   role: roles/securitycenter.admin
-  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+  member: group:gcp-security-admins@sample-domain.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -87,9 +87,9 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "123456789012" # kpt-set: ${org-id}
+    external: sample-org-id
   role: roles/resourcemanager.folderIamAdmin
-  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+  member: group:gcp-security-admins@sample-domain.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -103,9 +103,9 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "123456789012" # kpt-set: ${org-id}
+    external: sample-org-id
   role: roles/logging.privateLogViewer
-  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+  member: group:gcp-security-admins@sample-domain.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -119,9 +119,9 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "123456789012" # kpt-set: ${org-id}
+    external: sample-org-id
   role: roles/logging.configWriter
-  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+  member: group:gcp-security-admins@sample-domain.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -135,9 +135,9 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "123456789012" # kpt-set: ${org-id}
+    external: sample-org-id
   role: roles/container.viewer
-  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+  member: group:gcp-security-admins@sample-domain.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -151,9 +151,9 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "123456789012" # kpt-set: ${org-id}
+    external: sample-org-id
   role: roles/compute.viewer
-  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+  member: group:gcp-security-admins@sample-domain.com 
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
@@ -167,6 +167,6 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "123456789012" # kpt-set: ${org-id}
+    external: sample-org-id
   role: roles/bigquery.dataViewer
-  member: group:gcp-security-admins@example.com # kpt-set: group:${group-security-admins}
+  member: group:gcp-security-admins@sample-domain.com 

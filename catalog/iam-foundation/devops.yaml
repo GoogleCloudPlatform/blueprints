@@ -23,6 +23,6 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "123456789012" # kpt-set: ${org-id}
+    external: sample-org-id
   role: roles/resourcemanager.folderViewer
-  member: group:gcp-devops@example.com # kpt-set: group:${group-devops}
+  member: group:gcp-devops@sample-domain.com

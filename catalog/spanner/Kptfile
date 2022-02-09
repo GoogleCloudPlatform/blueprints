@@ -11,9 +11,7 @@ pipeline:
   mutators:
     - image: gcr.io/kpt-fn-demo/set-default-name:v0.3-yuwenma
       configPath: gcloud-config.yaml
-
     - image: gcr.io/kpt-fn-demo/set-gcp-location:v0.2-yuwenma
       configPath: gcloud-config.yaml
-
     - image: gcr.io/kpt-fn/set-namespace:v0.2.0
       configPath: gcloud-config.yaml

@@ -21,8 +21,7 @@ info:
   description: This blueprint sets up recommended IAM roles for an enterprise organization in Google Cloud.
 pipeline:
   mutators:
-    - image: gcr.io/kpt-fn/apply-setters:v0.2
-      configPath: setters.yaml
-    - image: gcr.io/kpt-fn/set-namespace:v0.1
-      configMap:
-        namespace: config-control
+    - image: gcr.io/kpt-fn-demo/set-org-id:v0.1-yuwenma
+      configPath: gcloud-config.yaml
+    - image: gcr.io/kpt-fn-demo/set-domain:v0.1-yuwenma
+      configPath: gcloud-config.yaml

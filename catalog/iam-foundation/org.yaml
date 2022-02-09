@@ -23,6 +23,6 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: "123456789012" # kpt-set: ${org-id}
+    external: example-org-id
   role: roles/resourcemanager.organizationAdmin
-  member: group:gcp-organization-admins@example.com # kpt-set: group:${group-org-admins}
+  member: group:gcp-organization-admins@example.com

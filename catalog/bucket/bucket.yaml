@@ -17,7 +17,7 @@ metadata:
   name: bucket
   annotations:
     cnrm.cloud.google.com/force-destroy: "false"
-    cnrm.cloud.google.com/project-id: sample-project-id
+    cnrm.cloud.google.com/project-id: example-project-id
 spec:
   location: us-central1
   storageClass: standard

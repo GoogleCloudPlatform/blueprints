@@ -11,17 +11,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-apiVersion: v1
-kind: ConfigMap
+# IAM Policy Member
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
 metadata:
-  name: setters
-data:
-  namespace: my-namespace
-  dataset-description: BigQuery audit logs for folder
-  dataset-location: US
-  dataset-name: audit-logs
-  default-table-expiration-ms: "3600000"
-  delete-contents-on-destroy: "false"
-  filter: ""
-  folder-k8s-name: my.folder.k8s.name
-  project-id: my-project-id
+  name: example-bigquery-export
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
+spec:
+  memberFrom:
+    logSinkRef:
+      name: example-bigquery-export
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: projects/example-project-id
+  role: roles/bigquery.dataEditor

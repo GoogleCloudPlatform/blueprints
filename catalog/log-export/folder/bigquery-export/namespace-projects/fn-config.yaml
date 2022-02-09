@@ -1,0 +1,6 @@
+apiVersion: fn.kpt.dev/v1alpha1
+kind: SetAnnotations
+metadata:
+  name: project-annotation
+annotations:
+  cnrm.cloud.google.com/project-id: example-project-id

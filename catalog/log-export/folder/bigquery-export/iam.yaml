@@ -15,16 +15,15 @@
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata:
-  name: bq-project-iam-policy
-  namespace: my-namespace # kpt-set: ${namespace}
+  name: example-bigquery-export
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
 spec:
   memberFrom:
     logSinkRef:
-      name: my.folder.k8s.name-bqsink # kpt-set: ${folder-k8s-name}-bqsink
+      name: example-bigquery-export
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
-    external: projects/my-project-id # kpt-set: projects/${project-id}
+    external: projects/example-project-id
   role: roles/bigquery.dataEditor

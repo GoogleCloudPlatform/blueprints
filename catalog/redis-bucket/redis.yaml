@@ -14,25 +14,23 @@
 apiVersion: serviceusage.cnrm.cloud.google.com/v1beta1
 kind: Service
 metadata:
-  name: blueprints-project-redis-bucket # kpt-set: ${project-id}-${name}
-  namespace: config-control
+  name: redis-bucket
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: blueprints-project # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: example-project-id
 spec:
   resourceID: redis.googleapis.com
 ---
 apiVersion: redis.cnrm.cloud.google.com/v1beta1
 kind: RedisInstance
 metadata:
-  name: blueprints-project-redis-bucket # kpt-set: ${project-id}-${name}
-  namespace: config-control
+  name: redis-bucket
   annotations:
-    cnrm.cloud.google.com/project-id: blueprints-project # kpt-set: ${project-id}
+    cnrm.cloud.google.com/project-id: example-project-id
 spec:
   authorizedNetworkRef:
-    external: projects/blueprints-project/global/networks/default # kpt-set: projects/${project-id}/global/networks/${network}
-  displayName: blueprints-project-redis-bucket # kpt-set: ${project-id}-${name}
+    external: projects/example-project-id/global/networks/default
+  displayName: redis-bucket
   memorySizeGb: 3
-  region: us-central1 # kpt-set: ${region}
+  region: us-central1
   tier: BASIC

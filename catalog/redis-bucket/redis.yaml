@@ -17,7 +17,7 @@ metadata:
   name: redis-bucket
   annotations:
     cnrm.cloud.google.com/disable-on-destroy: "false"
-    cnrm.cloud.google.com/project-id: sample-project-id
+    cnrm.cloud.google.com/project-id: example-project-id
 spec:
   resourceID: redis.googleapis.com
 ---
@@ -26,10 +26,10 @@ kind: RedisInstance
 metadata:
   name: redis-bucket
   annotations:
-    cnrm.cloud.google.com/project-id: sample-project-id
+    cnrm.cloud.google.com/project-id: example-project-id
 spec:
   authorizedNetworkRef:
-    external: projects/sample-project-id/global/networks/default
+    external: projects/example-project-id/global/networks/default
   displayName: redis-bucket
   memorySizeGb: 3
   region: us-central1

@@ -8,5 +8,5 @@ info:
   description: A log export on a folder that sinks to BigQuery
 pipeline:
   mutators:
-    - image: gcr.io/kpt-fn-demo/set-default-name:v0.5-yuwenma
+    - image: gcr.io/kpt-fn-demo/set-project-id:v0.3-yuwenma
       configPath: gcloud-config.yaml

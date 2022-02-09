@@ -23,7 +23,7 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: sample-org-id
+    external: example-org-id
   role: roles/compute.networkAdmin
   member: group:gcp-network-admins@example.com
 ---
@@ -39,7 +39,7 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: sample-org-id
+    external: example-org-id
   role: roles/compute.xpnAdmin
   member: group:gcp-network-admins@example.com
 ---
@@ -55,7 +55,7 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: sample-org-id
+    external: example-org-id
   role: roles/compute.securityAdmin
   member: group:gcp-network-admins@example.com
 ---
@@ -71,6 +71,6 @@ spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Organization
-    external: sample-org-id
+    external: example-org-id
   role: roles/resourcemanager.folderViewer
   member: group:gcp-network-admins@example.com

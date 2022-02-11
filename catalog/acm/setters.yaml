@@ -20,15 +20,9 @@ data:
   cluster-name: cluster-name
   # The location for this cluster e.g. us-east4
   location: us-east4
-  # The namespace in which to create Kubernetes CRDs representing cluster resources e.g. config-control
-  platform-namespace: config-control
-  # The project in which to manage cluster resources
-  project-id: project-id
   # The URL for the repo e.g. https://source.developers.google.com/p/${project-id}/r/${repo-name} for ACM (Config Sync)
   sync-repo: https://source.developers.google.com/p/project_id/r/repo
   # The reference for the repo e.g. projects/${project}/repos/${name}. Used to grant access to the ACM Service Account
   sync-repo-ref: projects/project-id/repos/repo-name
   # The directory in the repository to pull configs from e.g. config/root
   policy-dir: config/root
-  # ACM version to install
-  acm-version: 1.9.0

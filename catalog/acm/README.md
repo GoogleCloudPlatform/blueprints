@@ -12,7 +12,6 @@ A blueprint to install Anthos Config Management (ACM) on an existing GKE cluster
 |---------------|----------------------------------------------------------|------|-------|
 | cluster-name  | cluster-name                                             | str  |    16 |
 | location      | us-east4                                                 | str  |     2 |
-| policy-dir    | config/root                                              | str  |     1 |
 | project-id    | project-id                                               | str  |    18 |
 | sync-repo     | https://source.developers.google.com/p/project_id/r/repo | str  |     1 |
 | sync-repo-ref | projects/project-id/repos/repo-name                      | str  |     1 |

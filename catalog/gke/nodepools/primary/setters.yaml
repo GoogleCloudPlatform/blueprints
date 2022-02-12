@@ -24,9 +24,3 @@ data:
   max-node-count: "2"
   # The name of this node pool
   nodepool-name: primary
-  # The namespace in which to manage cluster resources
-  platform-namespace: config-control
-  # The project in which to manage cluster resources
-  project-id: project-id
-  # The namespace in which to manage service enablement resources
-  projects-namespace: projects

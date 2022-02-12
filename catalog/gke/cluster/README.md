@@ -14,10 +14,8 @@ A GKE cluster with public masters and private nodes
 | location            | us-east4                                                       | str  |     1 |
 | master-ip-range     | 10.254.0.0/28                                                  | str  |     1 |
 | network-ref         | projects/network-project-id/global/networks/default            | str  |     1 |
-| platform-namespace  | config-control                                                 | str  |     1 |
 | pods-range-name     | pods                                                           | str  |     1 |
 | project-id          | project-id                                                     | str  |     4 |
-| projects-namespace  | projects                                                       | str  |     1 |
 | security-group      | gke-security-groups@example.com                                | str  |     1 |
 | services-range-name | services                                                       | str  |     1 |
 | subnet-ref          | projects/network-project-id/regions/region/subnetworks/default | str  |     1 |
@@ -31,7 +29,7 @@ This package has no sub-packages.
 |        File        |                 APIVersion                 |       Kind       |               Name                |   Namespace    |
 |--------------------|--------------------------------------------|------------------|-----------------------------------|----------------|
 | cluster.yaml       | container.cnrm.cloud.google.com/v1beta1    | ContainerCluster | example-us-east4                  | config-control |
-| container-api.yaml | serviceusage.cnrm.cloud.google.com/v1beta1 | Service          | project-id-cluster-name-container | projects       |
+| container-api.yaml | serviceusage.cnrm.cloud.google.com/v1beta1 | Service          | project-id-cluster-name-container | config-control |
 
 ## Resource References
 

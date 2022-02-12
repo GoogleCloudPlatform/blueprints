@@ -33,7 +33,7 @@ spec:
       git:
         syncRepo: https://source.developers.google.com/p/project_id/r/repo # kpt-set: ${sync-repo}
         syncBranch: main
-        policyDir: config/root # kpt-set: ${policy-dir}
+        policyDir: config/root
         secretType: gcpserviceaccount
         gcpServiceAccountRef:
           external: sa-acm-cluster-name@project-id.iam.gserviceaccount.com # kpt-set: sa-acm-${cluster-name}@${project-id}.iam.gserviceaccount.com

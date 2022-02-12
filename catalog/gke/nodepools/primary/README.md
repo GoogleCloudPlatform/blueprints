@@ -8,15 +8,13 @@ A GKE node pool with a dedicated service account
 
 ## Setters
 
-|        Name        |      Value       | Type | Count |
-|--------------------|------------------|------|-------|
-| cluster-name       | example-us-east4 | str  |    11 |
-| location           | us-east4         | str  |     1 |
-| max-node-count     |                2 | int  |     1 |
-| nodepool-name      | primary          | str  |    11 |
-| platform-namespace | config-control   | str  |     8 |
-| project-id         | project-id       | str  |     5 |
-| projects-namespace | projects         | str  |     0 |
+|      Name      |      Value       | Type | Count |
+|----------------|------------------|------|-------|
+| cluster-name   | example-us-east4 | str  |    11 |
+| location       | us-east4         | str  |     1 |
+| max-node-count |                2 | int  |     1 |
+| nodepool-name  | primary          | str  |    11 |
+| project-id     | project-id       | str  |     5 |
 
 ## Sub-packages
 

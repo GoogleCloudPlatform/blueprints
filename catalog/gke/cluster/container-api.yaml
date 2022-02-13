@@ -17,7 +17,7 @@ kind: Service
 metadata:
   # Use a unique name to avoid overlap with other cluster package instances.
   name: project-id-cluster-name-container # kpt-set: ${project-id}-${cluster-name}-container
-  namespace: projects # kpt-set: ${projects-namespace}
+  namespace: config-control
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/gke:gke-cluster/v0.4.0
     cnrm.cloud.google.com/deletion-policy: abandon

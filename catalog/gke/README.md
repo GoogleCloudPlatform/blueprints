@@ -16,10 +16,8 @@ A GKE cluster with a primary node pool. An existing subnet needs to be provided 
 | max-node-count      |                                                              2 | int  |     1 |
 | network-ref         | projects/network-project-id/global/networks/default            | str  |     1 |
 | nodepool-name       | primary                                                        | str  |    11 |
-| platform-namespace  | config-control                                                 | str  |     9 |
 | pods-range-name     | pods                                                           | str  |     1 |
 | project-id          | project-id                                                     | str  |     9 |
-| projects-namespace  | projects                                                       | str  |     1 |
 | security-group      | gke-security-groups@example.com                                | str  |     1 |
 | services-range-name | services                                                       | str  |     1 |
 | subnet-ref          | projects/network-project-id/regions/region/subnetworks/default | str  |     1 |

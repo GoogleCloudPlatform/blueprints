@@ -26,9 +26,3 @@ data:
   network-ref: projects/network-project-id/global/networks/default
   # The reference to the subnet
   subnet-ref: projects/network-project-id/regions/region/subnetworks/default
-  # The namespace in which to manage cluster resources
-  platform-namespace: config-control
-  # The project in which to manage cluster resources
-  project-id: project-id
-  # The namespace in which to manage service enablement resources
-  projects-namespace: projects

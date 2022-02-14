@@ -15,7 +15,7 @@ apiVersion: container.cnrm.cloud.google.com/v1beta1
 kind: ContainerCluster
 metadata: # kpt-merge: config-control/example-us-east4
   name: example-us-east4 # kpt-set: ${cluster-name}
-  namespace: config-control # kpt-set: ${platform-namespace}
+  namespace: config-control
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/gke-autopilot/v0.1.0
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}

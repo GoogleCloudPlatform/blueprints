@@ -16,7 +16,7 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata: # kpt-merge: config-control/gke-example-us-east4-primary
   name: gke-example-us-east4-primary # kpt-set: gke-${cluster-name}-${nodepool-name}
-  namespace: config-control # kpt-set: ${platform-namespace}
+  namespace: config-control
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/gke:gke-nodepool/v0.4.0
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
@@ -28,14 +28,14 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata: # kpt-merge: config-control/logwriter-gke-example-us-east4-primary
   name: logwriter-gke-example-us-east4-primary # kpt-set: logwriter-gke-${cluster-name}-${nodepool-name}
-  namespace: config-control # kpt-set: ${platform-namespace}
+  namespace: config-control
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/gke:gke-nodepool/v0.4.0
 spec:
   memberFrom:
     serviceAccountRef:
       name: gke-example-us-east4-primary # kpt-set: gke-${cluster-name}-${nodepool-name}
-      namespace: config-control # kpt-set: ${platform-namespace}
+      namespace: config-control
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -47,14 +47,14 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata: # kpt-merge: config-control/metricwriter-gke-example-us-east4-primary
   name: metricwriter-gke-example-us-east4-primary # kpt-set: metricwriter-gke-${cluster-name}-${nodepool-name}
-  namespace: config-control # kpt-set: ${platform-namespace}
+  namespace: config-control
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/gke:gke-nodepool/v0.4.0
 spec:
   memberFrom:
     serviceAccountRef:
       name: gke-example-us-east4-primary # kpt-set: gke-${cluster-name}-${nodepool-name}
-      namespace: config-control # kpt-set: ${platform-namespace}
+      namespace: config-control
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project
@@ -66,14 +66,14 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPolicyMember
 metadata: # kpt-merge: config-control/artifactreader-gke-example-us-east4-primary
   name: artifactreader-gke-example-us-east4-primary # kpt-set: artifactreader-gke-${cluster-name}-${nodepool-name}
-  namespace: config-control # kpt-set: ${platform-namespace}
+  namespace: config-control
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/gke:gke-nodepool/v0.4.0
 spec:
   memberFrom:
     serviceAccountRef:
       name: gke-example-us-east4-primary # kpt-set: gke-${cluster-name}-${nodepool-name}
-      namespace: config-control # kpt-set: ${platform-namespace}
+      namespace: config-control
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project

@@ -10,18 +10,15 @@ A blueprint to create an Anthos cluster and install Anthos Config Management (AC
 
 |        Name         |                             Value                              | Type | Count |
 |---------------------|----------------------------------------------------------------|------|-------|
-| acm-version         | 1.9.0                                                          | str  |     0 |
-| cluster-name        | example-us-west4                                               | str  |    25 |
+| cluster-name        | example-us-west4                                               | str  |    29 |
 | location            | us-east4                                                       | str  |     4 |
 | master-ip-range     | 10.254.0.0/28                                                  | str  |     1 |
 | max-node-count      |                                                              2 | int  |     1 |
 | network-ref         | projects/network-project-id/global/networks/default            | str  |     1 |
 | nodepool-name       | primary                                                        | str  |    11 |
-| platform-namespace  | config-control                                                 | str  |    19 |
 | pods-range-name     | pods                                                           | str  |     1 |
-| policy-dir          | config/root                                                    | str  |     1 |
-| project-id          | project-id                                                     | str  |    30 |
-| projects-namespace  | projects                                                       | str  |     1 |
+| policy-dir          | config/root                                                    | str  |     0 |
+| project-id          | project-id                                                     | str  |    27 |
 | security-group      | gke-security-groups@example.com                                | str  |     1 |
 | services-range-name | services                                                       | str  |     1 |
 | subnet-ref          | projects/network-project-id/regions/region/subnetworks/default | str  |     1 |

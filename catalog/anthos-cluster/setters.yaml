@@ -22,12 +22,6 @@ data:
   location: us-east4
   # The private IP range for masters to use when peering to the VPC
   master-ip-range: 10.254.0.0/28
-  # The project in which to manage cluster resources
-  project-id: project-id
-  # The namespace in which to manage cluster resources
-  platform-namespace: config-control
-  # The namespace in which to manage service enablement resources
-  projects-namespace: projects
   # The private IP range name for pods to use, this range must already exist
   pods-range-name: pods
   # The private IP range name for services to use, this range must already exist
@@ -39,8 +33,6 @@ data:
   # The group in which to manage the list of groups that can be used for RBAC.
   # Must be named exactly 'gke-security-groups'.
   security-group: gke-security-groups@example.com
-  # ACM version to install
-  acm-version: 1.9.0
   # The URL for the repo for ACM (Config Sync)
   sync-repo: https://source.developers.google.com/p/project_id/r/repo
   # The directory in the repository to pull configs from e.g. config/root

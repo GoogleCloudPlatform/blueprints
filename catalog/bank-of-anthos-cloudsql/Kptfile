@@ -1,0 +1,18 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: bank-of-anthos-cloudsql
+upstream:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/bank-of-anthos
+    directory: /extras/cloudsql/kubernetes-manifests
+    ref: main
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/bank-of-anthos
+    directory: /extras/cloudsql/kubernetes-manifests
+    ref: main
+    commit: 6bc21926ad2eb48d7a591a9e0ebd5ca81732d5e0

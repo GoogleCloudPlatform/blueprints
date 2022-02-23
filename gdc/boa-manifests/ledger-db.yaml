@@ -51,10 +51,14 @@ spec:
           volumeMounts:
             - name: postgresdb
               mountPath: /var/lib/postgresql/data
-              subPath: postgres
-      volumes:
-        - name: postgresdb
-          emptyDir: {}
+  volumeClaimTemplates:
+  - metadata:
+      name: postgresdb
+    spec:
+      accessModes: [ ReadWriteOnce ]
+      resources:
+        requests:
+          storage: 1Gi
 # [END gke_boa_kubernetes_manifests_ledger_db_statefulset_ledger_db]
 ---
 # [START gke_boa_kubernetes_manifests_ledger_db_configmap_ledger_db_config]

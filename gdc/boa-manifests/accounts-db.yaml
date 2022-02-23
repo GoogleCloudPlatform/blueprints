@@ -57,10 +57,14 @@ spec:
         volumeMounts:
         - name: postgresdb
           mountPath: /var/lib/postgresql/data
-          subPath: postgres
-      volumes:
-      - name: postgresdb
-        emptyDir: {}
+  volumeClaimTemplates:
+  - metadata:
+      name: postgresdb
+    spec:
+      accessModes: [ ReadWriteOnce ]
+      resources:
+        requests:
+          storage: 1Gi
 # [END gke_boa_kubernetes_manifests_accounts_db_statefulset_accounts_db]
 ---
 # [START gke_boa_kubernetes_manifests_accounts_db_service_accounts_db]

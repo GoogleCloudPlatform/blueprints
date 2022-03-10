@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.4.2](https://github.com/GoogleCloudPlatform/blueprints/compare/project-blueprint-v0.4.1...project-blueprint-v0.4.2) (2022-02-02)
+
+
+### Bug Fixes
+
+* remove redundant project annotation ([#132](https://github.com/GoogleCloudPlatform/blueprints/issues/132)) ([35b03a8](https://github.com/GoogleCloudPlatform/blueprints/commit/35b03a801fd7996e7dace90cb967b02cba332557))
+
 ### [0.4.1](https://www.github.com/GoogleCloudPlatform/blueprints/compare/project-blueprint-v0.4.0...project-blueprint-v0.4.1) (2021-10-15)
 
 

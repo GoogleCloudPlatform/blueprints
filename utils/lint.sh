@@ -47,7 +47,7 @@ check_yaml_fmt(){
     catalogTmpDir="$tmpDir/catalog"
     # format tmpDir blueprints
     # todo: switch to kpt v1 after v1 branch merged
-    kpt fn eval "$catalogTmpDir" --image gcr.io/kpt-fn/format:unstable > /dev/null
+    kpt fn eval "$catalogTmpDir" --image gcr.io/kpt-fn/format:unstable --include-meta-resources > /dev/null
     local diffExitCode=1
     # check if both formatted and current are same
     diff -qr catalog "$catalogTmpDir" && diffExitCode=$? || diffExitCode=$?
@@ -61,6 +61,60 @@ check_yaml_fmt(){
     trap "rm -rf $tmpDir" EXIT
 }
 
+check_readmes(){
+    echo "Check Readme generation"
+    # copy catalog to tmpDir
+    # tmpDir has to be a path on host as dockerd could be mounted in dev container
+    tmpDirInWorkspace=".tmp"
+    rm -rf ${tmpDirInWorkspace}
+    mkdir -p ${tmpDirInWorkspace}
+    cp -R catalog "$tmpDirInWorkspace"
+    catalogTmpDir="$tmpDirInWorkspace/catalog"
+    # generate tmpDir blueprint readmes
+    fix_readmes ${catalogTmpDir} ${tmpDirInWorkspace} > /dev/null
+    local diffExitCode=1
+    # check if both generated and current are same
+    diff -qr catalog "$catalogTmpDir" && diffExitCode=$? || diffExitCode=$?
+    if [[ $diffExitCode -ne 0 ]]; then
+        echo "Incorrect readme files found in catalog. Please run make docker_fix_lint and review changes."
+        exit $diffExitCode
+    else
+        echo "All readmes in the catalog are generated correctly."
+    fi
+    # shellcheck disable=SC2064
+    trap "rm -rf $tmpDirInWorkspace" ERR EXIT
+}
+
+function fix_readmes() {
+    local parent="${1}"
+    local tmpPrefix="${2}"
+    while IFS='' read -r -d $'\0' child; do
+        child=${child#"./"}
+        if [[ "$(basename "${child}")" == .* ]]; then
+            # invisible dir
+            continue
+        fi
+        if [[ -f "${child}/Kptfile" ]]; then
+            # kpt package
+            echo "Generating ${child}/README.md"
+            pkgName=$(basename $child)
+            # if DOCKER_HOST_PATH dockderd socket mounted
+            if [[ -z "${DOCKER_HOST_PATH-}" ]]; then
+                MOUNT_PATH="$(pwd)/${child}"
+            else 
+                MOUNT_PATH="${DOCKER_HOST_PATH}/${child}"
+            fi
+            # if tmpPrefix is set, adjust repoPath to trim tmpPrefix
+            repoPath=$parent
+            if [[ ! -z "${tmpPrefix}" ]];then
+                repoPath="${parent#$tmpPrefix/}"
+            fi
+            kpt fn eval -i gcr.io/kpt-fn-contrib/generate-kpt-pkg-docs@sha256:046b57ae98fc7c0ae35713fcf50d8d0c2c34fcd1d576dec516ac075cc9f8d519 ${child} --include-meta-resources --as-current-user --mount type=bind,src="${MOUNT_PATH}",dst=/tmp,rw=true -- readme-path=/tmp/README.md repo-path="https://github.com/GoogleCloudPlatform/blueprints.git/${repoPath}/" pkg-name="${pkgName}"
+        fi
+        fix_readmes "${child}" "${tmpPrefix}"
+    done < <(find "${parent}" -mindepth 1 -maxdepth 1 -type d -print0)
+}
+
 fix_license(){
     echo "Fix license headers"
     check_addlicense
@@ -69,15 +123,19 @@ fix_license(){
 
 fix_yaml_fmt(){
     echo "Fix yaml format"
-    kpt fn eval catalog --image gcr.io/kpt-fn/format:unstable
+    kpt fn eval catalog --image gcr.io/kpt-fn/format:unstable --include-meta-resources
 }
 
 check_lint(){
     check_license
     check_yaml_fmt
+    check_readmes
 }
 
 fix_lint(){
+    REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd -P)"
+    cd "${REPO_ROOT}"
     fix_license
     fix_yaml_fmt
+    fix_readmes "catalog"
 }

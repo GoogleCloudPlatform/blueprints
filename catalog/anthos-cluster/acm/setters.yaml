@@ -1,0 +1,34 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: v1
+kind: ConfigMap
+metadata: # kpt-merge: /setters
+  name: setters
+data:
+  # The name of this cluster
+  cluster-name: cluster-name
+  # The location for this cluster e.g. us-east4
+  location: us-east4
+  # The namespace in which to create Kubernetes CRDs representing cluster resources e.g. config-control
+  platform-namespace: config-control
+  # The URL for the repo e.g. https://source.developers.google.com/p/${project-id}/r/${repo-name} for ACM (Config Sync)
+  sync-repo: https://source.developers.google.com/p/project_id/r/repo
+  # The directory in the repository to pull configs from e.g. config/root
+  policy-dir: config/root
+  # ACM version to install
+  acm-version: 1.9.0
+  # The reference for the repo e.g. projects/${project}/repos/${name}. Used to grant access to the ACM Service Account
+  sync-repo-ref: projects/project-id/repos/repo-name
+  # The project in which to manage cluster resources
+  project-id: project-id

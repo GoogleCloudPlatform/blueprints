@@ -21,7 +21,7 @@ metadata:
   name: source-repo-cicd-trigger # kpt-set: ${source-repo}-cicd-trigger
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gitops/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/gitops/v0.4.2
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   build:
@@ -42,7 +42,7 @@ spec:
         entrypoint: /bin/sh
         id: "Clone Deployment Repo"
         timeout: 300s
-      - name: gcr.io/kpt-dev/kpt:v1.0.0-beta.1
+      - name: gcr.io/kpt-dev/kpt:v1.0.0-beta.9
         volumes:
           - name: hydrated-workspace
             path: /hydrated-workspace

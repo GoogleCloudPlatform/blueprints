@@ -1,0 +1,27 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: gke
+  annotations:
+    blueprints.cloud.google.com/title: GKE blueprint
+upstream:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/blueprints
+    directory: /catalog/gke
+    ref: main
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/blueprints
+    directory: /catalog/gke
+    ref: main
+    commit: dd26c984df3c1a68786cb89d8f0a9be741346050
+info:
+  description: |
+    A GKE cluster with a primary node pool. An existing subnet needs to be provided where the cluster should be created.
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

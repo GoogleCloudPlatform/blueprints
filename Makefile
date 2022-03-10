@@ -14,13 +14,14 @@
 
 
 SHELL := /usr/bin/env bash
-DOCKER_TAG_VERSION_DEVELOPER_TOOLS := 1.1.3
+DOCKER_TAG_VERSION_DEVELOPER_TOOLS := 1.3
 DOCKER_IMAGE_DEVELOPER_TOOLS := cft/developer-tools-krm
 REGISTRY_URL := gcr.io/cloud-foundation-cicd
 
 .PHONY: docker_check_lint
 docker_check_lint:
 	docker run --rm -it \
+		-e DOCKER_HOST_PATH=$(CURDIR) \
 		-v $(CURDIR):/workspace \
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
@@ -30,6 +31,7 @@ docker_check_lint:
 .PHONY: docker_fix_lint
 docker_fix_lint:
 	docker run --rm -it \
+		-e DOCKER_HOST_PATH=$(CURDIR) \
 		-v $(CURDIR):/workspace \
 		-v /var/run/docker.sock:/var/run/docker.sock \
 		$(REGISTRY_URL)/${DOCKER_IMAGE_DEVELOPER_TOOLS}:${DOCKER_TAG_VERSION_DEVELOPER_TOOLS} \
@@ -43,6 +45,7 @@ docker_run:
 		-e BILLING_ACCOUNT \
 		-e PROJECT_ID \
 		-e CLUSTER_NAME \
+		-e DOCKER_HOST_PATH=$(CURDIR) \
 		-v $(CURDIR):/workspace \
 		-v $(CURDIR)/utils/testutils/krmt.sh:/usr/local/bin/krmt \
 		-v /var/run/docker.sock:/var/run/docker.sock \

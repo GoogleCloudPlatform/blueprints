@@ -16,27 +16,27 @@
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
-  name: sa-acm-gke-cluster # kpt-set: sa-acm-${cluster-name}
-  namespace: platform-namespace # kpt-set: ${platform-namespace}
+  name: sa-acm-cluster-name # kpt-set: sa-acm-${cluster-name}
+  namespace: config-control
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.1
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
-  displayName: sa-acm-gke-cluster # kpt-set: sa-acm-${cluster-name}
+  displayName: sa-acm-cluster-name # kpt-set: sa-acm-${cluster-name}
   description: For use with ACM to provide read access to Cloud Source Repositories
 ---
 # Allow ACM Config Sync Kubernetes ServiceAccount (KSA) for root-reconciler to use the ACM GSA
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
-  name: sa-acm-gke-cluster # kpt-set: sa-acm-${cluster-name}
-  namespace: platform-namespace # kpt-set: ${platform-namespace}
+  name: sa-acm-cluster-name # kpt-set: sa-acm-${cluster-name}
+  namespace: config-control
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.1
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceRef:
-    name: sa-acm-gke-cluster # kpt-set: sa-acm-${cluster-name}
+    name: sa-acm-cluster-name # kpt-set: sa-acm-${cluster-name}
     apiVersion: iam.cnrm.cloud.google.com/v1beta1
     kind: IAMServiceAccount
   bindings:
@@ -49,16 +49,16 @@ apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMPartialPolicy
 metadata:
   name: source-reader-sync-cluster-name-project-id # kpt-set: source-reader-sync-${cluster-name}-${project-id}
-  namespace: platform-namespace # kpt-set: ${platform-namespace}
+  namespace: config-control
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.0.1
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.1
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceRef:
     apiVersion: sourcerepo.cnrm.cloud.google.com/v1beta1
     kind: SourceRepoRepository
-    external: projects/project-id/repos/name # kpt-set: ${sync-repo-ref}
+    external: projects/project-id/repos/repo-name # kpt-set: ${sync-repo-ref}
   bindings:
     - role: roles/source.reader
       members:
-        - member: serviceAccount:sync-gke-cluster@project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:sa-acm-${cluster-name}@${project-id}.iam.gserviceaccount.com
+        - member: serviceAccount:sa-acm-cluster-name@project-id.iam.gserviceaccount.com # kpt-set: serviceAccount:sa-acm-${cluster-name}@${project-id}.iam.gserviceaccount.com

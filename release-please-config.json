@@ -16,6 +16,10 @@
         "package-name": "gke-blueprint",
         "changelog-path": "CHANGELOG.md"
       },
+      "catalog/gke-autopilot": {
+        "package-name": "gke-autopilot-blueprint",
+        "changelog-path": "CHANGELOG.md"
+      },
       "catalog/hierarchy": {
         "package-name": "hierarchy-blueprint",
         "changelog-path": "CHANGELOG.md"
@@ -46,6 +50,18 @@
       },
       "catalog/iam-foundation": {
         "package-name": "iam-foundation-blueprint",
+        "changelog-path": "CHANGELOG.md"
+      },
+      "catalog/acm": {
+        "package-name": "acm-blueprint",
+        "changelog-path": "CHANGELOG.md"
+      },
+      "catalog/anthos-cluster": {
+        "package-name": "anthos-cluster-blueprint",
+        "changelog-path": "CHANGELOG.md"
+      },
+      "catalog/landing-zone-lite": {
+        "package-name": "landing-zone-lite-blueprint",
         "changelog-path": "CHANGELOG.md"
       }
     },

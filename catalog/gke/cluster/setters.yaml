@@ -11,7 +11,6 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -27,12 +26,6 @@ data:
   network-ref: projects/network-project-id/global/networks/default
   # The reference to the subnet
   subnet-ref: projects/network-project-id/regions/region/subnetworks/default
-  # The namespace in which to manage cluster resources
-  platform-namespace: config-control
-  # The project in which to manage cluster resources
-  project-id: project-id
-  # The namespace in which to manage service enablement resources
-  projects-namespace: projects
   # The group in which to manage the list of groups that can be used for RBAC.
   # Must be named exactly 'gke-security-groups'.
   security-group: gke-security-groups@example.com

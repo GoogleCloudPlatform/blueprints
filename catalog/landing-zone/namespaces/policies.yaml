@@ -46,6 +46,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.4.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
   resourceRef:
     name: policies-sa

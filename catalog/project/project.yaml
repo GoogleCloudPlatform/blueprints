@@ -20,7 +20,7 @@ metadata:
     cnrm.cloud.google.com/auto-create-network: "false"
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:project/v0.4.2
 spec:
-  name: project-id # kpt-set: ${project-id}
+  name: project-name # kpt-set: ${project-name}
   billingAccountRef:
     external: "AAAAAA-BBBBBB-CCCCCC" # kpt-set: ${billing-account-id}
   folderRef:

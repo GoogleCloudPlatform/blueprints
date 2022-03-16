@@ -18,6 +18,7 @@ metadata:
 data:
   folder-name: name.of.folder
   project-id: project-id
+  project-name: project-name
   # These defaults can be kept
   folder-namespace: hierarchy
   networking-namespace: networking

@@ -17,7 +17,8 @@ Config Connector.
 | management-namespace  | config-control        | str  |     2 |
 | management-project-id | management-project-id | str  |     5 |
 | networking-namespace  | networking            | str  |     1 |
-| project-id            | project-id            | str  |    18 |
+| project-id            | project-id            | str  |    17 |
+| project-name          | project-name          | str  |     1 |
 | projects-namespace    | projects              | str  |     3 |
 
 ## Sub-packages

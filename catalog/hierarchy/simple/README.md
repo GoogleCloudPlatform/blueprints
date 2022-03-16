@@ -8,9 +8,7 @@ A simple GCP resource hierarchy with top-level folders
 
 ## Setters
 
-|   Name    |   Value   | Type | Count |
-|-----------|-----------|------|-------|
-| namespace | hierarchy | str  |     1 |
+This package has no top-level setters. See sub-packages.
 
 ## Sub-packages
 

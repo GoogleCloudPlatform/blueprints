@@ -10,9 +10,7 @@ teams
 
 ## Setters
 
-|   Name    |   Value   | Type | Count |
-|-----------|-----------|------|-------|
-| namespace | hierarchy | str  |     3 |
+This package has no top-level setters. See sub-packages.
 
 ## Sub-packages
 

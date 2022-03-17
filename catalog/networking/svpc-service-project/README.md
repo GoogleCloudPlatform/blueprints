@@ -8,11 +8,12 @@ A service project to attach to a Shared VPC
 
 ## Setters
 
-|      Name       |    Value     | Type | Count |
-|-----------------|--------------|------|-------|
-| host-project-id | host-project | str  |     1 |
-| namespace       | projects     | str  |     2 |
-| project-id      | project-id   | str  |     2 |
+|         Name         |    Value     | Type | Count |
+|----------------------|--------------|------|-------|
+| host-project-id      | host-project | str  |     1 |
+| networking-namespace | networking   | str  |     1 |
+| project-id           | project-id   | str  |     2 |
+| projects-namespace   | projects     | str  |     1 |
 
 ## Sub-packages
 

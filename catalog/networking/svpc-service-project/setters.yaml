@@ -16,6 +16,7 @@ kind: ConfigMap
 metadata:
   name: setters
 data:
-  namespace: projects
+  networking-namespace: networking
+  projects-namespace: projects
   host-project-id: host-project
   project-id: project-id

@@ -19,6 +19,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
   displayName: networking-sa
 ---
@@ -30,6 +31,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -46,6 +48,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -62,6 +65,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -78,6 +82,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -94,6 +99,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -127,12 +133,15 @@ metadata:
   name: networking
   annotations:
     cnrm.cloud.google.com/organization-id: "123456789012" # kpt-set: ${org-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
   name: allow-resource-reference-from-networking
   namespace: projects
+  annotations:
+    cnrm.cloud.google.com/ignore-clusterless: "true"
 roleRef:
   name: cnrm-viewer
   kind: ClusterRole
@@ -149,5 +158,6 @@ metadata:
   namespace: networking
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.0
+    cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
   googleServiceAccount: networking-sa@management-project-id.iam.gserviceaccount.com # kpt-set: networking-sa@${management-project-id}.iam.gserviceaccount.com

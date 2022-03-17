@@ -19,6 +19,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
   displayName: policies-sa
 ---
@@ -30,6 +31,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.0
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
@@ -63,6 +65,7 @@ metadata:
   name: policies
   annotations:
     cnrm.cloud.google.com/organization-id: "123456789012" # kpt-set: ${org-id}
+    cnrm.cloud.google.com/ignore-clusterless: "true"
 ---
 apiVersion: core.cnrm.cloud.google.com/v1beta1
 kind: ConfigConnectorContext
@@ -71,5 +74,6 @@ metadata:
   namespace: policies
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.0
+    cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
   googleServiceAccount: policies-sa@management-project-id.iam.gserviceaccount.com # kpt-set: policies-sa@${management-project-id}.iam.gserviceaccount.com

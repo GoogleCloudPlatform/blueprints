@@ -4,6 +4,7 @@ metadata:
   name: dns-record-set
   annotations:
     blueprints.cloud.google.com/title: Cloud DNS Record Set blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: A Cloud DNS record set for a managed zone
 pipeline:

@@ -4,6 +4,7 @@ metadata:
   name: gke
   annotations:
     blueprints.cloud.google.com/title: GKE blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: |
     A GKE cluster with a primary node pool. An existing subnet needs to be provided where the cluster should be created.

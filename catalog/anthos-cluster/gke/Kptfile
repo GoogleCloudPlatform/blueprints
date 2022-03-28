@@ -4,6 +4,7 @@ metadata:
   name: gke
   annotations:
     blueprints.cloud.google.com/title: GKE blueprint
+    config.kubernetes.io/local-config: "true"
 upstream:
   type: git
   git:

@@ -4,6 +4,7 @@ metadata:
   name: network-peering
   annotations:
     blueprints.cloud.google.com/title: Network Peering blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: A peering between two private networks
 pipeline:

@@ -4,6 +4,7 @@ metadata:
   name: dns-private-managed-zone
   annotations:
     blueprints.cloud.google.com/title: Cloud DNS Private Managed Zone blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: A private Cloud DNS managed zone
 pipeline:

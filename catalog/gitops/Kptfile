@@ -17,6 +17,7 @@ metadata:
   name: gitops-csr
   annotations:
     blueprints.cloud.google.com/title: CSR GitOps Pipeline blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: |
     A GitOps Continuous Deployment pipeline using Anthos Config Management (ACM),

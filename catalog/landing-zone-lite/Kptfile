@@ -4,6 +4,7 @@ metadata:
   name: landing-zone-lite
   annotations:
     blueprints.cloud.google.com/title: Landing Zone Lite blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: |
     Foundational landing zone blueprint for GCP for creating only a resource

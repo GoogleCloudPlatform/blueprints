@@ -4,6 +4,7 @@ metadata:
   name: spanner
   annotations:
     blueprints.cloud.google.com/title: Spanner blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: Spanner database and instance with deletion policy
 pipeline:

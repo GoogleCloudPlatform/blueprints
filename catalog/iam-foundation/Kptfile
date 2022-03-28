@@ -17,6 +17,7 @@ metadata:
   name: iam-foundation
   annotations:
     blueprints.cloud.google.com/title: Organizational Foundational IAM
+    config.kubernetes.io/local-config: "true"
 info:
   description: This blueprint sets up recommended IAM roles for an enterprise organization in Google Cloud.
 pipeline:

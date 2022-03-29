@@ -8,5 +8,10 @@ info:
   description: A Google Cloud Storage bucket
 pipeline:
   mutators:
-    - image: gcr.io/kpt-fn/apply-setters:v0.1
-      configPath: setters.yaml
+    - image: gcr.io/kpt-fn/set-namespace:v0.1.0
+      configMap:
+        namespace: config-control
+      name: gcr.io/kpt-fn/set-namespace:v0.1.0
+    - image: gcr.io/kpt-fn/set-project-id:v0.2.0
+      configMap:
+        namespace: blueprints-project

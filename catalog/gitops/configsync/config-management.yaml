@@ -26,5 +26,4 @@ spec:
     secretType: gcpserviceaccount
     syncBranch: main
     syncRepo: https://source.developers.google.com/p/project-id/r/deployment-repo # kpt-set: https://source.developers.google.com/p/${project-id}/r/${deployment-repo}
-    syncRevision: HEAD
   sourceFormat: unstructured

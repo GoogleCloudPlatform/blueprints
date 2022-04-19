@@ -23,3 +23,4 @@ spec:
   autoCreateSubnetworks: false
   deleteDefaultRoutesOnCreate: false
   routingMode: GLOBAL
+  description: vpc-shared-restricted VPC # kpt-set: ${network-name} VPC

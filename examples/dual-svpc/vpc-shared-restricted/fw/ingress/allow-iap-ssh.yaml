@@ -12,15 +12,24 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeNetwork
-metadata: # kpt-merge: networking/network-name
-  name: vpc-shared-base # kpt-set: ${network-name}
+kind: ComputeFirewall
+metadata: # kpt-merge: firewalls-namespace/network-name-fw-allow-iap-ssh
+  name: vpc-shared-restricted-allow-iap-ssh # kpt-set: ${network-name}-allow-iap-ssh
   namespace: config-control # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.4.0,kpt-pkg-fn-live
-    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
-  autoCreateSubnetworks: false
-  deleteDefaultRoutesOnCreate: false
-  routingMode: GLOBAL
-  description: vpc-shared-base VPC # kpt-set: ${network-name} VPC
+  priority: 10000 # kpt-set: ${priority}
+  allow:
+    - ports:
+        - "22"
+      protocol: tcp
+  direction: INGRESS
+  disabled: false
+  enableLogging: true # kpt-set: ${enable-logging}
+  networkRef:
+    name: vpc-shared-restricted # kpt-set: ${network-name}
+  sourceRanges:
+    - "35.235.240.0/20"
+  targetTags:
+    - allow-iap-ssh

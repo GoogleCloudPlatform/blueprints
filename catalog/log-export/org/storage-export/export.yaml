@@ -51,6 +51,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/force-destroy: "true"
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
+    cnrm.cloud.google.com/project-id: my-project-id # kpt-set: ${project-id}
 spec:
   bucketPolicyOnly: false # kpt-set: ${bucket-policy-only}
   location: US # kpt-set: ${location}

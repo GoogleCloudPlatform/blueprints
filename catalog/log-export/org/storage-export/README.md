@@ -15,7 +15,7 @@ A log export on a organization that sinks to Cloud Storage
 | location            | US                | str  |     1 |
 | namespace           | my-namespace      | str  |     3 |
 | org-id              |      123456789012 | str  |     3 |
-| project-id          | my-project-id     | str  |     2 |
+| project-id          | my-project-id     | str  |     3 |
 | storage-bucket-name | my-storage-bucket | str  |     3 |
 | storage-class       | MULTI_REGIONAL    | str  |     1 |
 

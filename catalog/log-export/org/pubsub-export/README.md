@@ -13,7 +13,7 @@ A log export on a organization that sinks to PubSub
 | filter     |                          | str  |     0 |
 | namespace  | my-namespace             | str  |     3 |
 | org-id     |             123456789012 | str  |     3 |
-| project-id | my-project-id            | str  |     2 |
+| project-id | my-project-id            | str  |     3 |
 | topic-name | pubsub-logexport-dataset | str  |     3 |
 
 ## Sub-packages

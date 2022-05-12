@@ -1,0 +1,35 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    name: cloud-sql-auth-proxy # kpt-set: ${serviceName}
+    app.kubernetes.io/name: "cloud-sql-auth-proxy" # kpt-set: ${serviceName}
+    app.kubernetes.io/version: "1.30.0" # kpt-set: ${tag}
+    app.kubernetes.io/component: "database"
+    app.kubernetes.io/tier: "backend"
+  name: cloud-sql-auth-proxy # kpt-set: ${serviceName}
+  namespace: default # kpt-set: ${namespace}
+spec:
+  type: ClusterIP
+  ports:
+  # The port that this service should serve on.
+  - port: 5432
+    protocol: TCP
+    name: db
+    targetPort: 5432
+  # Label keys and values that must match in order to receive traffic for this service.
+  selector:
+    app: cloud-sql-auth-proxy # kpt-set: ${daemonsetName}

@@ -4,6 +4,10 @@
         "package-name": "bucket-blueprint",
         "changelog-path": "CHANGELOG.md"
       },
+      "catalog/cloud-sql-auth-proxy": {
+        "package-name": "cloud-sql-auth-proxy-blueprint",
+        "changelog-path": "CHANGELOG.md"
+      },
       "catalog/empty": {
         "package-name": "empty-blueprint",
         "changelog-path": "CHANGELOG.md"

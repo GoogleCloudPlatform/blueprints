@@ -24,4 +24,4 @@ data:
   project-id: my-project-id
   storage-bucket-name: my-storage-bucket
   storage-class: MULTI_REGIONAL
-  retention-period-seconds: 31536000
+  retention-period-seconds: "31536000"

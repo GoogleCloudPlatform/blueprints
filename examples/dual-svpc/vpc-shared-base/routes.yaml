@@ -18,6 +18,7 @@ metadata:
   namespace: config-control # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   description: "Route through IGW to allow private google api access."
   destRange: 199.36.153.8/30
@@ -33,6 +34,7 @@ metadata:
   namespace: config-control # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   description: "Tag based route through IGW to access internet"
   destRange: 0.0.0.0/0

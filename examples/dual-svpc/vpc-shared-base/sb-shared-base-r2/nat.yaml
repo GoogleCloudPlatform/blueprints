@@ -52,5 +52,6 @@ metadata:
   namespace: config-control # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   location: us-west1 # kpt-set: ${region}

@@ -18,7 +18,7 @@ A log export on a folder that sinks to BigQuery
 | filter                      |                                | str  |     0 |
 | folder-k8s-name             | my.folder.k8s.name             | str  |     3 |
 | namespace                   | my-namespace                   | str  |     3 |
-| project-id                  | my-project-id                  | str  |     3 |
+| project-id                  | my-project-id                  | str  |     4 |
 
 ## Sub-packages
 

@@ -48,5 +48,8 @@ kind: PubSubTopic
 metadata:
   name: pubsub-logexport-dataset # kpt-set: ${topic-name}
   namespace: my-namespace # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
+    cnrm.cloud.google.com/project-id: my-project-id # kpt-set: ${project-id}
 
 # TODO(jcwc): Add support for creating subscribers (either a new blueprint or kpt fn)

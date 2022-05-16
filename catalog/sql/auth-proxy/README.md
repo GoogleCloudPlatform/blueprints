@@ -8,17 +8,15 @@ Launch a Cloud SQL Auth proxy instance as a DaemonSet in Kubernetes
 
 ## Setters
 
-|        Name        |              Value               | Type | Count |
-|--------------------|----------------------------------|------|-------|
-| CONNECTION_NAME    | example-connection               | str  |     1 |
-| containerName      | gce-proxy                        | str  |     1 |
-| daemonsetName      | cloud-sql-auth-proxy             | str  |     4 |
-| image              | gcr.io/cloudsql-docker/gce-proxy | str  |     1 |
-| namespace          | default                          | str  |     3 |
-| serviceAccountName | cloud-sql-proxy-sa               | str  |     1 |
-| serviceName        | cloud-sql-auth-proxy             | str  |     5 |
-| servieAccountName  | cloud-sql-auth-proxy             | str  |     1 |
-| tag                | 1.30.0                           | str  |     4 |
+|         Name         |        Value         | Type | Count |
+|----------------------|----------------------|------|-------|
+| connection-name      | example-connection   | str  |     1 |
+| daemonset-name       | cloud-sql-auth-proxy | str  |     4 |
+| namespace            | default              | str  |     3 |
+| service-account-name | cloud-sql-proxy-sa   | str  |     1 |
+| service-name         | cloud-sql-auth-proxy | str  |     2 |
+| servie-account-name  | cloud-sql-auth-proxy | str  |     1 |
+| tag                  | 1.30.0               | str  |     1 |
 
 ## Sub-packages
 
@@ -42,14 +40,14 @@ This package has no sub-packages.
 
 1.  Clone the package:
     ```shell
-    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/cloud-sql-auth-proxy@${VERSION}
+    kpt pkg get https://github.com/GoogleCloudPlatform/blueprints.git/catalog/sql/auth-proxy@${VERSION}
     ```
     Replace `${VERSION}` with the desired repo branch or tag
     (for example, `main`).
 
 1.  Move into the local package:
     ```shell
-    cd "./cloud-sql-auth-proxy/"
+    cd "./auth-proxy/"
     ```
 
 1.  Edit the function config file(s):

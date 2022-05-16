@@ -12,12 +12,12 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 apiVersion: v1
-kind: ServiceAccount
+kind: ConfigMap
 metadata:
-  name: cloud-sql-auth-proxy # kpt-set: ${servieAccountName}
-  namespace: default # kpt-set: ${namespace}
-  annotations:
-    app.kubernetes.io/name: "cloud-sql-auth-proxy" # kpt-set: ${serviceName}
-    app.kubernetes.io/version: "1.30.0" # kpt-set: ${tag}
-    app.kubernetes.io/component: "database"
-    app.kubernetes.io/tier: "backend"
+  name: setters
+data:
+  namespace: default
+  daemonset-name: cloud-sql-auth-proxy
+  service-name: cloud-sql-auth-proxy
+  service-account-name: cloud-sql-proxy-sa
+  connection-name: "example-connection"

@@ -14,34 +14,29 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: cloud-sql-auth-proxy # kpt-set: ${daemonsetName}
+  name: cloud-sql-auth-proxy # kpt-set: ${daemonset-name}
   namespace: default # kpt-set: ${namespace}
-  labels:
-    app.kubernetes.io/name: "cloud-sql-auth-proxy" # kpt-set: ${serviceName}
-    app.kubernetes.io/version: "1.30.0" # kpt-set: ${tag}
-    app.kubernetes.io/component: "database"
-    app.kubernetes.io/tier: "backend"
 spec:
   selector:
     matchLabels:
-      app: cloud-sql-auth-proxy # kpt-set: ${daemonsetName}
+      app: cloud-sql-auth-proxy # kpt-set: ${daemonset-name}
   template:
     metadata:
       labels:
-        app: cloud-sql-auth-proxy # kpt-set: ${daemonsetName}
+        app: cloud-sql-auth-proxy # kpt-set: ${daemonset-name}
     spec:
       tolerations:
       - key: node-role.kubernetes.io/master
         effect: NoSchedule
-      serviceAccountName: cloud-sql-proxy-sa # kpt-set: ${serviceAccountName}
+      serviceAccountName: cloud-sql-proxy-sa # kpt-set: ${service-account-name}
       containers:
-      - name: gce-proxy # kpt-set: ${containerName}
-        image: gcr.io/cloudsql-docker/gce-proxy:1.30.0 # kpt-set: ${image}:${tag}
+      - name: gce-proxy
+        image: gcr.io/cloudsql-docker/gce-proxy:1.30.0
         command: ["/cloud_sql_proxy"]
         args: ["-instances=$(CONNECTION_NAME)=tcp:0.0.0.0:5432", "-ip_address_types=PRIVATE", "-log_debug_stdout=true", "-verbose=false"]
         env:
         - name: CONNECTION_NAME
-          value: "example-connection" # kpt-set: ${CONNECTION_NAME}
+          value: "example-connection" # kpt-set: ${connection-name}
         ports:
         - containerPort: 5432
           name: db

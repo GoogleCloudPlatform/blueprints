@@ -17,7 +17,7 @@ metadata:
   name: setters
 data:
   namespace: my-namespace
-  bucket-policy-only: "false"
+  uniform-bucket-level-access: "true"
   filter: ""
   folder-k8s-name: my.folder.k8s.name
   location: US

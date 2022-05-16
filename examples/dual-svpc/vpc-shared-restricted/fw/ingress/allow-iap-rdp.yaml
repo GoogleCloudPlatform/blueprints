@@ -17,7 +17,8 @@ metadata: # kpt-merge: firewalls-namespace/network-name-fw-allow-iap-rdp
   name: vpc-shared-restricted-allow-iap-rdp # kpt-set: ${network-name}-allow-iap-rdp
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.4.0,kpt-pkg-fn-live
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.4.0,kpt-pkg-fn-live  
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   priority: 10000 # kpt-set: ${priority}
   allow:

@@ -26,3 +26,4 @@ data:
   google-api-cidr: |
     - 199.36.153.8/30
   network-name: network-name
+  project-id: project-id

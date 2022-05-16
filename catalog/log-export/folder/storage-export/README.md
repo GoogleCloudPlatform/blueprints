@@ -15,7 +15,7 @@ A log export on a folder that sinks to Cloud Storage
 | folder-k8s-name          | my.folder.k8s.name | str  |     3 |
 | location                 | US                 | str  |     1 |
 | namespace                | my-namespace       | str  |     3 |
-| project-id               | my-project-id      | str  |     2 |
+| project-id               | my-project-id      | str  |     3 |
 | retention-period-seconds |           31536000 | int  |     1 |
 | storage-bucket-name      | my-storage-bucket  | str  |     3 |
 | storage-class            | MULTI_REGIONAL     | str  |     1 |

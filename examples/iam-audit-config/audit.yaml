@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,17 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-apiVersion: v1
-kind: ConfigMap
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMAuditConfig
 metadata:
-  name: setters
-data:
-  namespace: my-namespace
-  bucket-policy-only: "false"
-  filter: ""
-  folder-k8s-name: my.folder.k8s.name
-  location: US
-  project-id: my-project-id
-  storage-bucket-name: my-storage-bucket
-  storage-class: MULTI_REGIONAL
-  retention-period-seconds: "31536000"
+  name: 123-iamauditconfig # kpt-set: ${org-id}-iamauditconfig
+  namespace: logging # kpt-set: ${namespace}
+spec:
+  service: allServices
+  auditLogConfigs:
+    - logType: ADMIN_READ
+  resourceRef:
+    kind: Organization
+    external: "123" # kpt-set: ${org-id}

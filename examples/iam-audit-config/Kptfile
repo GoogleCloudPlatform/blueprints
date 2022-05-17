@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,17 +11,16 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-apiVersion: v1
-kind: ConfigMap
+apiVersion: kpt.dev/v1
+kind: Kptfile
 metadata:
-  name: setters
-data:
-  namespace: my-namespace
-  bucket-policy-only: "false"
-  filter: ""
-  folder-k8s-name: my.folder.k8s.name
-  location: US
-  project-id: my-project-id
-  storage-bucket-name: my-storage-bucket
-  storage-class: MULTI_REGIONAL
-  retention-period-seconds: "31536000"
+  name: iamauditconfig-example
+  annotations:
+    blueprints.cloud.google.com/title: Org IAMAuditConfig example
+    config.kubernetes.io/local-config: "true"
+info:
+  description: An example showing how to configure IAMAuditConfig for an organization.
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
+      configPath: setters.yaml

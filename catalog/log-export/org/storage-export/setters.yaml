@@ -17,7 +17,7 @@ metadata:
   name: setters
 data:
   namespace: my-namespace
-  bucket-policy-only: "false"
+  uniform-bucket-level-access: "true"
   filter: ""
   location: US
   org-id: "123456789012"

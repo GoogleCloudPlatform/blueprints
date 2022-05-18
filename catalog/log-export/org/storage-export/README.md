@@ -8,16 +8,17 @@ A log export on a organization that sinks to Cloud Storage
 
 ## Setters
 
-|        Name         |       Value       | Type | Count |
-|---------------------|-------------------|------|-------|
-| bucket-policy-only  | false             | bool |     1 |
-| filter              |                   | str  |     0 |
-| location            | US                | str  |     1 |
-| namespace           | my-namespace      | str  |     3 |
-| org-id              |      123456789012 | str  |     3 |
-| project-id          | my-project-id     | str  |     2 |
-| storage-bucket-name | my-storage-bucket | str  |     3 |
-| storage-class       | MULTI_REGIONAL    | str  |     1 |
+|            Name             |       Value       | Type | Count |
+|-----------------------------|-------------------|------|-------|
+| filter                      |                   | str  |     0 |
+| location                    | US                | str  |     1 |
+| namespace                   | my-namespace      | str  |     3 |
+| org-id                      |      123456789012 | str  |     3 |
+| project-id                  | my-project-id     | str  |     3 |
+| retention-period-seconds    |          31536000 | int  |     1 |
+| storage-bucket-name         | my-storage-bucket | str  |     3 |
+| storage-class               | MULTI_REGIONAL    | str  |     1 |
+| uniform-bucket-level-access | true              | bool |     1 |
 
 ## Sub-packages
 

@@ -30,15 +30,17 @@ This package has no sub-packages.
 
 ## Resources
 
-|          File          |            APIVersion             |       Kind        |                    Name                    |   Namespace    |
-|------------------------|-----------------------------------|-------------------|--------------------------------------------|----------------|
-| config-management.yaml | configmanagement.gke.io/v1        | ConfigManagement  | config-management                          |                |
-| configsync-iam.yaml    | iam.cnrm.cloud.google.com/v1beta1 | IAMServiceAccount | sync-cluster-name                          | config-control |
-| configsync-iam.yaml    | iam.cnrm.cloud.google.com/v1beta1 | IAMPartialPolicy  | sync-cluster-name                          | config-control |
-| configsync-iam.yaml    | iam.cnrm.cloud.google.com/v1beta1 | IAMPartialPolicy  | source-reader-sync-cluster-name-project-id | config-control |
+|          File          |            APIVersion             |       Kind        |                    Name                    |        Namespace         |
+|------------------------|-----------------------------------|-------------------|--------------------------------------------|--------------------------|
+| config-management.yaml | configmanagement.gke.io/v1        | ConfigManagement  | config-management                          |                          |
+| configsync-iam.yaml    | iam.cnrm.cloud.google.com/v1beta1 | IAMServiceAccount | sync-cluster-name                          | config-control           |
+| configsync-iam.yaml    | iam.cnrm.cloud.google.com/v1beta1 | IAMPartialPolicy  | sync-cluster-name                          | config-control           |
+| configsync-iam.yaml    | iam.cnrm.cloud.google.com/v1beta1 | IAMPartialPolicy  | source-reader-sync-cluster-name-project-id | config-control           |
+| rootsync.yaml          | configsync.gke.io/v1beta1         | RootSync          | root-sync                                  | config-management-system |
 
 ## Resource References
 
+- RootSync
 - [ConfigManagement](https://cloud.google.com/anthos-config-management/docs/configmanagement-fields)
 - [IAMPartialPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampartialpolicy)
 - [IAMServiceAccount](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount)

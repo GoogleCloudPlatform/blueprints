@@ -1,0 +1,19 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: cloud-sql-auth-proxy
+  annotations:
+    blueprints.cloud.google.com/title: Cloud SQL Auth Proxy blueprint
+info:
+  description: |
+    Launch a Cloud SQL Auth proxy instance as a DaemonSet in Kubernetes
+pipeline:
+  mutators:
+  - image: gcr.io/kpt-fn/apply-setters:v0.2.0
+    configPath: setters.yaml
+  - image: gcr.io/kpt-fn/set-labels:unstable
+    configMap:
+      app.kubernetes.io/name: "cloud-sql-auth-proxy" # kpt-set: ${service-name}
+      app.kubernetes.io/version: "1.30.0" # kpt-set: ${tag}
+      app.kubernetes.io/component: "database"
+      app.kubernetes.io/tier: "backend"

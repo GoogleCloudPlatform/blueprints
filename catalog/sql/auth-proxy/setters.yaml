@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -16,12 +16,8 @@ kind: ConfigMap
 metadata:
   name: setters
 data:
-  namespace: my-namespace
-  uniform-bucket-level-access: "true"
-  filter: ""
-  folder-k8s-name: my.folder.k8s.name
-  location: US
-  project-id: my-project-id
-  storage-bucket-name: my-storage-bucket
-  storage-class: MULTI_REGIONAL
-  retention-period-seconds: "31536000"
+  namespace: default
+  daemonset-name: cloud-sql-auth-proxy
+  service-name: cloud-sql-auth-proxy
+  service-account-name: cloud-sql-proxy-sa
+  connection-name: "example-connection"

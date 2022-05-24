@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,16 +12,18 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 apiVersion: v1
-kind: ConfigMap
+kind: Service
 metadata:
-  name: setters
-data:
-  namespace: my-namespace
-  uniform-bucket-level-access: "true"
-  filter: ""
-  folder-k8s-name: my.folder.k8s.name
-  location: US
-  project-id: my-project-id
-  storage-bucket-name: my-storage-bucket
-  storage-class: MULTI_REGIONAL
-  retention-period-seconds: "31536000"
+  name: cloud-sql-auth-proxy # kpt-set: ${service-name}
+  namespace: default # kpt-set: ${namespace}
+spec:
+  type: ClusterIP
+  ports:
+  # The port that this service should serve on.
+  - port: 5432
+    protocol: TCP
+    name: db
+    targetPort: 5432
+  # Label keys and values that must match in order to receive traffic for this service.
+  selector:
+    app: cloud-sql-auth-proxy # kpt-set: ${daemonset-name}

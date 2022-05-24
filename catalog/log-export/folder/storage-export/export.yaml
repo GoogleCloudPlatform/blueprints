@@ -50,10 +50,11 @@ metadata:
   namespace: my-namespace # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/force-destroy: "true"
+    cnrm.cloud.google.com/project-id: my-project-id # kpt-set: ${project-id}
 spec:
-  bucketPolicyOnly: false # kpt-set: ${bucket-policy-only}
+  uniformBucketLevelAccess: true # kpt-set: ${uniform-bucket-level-access}
   location: US # kpt-set: ${location}
   storageClass: MULTI_REGIONAL # kpt-set: ${storage-class}
   retentionPolicy:
-    retentionPeriod: 31536000
+    retentionPeriod: 31536000 # kpt-set: ${retention-period-seconds}
     isLocked: false

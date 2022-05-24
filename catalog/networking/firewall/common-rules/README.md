@@ -45,6 +45,7 @@ Contents:
 | google-api-cidr        | [199.36.153.8/30]   | array |     1 |
 | network-name           | network-name        | str   |    14 |
 | priority               |               10000 | int   |     4 |
+| project-id             | project-id          | str   |     7 |
 
 ## Sub-packages
 

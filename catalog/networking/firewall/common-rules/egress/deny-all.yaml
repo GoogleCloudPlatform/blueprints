@@ -18,6 +18,7 @@ metadata:
   namespace: firewalls-namespace # kpt-set: ${firewalls-namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.4.0
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   priority: 65535
   deny:

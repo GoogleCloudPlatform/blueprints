@@ -14,5 +14,6 @@
   "catalog/networking": "0.4.0",
   "catalog/project": "0.4.2",
   "catalog/redis-bucket": "0.3.2",
-  "catalog/spanner": "0.3.0"
+  "catalog/spanner": "0.3.0",
+  "catalog/sql/auth-proxy": "0.0.1"
 }

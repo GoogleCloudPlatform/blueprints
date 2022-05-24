@@ -19,10 +19,11 @@ metadata:
     config.kubernetes.io/local-config: "true"
 data:
   namespace: my-namespace
-  bucket-policy-only: "false"
+  uniform-bucket-level-access: "true"
   filter: ""
   folder-k8s-name: my.folder.k8s.name
   location: US
   project-id: my-project-id
   storage-bucket-name: my-storage-bucket
   storage-class: MULTI_REGIONAL
+  retention-period-seconds: "31536000"

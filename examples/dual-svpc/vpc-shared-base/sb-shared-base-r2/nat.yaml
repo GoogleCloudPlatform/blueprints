@@ -1,0 +1,57 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeRouterNAT
+metadata: # kpt-merge: networking/network-name-router-nat
+  name: rn-vpc-shared-base-west1-egress # kpt-set: rn-${network-name}-${region}-egress
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.4.0,kpt-pkg-fn-live
+spec:
+  natIpAllocateOption: MANUAL_ONLY
+  natIps:
+  - name: ca-vpc-shared-base-west1-1 # kpt-set: ca-${network-name}-${region}-1
+  region: us-west1 # kpt-set: ${region}
+  routerRef:
+    name: cr-vpc-shared-base-west1-router # kpt-set: cr-${network-name}-${region}-router
+  sourceSubnetworkIpRangesToNat: ALL_SUBNETWORKS_ALL_IP_RANGES
+  logConfig:
+    enable: true
+    filter: "TRANSLATIONS_ONLY"
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeRouter
+metadata: # kpt-merge: networking/network-name-router
+  name: cr-vpc-shared-base-west1-router # kpt-set: cr-${network-name}-${region}-router
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.4.0,kpt-pkg-fn-live
+spec:
+  description: example router description
+  networkRef:
+    name: "vpc-shared-base" # kpt-set: ${network-name}
+  region: us-west1 # kpt-set: ${region}
+---
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeAddress
+metadata:
+  name: ca-vpc-shared-base-west1-1 # kpt-set: ca-${network-name}-${region}-1
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
+    cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+spec:
+  location: us-west1 # kpt-set: ${region}

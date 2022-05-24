@@ -16,7 +16,7 @@ kind: IAMPolicyMember
 metadata:
   name: security-admins-org-policy
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.1
     blueprints.cloud.google.com/description: This grants permission to set organizational policy constraints.
   namespace: config-control
 spec:
@@ -32,7 +32,7 @@ kind: IAMPolicyMember
 metadata:
   name: security-admins-security-reviewer
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.1
     blueprints.cloud.google.com/description: This grants permissions to view all resources for the organization, and to view the IAM policies that apply to them.
   namespace: config-control
 spec:
@@ -48,7 +48,7 @@ kind: IAMPolicyMember
 metadata:
   name: security-admins-custom-roles
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.1
     blueprints.cloud.google.com/description: This grants permissions to view all custom IAM roles in the organization, and to view the projects that they apply to.
   namespace: config-control
 spec:
@@ -64,7 +64,7 @@ kind: IAMPolicyMember
 metadata:
   name: security-admins-scc
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.1
     blueprints.cloud.google.com/description: This grants administrator access to the Security Command Center.
   namespace: config-control
 spec:
@@ -80,7 +80,7 @@ kind: IAMPolicyMember
 metadata:
   name: security-admins-folder-iam
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.1
     blueprints.cloud.google.com/description: This grants permissions to set folder-level IAM policies.
   namespace: config-control
 spec:
@@ -96,7 +96,7 @@ kind: IAMPolicyMember
 metadata:
   name: security-admins-private-logs
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.1
     blueprints.cloud.google.com/description: This grants read-only access to Cloud Logging features, including the ability to read private logs.
   namespace: config-control
 spec:
@@ -112,7 +112,7 @@ kind: IAMPolicyMember
 metadata:
   name: security-admins-log-config
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.1
     blueprints.cloud.google.com/description: This grants permissions to create logs-based metrics and export sinks.
   namespace: config-control
 spec:
@@ -128,7 +128,7 @@ kind: IAMPolicyMember
 metadata:
   name: security-admins-gke
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.1
     blueprints.cloud.google.com/description: This grants read-only access to Google Kubernetes Engine resources.
   namespace: config-control
 spec:
@@ -144,7 +144,7 @@ kind: IAMPolicyMember
 metadata:
   name: security-admins-gce
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.1
     blueprints.cloud.google.com/description: This grants read-only access to Compute Engine resources.
   namespace: config-control
 spec:
@@ -160,7 +160,7 @@ kind: IAMPolicyMember
 metadata:
   name: security-admins-bq
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.0
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.1
     blueprints.cloud.google.com/description: This grants read-only access to BigQuery datasets.
   namespace: config-control
 spec:

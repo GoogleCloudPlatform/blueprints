@@ -18,7 +18,7 @@ metadata:
   name: gke-example-us-east4-primary # kpt-set: gke-${cluster-name}-${nodepool-name}
   namespace: config-control
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gke:gke-nodepool/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/gke:gke-nodepool/v0.4.1
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   displayName: gke-example-us-east4-primary # kpt-set: gke-${cluster-name}-${nodepool-name}
@@ -30,7 +30,7 @@ metadata:
   name: logwriter-gke-example-us-east4-primary # kpt-set: logwriter-gke-${cluster-name}-${nodepool-name}
   namespace: config-control
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gke:gke-nodepool/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/gke:gke-nodepool/v0.4.1
 spec:
   memberFrom:
     serviceAccountRef:
@@ -49,7 +49,7 @@ metadata:
   name: metricwriter-gke-example-us-east4-primary # kpt-set: metricwriter-gke-${cluster-name}-${nodepool-name}
   namespace: config-control
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gke:gke-nodepool/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/gke:gke-nodepool/v0.4.1
 spec:
   memberFrom:
     serviceAccountRef:
@@ -68,7 +68,7 @@ metadata:
   name: artifactreader-gke-example-us-east4-primary # kpt-set: artifactreader-gke-${cluster-name}-${nodepool-name}
   namespace: config-control
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gke:gke-nodepool/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/gke:gke-nodepool/v0.4.1
 spec:
   memberFrom:
     serviceAccountRef:

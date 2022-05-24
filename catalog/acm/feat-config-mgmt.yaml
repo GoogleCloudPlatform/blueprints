@@ -17,7 +17,7 @@ metadata:
   name: feat-acm-cluster-name # kpt-set: feat-acm-${cluster-name}
   namespace: config-control
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.1
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.2
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   projectRef:

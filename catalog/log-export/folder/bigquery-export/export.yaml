@@ -18,7 +18,7 @@ metadata:
   name: my-project-id-bigquery # kpt-set: ${project-id}-bigquery
   namespace: projects
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.5.0
     cnrm.cloud.google.com/deletion-policy: abandon
     cnrm.cloud.google.com/disable-dependent-services: "false"
     cnrm.cloud.google.com/project-id: my-project-id # kpt-set: ${project-id}
@@ -32,7 +32,7 @@ metadata:
   name: my.folder.k8s.name-bqsink # kpt-set: ${folder-k8s-name}-bqsink
   namespace: my-namespace # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.5.0
 spec:
   destination:
     bigQueryDatasetRef:
@@ -49,7 +49,7 @@ metadata:
   name: bqlogexportdataset
   namespace: my-namespace # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.5.0
     cnrm.cloud.google.com/delete-contents-on-destroy: "false" # kpt-set: ${delete-contents-on-destroy}
     cnrm.cloud.google.com/project-id: my-project-id # kpt-set: ${project-id}
 spec:

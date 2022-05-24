@@ -4,6 +4,7 @@ metadata:
   name: team-hierarchy
   annotations:
     blueprints.cloud.google.com/title: Team Hierarchy blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: A GCP resource hierarchy organized by teams and environments
 pipeline:

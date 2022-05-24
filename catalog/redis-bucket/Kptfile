@@ -5,6 +5,7 @@ metadata:
   annotations:
     blueprints.cloud.google.com/title: |
       Google Cloud Storage and Memorystore for Redis blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: |
     Google Cloud Storage (GCS) bucket and Memorystore for Redis instance.

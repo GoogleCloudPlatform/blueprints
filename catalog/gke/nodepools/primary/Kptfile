@@ -4,6 +4,7 @@ metadata:
   name: gke-nodepool
   annotations:
     blueprints.cloud.google.com/title: GKE Node Pool blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: A GKE node pool with a dedicated service account
 pipeline:

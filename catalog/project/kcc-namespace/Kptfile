@@ -4,6 +4,7 @@ metadata:
   name: kcc-namespace
   annotations:
     blueprints.cloud.google.com/title: Project Namespace Package
+    config.kubernetes.io/local-config: "true"
 info:
   description: |
     Kubernetes namespace configured for use with Config Connector to manage GCP

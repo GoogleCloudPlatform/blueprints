@@ -4,5 +4,6 @@ metadata:
   name: empty
   annotations:
     blueprints.cloud.google.com/title: Empty blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: An example of an empty blueprint.

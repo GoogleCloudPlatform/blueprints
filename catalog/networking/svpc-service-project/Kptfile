@@ -4,6 +4,7 @@ metadata:
   name: svpc-service-project
   annotations:
     blueprints.cloud.google.com/title: Shared VPC Service Project blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: A service project to attach to a Shared VPC
 pipeline:

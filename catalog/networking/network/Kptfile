@@ -4,6 +4,7 @@ metadata:
   name: network
   annotations:
     blueprints.cloud.google.com/title: Network blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: |
     A private network with VPN and Cloud NAT.

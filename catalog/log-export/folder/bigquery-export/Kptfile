@@ -4,6 +4,7 @@ metadata:
   name: bigquery-export
   annotations:
     blueprints.cloud.google.com/title: BigQuery Export blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: A log export on a folder that sinks to BigQuery
 pipeline:

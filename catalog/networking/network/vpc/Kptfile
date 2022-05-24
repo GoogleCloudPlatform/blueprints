@@ -4,6 +4,7 @@ metadata:
   name: vpc
   annotations:
     blueprints.cloud.google.com/title: Virtual Private Cloud blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: A Virtual Private Cloud (VPC)
 pipeline:

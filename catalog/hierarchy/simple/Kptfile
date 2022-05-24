@@ -4,6 +4,7 @@ metadata:
   name: simple-hierarchy
   annotations:
     blueprints.cloud.google.com/title: Simple Hierarchy blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: A simple GCP resource hierarchy with top-level folders
 pipeline:

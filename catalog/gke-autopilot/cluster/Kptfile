@@ -4,6 +4,7 @@ metadata:
   name: gke-cluster
   annotations:
     blueprints.cloud.google.com/title: GKE Cluster blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: A GKE cluster with public masters and private nodes
 pipeline:

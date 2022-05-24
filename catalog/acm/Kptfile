@@ -17,6 +17,7 @@ metadata:
   name: acm
   annotations:
     blueprints.cloud.google.com/title: ACM blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: |
     A blueprint to install Anthos Config Management (ACM) on an existing GKE cluster. The installation is done by enrolling the cluster into GKE Hub Membership, enabling and configuring the ACM feature.

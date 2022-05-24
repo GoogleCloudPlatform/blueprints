@@ -4,6 +4,7 @@ metadata:
   name: storage-export
   annotations:
     blueprints.cloud.google.com/title: Cloud Storage Export blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: A log export on a organization that sinks to Cloud Storage
 pipeline:

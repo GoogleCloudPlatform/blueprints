@@ -4,6 +4,7 @@ metadata:
   name: bu-hierarchy
   annotations:
     blueprints.cloud.google.com/title: Business Unit Hierarchy blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: |
     A GCP resource hierarchy organized by business units, teams, and

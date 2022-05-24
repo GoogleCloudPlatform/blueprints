@@ -4,6 +4,7 @@ metadata:
   name: gke-autopilot
   annotations:
     blueprints.cloud.google.com/title: GKE Autopilot blueprint
+    config.kubernetes.io/local-config: "true"
 upstream:
   type: git
   git:

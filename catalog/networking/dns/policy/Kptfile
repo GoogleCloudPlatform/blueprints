@@ -4,6 +4,7 @@ metadata:
   name: dns-policy
   annotations:
     blueprints.cloud.google.com/title: Cloud DNS Policy blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: A Cloud DNS policy with logging and forwarding
 pipeline:

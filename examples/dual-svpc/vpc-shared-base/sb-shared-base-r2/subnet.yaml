@@ -12,25 +12,21 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
-kind: ComputeFirewall
-metadata:
-  name: network-name-fw-allow-iap-ssh # kpt-set: ${network-name}-fw-allow-iap-ssh
-  namespace: firewalls-namespace # kpt-set: ${firewalls-namespace}
+kind: ComputeSubnetwork
+metadata: # kpt-merge: networking/network-name-subnetwork
+  name: sb-dev-shared-base-us-west1 # kpt-set: sb-${env}-shared-base-${region}
+  namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.4.0
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.4.0,kpt-pkg-fn-live
 spec:
-  priority: 10000 # kpt-set: ${priority}
-  allow:
-    - ports:
-        - "22"
-      protocol: tcp
-  direction: INGRESS
-  disabled: false
-  enableLogging: false # kpt-set: ${enable-logging}
+  description: Subnetwork
+  ipCidrRange: 10.1.64.0/21 # kpt-set: ${ip-cidr-range}
+  logConfig:
+    metadata: INCLUDE_ALL_METADATA
+    aggregationInterval: INTERVAL_10_MIN
+    flowSampling: 0.5
   networkRef:
-    name: network-name # kpt-set: ${network-name}
-  sourceRanges:
-    - "35.235.240.0/20"
-  targetTags:
-    - allow-iap-ssh
+    name: "vpc-shared-base" # kpt-set: ${network-name}
+  privateIpGoogleAccess: true
+  region: us-west1 # kpt-set: ${region}

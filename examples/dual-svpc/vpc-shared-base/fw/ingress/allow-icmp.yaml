@@ -13,24 +13,20 @@
 # limitations under the License.
 apiVersion: compute.cnrm.cloud.google.com/v1beta1
 kind: ComputeFirewall
-metadata:
-  name: network-name-fw-allow-iap-ssh # kpt-set: ${network-name}-fw-allow-iap-ssh
-  namespace: firewalls-namespace # kpt-set: ${firewalls-namespace}
+metadata: # kpt-merge: firewalls-namespace/network-name-fw-allow-internal-common
+  name: vpc-shared-base-allow-icmp # kpt-set: ${network-name}-allow-icmp
+  namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.4.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.4.0,kpt-pkg-fn-live
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   priority: 10000 # kpt-set: ${priority}
   allow:
-    - ports:
-        - "22"
-      protocol: tcp
+    - protocol: icmp
   direction: INGRESS
   disabled: false
-  enableLogging: false # kpt-set: ${enable-logging}
+  enableLogging: true # kpt-set: ${enable-logging}
   networkRef:
-    name: network-name # kpt-set: ${network-name}
+    name: vpc-shared-base # kpt-set: ${network-name}
   sourceRanges:
-    - "35.235.240.0/20"
-  targetTags:
-    - allow-iap-ssh
+    - "0.0.0.0/0"

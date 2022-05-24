@@ -13,17 +13,14 @@
 # limitations under the License.
 apiVersion: v1
 kind: ConfigMap
-metadata:
+metadata: # kpt-merge: /setters
   name: setters
 data:
-  priority: "10000"
-  allow-default-egress: "true"
-  dont-allow-google-apis: "true"
-  dont-allow-windows-kms: "true"
-  enable-logging: "false"
-  firewall-project-id: firewall-project-id
-  firewalls-namespace: firewalls-namespace
-  google-api-cidr: |
-    - 199.36.153.8/30
-  network-name: network-name
+  namespace: config-control
+  network-name: vpc-shared-restricted
   project-id: project-id
+  project-number: 123
+  private-ip-cidr: 10.24.64.0
+  env: dev
+  access-context-manager-policy-id: 123
+  org-id: 123

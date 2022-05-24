@@ -1,0 +1,42 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: compute.cnrm.cloud.google.com/v1beta1
+kind: ComputeAddress
+metadata:
+  name: ga-vpc-shared-restricted-dev-vpc-peering-internal # kpt-set: ga-${network-name}-${env}-vpc-peering-internal
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
+spec:
+  address: 10.24.64.0 # kpt-set: ${private-ip-cidr}
+  addressType: INTERNAL
+  purpose: VPC_PEERING
+  prefixLength: 21
+  location: global
+  networkRef:
+    name: vpc-shared-restricted # kpt-set: ${network-name}
+---
+apiVersion: servicenetworking.cnrm.cloud.google.com/v1beta1
+kind: ServiceNetworkingConnection
+metadata:
+  name: svc-net-vpc-shared-restricted-dev # kpt-set: svc-net-${network-name}-${env}
+  namespace: config-control # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: 'kpt-fn-live'
+spec:
+  networkRef:
+    name: vpc-shared-restricted # kpt-set: ${network-name}
+  reservedPeeringRanges:
+    - name: ga-vpc-shared-restricted-dev-vpc-peering-internal # kpt-set: ga-${network-name}-${env}-vpc-peering-internal
+  service: "servicenetworking.googleapis.com"

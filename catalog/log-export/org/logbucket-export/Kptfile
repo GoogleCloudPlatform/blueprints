@@ -1,0 +1,12 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: logbucket-export
+  annotations:
+    blueprints.cloud.google.com/title: Cloud Logging Log Bucket Export blueprint
+info:
+  description: A log export on an organization that sinks to Cloud Logging Log Bucket
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

@@ -17,7 +17,7 @@ metadata: # kpt-merge: config-control/example-us-east4
   name: example-us-east4 # kpt-set: ${cluster-name}
   namespace: config-control
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gke-autopilot/v0.1.0
+    cnrm.cloud.google.com/blueprint: cnrm/gke-autopilot/v0.1.1
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     # Remove the default node pool after bootstrapping.
     # Explcit node pool configuration allows for more isolation and makes it

@@ -17,7 +17,7 @@ metadata:
   name: disable-vm-external-ip
   namespace: policies
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.1
 spec:
   constraint: "constraints/compute.vmExternalIpAccess"
   listPolicy:

@@ -19,7 +19,7 @@ metadata: # kpt-merge: projects/project-id-cluster-name-container
   name: project-id-cluster-name-container # kpt-set: ${project-id}-${cluster-name}-container
   namespace: config-control
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gke-autopilot/v0.1.0
+    cnrm.cloud.google.com/blueprint: cnrm/gke-autopilot/v0.1.1
     cnrm.cloud.google.com/deletion-policy: abandon
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:

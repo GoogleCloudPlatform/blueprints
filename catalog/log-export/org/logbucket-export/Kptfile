@@ -4,7 +4,7 @@ metadata:
   name: logbucket-export
   annotations:
     blueprints.cloud.google.com/title: Cloud Logging Log Bucket Export blueprint
-    config.kubernetes.io/local-config: "true"    
+    config.kubernetes.io/local-config: "true"
 info:
   description: A log export on an organization that sinks to Cloud Logging Log Bucket
 pipeline:

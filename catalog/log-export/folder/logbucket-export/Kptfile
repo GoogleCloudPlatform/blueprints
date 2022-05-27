@@ -4,9 +4,10 @@ metadata:
   name: logbucket-export
   annotations:
     blueprints.cloud.google.com/title: Cloud Logging Log Bucket Export blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: A log export on a folder that sinks to Cloud Logging Log Bucket
 pipeline:
   mutators:
-    - image: gcr.io/kpt-fn/apply-setters:v0.1
+    - image: gcr.io/kpt-fn/apply-setters:v0.2
       configPath: setters.yaml

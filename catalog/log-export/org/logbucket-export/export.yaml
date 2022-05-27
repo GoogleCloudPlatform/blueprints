@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -29,7 +29,7 @@ spec:
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
-  name: 123456789012-orglogbucketsink # kpt-set: ${org-id}-orglogbucketsink
+  name: 123456789012-orglogbucketsink # kpt-set: ${org-id}-logbucketsink
   namespace: my-namespace # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
@@ -38,7 +38,7 @@ spec:
     external: "123456789012" # kpt-set: ${org-id}
   destination:
     loggingLogBucketRef:
-      external: logging.googleapis.com/projects/my-project-id/locations/global/buckets/my-log-k8s-bucket # kpt-set: logging.googleapis.com/projects/${project-id}/locations/${location}/buckets/${log-bucket-k8s-name}
+      external: logging.googleapis.com/projects/my-project-id/locations/global/buckets/my-log-k8s-bucket # kpt-set: logging.googleapis.com/projects/${project-id}/locations/${location}/buckets/${log-bucket-name}
   filter: "" # kpt-set: ${filter}
   includeChildren: true
 ---
@@ -46,7 +46,7 @@ spec:
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogBucket
 metadata:
-  name: my-log-k8s-bucket # kpt-set: ${log-bucket-k8s-name}
+  name: my-log-k8s-bucket # kpt-set: ${log-bucket-name}
   namespace: my-namespace # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
@@ -55,5 +55,5 @@ spec:
     external: "projects/my-project-id" # kpt-set: projects/${project-id}
   location: "global" # kpt-set: ${location}
   description: "Log bucket for organization level logs"
-  locked: true
+  locked: true # kpt-set: ${bucket-locked}
   retentionDays: 30 # kpt-set: ${retentionDays}

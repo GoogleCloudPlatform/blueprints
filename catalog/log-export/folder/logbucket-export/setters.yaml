@@ -19,7 +19,7 @@ metadata:
     config.kubernetes.io/local-config: "true"
 data:
   namespace: my-namespace
-  ffolder-k8s-name: my.folder.k8s.name
+  folder-k8s-name: my.folder.k8s.name
   project-id: my-project-id
   log-bucket-name: my-log-k8s-bucket
   location: global

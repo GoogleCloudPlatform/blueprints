@@ -8,16 +8,16 @@ A log export on a folder that sinks to Cloud Logging Log Bucket
 
 ## Setters
 
-|      Name       |       Value       | Type | Count |
-|-----------------|-------------------|------|-------|
-| bucket-locked   | true              | bool |     1 |
-| filter          |                   | str  |     0 |
-| folder-id       |      123456789012 | str  |     1 |
-| location        | global            | str  |     2 |
-| log-bucket-name | my-log-k8s-bucket | str  |     2 |
-| namespace       | my-namespace      | str  |     3 |
-| project-id      | my-project-id     | str  |     4 |
-| retention-days  |                30 | int  |     1 |
+|      Name       |       Value        | Type | Count |
+|-----------------|--------------------|------|-------|
+| bucket-locked   | true               | bool |     1 |
+| filter          |                    | str  |     0 |
+| folder-k8s-name | my.folder.k8s.name | str  |     1 |
+| location        | global             | str  |     2 |
+| log-bucket-name | my-log-k8s-bucket  | str  |     2 |
+| namespace       | my-namespace       | str  |     3 |
+| project-id      | my-project-id      | str  |     4 |
+| retention-days  |                 30 | int  |     1 |
 
 ## Sub-packages
 

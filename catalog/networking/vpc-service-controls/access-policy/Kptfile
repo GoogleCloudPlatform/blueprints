@@ -4,6 +4,7 @@ metadata:
   name: service-controls-access-policy
   annotations:
     blueprints.cloud.google.com/title: Service Controls Access Policy blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: An org-level access policy using the Access Context Manager
 pipeline:

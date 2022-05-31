@@ -4,6 +4,7 @@ metadata:
   name: shared-vpc
   annotations:
     blueprints.cloud.google.com/title: Shared VPC Host Project blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: |
     Configures a project as the Host project for a Shared VPC.

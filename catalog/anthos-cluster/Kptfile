@@ -4,6 +4,7 @@ metadata:
   name: anthos-cluster
   annotations:
     blueprints.cloud.google.com/title: Anthos cluster blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: |
     A blueprint to create an Anthos cluster and install Anthos Config Management (ACM) on the cluster. The ACM installation is done by enrolling the cluster into GKE Hub Membership, enabling and configuring the ACM feature. An existing subnet needs to be provided where the cluster should be created.

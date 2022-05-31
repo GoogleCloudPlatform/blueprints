@@ -1,5 +1,18 @@
 # Changelog
 
+## [0.5.0](https://github.com/GoogleCloudPlatform/blueprints/compare/gitops-blueprint-v0.4.2...gitops-blueprint-v0.5.0) (2022-05-24)
+
+
+### Features
+
+* gitops multirepo update ([#177](https://github.com/GoogleCloudPlatform/blueprints/issues/177)) ([ed6ed51](https://github.com/GoogleCloudPlatform/blueprints/commit/ed6ed51dbc4467141bc5f125836f534631333444))
+
+
+### Bug Fixes
+
+* add local-config annotations to kptfiles and functionConfigs ([#176](https://github.com/GoogleCloudPlatform/blueprints/issues/176)) ([0d005f0](https://github.com/GoogleCloudPlatform/blueprints/commit/0d005f0174d95d3aca1691e67deffa573c3e7db7))
+* remove gitops ConfigManagement syncRevision field ([#179](https://github.com/GoogleCloudPlatform/blueprints/issues/179)) ([783380c](https://github.com/GoogleCloudPlatform/blueprints/commit/783380ce4e6c3f21e9e90055b3a88bada0410154))
+
 ### [0.4.2](https://github.com/GoogleCloudPlatform/blueprints/compare/gitops-blueprint-v0.4.1...gitops-blueprint-v0.4.2) (2022-02-02)
 
 

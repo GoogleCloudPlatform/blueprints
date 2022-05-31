@@ -1,5 +1,12 @@
 # Changelog
 
+### [0.1.1](https://github.com/GoogleCloudPlatform/blueprints/compare/landing-zone-lite-blueprint-v0.1.0...landing-zone-lite-blueprint-v0.1.1) (2022-05-24)
+
+
+### Bug Fixes
+
+* add local-config annotations to kptfiles and functionConfigs ([#176](https://github.com/GoogleCloudPlatform/blueprints/issues/176)) ([0d005f0](https://github.com/GoogleCloudPlatform/blueprints/commit/0d005f0174d95d3aca1691e67deffa573c3e7db7))
+
 ## [0.1.0](https://www.github.com/GoogleCloudPlatform/blueprints/compare/landing-zone-lite-blueprint-v0.0.1...landing-zone-lite-blueprint-v0.1.0) (2021-12-23)
 
 ### Features

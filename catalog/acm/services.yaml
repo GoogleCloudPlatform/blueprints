@@ -18,7 +18,7 @@ metadata:
   name: project-id-cluster-name-gkehub # kpt-set: ${project-id}-${cluster-name}-gkehub
   namespace: config-control
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.1
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.2
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     cnrm.cloud.google.com/deletion-policy: abandon
 spec:
@@ -30,7 +30,7 @@ metadata:
   name: project-id-cluster-name-acm # kpt-set: ${project-id}-${cluster-name}-acm
   namespace: config-control
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.1
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.2
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
     cnrm.cloud.google.com/deletion-policy: abandon
 spec:

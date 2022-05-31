@@ -4,6 +4,7 @@ metadata:
   name: configsync-csr
   annotations:
     blueprints.cloud.google.com/title: CSR ConfigSync blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: |
     A GitOps Continuous Deployment pipeline using Anthos Config Management (ACM)

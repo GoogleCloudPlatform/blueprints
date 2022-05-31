@@ -18,7 +18,7 @@ metadata:
   namespace: projects # kpt-set: ${projects-namespace}
   annotations:
     cnrm.cloud.google.com/auto-create-network: "false"
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:project/v0.4.2
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:project/v0.4.3
 spec:
   name: project-id # kpt-set: ${project-id}
   billingAccountRef:

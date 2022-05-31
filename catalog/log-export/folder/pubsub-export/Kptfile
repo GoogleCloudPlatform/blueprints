@@ -4,6 +4,7 @@ metadata:
   name: pubsub-export
   annotations:
     blueprints.cloud.google.com/title: PubSub Export blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: A log export on a folder that sinks to PubSub
 pipeline:

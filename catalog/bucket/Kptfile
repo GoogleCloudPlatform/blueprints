@@ -4,6 +4,7 @@ metadata:
   name: bucket
   annotations:
     blueprints.cloud.google.com/title: Google Cloud Storage Bucket blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: A Google Cloud Storage bucket
 pipeline:

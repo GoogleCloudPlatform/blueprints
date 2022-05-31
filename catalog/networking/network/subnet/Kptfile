@@ -4,6 +4,7 @@ metadata:
   name: subnetwork
   annotations:
     blueprints.cloud.google.com/title: Subnetwork blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: A regional subnet with Cloud NAT for public egress
 pipeline:

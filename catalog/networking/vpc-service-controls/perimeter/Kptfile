@@ -4,6 +4,7 @@ metadata:
   name: service-controls-perimeter
   annotations:
     blueprints.cloud.google.com/title: Service Controls Perimeter blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: |
     A basic access level restricting access to a specific region using the

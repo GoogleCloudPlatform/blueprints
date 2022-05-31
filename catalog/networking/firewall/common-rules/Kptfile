@@ -4,6 +4,7 @@ metadata:
   name: firewall-common-rules
   annotations:
     blueprints.cloud.google.com/title: Firewall Common Rules blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: |
     Common firewall rules for projects with a private network.

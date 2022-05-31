@@ -19,7 +19,7 @@ metadata:
   name: sa-acm-cluster-name # kpt-set: sa-acm-${cluster-name}
   namespace: config-control
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.1
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.2
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   displayName: sa-acm-cluster-name # kpt-set: sa-acm-${cluster-name}
@@ -32,7 +32,7 @@ metadata:
   name: sa-acm-cluster-name # kpt-set: sa-acm-${cluster-name}
   namespace: config-control
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.1
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.2
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceRef:
@@ -51,7 +51,7 @@ metadata:
   name: source-reader-sync-cluster-name-project-id # kpt-set: source-reader-sync-${cluster-name}-${project-id}
   namespace: config-control
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.1
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.2
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   resourceRef:

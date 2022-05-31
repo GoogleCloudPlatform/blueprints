@@ -1,0 +1,28 @@
+apiVersion: kpt.dev/v1
+kind: Kptfile
+metadata:
+  name: vpcsc-perimeter
+  annotations:
+    blueprints.cloud.google.com/title: Service Controls Perimeter blueprint
+upstream:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/blueprints
+    directory: /catalog/networking/vpc-service-controls/perimeter
+    ref: main
+  updateStrategy: resource-merge
+upstreamLock:
+  type: git
+  git:
+    repo: https://github.com/GoogleCloudPlatform/blueprints
+    directory: /catalog/networking/vpc-service-controls/perimeter
+    ref: main
+    commit: 783380ce4e6c3f21e9e90055b3a88bada0410154
+info:
+  description: |
+    A basic access level restricting access to a specific region using the
+    Access Context Manager
+pipeline:
+  mutators:
+    - image: gcr.io/kpt-fn/apply-setters:v0.1
+      configPath: setters.yaml

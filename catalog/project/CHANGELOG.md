@@ -1,5 +1,14 @@
 # Changelog
 
+### [0.4.3](https://github.com/GoogleCloudPlatform/blueprints/compare/project-blueprint-v0.4.2...project-blueprint-v0.4.3) (2022-05-24)
+
+
+### Bug Fixes
+
+* Add 'ignore-clusterless' annotations to resources that are irrelevant to clusterless actuation mode (when a GKE cluster is not involved) ([#164](https://github.com/GoogleCloudPlatform/blueprints/issues/164)) ([84fa763](https://github.com/GoogleCloudPlatform/blueprints/commit/84fa76359253eca234ab5664a97c62dc88b1a860))
+* Add ignore-clusterless to project blueprint resources that are unnecessary in clusterless workflow. ([#173](https://github.com/GoogleCloudPlatform/blueprints/issues/173)) ([3c2dda6](https://github.com/GoogleCloudPlatform/blueprints/commit/3c2dda6e6ba2c7929b2cb5e4c71c9584eb62654c))
+* add local-config annotations to kptfiles and functionConfigs ([#176](https://github.com/GoogleCloudPlatform/blueprints/issues/176)) ([0d005f0](https://github.com/GoogleCloudPlatform/blueprints/commit/0d005f0174d95d3aca1691e67deffa573c3e7db7))
+
 ### [0.4.2](https://github.com/GoogleCloudPlatform/blueprints/compare/project-blueprint-v0.4.1...project-blueprint-v0.4.2) (2022-02-02)
 
 

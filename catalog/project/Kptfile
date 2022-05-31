@@ -4,6 +4,7 @@ metadata:
   name: project
   annotations:
     blueprints.cloud.google.com/title: Project blueprint
+    config.kubernetes.io/local-config: "true"
 info:
   description: |
     A project and a project namespace in which to manage project resources with

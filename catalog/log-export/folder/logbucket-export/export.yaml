@@ -29,13 +29,13 @@ spec:
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
-  name: 123456789012-fldrlogbucketsink # kpt-set: ${folder-id}-logbucketsink
+  name: 123456789012-fldrlogbucketsink # kpt-set: ${folder-k8s-name}-logbucketsink
   namespace: my-namespace # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
 spec:
   folderRef:
-    external: "123456789012" # kpt-set: ${folder-id}
+    name: my.folder.k8s.name # kpt-set: ${folder-k8s-name}
   destination:
     loggingLogBucketRef:
       external: logging.googleapis.com/projects/my-project-id/locations/global/buckets/my-log-k8s-bucket # kpt-set: logging.googleapis.com/projects/${project-id}/locations/${location}/buckets/${log-bucket-name}

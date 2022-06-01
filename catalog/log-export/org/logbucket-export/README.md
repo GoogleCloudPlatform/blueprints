@@ -17,7 +17,7 @@ A log export on an organization that sinks to Cloud Logging Log Bucket
 | namespace       | my-namespace      | str  |     3 |
 | org-id          |      123456789012 | str  |     1 |
 | project-id      | my-project-id     | str  |     4 |
-| retentionDays   |                30 | int  |     1 |
+| retention-days  |                30 | int  |     1 |
 
 ## Sub-packages
 

@@ -25,4 +25,4 @@ data:
   location: global
   filter: ""
   bucket-locked: "true"
-  retentionDays: "30"
+  retention-days: "30"

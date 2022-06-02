@@ -56,4 +56,4 @@ spec:
   location: "global" # kpt-set: ${location}
   description: "Log bucket for organization level logs"
   locked: true # kpt-set: ${bucket-locked}
-  retentionDays: 30 # kpt-set: ${retentionDays}
+  retentionDays: 30 # kpt-set: ${retention-days}

@@ -10,13 +10,13 @@ A log export on an organization that sinks to Cloud Logging Log Bucket
 
 |      Name       |       Value       | Type | Count |
 |-----------------|-------------------|------|-------|
-| bucket-locked   | true              | bool |     1 |
+| bucket-locked   | false             | bool |     1 |
 | filter          |                   | str  |     0 |
 | location        | global            | str  |     2 |
 | log-bucket-name | my-log-k8s-bucket | str  |     2 |
 | namespace       | my-namespace      | str  |     3 |
-| org-id          |      123456789012 | str  |     1 |
-| project-id      | my-project-id     | str  |     4 |
+| org-id          |      123456789012 | str  |     2 |
+| project-id      | my-project-id     | str  |     5 |
 | retention-days  |                30 | int  |     1 |
 
 ## Sub-packages
@@ -25,11 +25,11 @@ This package has no sub-packages.
 
 ## Resources
 
-|    File     |                 APIVersion                 |       Kind       |             Name              |  Namespace   |
-|-------------|--------------------------------------------|------------------|-------------------------------|--------------|
-| export.yaml | serviceusage.cnrm.cloud.google.com/v1beta1 | Service          | my-project-id-logbucket       | my-namespace |
-| export.yaml | logging.cnrm.cloud.google.com/v1beta1      | LoggingLogSink   | 123456789012-orglogbucketsink | my-namespace |
-| export.yaml | logging.cnrm.cloud.google.com/v1beta1      | LoggingLogBucket | my-log-k8s-bucket             | my-namespace |
+|    File     |                 APIVersion                 |       Kind       |            Name            |  Namespace   |
+|-------------|--------------------------------------------|------------------|----------------------------|--------------|
+| export.yaml | serviceusage.cnrm.cloud.google.com/v1beta1 | Service          | my-project-id-logbucket    | my-namespace |
+| export.yaml | logging.cnrm.cloud.google.com/v1beta1      | LoggingLogSink   | 123456789012-logbucketsink | my-namespace |
+| export.yaml | logging.cnrm.cloud.google.com/v1beta1      | LoggingLogBucket | my-log-k8s-bucket          | my-namespace |
 
 ## Resource References
 

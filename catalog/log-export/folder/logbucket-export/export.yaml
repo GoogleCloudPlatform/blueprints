@@ -29,7 +29,7 @@ spec:
 apiVersion: logging.cnrm.cloud.google.com/v1beta1
 kind: LoggingLogSink
 metadata:
-  name: 123456789012-fldrlogbucketsink # kpt-set: ${folder-k8s-name}-logbucketsink
+  name: my.folder.k8s.name-logbucketsink # kpt-set: ${folder-k8s-name}-logbucketsink
   namespace: my-namespace # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
@@ -50,10 +50,11 @@ metadata:
   namespace: my-namespace # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
+    cnrm.cloud.google.com/project-id: my-project-id # kpt-set: ${project-id}
 spec:
   projectRef:
     external: "projects/my-project-id" # kpt-set: projects/${project-id}
   location: "global" # kpt-set: ${location}
   description: "Log bucket for folder level logs"
-  locked: true # kpt-set: ${bucket-locked}
+  locked: false # kpt-set: ${bucket-locked}
   retentionDays: 30 # kpt-set: ${retention-days}

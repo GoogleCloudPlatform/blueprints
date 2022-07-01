@@ -1,0 +1,30 @@
+# Copyright 2021 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+# IAM Policy Member
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: log-bkt-project-iam-policy
+  namespace: logging # kpt-set: ${namespace}
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
+spec:
+  memberFrom:
+    logSinkRef:
+      name: 123456789012-logbucketsink # kpt-set: ${org-id}-logbucketsink
+  resourceRef:
+    apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
+    kind: Project
+    external: projects/my-project-id # kpt-set: projects/${project-id}
+  role: roles/logging.bucketWriter

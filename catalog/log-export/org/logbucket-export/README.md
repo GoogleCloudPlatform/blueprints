@@ -14,9 +14,9 @@ A log export on an organization that sinks to Cloud Logging Log Bucket
 | filter          |                   | str  |     0 |
 | location        | global            | str  |     2 |
 | log-bucket-name | my-log-k8s-bucket | str  |     2 |
-| namespace       | my-namespace      | str  |     3 |
-| org-id          |      123456789012 | str  |     2 |
-| project-id      | my-project-id     | str  |     5 |
+| namespace       | my-namespace      | str  |     4 |
+| org-id          |      123456789012 | str  |     3 |
+| project-id      | my-project-id     | str  |     6 |
 | retention-days  |                30 | int  |     1 |
 
 ## Sub-packages
@@ -30,9 +30,11 @@ This package has no sub-packages.
 | export.yaml | serviceusage.cnrm.cloud.google.com/v1beta1 | Service          | my-project-id-logbucket    | my-namespace |
 | export.yaml | logging.cnrm.cloud.google.com/v1beta1      | LoggingLogSink   | 123456789012-logbucketsink | my-namespace |
 | export.yaml | logging.cnrm.cloud.google.com/v1beta1      | LoggingLogBucket | my-log-k8s-bucket          | my-namespace |
+| iam.yaml    | iam.cnrm.cloud.google.com/v1beta1          | IAMPolicyMember  | log-bkt-project-iam-policy | logging      |
 
 ## Resource References
 
+- [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember)
 - [LoggingLogBucket](https://cloud.google.com/config-connector/docs/reference/resource-docs/logging/logginglogbucket)
 - [LoggingLogSink](https://cloud.google.com/config-connector/docs/reference/resource-docs/logging/logginglogsink)
 - [Service](https://cloud.google.com/config-connector/docs/reference/resource-docs/serviceusage/service)

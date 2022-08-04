@@ -14,6 +14,9 @@ After installing this blueprint, you will be able to:
 3.  Automatically apply your config changes to your Config Controller
     cluster on merge
 
+NOTE: cluster-name must not exceed 25 characters in length, as it is
+included in the service account ID which has a maximum character length.
+
 ## Setters
 
 |      Name       |      Value      | Type | Count |

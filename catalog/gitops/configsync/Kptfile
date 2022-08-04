@@ -16,7 +16,13 @@ info:
     2.  Manage plain KRM or manually rendered blueprints
     3.  Automatically apply your config changes to your Config Controller
         cluster on merge
+
+    NOTE: cluster-name must not exceed 25 characters in length, as it is
+    included in the service account ID which has a maximum character length.
 pipeline:
   mutators:
     - image: gcr.io/kpt-fn/apply-setters:v0.1
       configPath: setters.yaml
+  validators:
+    - image: gcr.io/kpt-fn/starlark:v0.4
+      configPath: validation.yaml

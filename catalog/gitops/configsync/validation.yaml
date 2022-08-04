@@ -1,4 +1,4 @@
-# Copyright 2021 Google LLC
+# Copyright 2022 Google LLC
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -11,16 +11,15 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-apiVersion: v1
-kind: ConfigMap
+apiVersion: fn.kpt.dev/v1alpha1
+kind: StarlarkRun
 metadata:
-  name: setters
+  name: validate-cluster-name-length
   annotations:
-    config.kubernetes.io/local-config: "true"
-data:
-  namespace: config-control
-  # cluster-name must not exceed 25 characters in length
-  cluster-name: cluster-name
-  configsync-dir: config
-  deployment-repo: deployment-repo
-  project-id: project-id
+    config.kubernetes.io/local-config: 'true'
+source: |
+  for resource in ctx.resource_list["items"]:
+    if resource["kind"] == "IAMServiceAccount" and \
+    len(resource["metadata"]["name"]) > 30:
+      fail("cluster-name cannot exceed 25 characters in length:", \
+      len(resource["metadata"]["name"])-5)

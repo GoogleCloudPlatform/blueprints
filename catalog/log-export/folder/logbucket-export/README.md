@@ -14,8 +14,8 @@ A log export on a folder that sinks to Cloud Logging Log Bucket
 | filter          |                    | str  |     0 |
 | folder-k8s-name | my.folder.k8s.name | str  |     3 |
 | location        | global             | str  |     2 |
-| log-bucket-name | my-log-k8s-bucket  | str  |     2 |
-| namespace       | my-namespace       | str  |     4 |
+| log-bucket-name | my-log-k8s-bucket  | str  |     3 |
+| namespace       | my-namespace       | str  |     5 |
 | project-id      | my-project-id      | str  |     6 |
 | retention-days  |                 30 | int  |     1 |
 

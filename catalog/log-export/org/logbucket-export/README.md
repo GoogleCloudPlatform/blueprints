@@ -13,8 +13,8 @@ A log export on an organization that sinks to Cloud Logging Log Bucket
 | bucket-locked   | false             | bool |     1 |
 | filter          |                   | str  |     0 |
 | location        | global            | str  |     2 |
-| log-bucket-name | my-log-k8s-bucket | str  |     2 |
-| namespace       | my-namespace      | str  |     4 |
+| log-bucket-name | my-log-k8s-bucket | str  |     3 |
+| namespace       | my-namespace      | str  |     5 |
 | org-id          |      123456789012 | str  |     3 |
 | project-id      | my-project-id     | str  |     6 |
 | retention-days  |                30 | int  |     1 |

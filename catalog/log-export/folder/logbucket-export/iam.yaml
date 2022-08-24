@@ -19,10 +19,11 @@ metadata:
   namespace: logging # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
+    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/my-namespace/LoggingLogSink/my.folder.k8s.name-logbucketsink # kpt-set: logging.cnrm.cloud.google.com/namespaces/${namespace}/LoggingLogSink/${folder-k8s-name}-logbucketsink
 spec:
   memberFrom:
     logSinkRef:
-      name: 123456789012-logbucketsink # kpt-set: ${folder-k8s-name}-logbucketsink
+      name: my.folder.k8s.name-logbucketsink # kpt-set: ${folder-k8s-name}-logbucketsink
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1
     kind: Project

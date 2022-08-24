@@ -33,6 +33,7 @@ metadata:
   namespace: my-namespace # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
+    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/my-namespace/LoggingLogBucket/my-log-k8s-bucket # kpt-set: logging.cnrm.cloud.google.com/namespaces/${namespace}/LoggingLogBucket/${log-bucket-name}
 spec:
   folderRef:
     name: my.folder.k8s.name # kpt-set: ${folder-k8s-name}

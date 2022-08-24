@@ -19,6 +19,7 @@ metadata:
   namespace: logging # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.0
+    config.kubernetes.io/depends-on: logging.cnrm.cloud.google.com/namespaces/my-namespace/LoggingLogSink/123456789012-logbucketsink # kpt-set: logging.cnrm.cloud.google.com/namespaces/${namespace}/LoggingLogSink/${org-id}-logbucketsink
 spec:
   memberFrom:
     logSinkRef:

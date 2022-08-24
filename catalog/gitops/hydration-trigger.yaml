@@ -21,7 +21,7 @@ metadata:
   name: source-repo-cicd-trigger # kpt-set: ${source-repo}-cicd-trigger
   namespace: config-control # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/gitops/v0.5.0
+    cnrm.cloud.google.com/blueprint: cnrm/gitops/v0.6.0
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   build:

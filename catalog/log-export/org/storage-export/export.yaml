@@ -18,7 +18,7 @@ metadata:
   name: my-project-id-storage # kpt-set: ${project-id}-storage
   namespace: projects
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.5.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.6.0
     cnrm.cloud.google.com/deletion-policy: "abandon"
     cnrm.cloud.google.com/disable-dependent-services: "false"
     cnrm.cloud.google.com/project-id: my-project-id # kpt-set: ${project-id}
@@ -32,7 +32,7 @@ metadata:
   name: 123456789012-storagesink # kpt-set: ${org-id}-storagesink
   namespace: my-namespace # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.5.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.6.0
 spec:
   destination:
     storageBucketRef:
@@ -50,7 +50,7 @@ metadata:
   namespace: my-namespace # kpt-set: ${namespace}
   annotations:
     cnrm.cloud.google.com/force-destroy: "true"
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.5.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.6.0
     cnrm.cloud.google.com/project-id: my-project-id # kpt-set: ${project-id}
 spec:
   uniformBucketLevelAccess: true # kpt-set: ${uniform-bucket-level-access}

@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.6.0](https://github.com/GoogleCloudPlatform/blueprints/compare/gitops-blueprint-v0.5.0...gitops-blueprint-v0.6.0) (2022-08-24)
+
+
+### Features
+
+* add cluster-name validator, update README ([#199](https://github.com/GoogleCloudPlatform/blueprints/issues/199)) ([5e0966b](https://github.com/GoogleCloudPlatform/blueprints/commit/5e0966b91b8d40fd00e8c2bc43e6b49cf3185aa2))
+
 ## [0.5.0](https://github.com/GoogleCloudPlatform/blueprints/compare/gitops-blueprint-v0.4.2...gitops-blueprint-v0.5.0) (2022-05-24)
 
 

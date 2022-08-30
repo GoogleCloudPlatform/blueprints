@@ -1,5 +1,20 @@
 # Changelog
 
+## [0.6.0](https://github.com/GoogleCloudPlatform/blueprints/compare/log-export-blueprint-v0.5.0...log-export-blueprint-v0.6.0) (2022-08-24)
+
+
+### Features
+
+* adds blueprints for log-export with sinks for Cloud Log Buckets ([6edd3f5](https://github.com/GoogleCloudPlatform/blueprints/commit/6edd3f5c40cbcb331aea575f0d159a5912d4285a))
+
+
+### Bug Fixes
+
+* adds depends-on annotation for log-export ([7696fa4](https://github.com/GoogleCloudPlatform/blueprints/commit/7696fa4a1b9df7692e21db01e520422436591b2e))
+* adds the iam policy resource for the sink for log-bucket ([1ac8e49](https://github.com/GoogleCloudPlatform/blueprints/commit/1ac8e4930c9da45e80c622d4cbd681ee0a7c364d))
+* org logbucket retention setter ([42a7d0d](https://github.com/GoogleCloudPlatform/blueprints/commit/42a7d0d39c4aded518b856b8315cbb0f6438f44d))
+* sets bucket-locked to false as default ([2725a8e](https://github.com/GoogleCloudPlatform/blueprints/commit/2725a8eca562a732c4616cfee65ec43220c965f7))
+
 ## [0.5.0](https://github.com/GoogleCloudPlatform/blueprints/compare/log-export-blueprint-v0.4.0...log-export-blueprint-v0.5.0) (2022-05-24)
 
 

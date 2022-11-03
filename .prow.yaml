@@ -29,6 +29,10 @@ presubmits:
             privileged: true
           command: ["/usr/local/bin/prow_entrypoint.sh"]
           args: ["utils/check_lint.sh"]
+          resources:
+            requests:
+              memory: 8Gi
+              cpu: 2
   - name: test-int
     always_run: true
     decorate: true

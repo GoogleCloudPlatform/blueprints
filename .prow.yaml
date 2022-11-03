@@ -18,6 +18,7 @@ presubmits:
     decorate: true
     labels:
       preset-dind-enabled: "true"
+      preset-kind-volume-mounts: "true"
     cluster: build-blueprints
     decoration_config:
       timeout: 30m

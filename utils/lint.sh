@@ -125,7 +125,7 @@ function init_schema_check(){
 
     # re create kind cluster
     kind delete cluster --name yaml-validator-cluster
-    kind create cluster --name yaml-validator-cluster
+    kind create cluster --name yaml-validator-cluster --retain || kind export logs $ARTIFACTS
  
     # create namespaces used in blueprints
     for ns in config-control \

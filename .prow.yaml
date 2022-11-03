@@ -13,26 +13,6 @@
 # limitations under the License.
 
 presubmits:
-  - name: lint
-    always_run: true
-    decorate: true
-    labels:
-      preset-dind-enabled: "true"
-      preset-kind-volume-mounts: "true"
-    cluster: build-blueprints
-    decoration_config:
-      timeout: 30m
-    spec:
-      containers:
-        - image: gcr.io/cloud-foundation-cicd/cft/developer-tools-krm:1.8
-          securityContext:
-            privileged: true
-          command: ["/usr/local/bin/prow_entrypoint.sh"]
-          args: ["utils/check_lint.sh"]
-          resources:
-            requests:
-              memory: 8Gi
-              cpu: 2
   - name: test-int
     always_run: true
     decorate: true

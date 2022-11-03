@@ -125,7 +125,7 @@ function init_schema_check(){
 
     # re create kind cluster
     kind delete cluster --name yaml-validator-cluster
-    kind create cluster --name yaml-validator-cluster --retain || kind export logs --name yaml-validator-cluster $ARTIFACTS
+    kind create cluster --name yaml-validator-cluster
  
     # create namespaces used in blueprints
     for ns in config-control \
@@ -178,8 +178,8 @@ function check_schema() {
             done
 
             kpt live init "${child}" &> /dev/null
-            kptOp=$(kpt live apply "${child}" --dry-run --server-side --install-resource-group --output json)
-            passed=$(echo "${kptOp}" | jq 'select(.type == "summary")' | jq 'if .failed == 0 then true else false end')
+            kptOp=$(kpt live apply "${child}" --dry-run --server-side --install-resource-group --inventory-policy adopt --output json || echo "{}")
+            passed=$(echo "${kptOp}" | jq 'select(.eventType == "completed") | if .failedCount == 0 then true else false end')
             if $passed; then
               echo "${child} passed"
             else

@@ -19,14 +19,15 @@ metadata: # kpt-merge: networking/spcregionperimeter
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.4.0,kpt-pkg-fn-live
 spec:
-  resources:
-    - projectRef:
-        external: projects/123 # kpt-set: projects/${project-number}
-  accessLevels:
-    - name: alp_dev_members # kpt-set: alp_${env}_members
-  restrictedServices: # kpt-set: ${restricted-services}
-    - "storage.googleapis.com"
-    - "bigquery.googleapis.com"
+  spec:
+    resources:
+      - projectRef:
+          external: projects/123 # kpt-set: projects/${project-number}
+    accessLevels:
+      - name: alp_dev_members # kpt-set: alp_${env}_members
+    restrictedServices: # kpt-set: ${restricted-services}
+      - "storage.googleapis.com"
+      - "bigquery.googleapis.com"
   accessPolicyRef:
     external: accessPolicies/123 # kpt-set: accessPolicies/${access-context-manager-policy-id}
   description: Service Perimeter managed by Config Connector

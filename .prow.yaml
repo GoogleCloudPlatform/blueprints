@@ -23,7 +23,7 @@ presubmits:
       timeout: 30m
     spec:
       containers:
-        - image: gcr.io/cloud-foundation-cicd/cft/developer-tools-krm:1.3
+        - image: gcr.io/cloud-foundation-cicd/cft/developer-tools-krm:1.8
           securityContext:
             privileged: true
           command: ["/usr/local/bin/prow_entrypoint.sh"]

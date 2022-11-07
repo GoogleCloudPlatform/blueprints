@@ -19,7 +19,7 @@ metadata:
   annotations:
     cnrm.cloud.google.com/blueprint: cnrm/landing-zone-lite/v0.5.1
     cnrm.cloud.google.com/deletion-policy: "abandon"
-    config.kubernetes.io/local-config: true
+    config.kubernetes.io/local-config: "true"
 spec:
   services:
     - cloudbilling.googleapis.com

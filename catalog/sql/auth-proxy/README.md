@@ -12,9 +12,10 @@ Launch a Cloud SQL Auth proxy instance as a DaemonSet in Kubernetes
 |----------------------|----------------------|------|-------|
 | connection-name      | example-connection   | str  |     1 |
 | daemonset-name       | cloud-sql-auth-proxy | str  |     4 |
-| namespace            | default              | str  |     3 |
-| service-account-name | cloud-sql-proxy-sa   | str  |     1 |
-| service-name         | cloud-sql-auth-proxy | str  |     2 |
+| namespace            | default              | str  |     1 |
+| project-id           |                      | str  |     2 |
+| service-account-name | cloud-sql-proxy-sa   | str  |     2 |
+| service-name         | cloud-sql-auth-proxy | str  |     1 |
 | servie-account-name  | cloud-sql-auth-proxy | str  |     1 |
 | tag                  | 1.30.0               | str  |     1 |
 
@@ -24,15 +25,21 @@ This package has no sub-packages.
 
 ## Resources
 
-|        File        | APIVersion |      Kind      |         Name         | Namespace |
-|--------------------|------------|----------------|----------------------|-----------|
-| daemonset.yml      | apps/v1    | DaemonSet      | cloud-sql-auth-proxy | default   |
-| service.yml        | v1         | Service        | cloud-sql-auth-proxy | default   |
-| serviceAccount.yml | v1         | ServiceAccount | cloud-sql-auth-proxy | default   |
+|        File         |            APIVersion             |       Kind        |                 Name                 | Namespace |
+|---------------------|-----------------------------------|-------------------|--------------------------------------|-----------|
+| daemonset.yaml      | apps/v1                           | DaemonSet         | cloud-sql-auth-proxy                 | default   |
+| iam.yaml            | iam.cnrm.cloud.google.com/v1beta1 | IAMPolicyMember   | iam-member-cloud-sql                 | default   |
+| iam.yaml            | iam.cnrm.cloud.google.com/v1beta1 | IAMServiceAccount | cloud-sql-auth-proxy                 | default   |
+| iam.yaml            | iam.cnrm.cloud.google.com/v1beta1 | IAMPolicy         | iampolicy-cloud-sql-workloadidentity | default   |
+| service.yaml        | v1                                | Service           | cloud-sql-auth-proxy                 | default   |
+| serviceAccount.yaml | v1                                | ServiceAccount    | cloud-sql-auth-proxy                 | default   |
 
 ## Resource References
 
 - DaemonSet
+- [IAMPolicyMember](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicymember)
+- [IAMPolicy](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iampolicy)
+- [IAMServiceAccount](https://cloud.google.com/config-connector/docs/reference/resource-docs/iam/iamserviceaccount)
 - [ServiceAccount](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#serviceaccount-v1-core)
 - [Service](https://kubernetes.io/docs/reference/generated/kubernetes-api/v1.22/#service-v1-core)
 
@@ -60,7 +67,7 @@ This package has no sub-packages.
 
 1.  Initialize the resource inventory
     ```shell
-    kpt live init --namespace ${NAMESPACE}"
+    kpt live init --namespace ${NAMESPACE}
     ```
     Replace `${NAMESPACE}` with the namespace in which to manage
     the inventory ResourceGroup (for example, `config-control`).

@@ -15,7 +15,9 @@ apiVersion: apps/v1
 kind: DaemonSet
 metadata:
   name: cloud-sql-auth-proxy # kpt-set: ${daemonset-name}
-  namespace: default # kpt-set: ${namespace}
+  namespace: default
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/sql/auth-proxy/v0.1.0
 spec:
   selector:
     matchLabels:
@@ -31,7 +33,7 @@ spec:
       serviceAccountName: cloud-sql-proxy-sa # kpt-set: ${service-account-name}
       containers:
       - name: gce-proxy
-        image: gcr.io/cloudsql-docker/gce-proxy:1.30.0
+        image: gcr.io/cloudsql-docker/gce-proxy:1.33.0
         command: ["/cloud_sql_proxy"]
         args: ["-instances=$(CONNECTION_NAME)=tcp:0.0.0.0:5432", "-ip_address_types=PRIVATE", "-log_debug_stdout=true", "-verbose=false"]
         env:

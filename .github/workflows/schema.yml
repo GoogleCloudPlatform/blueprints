@@ -11,8 +11,19 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-apiVersion: v1
-kind: ServiceAccount
-metadata:
-  name: cloud-sql-auth-proxy # kpt-set: ${servie-account-name}
-  namespace: default # kpt-set: ${namespace}
+
+name: "Lint check"
+on: [push]
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - run: |
+          docker run --rm \
+          -e DOCKER_HOST_PATH=/home/runner/work/blueprints/blueprints \
+          --network=host \
+          -v /home/runner/work/blueprints/blueprints:/workspace \
+          -v /var/run/docker.sock:/var/run/docker.sock \
+          gcr.io/cloud-foundation-cicd/cft/developer-tools-krm:1.8 \
+          ./utils/check_lint.sh

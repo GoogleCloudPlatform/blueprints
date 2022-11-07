@@ -9,8 +9,14 @@ info:
     Launch a Cloud SQL Auth proxy instance as a DaemonSet in Kubernetes
 pipeline:
   mutators:
+  - image: gcr.io/kpt-fn/set-project-id:v0.2.0
+    configMap:
+      project-id: example-project
   - image: gcr.io/kpt-fn/apply-setters:v0.2.0
     configPath: setters.yaml
+  - image: gcr.io/kpt-fn/set-namespace:v0.4.1
+    configMap:
+      namespace: default
   - image: gcr.io/kpt-fn/set-labels:unstable
     configMap:
       app.kubernetes.io/name: "cloud-sql-auth-proxy" # kpt-set: ${service-name}

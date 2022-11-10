@@ -47,7 +47,7 @@ check_yaml_fmt(){
     catalogTmpDir="$tmpDir/catalog"
     # format tmpDir blueprints
     # todo: switch to kpt v1 after v1 branch merged
-    kpt fn eval "$catalogTmpDir" --image gcr.io/kpt-fn/format:unstable --include-meta-resources > /dev/null
+    kpt fn eval "$catalogTmpDir" --image gcr.io/kpt-fn/format:unstable > /dev/null
     local diffExitCode=1
     # check if both formatted and current are same
     diff -qr catalog "$catalogTmpDir" && diffExitCode=$? || diffExitCode=$?
@@ -115,6 +115,83 @@ function fix_readmes() {
     done < <(find "${parent}" -mindepth 1 -maxdepth 1 -type d -print0)
 }
 
+function init_schema_check(){
+    # create temp dir
+    tmpDirInWorkspace=".tmp"
+    rm -rf "${tmpDirInWorkspace}"
+    mkdir -p "${tmpDirInWorkspace}"
+    cp -R catalog "$tmpDirInWorkspace"
+    cp -R examples "$tmpDirInWorkspace"
+
+    # re create kind cluster
+    kind delete cluster --name yaml-validator-cluster
+    kind create cluster --name yaml-validator-cluster
+ 
+    # create namespaces used in blueprints
+    for ns in config-control \
+            hierarchy \
+            logging \
+            networking \
+            projects \
+            firewalls-namespace \
+            namespace \
+            platform-namespace \
+            my-namespace \
+            policies;
+        # create via apply so we dont error out if already exists
+        do kubectl create namespace "${ns}" --dry-run=client -o yaml | kubectl apply -f - ; 
+    done
+
+    # clone and apply KCC CRDs
+    crdTmpDir="$tmpDirInWorkspace/kcc"
+    git clone --depth 1 --branch v1.80.0 https://github.com/GoogleCloudPlatform/k8s-config-connector.git "${crdTmpDir}"
+    kubectl apply -f "${crdTmpDir}/crds"
+
+    # schema check
+    check_schema "$tmpDirInWorkspace/catalog"
+    check_schema "$tmpDirInWorkspace/examples"
+
+    # cleanup
+    # shellcheck disable=SC2064
+    trap "rm -rf $tmpDirInWorkspace && kind delete cluster --name yaml-validator-cluster" ERR EXIT
+}
+
+function check_schema() {
+    local parent="${1}"
+    while IFS='' read -r -d $'\0' child; do
+        child=${child#"./"}
+        if [[ "$(basename "${child}")" == .* ]]; then
+            # invisible dir
+            continue
+        fi
+        if [[ -f "${child}/Kptfile" ]]; then
+            echo "working in ${child}"
+            # mark certain CRs as local resources which are not available in kind
+            for kind in ConfigConnectorContext \
+                GCPEnforceNamingV2 \
+                ConfigManagement \
+                RootSync \
+                ConstraintTemplate \
+                GCPRequireDeletionPolicy; do
+              # run in context of ${child} package as we may have duplicate GVKNN resources
+              kpt fn eval "${child}" --image gcr.io/kpt-fn/set-annotations:unstable --match-kind "${kind}" -- config.kubernetes.io/local-config="true" &> /dev/null
+            done
+
+            kpt live init "${child}" &> /dev/null
+            kptOp=$(kpt live apply "${child}" --dry-run --server-side --install-resource-group --inventory-policy adopt --output json || echo "{}")
+            passed=$(echo "${kptOp}" | jq 'select(.eventType == "completed") | if .failedCount == 0 then true else false end')
+            if $passed; then
+              echo "${child} passed"
+            else
+              echo "${child} failed"
+              echo "${kptOp}" | jq
+              exit 1
+            fi
+        fi
+        check_schema "${child}"
+    done < <(find "${parent}" -mindepth 1 -maxdepth 1 -type d -print0)
+}
+
 fix_license(){
     echo "Fix license headers"
     check_addlicense
@@ -123,13 +200,14 @@ fix_license(){
 
 fix_yaml_fmt(){
     echo "Fix yaml format"
-    kpt fn eval catalog --image gcr.io/kpt-fn/format:unstable --include-meta-resources
+    kpt fn eval catalog --image gcr.io/kpt-fn/format:unstable
 }
 
 check_lint(){
     check_license
     check_yaml_fmt
     check_readmes
+    init_schema_check
 }
 
 fix_lint(){

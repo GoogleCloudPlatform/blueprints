@@ -109,7 +109,7 @@ function fix_readmes() {
             if [[ ! -z "${tmpPrefix}" ]];then
                 repoPath="${parent#$tmpPrefix/}"
             fi
-            kpt fn eval -i gcr.io/kpt-fn/generate-kpt-pkg-docs@sha256:c281e25a156611e775ad535952886e713393572ad46bc6feab559dcca0e3b8ac ${child} --include-meta-resources --as-current-user --mount type=bind,src="${MOUNT_PATH}",dst=/tmp,rw=true -- readme-path=/tmp/README.md repo-path="https://github.com/GoogleCloudPlatform/blueprints.git/${repoPath}/" pkg-name="${pkgName}"
+            kpt fn eval -i gcr.io/kpt-fn/generate-kpt-pkg-docs@sha256:c281e25a156611e775ad535952886e713393572ad46bc6feab559dcca0e3b8ac ${child} --as-current-user --mount type=bind,src="${MOUNT_PATH}",dst=/tmp,rw=true -- readme-path=/tmp/README.md repo-path="https://github.com/GoogleCloudPlatform/blueprints.git/${repoPath}/" pkg-name="${pkgName}"
         fi
         fix_readmes "${child}" "${tmpPrefix}"
     done < <(find "${parent}" -mindepth 1 -maxdepth 1 -type d -print0)

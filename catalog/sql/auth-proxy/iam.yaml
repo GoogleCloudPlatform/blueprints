@@ -1,0 +1,54 @@
+# Copyright 2022 Google LLC
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#      http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: iam-member-cloud-sql
+  namespace: default
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/sql/auth-proxy/v0.1.0
+spec:
+  memberFrom:
+    serviceAccountRef:
+      name: cloud-sql-auth-proxy
+  role: roles/cloudsql.client
+  resourceRef:
+    kind: Project
+    external: projects/example-project # kpt-set: projects/${project-id}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMServiceAccount
+metadata:
+  name: cloud-sql-auth-proxy
+  namespace: default
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/sql/auth-proxy/v0.1.0
+spec:
+  displayName: cloud-sql-auth-proxy Service Account
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicy
+metadata:
+  name: iampolicy-cloud-sql-workloadidentity
+  namespace: default
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/sql/auth-proxy/v0.1.0
+spec:
+  resourceRef:
+    kind: IAMServiceAccount
+    name: cloud-sql-auth-proxy
+  bindings:
+    - role: roles/iam.workloadIdentityUser
+      members:
+        - serviceAccount:example-project.svc.id.goog[default/cloud-sql-auth-proxy] # kpt-set: serviceAccount:${project-id}.svc.id.goog[${namespace}/${service-account-name}]

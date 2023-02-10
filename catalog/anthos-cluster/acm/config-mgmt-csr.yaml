@@ -28,7 +28,6 @@ spec:
   featureRef:
     name: feature-name # kpt-set: feat-acm-${cluster-name}
   configmanagement:
-    version: 1.9.0 #kpt-set: ${acm-version}
     configSync:
       sourceFormat: unstructured
       git:

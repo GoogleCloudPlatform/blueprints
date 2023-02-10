@@ -6,7 +6,6 @@ A blueprint to install Anthos Config Management (ACM) on an existing GKE cluster
 
 ```
 Setter              Usages
-acm-version         0
 cluster-name        16
 location            2
 platform-namespace  8

@@ -22,6 +22,18 @@ use GitHub pull requests for this purpose. Consult
 [GitHub Help](https://help.github.com/articles/about-pull-requests/) for more
 information on using pull requests.
 
+## Linting and Formatting
+
+Many of the files in this repository can be linted or formatted to
+maintain a standard of quality.
+
+### Execution
+
+Run `make docker_check_lint`.
+
+Run `make docker_fix_lint`.
+
+
 ## Community Guidelines
 
 This project follows

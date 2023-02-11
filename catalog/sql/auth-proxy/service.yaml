@@ -12,14 +12,20 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 apiVersion: v1
-kind: ConfigMap
+kind: Service
 metadata:
-  name: setters
-  annotations:
-    config.kubernetes.io/local-config: "true"
-data:
-  daemonset-name: cloud-sql-auth-proxy
-  service-account-name: cloud-sql-proxy-sa
-  connection-name: "example-connection"
-  project-id: ""
+  name: cloud-sql-auth-proxy
   namespace: default
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/sql/auth-proxy/v0.1.0
+spec:
+  type: ClusterIP
+  ports:
+  # The port that this service should serve on.
+  - port: 5432
+    protocol: TCP
+    name: db
+    targetPort: 5432
+  # Label keys and values that must match in order to receive traffic for this service.
+  selector:
+    app: cloud-sql-auth-proxy # kpt-set: ${daemonset-name}

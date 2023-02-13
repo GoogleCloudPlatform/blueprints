@@ -33,9 +33,8 @@ spec:
       serviceAccountName: cloud-sql-proxy-sa # kpt-set: ${service-account-name}
       containers:
       - name: gce-proxy
-        image: gcr.io/cloudsql-docker/gce-proxy:1.33.0
-        command: ["/cloud_sql_proxy"]
-        args: ["-instances=$(CONNECTION_NAME)=tcp:0.0.0.0:5432", "-ip_address_types=PRIVATE", "-log_debug_stdout=true", "-verbose=false"]
+        image: gcr.io/cloud-sql-connectors/cloud-sql-proxy:2.0.0
+        args: ["$(CONNECTION_NAME)", '--address=0.0.0.0', "--private-ip", "--structured-logs"]
         env:
         - name: CONNECTION_NAME
           value: "example-connection" # kpt-set: ${connection-name}

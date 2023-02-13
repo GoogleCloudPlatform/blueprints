@@ -13,7 +13,7 @@ Launch a Cloud SQL Auth proxy instance as a DaemonSet in Kubernetes
 | connection-name      | example-connection   | str  |     1 |
 | daemonset-name       | cloud-sql-auth-proxy | str  |     4 |
 | namespace            | default              | str  |     1 |
-| project-id           |                      | str  |     2 |
+| project-id           |                      | str  |     3 |
 | service-account-name | cloud-sql-proxy-sa   | str  |     2 |
 | service-name         | cloud-sql-auth-proxy | str  |     1 |
 | servie-account-name  | cloud-sql-auth-proxy | str  |     1 |
@@ -29,6 +29,7 @@ This package has no sub-packages.
 |---------------------|-----------------------------------|-------------------|--------------------------------------|-----------|
 | daemonset.yaml      | apps/v1                           | DaemonSet         | cloud-sql-auth-proxy                 | default   |
 | iam.yaml            | iam.cnrm.cloud.google.com/v1beta1 | IAMPolicyMember   | iam-member-cloud-sql                 | default   |
+| iam.yaml            | iam.cnrm.cloud.google.com/v1beta1 | IAMPolicyMember   | iam-member-cloudsql-metrics          | default   |
 | iam.yaml            | iam.cnrm.cloud.google.com/v1beta1 | IAMServiceAccount | cloud-sql-auth-proxy                 | default   |
 | iam.yaml            | iam.cnrm.cloud.google.com/v1beta1 | IAMPolicy         | iampolicy-cloud-sql-workloadidentity | default   |
 | service.yaml        | v1                                | Service           | cloud-sql-auth-proxy                 | default   |

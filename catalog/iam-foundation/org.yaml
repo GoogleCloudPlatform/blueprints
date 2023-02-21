@@ -16,7 +16,7 @@ kind: IAMPolicyMember
 metadata:
   name: foundation-org-admin
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.1
+    cnrm.cloud.google.com/blueprint: cnrm/org-iam/v0.1.2
     blueprints.cloud.google.com/description: Access to administer all resources belonging to the organization.
   namespace: config-control
 spec:

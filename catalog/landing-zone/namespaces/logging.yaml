@@ -25,7 +25,7 @@ metadata:
   name: configconnectorcontext.core.cnrm.cloud.google.com
   namespace: logging
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.1
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.2
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
   googleServiceAccount: logging-sa@management-project-id.iam.gserviceaccount.com # kpt-set: logging-sa@${management-project-id}.iam.gserviceaccount.com
@@ -36,7 +36,7 @@ metadata:
   name: logging-sa
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.1
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.2
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
@@ -48,7 +48,7 @@ metadata:
   name: logging-sa-logadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.1
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.2
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
@@ -65,7 +65,7 @@ metadata:
   name: logging-sa-bigqueryadmin-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.1
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.2
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:
@@ -82,7 +82,7 @@ metadata:
   name: logging-sa-workload-identity-binding
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.1
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone/v0.5.2
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:

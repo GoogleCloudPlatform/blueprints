@@ -18,7 +18,7 @@ metadata:
   namespace: networking # kpt-set: ${networking-namespace}
   annotations:
     cnrm.cloud.google.com/project-id: host-project # kpt-set: ${host-project-id}
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.4.1
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:networking/v0.4.2
 spec:
   projectRef:
     name: project-id # kpt-set: ${project-id}

@@ -28,6 +28,22 @@ spec:
     external: projects/example-project # kpt-set: projects/${project-id}
 ---
 apiVersion: iam.cnrm.cloud.google.com/v1beta1
+kind: IAMPolicyMember
+metadata:
+  name: iam-member-cloudsql-metrics
+  namespace: default
+  annotations:
+    cnrm.cloud.google.com/blueprint: cnrm/sql/auth-proxy/v0.1.0
+spec:
+  memberFrom:
+    serviceAccountRef:
+      name: cloud-sql-auth-proxy
+  role: roles/monitoring.metricWriter
+  resourceRef:
+    kind: Project
+    external: projects/example-project # kpt-set: projects/${project-id}
+---
+apiVersion: iam.cnrm.cloud.google.com/v1beta1
 kind: IAMServiceAccount
 metadata:
   name: cloud-sql-auth-proxy

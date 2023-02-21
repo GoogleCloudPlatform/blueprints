@@ -1,5 +1,17 @@
 # Changelog
 
+## [0.2.0](https://github.com/GoogleCloudPlatform/blueprints/compare/anthos-cluster-blueprint-v0.1.2...anthos-cluster-blueprint-v0.2.0) (2023-02-21)
+
+
+### Features
+
+* reduce setters for ACM on GKE blueprint ([#197](https://github.com/GoogleCloudPlatform/blueprints/issues/197)) ([b234a99](https://github.com/GoogleCloudPlatform/blueprints/commit/b234a9977bbaff02cf09fa094b4c58ebef9927e8))
+
+
+### Bug Fixes
+
+* update generate-kpt-pkg-docs version to fix bug ([#204](https://github.com/GoogleCloudPlatform/blueprints/issues/204)) ([51c8c8c](https://github.com/GoogleCloudPlatform/blueprints/commit/51c8c8cc870cae72d3bb73a86313f151dc3e0e94))
+
 ### [0.1.2](https://github.com/GoogleCloudPlatform/blueprints/compare/anthos-cluster-blueprint-v0.1.1...anthos-cluster-blueprint-v0.1.2) (2022-05-24)
 
 

@@ -17,7 +17,7 @@ metadata:
   name: cloud-sql-auth-proxy
   namespace: default
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/sql/auth-proxy/v0.1.0
+    cnrm.cloud.google.com/blueprint: cnrm/sql/auth-proxy/v0.2.0
 spec:
   type: ClusterIP
   ports:

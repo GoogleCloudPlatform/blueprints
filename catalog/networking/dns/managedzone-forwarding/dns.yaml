@@ -17,7 +17,7 @@ metadata:
   name: dnsmanagedzone-sample # kpt-set: ${managed-zone-name}
   namespace: networking # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.1
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.4.2
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   dnsName: "example.com." # kpt-set: ${domain}

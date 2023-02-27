@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.5](https://github.com/GoogleCloudPlatform/blueprints/compare/bucket-blueprint-v0.4.4...bucket-blueprint-v0.4.5) (2023-02-21)
+
+
+### Bug Fixes
+
+* update generate-kpt-pkg-docs version to fix bug ([#204](https://github.com/GoogleCloudPlatform/blueprints/issues/204)) ([51c8c8c](https://github.com/GoogleCloudPlatform/blueprints/commit/51c8c8cc870cae72d3bb73a86313f151dc3e0e94))
+
 ### [0.4.4](https://github.com/GoogleCloudPlatform/blueprints/compare/bucket-blueprint-v0.4.3...bucket-blueprint-v0.4.4) (2022-05-24)
 
 

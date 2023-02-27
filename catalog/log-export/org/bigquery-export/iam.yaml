@@ -18,7 +18,7 @@ metadata:
   name: bq-project-iam-policy
   namespace: logging # kpt-set: ${namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.6.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.6.1
 spec:
   memberFrom:
     logSinkRef:
@@ -35,7 +35,7 @@ metadata:
   name: logging-sa-iam-permissions
   namespace: config-control # kpt-set: ${management-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.6.0
+    cnrm.cloud.google.com/blueprint: cnrm/landing-zone:log-export/v0.6.1
 spec:
   resourceRef:
     apiVersion: resourcemanager.cnrm.cloud.google.com/v1beta1

@@ -17,7 +17,7 @@ metadata: # kpt-merge: platform-namespace/feature-membership-name
   name: feature-membership-name # kpt-set: acm-membership-${cluster-name}
   namespace: platform-namespace # kpt-set: ${platform-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.1.2
+    cnrm.cloud.google.com/blueprint: cnrm/acm/v0.2.0
     cnrm.cloud.google.com/project-id: project-id # kpt-set: ${project-id}
 spec:
   projectRef:

@@ -18,7 +18,7 @@ metadata:
   name: kcc-project-id-owners-permissions # kpt-set: kcc-${project-id}-owners-permissions
   namespace: projects # kpt-set: ${projects-namespace}
   annotations:
-    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.4.3
+    cnrm.cloud.google.com/blueprint: cnrm/kcc-namespace/v0.4.4
     cnrm.cloud.google.com/project-id: management-project-id # kpt-set: ${management-project-id}
     cnrm.cloud.google.com/ignore-clusterless: "true"
 spec:

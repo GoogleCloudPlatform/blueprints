@@ -31,5 +31,5 @@ jobs:
           --network=host \
           -v /home/runner/work/blueprints/blueprints:/workspace \
           -v /var/run/docker.sock:/var/run/docker.sock \
-          gcr.io/cloud-foundation-cicd/cft/developer-tools-krm:1.8 \
+          gcr.io/cloud-foundation-cicd/cft/developer-tools-krm:1.22 \
           ./utils/check_lint.sh

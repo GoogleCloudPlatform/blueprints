@@ -97,6 +97,7 @@ create_cc(){
     echo "Creating Config Controller ${CC_NAME} in ${PROJECT_ID}"
     echo "Enabling services"
     gcloud services enable krmapihosting.googleapis.com container.googleapis.com cloudresourcemanager.googleapis.com anthos.googleapis.com --project=$PROJECT_ID
+    sleep 60s
     echo "Creating CC"
     gcloud alpha anthos config controller create ${CC_NAME} --location=us-central1 --project=$PROJECT_ID
     gcloud alpha anthos config controller get-credentials ${CC_NAME} --location us-central1 --project=$PROJECT_ID

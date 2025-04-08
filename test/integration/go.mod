@@ -2,7 +2,7 @@ module github.com/GoogleCloudPlatform/blueprints/test/integration
 
 go 1.23.0
 
-toolchain go1.23.7
+toolchain go1.23.8
 
 require (
 	github.com/GoogleCloudPlatform/cloud-foundation-toolkit/infra/blueprint-test v0.17.6
